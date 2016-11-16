@@ -32,7 +32,9 @@ contract XindeInterface {
         forceTransferRoleC,
 
         coreRole,
-        coreRoleC
+        coreRoleC,
+
+        end
 
     }
 
@@ -110,6 +112,14 @@ contract XindeInterface {
 
     }
 
+    sturct resetMeOperation{
+
+        role                m_role;
+        address             m_key;
+        OperationStatus     m_status;
+
+    }
+
     // if xinde.init() have run,make sure this contract can only init one time
     bool inited;
 
@@ -117,11 +127,27 @@ contract XindeInterface {
     uint m_operationAmounts;
     mapping(uint=>Operation) m_operations;
 
-    // recode all waiting comfirm operation no.
+    // recode all waiting comfirm operation amounts.
     uint m_waitComfirmAmounts;
+    // all wait comfirms operations
     uint[] m_waitComfirms;
 
+
+    // recode all resetMeoperations
+    uint m_operationAmounts_resetMe;
+    //recode all resetMe operations
+    mapping(uint=>resetMeOperation) m_operations_resetMe;
+
+    // recode all waiting comfirm resetMe operation amounts.
+    uint m_waitComfirmAmounts_resetMe;
+
+    // all wait comfirms resetMe operations
+    uint[] m_waitComfirms_resetMe;
+
     AccountFun m_accountFun;
+
+    mapping(uint=>address) m_keys;
+    /*
     // reseter can reset the owner of any account crete by account manager contract
     address reSetAdd;
     address reSetAddC;
@@ -147,7 +173,7 @@ contract XindeInterface {
     address forceTransferAddC;
 
     address coreAdd;
-    address coreAddC;
+    address coreAddC;*/
 
     /// @notice init xinde keys and account function sig
     function init();
@@ -215,8 +241,6 @@ contract XindeInterface {
     /// @return 16 addresses of control this contract as address[]
     function summary()constant returns(address[]);
 
-    function test (address _keyAddress,role _role);
-
     event Init(address,address);
     event Reset(address _account,address[] _owners,uint32[] _weight,uint32[] _Threshold);
     event SetIdLevel (address _account,uint level);
@@ -226,14 +250,15 @@ contract XindeInterface {
     event ConfirmOperation(uint _no);
 
     event Scall(bool);
+
 }
 contract Xinde is XindeInterface{
 
     function init(){
         Scall(inited);
         if(inited) throw;
-        coreAdd=msg.sender;
-        coreAddC=msg.sender;
+        m_keys[uint(role.coreRole)]=msg.sender;
+        m_keys[uint(role.coreRoleC)]=msg.sender;
 
         m_accountFun.freeze         =0x62a5af3b;
         m_accountFun.revokeCA       =0xe698fc31;
@@ -247,13 +272,13 @@ contract Xinde is XindeInterface{
         //uint[] t_res;
 
         //t_res[0]=m_accountFun.freeze;
-        Init(msg.sender,coreAdd);
+        Init(msg.sender,m_keys[uint(role.coreRole)]);
     }
 
 
     function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold){
 
-        if (msg.sender!=reSetAdd) throw;
+        if (msg.sender!=m_keys[uint(role.reSetRole)]) throw;
         if (_owners.length!=_weight.length) throw;
             uint[] memory t_data;
             t_data[0]=_Threshold;
@@ -263,42 +288,42 @@ contract Xinde is XindeInterface{
             for(i=0;i<_owners.length;i++)
                 t_data[i+3+_owners.length]=_weight[i];
 
-        addOperation(_account,OperationType.reSetType,0xd26cb679,t_data);
+        addOperation(_account,OperationType.reSetType,m_accountFun.reSet,t_data);
 
     }
 
     function setIdLevel (address _account,uint _level){
 
         if (_level>=100)throw;
-        if (msg.sender!=realNameAdd) throw;
+        if (msg.sender!=m_keys[uint(role.realNameRole)]) throw;
         uint[] memory t_data;
         t_data[0]=_level;
 
-        addOperation(_account,OperationType.setIdLevelType,0x777af46f,t_data);
+        addOperation(_account,OperationType.setIdLevelType,m_accountFun.setIdLevel,t_data);
 
     }
 
     function setCA (address _account,address _CA){
 
-        if (msg.sender!=CAAdd) throw;
+        if (msg.sender!=m_keys[uint(role.CARole)]) throw;
         uint[] memory t_data;
         t_data[0]=uint(_CA);
 
-        addOperation(_account,OperationType.setCAType,0x2cab3b98,t_data);
+        addOperation(_account,OperationType.setCAType,m_accountFun.setCA,t_data);
 
     }
 
     function revokeCA (address _account){
 
-        if (msg.sender!=revokeAdd) throw;
+        if (msg.sender!=m_keys[uint(role.revokeRole)]) throw;
         uint[] memory t_data;
-        addOperation(_account,OperationType.revokeCAType,0x2cab3b98,t_data);
+        addOperation(_account,OperationType.revokeCAType,m_accountFun.revokeCA,t_data);
 
     }
 
     function freeze(address _account){
 
-        if (msg.sender!=freezeAdd) throw;
+        if (msg.sender!=m_keys[uint(role.freezeRole)]) throw;
         uint[] memory t_data;
         addOperation(_account,OperationType.freezeType,m_accountFun.freeze,t_data);
         Freeze(_account);
@@ -307,7 +332,7 @@ contract Xinde is XindeInterface{
 
     function unfreeze(address _account){
 
-        if (msg.sender!=unfreezeAdd) throw;
+        if (msg.sender!=m_keys[uint(role.unfreezeRole)]) throw;
         uint[] memory t_data;
         addOperation(_account,OperationType.unfreezeType,m_accountFun.unfreeze,t_data);
         Unfreeze(_account);
@@ -316,107 +341,72 @@ contract Xinde is XindeInterface{
 
     function resetMe(address _keyAddress,role _role){
 
-        if (msg.sender!=coreAdd) throw;
+        if (msg.sender!=m_keys[uint(role.coreRole)]) throw;
+        if(uint(_role)>=uint(role.end)) throw;
 
-        if(_role==role.reSetRole)
-            reSetAdd=_keyAddress;
-        else if(_role==role.reSetRoleC)
-            reSetAddC=_keyAddress;
+        m_operations_resetMe[++m_operationAmount_resetMe]=resetMeOperation(_role,_keyAddress,OperationStatus.waitComfirm);
+        m_waitComfirmAmounts_resetMe++;
+        m_waitComfirms_resetMe[m_waitComfirms_resetMe.length+1]=m_waitComfirmAmounts_resetMe;
+        ResetMe(_keyAddress, _role);
+    }
 
-        else if(_role==role.realNameRole)
-            realNameAdd=_keyAddress;
-        else if(_role==role.realNameRoleC)
-            realNameAddC=_keyAddress;
+    function resetMeC(address _keyAddress,role _role,uint _no){
 
-        else if(_role==role.CARole)
-            CAAdd=_keyAddress;
-        else if(_role==role.CARoleC)
-            CAAddC=_keyAddress;
+        if (msg.sender!=m_keys[uint(role.coreRoleC)]) throw;
+        if(m_operations_resetMe[_no].m_role!=_role) throw;
+        if(m_operations_resetMe[_no].m_key!=_keyAddress) throw;
+        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm)throw;
 
-        else if(_role==role.revokeRole)
-            revokeAdd=_keyAddress;
-        else if(_role==role.revokeRoleC)
-            revokeAddC=_keyAddress;
+        m_keys[uint(_role)]=_keyAddress;
+        del2(_no);
+        ResetMe(_keyAddress, _role);
 
-        else if(_role==role.freezeRole)
-            freezeAdd=_keyAddress;
-        else if(_role==role.freezeRoleC)
-            freezeAddC=_keyAddress;
+    }
 
-        else if(_role==role.unfreezeRole)
-            unfreezeAdd=_keyAddress;
-        else if(_role==role.unfreezeRoleC)
-            unfreezeAddC=_keyAddress;
+    function ResetMeReject(address _key,uint _no){
 
-        else if(_role==role.forceTransferRole)
-            forceTransferAdd=_keyAddress;
-        else if(_role==role.forceTransferRoleC)
-            forceTransferAddC=_keyAddress;
-
-        else if(_role==role.coreRole)
-            coreAdd=_keyAddress;
-        else if(_role==role.coreRoleC)
-            coreAddC=_keyAddress;
+        if(msg.sender!=m_keys[uint(role.coreRoleC)]) throw;
+        if(m_operations_resetMe[_no].m_key!=_key) throw;
+        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm)throw;
+        m_operations_resetMe[_no].m_status=OperationStatus.reject;
+        del2(_no);
 
     }
 
     function getRole(role _role)constant returns(address){
 
-        if(_role==role.reSetRole)
-            return reSetAdd;
-        else if(_role==role.reSetRoleC)
-            return reSetAddC;
-
-        else if(_role==role.realNameRole)
-            return realNameAdd;
-        else if(_role==role.realNameRoleC)
-            return realNameAddC;
-
-        else if(_role==role.CARole)
-            return CAAdd;
-        else if(_role==role.CARoleC)
-            return CAAddC;
-
-        else if(_role==role.revokeRole)
-            return revokeAdd;
-        else if(_role==role.revokeRoleC)
-            return revokeAddC;
-
-        else if(_role==role.freezeRole)
-            return freezeAdd;
-        else if(_role==role.freezeRoleC)
-            return freezeAddC;
-
-        else if(_role==role.unfreezeRole)
-            return unfreezeAdd;
-        else if(_role==role.unfreezeRoleC)
-            return unfreezeAddC;
-
-        else if(_role==role.forceTransferRole)
-            return forceTransferAdd;
-        else if(_role==role.forceTransferRoleC)
-            return forceTransferAddC;
-
-        else if(_role==role.coreRole)
-            return coreAdd;
-        else if(_role==role.coreRoleC)
-            return coreAddC;
+        return m_keys[uint(_role)];
 
     }
 
     function del(uint _no)internal{
 
-        uint t_start=0;
+        bool t_start=false;
         for (uint i=0;i<m_waitComfirmAmounts;i++){
             if(m_waitComfirms[i]==_no){
-                t_start=1;
+                t_start=true;
                 i++;
             }
-            if(t_start==1)
+            if(t_start)
                 m_waitComfirms[i-1]=m_waitComfirms[i];
         }
-        if(t_start==1)
+        if(t_start)
             m_waitComfirmAmounts--;
+
+    }
+    function del2(uint _no)internal{
+
+        bool t_start=false;
+        for (uint i=0;i<m_waitComfirmAmounts_resetMe;i++){
+            if(m_waitComfirms_resetMe[i]==_no){
+                t_start=true;
+                i++;
+            }
+            if(t_start)
+                m_waitComfirms_resetMe[i-1]=m_waitComfirms_resetMe[i];
+        }
+        if(t_start)
+            m_waitComfirmAmounts_resetMe--;
 
     }
 
@@ -426,43 +416,10 @@ contract Xinde is XindeInterface{
         m_waitComfirms[m_waitComfirms.length+1]=m_operationAmounts;
 
     }
-    /*function storeOperation(uint _funsig) internal{
-
-        //exclude function sig of this call
-        uint t_dataSize=msg.data.size()-0x40;
-        assembly{
-            // start memory 0x100,exclude function sig of this call
-            calldatacopy(0x100,0x04,t_dataSize)
-        }
-        for (uint i=0;i<t_dataSize;i++)
-
-
-    }*/
-        /*function reSetC(address _account,uint _no){
-
-        Operation memory t_operation=m_operations[_no];
-        if(t_operation.m_account!=_account) throw;
-
-        //use inline semmbly
-        address[] memory t_owners;
-        uint32[]  memory t_weights;
-        for(uint i=0;i<t_operation.m_data[1];i++)
-            t_owners[i]=address(t_operation.m_data[3+i]);
-
-        for(i=0;i<t_operation.m_data[1];i++)
-            t_weights[i]=uint32(t_operation.m_data[3+i+t_operation.m_data[1]]);
-
-        Account a;
-        a=Account(_account);
-        a.resetOwner(t_owners,t_weights,uint32(t_operation.m_data[0]));
-
-        del(_no);
-        //ResetC(t_owners,t_weights,t_operation.m_data[0]);
-
-    }*/
 
     function comfirm(address _account,uint _no){
 
+        if(msg.sender!=m_keys[uint(m_operations[_no].m_type)]) throw;
         if(m_operations[_no].m_account!=_account) throw;
         if(m_operations[_no].m_status!=OperationStatus.waitComfirm)throw;
         uint r;
@@ -491,6 +448,7 @@ contract Xinde is XindeInterface{
 
     function reject(address _account,uint _no){
 
+        if(msg.sender!=m_keys[uint(m_operations[_no].m_type)]) throw;
         if(m_operations[_no].m_account!=_account) throw;
         if(m_operations[_no].m_status!=OperationStatus.waitComfirm)throw;
         m_operations[_no].m_status=OperationStatus.reject;
@@ -504,6 +462,12 @@ contract Xinde is XindeInterface{
 
     }
 
+    function getOperationAmounts_resetMe()constant returns(uint _totalAmounts,uint _waitAmounts){
+
+        return  (m_operationAmounts_resetMe,m_waitComfirmAmounts_resetMe);
+
+    }
+
     function getOperation(uint _no)constant returns(uint[]){
 
         //zero Operation
@@ -511,12 +475,23 @@ contract Xinde is XindeInterface{
         Operation t_operation=m_operations[_no];
         if (uint(t_operation.m_account)==0) throw;
         uint[] memory t_res;
-        t_res[0]=uint(t_operation.m_account);
-        t_res[1]=uint(t_operation.m_type);
+        t_res[0]=_no;
+        t_res[1]=uint(t_operation.m_account);
+        t_res[2]=uint(t_operation.m_type);
 
         for(uint i;i<t_operation.m_data.length;i++)
-            t_res[3+i]=t_operation.m_data[i];
+            t_res[4+i]=t_operation.m_data[i];
         return t_res;
+
+    }
+
+    function getOperation_resetMe(uint _no)constant returns(uint r_no,role _role,address _key,OperationStatus _status){
+
+        r_no=_no;
+        _role=m_operations_resetMe[_no].m_role;
+        _key=m_operations_resetMe[_no].m_key;
+        _status=m_operations_resetMe[_no].m_status;
+        return;
 
     }
 
@@ -524,35 +499,11 @@ contract Xinde is XindeInterface{
 
         address[] memory res= new address[](16);
 
-        res[0]=reSetAdd;
-        res[1]=reSetAddC;
-
-        res[2]=realNameAdd;
-        res[3]=realNameAddC;
-
-        res[4]=CAAdd;
-        res[5]=CAAddC;
-
-        res[6]=revokeAdd;
-        res[7]=revokeAddC;
-
-        res[8]=freezeAdd;
-        res[9]=freezeAddC;
-
-        res[10]=unfreezeAdd;
-        res[11]=unfreezeAddC;
-
-        res[12]=forceTransferAdd;
-        res[13]=forceTransferAddC;
-
-        res[14]=coreAdd;
-        res[15]=coreAddC;
+        for(uint i=0;i<16;i++)
+            res[i]=m_keys[i];
 
         return (res);
 
-    }
-    function test(address _keyAddress,role _role){
-        realNameAdd=_keyAddress;
     }
 
 }

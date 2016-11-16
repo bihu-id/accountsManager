@@ -96,12 +96,6 @@ contract('deployData', function(accounts) {
             sig : 0x45c8b1a6,
             resSize : 32,
             gas : 300000
-        },
-        {
-            name : 'test',
-            sig : 0xbc645d96,
-            resSize : 32,
-            gas : 300000
         }
         //bc645d96 test(address,uint8)
     ];
