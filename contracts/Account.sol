@@ -100,8 +100,8 @@ contract AccountInterface{
         uint _ownerAmount,
         uint _tx_threshold,
         address _CA,
-        address _owner,
-        uint  _weight);
+        address[] _owner,
+        uint[] _weight);
 
     /// @notice get the _owner address and it _weight by no
     /// @param _no _owner no
@@ -223,8 +223,8 @@ contract Account is AccountInterface{
         uint _ownerAmount,
         uint _tx_threshold,
         address _CA,
-        address _owner,
-        uint _weight){
+        address[] _owner,
+        uint[] _weight){
             _core=m_data.m_core;
             _TxCore=m_data.m_coreTx;
             _status=uint(m_data.m_status);
@@ -232,11 +232,11 @@ contract Account is AccountInterface{
             _ownerAmount=m_data.m_ownerFind.length;
             _tx_threshold=m_data.m_Tx_threshold;
             _CA=m_data.m_CA;
-            _owner=m_data.m_ownerFind[0];
-            //uint[] memory t_weight=new uint[5];
-            //for(uint i=0;i<_ownerAmount;i++){
-            //    t_weight.push(uint(m_data.m_owners[_owners[i]]));
-            _weight=m_data.m_owners[_owner];
+            _owner=m_data.m_ownerFind;
+            uint[] memory t_weight=new uint[](_ownerAmount);
+            for(uint i=0;i<_ownerAmount;i++)
+                t_weight[i]=uint(m_data.m_owners[m_data.m_ownerFind[i]]);
+            _weight=t_weight;
             return;
     }
 

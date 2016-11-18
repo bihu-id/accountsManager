@@ -271,7 +271,7 @@ contract XindeInterface {
     /// @param _start ;                                                 从_start开始
     /// @param _limit ;                                                 总计获得多少个
     /// @param _type ;                                                  1:账户操作,2:合约本身重置KEY操作
-    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [])
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint []);
 
     /// @notice get summary of this contract;                           获得Xinde合约的KEYS地址
     /// @return 16 addresses of control this contract as address[];     A1~A8,A1~A8_confirm的地址
