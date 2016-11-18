@@ -1,25 +1,25 @@
 contract TestInterface{
 
-    enum role{
 
-        reSetRole,
-        reSetRoleC
+    uint a;
+    uint b;
+    mapping (uint=>uint ) m;
+    mapping (uint=>uint ) m1;
+    uint [] x;
 
-    }
-    address a;
-    address b;
-    function set(address _a,role _role);
-    function get()returns (address,address);
+    uint l;
+
 }
 contract Test is TestInterface{
 
-    function set(address _a,role _role){
-        if(_role==role.reSetRole)
-            a=_a;
-        else
-            b=_a;
+    function get()constant returns(uint){
+        return l;
     }
-    function get()returns (address,address){
-        return (a,b);
+    function set(uint _n,uint _value){
+        m[++l]=_value;
+        m1[l]=_value;
+    }
+    function getm(uint _n)constant returns(uint){
+        return m1[_n];
     }
 }

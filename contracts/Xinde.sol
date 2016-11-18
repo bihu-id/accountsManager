@@ -112,7 +112,7 @@ contract XindeInterface {
 
     }
 
-    sturct resetMeOperation{
+    struct ResetMeOperation{
 
         role                m_role;
         address             m_key;
@@ -130,19 +130,20 @@ contract XindeInterface {
     // recode all waiting comfirm operation amounts.
     uint m_waitComfirmAmounts;
     // all wait comfirms operations
-    uint[] m_waitComfirms;
+    mapping(uint=>uint) m_waitComfirms;
 
 
     // recode all resetMeoperations
     uint m_operationAmounts_resetMe;
+
     //recode all resetMe operations
-    mapping(uint=>resetMeOperation) m_operations_resetMe;
+    mapping(uint=>ResetMeOperation) m_operations_resetMe;
 
     // recode all waiting comfirm resetMe operation amounts.
     uint m_waitComfirmAmounts_resetMe;
 
-    // all wait comfirms resetMe operations
-    uint[] m_waitComfirms_resetMe;
+    // all wait comfirms resetMe operations No.
+    mapping(uint=>uint) m_waitComfirms_resetMe;
 
     AccountFun m_accountFun;
 
@@ -246,7 +247,8 @@ contract XindeInterface {
     event SetIdLevel (address _account,uint level);
     event Freeze(address _account);
     event Unfreeze(address _account);
-    event ResetMe(address _keyAddress,role _role);
+    event ResetMe(uint _no,address _keyAddress,role _role);
+    event ResetMeC(uint _no,address _keyAddress,role _role);
     event ConfirmOperation(uint _no);
 
     event Scall(bool);
@@ -344,10 +346,14 @@ contract Xinde is XindeInterface{
         if (msg.sender!=m_keys[uint(role.coreRole)]) throw;
         if(uint(_role)>=uint(role.end)) throw;
 
-        m_operations_resetMe[++m_operationAmount_resetMe]=resetMeOperation(_role,_keyAddress,OperationStatus.waitComfirm);
+        //map  m_operations_resetMe start from 1
+        m_operationAmounts_resetMe++;
+        m_operations_resetMe[m_operationAmounts_resetMe]=ResetMeOperation(_role,_keyAddress,OperationStatus.waitComfirm);
+
+        //map  m_waitComfirms_resetMe start from 1
         m_waitComfirmAmounts_resetMe++;
-        m_waitComfirms_resetMe[m_waitComfirms_resetMe.length+1]=m_waitComfirmAmounts_resetMe;
-        ResetMe(_keyAddress, _role);
+        m_waitComfirms_resetMe[m_waitComfirmAmounts_resetMe]=m_operationAmounts_resetMe;
+        ResetMe(m_waitComfirms_resetMe[m_waitComfirmAmounts_resetMe],_keyAddress,_role);
     }
 
     function resetMeC(address _keyAddress,role _role,uint _no){
@@ -358,8 +364,9 @@ contract Xinde is XindeInterface{
         if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm)throw;
 
         m_keys[uint(_role)]=_keyAddress;
+        m_operations_resetMe[_no].m_status=OperationStatus.comfirm;
         del2(_no);
-        ResetMe(_keyAddress, _role);
+        ResetMeC(_no,_keyAddress,_role);
 
     }
 
@@ -413,7 +420,7 @@ contract Xinde is XindeInterface{
     function addOperation(address _account,OperationType _type,uint _accountFun,uint[] _data)internal{
 
         m_operations[++m_operationAmounts]=Operation(_account,_type,_accountFun,_data,OperationStatus.waitComfirm);
-        m_waitComfirms[m_waitComfirms.length+1]=m_operationAmounts;
+        m_waitComfirms[m_operationAmounts]=m_operationAmounts;
 
     }
 
@@ -465,6 +472,39 @@ contract Xinde is XindeInterface{
     function getOperationAmounts_resetMe()constant returns(uint _totalAmounts,uint _waitAmounts){
 
         return  (m_operationAmounts_resetMe,m_waitComfirmAmounts_resetMe);
+
+    }
+
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint []){
+
+        // get max 100 per request
+        uint t_end;
+        uint t_max;
+        uint t_limit=_limit;
+        if(_limit>20)
+            t_limit=20;
+        if (_type==1)
+            t_max=m_waitComfirmAmounts;
+        if(_type==2)
+            t_max=m_waitComfirmAmounts_resetMe;
+
+        if(_start+t_limit<t_max)
+            t_end=_start+t_limit;
+        else
+            t_end=t_max;
+
+        uint[] memory res=new uint[](t_max-_start);
+
+        // notice operation no start from 1 ,becasue  0 is default return when null
+        for(uint i=_start;i<t_end;i++){
+            if (_type==1)
+                res[i-_start]=m_waitComfirms[i];
+
+            if (_type==2)
+                res[i-_start]=m_waitComfirms_resetMe[i];
+        }
+
+        return res;
 
     }
 

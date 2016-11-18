@@ -47,7 +47,7 @@ contract LogicPorxy{
     // do not change the function name and parameter ,because the sig of this function was hard wirte in Data contract,
     function get(uint _fun)returns(uint,uint,uint){
 
-        GetFun(_fun,address(m_funs[_fun].m_logic),m_funs[_fun].m_resSize,m_funs[_fun].m_gasNeed);
+        //GetFun(_fun,address(m_funs[_fun].m_logic),m_funs[_fun].m_resSize,m_funs[_fun].m_gasNeed);
         return (m_funs[_fun].m_logic,m_funs[_fun].m_resSize,m_funs[_fun].m_gasNeed);
 
     }

@@ -11,8 +11,34 @@ contract('deployData', function(accounts) {
     var accountManagerlogic;
     var accountManagerdata;*/
     var accountManager;
-
+/*
+ 02a6e12f ResetMeReject(address,uint256)
+ 6db1e2f0 comfirm(address,uint256)
+ 8d1fdf2f freeze(address)
+ 202e3924 getOperation(uint256)
+ edc3ed39 getOperationAmounts()
+ 0a2fc8b2 getOperationAmounts_resetMe()
+ 084c32fa getOperation_resetMe(uint256)
+ 6288a66c getRole(uint8)
+ ee20c380 getWaitOperationNos(uint256,uint256,uint256)
+ e1c7392a init()
+ f8e4feba reSet(address,address[],uint32[],uint32)
+ a0ff66ba reject(address,uint256)
+ 3c4421c1 resetMe(address,uint8)
+ 49c00854 resetMeC(address,uint8,uint256)
+ 6be2f0e6 revokeCA(address)
+ 9f394af0 setCA(address,address)
+ 0f6621fd setIdLevel(address,uint256)
+ b16a867c summary()
+ 45c8b1a6 unfreeze(address)
+ */
     var XindeFuns=[
+        {
+            name : 'ResetMeReject',
+            sig : 0x02a6e12f,
+            resSize : 32,
+            gas : 300000
+        },
         {
             name : 'comfirm',
             sig : 0x6db1e2f0,
@@ -34,6 +60,24 @@ contract('deployData', function(accounts) {
         {
             name : 'getOperationAmounts',
             sig : 0xedc3ed39,
+            resSize : 64,
+            gas : 300000
+        },
+        {
+            name : 'getWaitOperationNos',
+            sig : 0xee20c380,
+            resSize : 32*30,
+            gas : 600000
+        },
+        {
+            name : 'getOperation_resetMe',
+            sig : 0x084c32fa,
+            resSize : 32*20,
+            gas : 300000
+        },
+        {
+            name : 'getOperationAmounts_resetMe',
+            sig : 0x0a2fc8b2,
             resSize : 64,
             gas : 300000
         },
@@ -64,7 +108,13 @@ contract('deployData', function(accounts) {
         {
             name : 'resetMe',
             sig : 0x3c4421c1,
-            resSize : 32,
+            resSize : 32*2,
+            gas : 600000
+        },
+        {
+            name : 'resetMeC',
+            sig : 0x49c00854,
+            resSize : 32*3,
             gas : 300000
         },
         {
@@ -228,18 +278,18 @@ contract('deployData', function(accounts) {
     })
 
     it ("console",function(){
-        console.log('var xindeporxy='+'"'+xindeporxy+'"')
-        console.log('var xindelogic='+'"'+xindelogic+'"')
-        console.log('var xindedata='+'"'+xindedata+'"')
+        console.log('xindeporxy:'+'"'+xindeporxy+'",')
+        console.log('xindelogic:'+'"'+xindelogic+'",')
+        console.log('xindedata:'+'"'+xindedata+'",')
 
         /*console.log('var accountManagerporxy='+'"'+accountManagerporxy+'"')
         console.log('var accountManagerlogic='+'"'+accountManagerlogic+'"')
         console.log('var accountManagerdata='+'"'+accountManagerdata+'"')*/
 
-        console.log('var accountManager='+'"'+accountManager+'"')
+        console.log('accountManager:'+'"'+accountManager+'",')
 
-        console.log('var accountlogic='+'"'+accountlogic+'"')
-        console.log('var accountporxy='+'"'+accountporxy+'"')
+        console.log('accountlogic:'+'"'+accountlogic+'",')
+        console.log('accountporxy:'+'"'+accountporxy+'"')
     })
 
 
