@@ -262,10 +262,10 @@ contract XindeInterface {
     /// @return detail of operation as array type of structure Operation
     /// 返回操作详情:
     /// res[0]:编号
-    /// res[1]:类型
-    /// res[2]:新地址
-    /// res[3]:状态
-    function getOperation(uint _no)constant returns(uint[] );
+    /// res[1]:操作地址
+    /// res[2]:类型
+    /// res[3]:数据
+    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,uint[] _data);
 
     /// @notice get waiting operation Nos;                              获得所有的等待批准的操作的标号
     /// @param _start ;                                                 从_start开始
@@ -299,7 +299,7 @@ contract Xinde is XindeInterface{
 
         m_accountFun.freeze         =0x62a5af3b;
         m_accountFun.revokeCA       =0xe698fc31;
-        m_accountFun.reSet          =0xd26cb679;
+        m_accountFun.reSet          =0x00afc90b;
         m_accountFun.setCA          =0x2cab3b98;
         m_accountFun.setIdLevel     =0x777af46f;
         m_accountFun.setPass        =0xf86cd7ad;
@@ -315,15 +315,16 @@ contract Xinde is XindeInterface{
 
     function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold){
 
-        if (msg.sender!=m_keys[uint(role.reSetRole)]) throw;
-        if (_owners.length!=_weight.length) throw;
-            uint[] memory t_data;
+        //if (msg.sender!=m_keys[uint(role.reSetRole)]) throw;
+        //if (_owners.length!=_weight.length) throw;
+        // the follow code basely equil using code  btyes m_data=msg.data
+            uint[] memory t_data=new uint[](2+2*_owners.length);
             t_data[0]=_Threshold;
             t_data[1]=_owners.length;
-            for(uint i=0;i<_owners.length;i++)
+            for(uint i=0;i<_owners.length;i++){
                 t_data[i+3]=uint(_owners[i]);
-            for(i=0;i<_owners.length;i++)
                 t_data[i+3+_owners.length]=_weight[i];
+            }
 
         addOperation(_account,OperationType.reSetType,m_accountFun.reSet,t_data);
 
@@ -333,7 +334,7 @@ contract Xinde is XindeInterface{
 
         if (_level>=100)throw;
         if (msg.sender!=m_keys[uint(role.realNameRole)]) throw;
-        uint[] memory t_data;
+        uint[] memory t_data=new uint[](1);
         t_data[0]=_level;
 
         addOperation(_account,OperationType.setIdLevelType,m_accountFun.setIdLevel,t_data);
@@ -343,7 +344,7 @@ contract Xinde is XindeInterface{
     function setCA (address _account,address _CA){
 
         if (msg.sender!=m_keys[uint(role.CARole)]) throw;
-        uint[] memory t_data;
+        uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_CA);
 
         addOperation(_account,OperationType.setCAType,m_accountFun.setCA,t_data);
@@ -353,7 +354,7 @@ contract Xinde is XindeInterface{
     function revokeCA (address _account){
 
         if (msg.sender!=m_keys[uint(role.revokeRole)]) throw;
-        uint[] memory t_data;
+        uint[] memory t_data=new uint[](1);
         addOperation(_account,OperationType.revokeCAType,m_accountFun.revokeCA,t_data);
 
     }
@@ -361,7 +362,7 @@ contract Xinde is XindeInterface{
     function freeze(address _account){
 
         if (msg.sender!=m_keys[uint(role.freezeRole)]) throw;
-        uint[] memory t_data;
+        uint[] memory t_data=new uint[](1);
         addOperation(_account,OperationType.freezeType,m_accountFun.freeze,t_data);
         Freeze(_account);
 
@@ -370,7 +371,7 @@ contract Xinde is XindeInterface{
     function unfreeze(address _account){
 
         if (msg.sender!=m_keys[uint(role.unfreezeRole)]) throw;
-        uint[] memory t_data;
+        uint[] memory t_data=new uint[](1);
         addOperation(_account,OperationType.unfreezeType,m_accountFun.unfreeze,t_data);
         Unfreeze(_account);
 
@@ -455,7 +456,7 @@ contract Xinde is XindeInterface{
     function addOperation(address _account,OperationType _type,uint _accountFun,uint[] _data)internal{
 
         m_operations[++m_operationAmounts]=Operation(_account,_type,_accountFun,_data,OperationStatus.waitComfirm);
-        m_waitComfirms[m_operationAmounts]=m_operationAmounts;
+        m_waitComfirms[++m_waitComfirmAmounts]=m_operationAmounts;
 
     }
 
@@ -544,20 +545,20 @@ contract Xinde is XindeInterface{
 
     }
 
-    function getOperation(uint _no)constant returns(uint[]){
+    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,uint[] _data){
 
         //zero Operation
         //Operation nullOperation;
         Operation t_operation=m_operations[_no];
         if (uint(t_operation.m_account)==0) throw;
-        uint[] memory t_res;
-        t_res[0]=_no;
-        t_res[1]=uint(t_operation.m_account);
-        t_res[2]=uint(t_operation.m_type);
 
-        for(uint i;i<t_operation.m_data.length;i++)
-            t_res[4+i]=t_operation.m_data[i];
-        return t_res;
+        r_no=_no;
+        _account=t_operation.m_account;
+        _type=uint(t_operation.m_type);
+
+        _data=t_operation.m_data;
+
+        return ;
 
     }
 

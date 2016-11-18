@@ -58,7 +58,7 @@ contract AccountInterface{
     mapping(uint=>bool) m_signsPass;
 
 
-    function resetOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold);
+    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight);
 
     function getApprove(address[] _owners)returns(bool);
 
@@ -153,7 +153,7 @@ contract Account is AccountInterface{
             return true;
     }
 
-    function resetOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold) onlyCore{
+    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight) onlyCore{
         if (!checkOwner(_owners,_weight,_Tx_threshold)) throw;
         uint t_totalWeight=0;
         for(uint32 i=0;i<_owners.length;i++){

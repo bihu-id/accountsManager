@@ -8,11 +8,19 @@ contract(' test', function(accounts) {
     })
     it("set",function(){
         var t_test =Test.at(test);
-        return t_test.set(0,1,{from:accounts[0]}).then(function(tx){
-            console.log(web3.eth.getTransactionReceipt(tx));
+        return t_test.set([1,2,3,4,5],{from:accounts[0]}).then(function(tx){
+            //console.log(web3.eth.getTransactionReceipt(tx));
         })
     })
 
+    it("get",function(){
+        var t_test =Test.at(test);
+        return t_test.get.call().then(function(res){
+            console.log(res.toString(10))
+        })
+    })
+
+/*
     it("set",function(){
         var t_test =Test.at(test);
         return t_test.set(2,2,{from:accounts[0]}).then(function(tx){
@@ -45,6 +53,6 @@ contract(' test', function(accounts) {
         return t_test.getm.call(2).then(function(res){
             console.log(res.toString(10))
         })
-    })
+    })*/
 
 })

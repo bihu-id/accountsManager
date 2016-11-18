@@ -163,7 +163,7 @@ contract('deployData', function(accounts) {
         },
         {
             name: 'getOwner',
-            sig: 0xc41a360a,
+            sig: 0x00afc90b,
             resSize: 32,
             gas: 300000
         },
@@ -216,7 +216,7 @@ contract('deployData', function(accounts) {
      ba236dcd getApprove(address[])
      c41a360a getOwner(uint256)
      448ac35d init(address,uint32,uint32,address,address)
-     d26cb679 resetOwner(address[],uint32[],uint32)
+     00afc90b resetOwner(uint32,address[],uint32[])
      e698fc31 revokeCA()
      2cab3b98 setCA(address)
      777af46f setIdLevel(uint32)
