@@ -14,7 +14,31 @@ contract('check function', function(accounts) {
     var accountManager=address.accountManager
     var accountlogic=address.accountlogic
     var accountporxy=address.accountporxy
+    
+    it("get resetMe operation ", function(){
 
+        var xinde=Xinde.at(xindedata);
+        xinde.getOperationAmounts_resetMe.call().then(function(res){
+            console.log("wait resetMe amounts :",res.toString(10))
+            amount=res[1];
+        })
+    })
+
+    it ("get all waiting operation resetMe",function() {
+        var xinde = Xinde.at(xindedata);
+
+        return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
+            console.log( "wait comfirm operations :",res.toString(10))
+            res.forEach(function(w){
+                return xinde.getOperation_resetMe(w).then(function (res) {
+                    console.log( "operation detail:")
+                    console.log("No","role","           new address               ","status")
+                    console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
+
+                })
+            })
+        })
+    })
     it("xinde summary", function(){
 
         var xinde=Xinde.at(xindedata);

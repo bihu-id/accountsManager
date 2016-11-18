@@ -35,18 +35,6 @@ contract('check function', function(accounts) {
     it ("set reset key ",function() {
 
         var xinde = Xinde.at(xindedata);
-        /*var keys=[]
-        for (var i=0;i<14;i++)
-            keys[i]={
-                key:i*0x100+1,
-                no:i
-            }
-        return keys.forEach(function(key){
-            //console.log(key.key.toString(16),key.no.toString(10))
-            return xinde.resetMe(key.key, key.no, {from: accounts[0], gas: 2000000}).then(function (tx) {
-                //console.log(web3.eth.getTransactionReceipt(tx));
-            })
-        });*/
         return xinde.resetMe(accounts[1], 0, {from: accounts[0], gas: 2000000}).then(function (tx) {
             //console.log(web3.eth.getTransactionReceipt(tx));
             console.log("reset key 0 :",accounts[1]);
@@ -56,12 +44,28 @@ contract('check function', function(accounts) {
 
         var xinde = Xinde.at(xindedata);
 
-        return xinde.resetMe(accounts[2], 2, {from: accounts[0], gas: 2000000}).then(function (tx) {
-            console.log("reset key 2 :",accounts[2]);
+        return xinde.resetMe(accounts[2], 1, {from: accounts[0], gas: 2000000}).then(function (tx) {
+            console.log("reset key 1 :",accounts[2]);
+        })
+    })
+    it ("set reset key ",function() {
+
+        var xinde = Xinde.at(xindedata);
+
+        return xinde.resetMe(accounts[3], 2, {from: accounts[0], gas: 2000000}).then(function (tx) {
+            console.log("reset key 2 :",accounts[3]);
+        })
+    })
+    it ("set reset key ",function() {
+
+        var xinde = Xinde.at(xindedata);
+
+        return xinde.resetMe(accounts[4], 3, {from: accounts[0], gas: 2000000}).then(function (tx) {
+            console.log("reset key 3 :",accounts[4]);
         })
     })
 
-    it("get resetMe operation ", function(){
+    it("get resetMe operation amounts", function(){
 
         var xinde=Xinde.at(xindedata);
         xinde.getOperationAmounts_resetMe.call().then(function(res){
@@ -73,12 +77,12 @@ contract('check function', function(accounts) {
     it ("get all waiting operation resetMe",function() {
         var xinde = Xinde.at(xindedata);
 
-        return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
+        return xinde.getWaitOperationNos(1,4 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
+            console.log( "operation detail:")
+            console.log("No","role","           new address               ","status")
             res.forEach(function(w){
                 return xinde.getOperation_resetMe(w).then(function (res) {
-                    console.log( "operation detail:")
-                    console.log("No","role","           new address               ","status")
                     console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
 
                 })
@@ -86,30 +90,58 @@ contract('check function', function(accounts) {
         })
     })
 
-    /*it ("get reset me operation detail ",function() {
+    it ("comfirm resetMe no 1",function() {
         var xinde = Xinde.at(xindedata);
-        waiting.forEach(function(w){
-            return xinde.getOperation_resetMe(w).then(function (res) {
-                console.log( "operation detail:")
-                console.log("No:",res[0].toString(10),"set which key :key"+res[1].toString(10),"new address:",res[2].toString(16) ,"status:" ,res[3].toString(10))
-
+        return xinde.getOperation_resetMe(1).then(function (res) {
+            console.log("try comfirm next operation :")
+            console.log("No", "role", "           new address               ", "status")
+            console.log(res[0].toString(10), res[1].toString(10), res[2].toString(16), res[3].toString(10))
+            return xinde.resetMeC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
             })
         })
+    })
 
-    })*/
+    it ("get all waiting operation resetMe",function() {
+        var xinde = Xinde.at(xindedata);
+
+        return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
+            console.log( "wait comfirm operations :",res.toString(10))
+            console.log( "operation detail:")
+            console.log("No","role","           new address               ","status")
+            res.forEach(function(w){
+                return xinde.getOperation_resetMe(w).then(function (res) {
+                    console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
+
+                })
+            })
+        })
+    })
+
 
     it ("comfirm resetMe",function() {
         var xinde = Xinde.at(xindedata);
 
-        return xinde.getOperation_resetMe(2).then(function (res) {
-            console.log("try comfirm next operation :")
-            console.log("No:",res[0].toString(10),"set which key :key"+res[1].toString(10),"new address:",res[2].toString(16) ,"status:" ,res[3].toString(10))
-            return xinde.resetMeC(res[2],res[1],res[0],{from:accounts[0]}).then(function (tx) {
+        return xinde.getWaitOperationNos(1,8 ,2).then(function (res) {
+            console.log( "wait comfirm operations :",res.toString(10))
+            res.forEach(function(r){
+                return xinde.getOperation_resetMe(r).then(function (res) {
+                    //console.log( "operation detail:")
+                    //console.log("No","role","           new address               ","status")
+                    //console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
+                    console.log("try comfirm next operation :")
 
+                    if(res[3]==0) {
+                        console.log("No", "role", "           new address               ", "status")
+                        console.log(res[0].toString(10), res[1].toString(10), res[2].toString(16), res[3].toString(10))
+                        return xinde.resetMeC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
+
+                        })
+                    }
+
+
+                })
             })
-
         })
-
     })
 
     it("get resetMe operation ", function(){

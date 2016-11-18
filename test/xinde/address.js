@@ -1,10 +1,10 @@
 var Address={
-    xindeporxy:"0x5506515ce8a055ca447e86e13772a9103a2ed415",
-    xindelogic:"0x994b997032a90d93fd5dd5fc21cda117a05ac24e",
-    xindedata:"0xf28215898cc98232816f35b4a36643a18faa2feb",
-    accountManager:"0xe7a89556488f2036eadc44dd37862712af3dc5eb",
-    accountlogic:"0xe32438c80c4affba6329c897350379b81fc7c44f",
-    accountporxy:"0x44f972329415eb92b799f1eb5138b95804b77a39"
+    xindeporxy:"0x19fd486f2fc35b94ae69713767042a6be84e85fb",
+    xindelogic:"0x6452f0062f0e69364bc2331997611bd1e0b5ce23",
+    xindedata:"0xc06df393ebc0e6c5ba5c4624ecfe242911d7f156",
+    accountManager:"0x9942333a23d1fd94391ce211c1e04d38c5f1f3f3",
+    accountlogic:"0x3ed923c65411d604eb8c7e22084513eace7b02b8",
+    accountporxy:"0x8a579e95b6894f9aca4931861af2b20b4a2e4778"
 
 
 

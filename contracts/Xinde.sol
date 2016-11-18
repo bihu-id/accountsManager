@@ -389,7 +389,7 @@ contract Xinde is XindeInterface{
     function del(uint _no)internal{
 
         bool t_start=false;
-        for (uint i=0;i<m_waitComfirmAmounts;i++){
+        for (uint i=1;i<=m_waitComfirmAmounts;i++){
             if(m_waitComfirms[i]==_no){
                 t_start=true;
                 i++;
@@ -404,7 +404,7 @@ contract Xinde is XindeInterface{
     function del2(uint _no)internal{
 
         bool t_start=false;
-        for (uint i=0;i<m_waitComfirmAmounts_resetMe;i++){
+        for (uint i=1;i<=m_waitComfirmAmounts_resetMe;i++){
             if(m_waitComfirms_resetMe[i]==_no){
                 t_start=true;
                 i++;
@@ -480,6 +480,7 @@ contract Xinde is XindeInterface{
         // get max 100 per request
         uint t_end;
         uint t_max;
+
         uint t_limit=_limit;
         if(_limit>20)
             t_limit=20;
@@ -488,15 +489,15 @@ contract Xinde is XindeInterface{
         if(_type==2)
             t_max=m_waitComfirmAmounts_resetMe;
 
-        if(_start+t_limit<t_max)
-            t_end=_start+t_limit;
+        if((_start+t_limit-1)<=t_max)
+            t_end=_start+t_limit-1;
         else
             t_end=t_max;
 
-        uint[] memory res=new uint[](t_max-_start);
+        uint[] memory res=new uint[](t_end-_start+1);
 
         // notice operation no start from 1 ,becasue  0 is default return when null
-        for(uint i=_start;i<t_end;i++){
+        for(uint i=_start;i<=t_end;i++){
             if (_type==1)
                 res[i-_start]=m_waitComfirms[i];
 
