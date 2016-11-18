@@ -7,61 +7,83 @@ contract XindeInterface {
     function notUse(LogicPorxy _porxy)internal{porxy=_porxy;}
     // above not in use
     //role type enum
+    //以上不使用
 
     enum role{
 
+        //重置账户的拥护者的KEY和批准KEY的Role,分别对应A1,A1_confirm
         reSetRole,
         reSetRoleC,
 
+        //实名认证标签KEY和批准KEY的Role,分别对应A2,A2_confirm
         realNameRole,
         realNameRoleC,
 
+        //CA认证标签KEY和批准KEY的Role,分别对应A3,A3_confirm
         CARole,
         CARoleC,
 
+        //撤销CA认证标签KEY和批准KEY的Role,分别对应A4,A4_confirm
         revokeRole,
         revokeRoleC,
 
+        //冻结账号KEY和批准KEY的Role,分别对应A5,A5_confirm
         freezeRole,
         freezeRoleC,
 
+        //解冻账号KEY和批准KEY的Role,分别对应A6,A6_confirm
         unfreezeRole,
         unfreezeRoleC,
 
+        //强制转移资产KEY和批准KEY的Role,分别对应A7,A7_confirm
         forceTransferRole,
         forceTransferRoleC,
 
+        //XinDe合约控制KEY和批准KEY的Role,分别对应A8,A8_confirm
         coreRole,
         coreRoleC,
 
+        //标示END
         end
 
     }
 
+    //账户操作类型
     enum OperationType{
 
+
+        //重置账户拥有者
         reSetType,
 
+        //设置账户实名等级
         setIdLevelType,
 
+        //设置账户CA标签
         setCAType,
 
+        //取消账户CA
         revokeCAType,
 
+        //冻结账户
         freezeType,
 
+        //解冻账户
         unfreezeType,
 
-        forceTransferType,
-
-        coreType
+        //强制转移
+        forceTransferType
 
     }
 
     enum OperationStatus{
 
+        //等待批准
         waitComfirm,
+
+        //已经批准
         comfirm,
+
+        //已经拒绝
         reject
 
     }
@@ -176,70 +198,83 @@ contract XindeInterface {
     address coreAdd;
     address coreAddC;*/
 
-    /// @notice init xinde keys and account function sig
+    /// @notice init xinde keys and account function sig;初始化合约,只会第一调用时生效
     function init();
 
-    /// @notice reset owner of account
-    /// @param _account account contract address
-    /// @param _owners owners of this account
-    /// @param _weight weight per owner
-    /// @param _Threshold the tx threshold
+    /// @notice reset owner of account;             重置用户账户拥有者
+    /// @param _account account contract address;   操作的用户合约账号地址
+    /// @param _owners owners of this account;      新的用户账号拥有者
+    /// @param _weight weight per owner;            新的用户账户拥有的权重,和_owners一一对应
+    /// @param _Threshold the tx threshold;         用户交易生效阀值
     function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold);
 
-    /// @notice set account real name level
-    /// @param _account account contract address
-    /// @param _level real name level
+    /// @notice set account real name level;        设置用户实名等级,数值小于100
+    /// @param _account account contract address    操作的用户合约账号地址
+    /// @param _level real name level               用户实名等级
     function setIdLevel (address _account,uint _level);
 
-    /// @notice set account CA address
-    /// @param _account account contract address
-    /// @param _CA CA address
+    /// @notice set account CA address;             设置用户CA
+    /// @param _account account contract address;   操作的用户合约账号地址
+    /// @param _CA CA address;                      用户CA地址
     function setCA (address _account,address _CA);
 
-    /// @notice revoke account CA lable
-    /// @param _account account contract address
+    /// @notice revoke account CA lable;            撤销用户CA
+    /// @param _account account contract address;   操作的用户合约账号地址
     function revokeCA (address _account);
 
-    /// @notice freeze account
-    /// @param _account account contract address
+    /// @notice freeze account;                     冻结账号
+    /// @param _account account contract address;   操作的用户合约账号地址
     function freeze(address _account);
 
-    /// @notice unfreeze account
-    /// @param _account account contract address
+    /// @notice unfreeze account;                   解冻账号
+    /// @param _account account contract address;   操作的用户合约账号地址
     function unfreeze(address _account);
 
-    /// @notice reset all address by core of this contract
-    /// @param _keyAddress the new address of roler
-    /// @param _role what roller to been reset
+    /// @notice reset all address by core of this contract; 重置Xinde合约的KEY
+    /// @param _keyAddress the new address of roler;        新的地址
+    /// @param _role what roller to been reset;             重置哪个KEY A1~A8,A1_confirm~A8_confirm
     function resetMe(address _keyAddress,role _role);
 
-    /// @notice get the role address
-    /// @param _role type
-    /// @return address of _role key
+    /// @notice get the role address;                       获得地址
+    /// @param _role type;                                  哪个KEY A1~A8,A1_confirm~A8_confirm
+    /// @return address of _role key                        _role的地址
     function getRole(role _role)constant returns(address);
 
-    /// @notice comfirm operation
-    /// @param _account account contract address operation carry on
-    /// @param _no operation _no
+    /// @notice comfirm operation;                                      批准一个操作
+    /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
+    /// @param _no operation _no;                                       操作编号
     function comfirm(address _account,uint _no);
 
-    /// @notice reject operation
-    /// @param _account account contract address operation carry on
-    /// @param _no  operation no
+    /// @notice reject operation;                                       拒绝一个操作
+    /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
+    /// @param _no  operation no;                                       操作编号
     function reject(address _account,uint _no);
 
-    /// @notice get opertaion amount include total and wait
-    /// @return _totalAmounts total operation amounts include wait,comfirm and reject
+    /// @notice get opertaion amount include total and wait;            获得等待批准的操作总数
+    /// @return _totalAmounts total operation amounts include wait,comfirm and reject;
+    /// 所有操作总数
     /// @return _waitAmounts wait comfirm operation amount
+    /// 等待批准的操作的总数
     function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts);
 
-    /// @notice get operation detail
-    /// @param _no operation no
+    /// @notice get operation detail;                                   获得操作的详情
+    /// @param _no operation no;                                        操作编号
     /// @return detail of operation as array type of structure Operation
+    /// 返回操作详情:
+    /// res[0]:编号
+    /// res[1]:类型
+    /// res[2]:新地址
+    /// res[3]:状态
     function getOperation(uint _no)constant returns(uint[] );
 
-    /// @notice get summary of this contract
-    /// @return 16 addresses of control this contract as address[]
+    /// @notice get waiting operation Nos;                              获得所有的等待批准的操作的标号
+    /// @param _start ;                                                 从_start开始
+    /// @param _limit ;                                                 总计获得多少个
+    /// @param _type ;                                                  1:账户操作,2:合约本身重置KEY操作
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [])
+
+    /// @notice get summary of this contract;                           获得Xinde合约的KEYS地址
+    /// @return 16 addresses of control this contract as address[];     A1~A8,A1~A8_confirm的地址
     function summary()constant returns(address[]);
 
     event Init(address,address);
