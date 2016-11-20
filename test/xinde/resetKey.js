@@ -35,12 +35,13 @@ contract('check function', function(accounts) {
     it ("set reset key ",function() {
 
         var xinde = Xinde.at(xindedata);
-        return xinde.resetMe(accounts[1], 0, {from: accounts[0], gas: 2000000}).then(function (tx) {
-            //console.log(web3.eth.getTransactionReceipt(tx));
-            console.log("reset key 0 :",accounts[1]);
-        })
+        for(var i=0;i<14;i++)
+            xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
+                //console.log(web3.eth.getTransactionReceipt(tx));
+                console.log("reset key %d:%s",i,accounts[i]);
+            })
     })
-    it ("set reset key ",function() {
+    /*it ("set reset key ",function() {
 
         var xinde = Xinde.at(xindedata);
 
@@ -63,9 +64,9 @@ contract('check function', function(accounts) {
         return xinde.resetMe(accounts[4], 3, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 3 :",accounts[4]);
         })
-    })
+    })*/
 
-    it("get resetMe operation amounts", function(){
+    /*it("get resetMe operation amounts", function(){
 
         var xinde=Xinde.at(xindedata);
         xinde.getOperationAmounts_resetMe.call().then(function(res){
@@ -178,5 +179,5 @@ contract('check function', function(accounts) {
                 console.log("%s :%s ","key"+i,res[i].toString(16))
 
         })
-    });
+    });*/
 })

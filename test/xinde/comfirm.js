@@ -9,7 +9,7 @@ contract('check function', function(accounts) {
     var accountporxy = address.accountporxy
     it("get all waiting operation resetMe", function () {
         var xinde = Xinde.at(xindedata);
-        return xinde.getWaitOperationNos(1, 8, 2).then(function (res) {
+        return xinde.getWaitOperationNos(1, 14, 2).then(function (res) {
             console.log("wait comfirm operations :", res.toString(10))
             console.log("operation detail:")
             console.log("No", "role", "           new address               ", "status")
@@ -25,7 +25,7 @@ contract('check function', function(accounts) {
     it ("comfirm resetMe",function() {
         var xinde = Xinde.at(xindedata);
 
-        return xinde.getWaitOperationNos(1,8 ,2).then(function (res) {
+        return xinde.getWaitOperationNos(1,14 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
             res.forEach(function(r){
                 return xinde.getOperation_resetMe(r).then(function (res) {

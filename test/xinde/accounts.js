@@ -1,9 +1,8 @@
 contract('accounts', function(accounts) {
 
+    console.log(accounts)
     it("accounts:", function () {
-        accounts.forEach(function(account){
-            console.log(account);
-        })
+        console.log(accounts)
     })
 })
 /*0xdcf723011cc7314503f35fb9373064654c96e407

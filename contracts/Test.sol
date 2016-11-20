@@ -1,30 +1,18 @@
 contract TestInterface{
 
 
-    uint a;
-    uint b;
-    mapping (uint=>uint ) m;
-    mapping (uint=>uint ) m1;
-    uint [] x;
-
-    uint l;
-
+    uint[] a;
+    event Log(uint []);
 }
 contract Test is TestInterface{
 
     function get()constant returns(uint[]){
-        return x;
+        Log(a);
+        return a;
     }
     function set(uint[] _n){
-        uint[] memory t_x=new uint[](_n.length);
-        for (uint i=0;i<_n.length;i++)
-            t_x[i]=_n[i]*10;
-        e(t_x);
+        //Log(a);
+        a=_n;
 
     }
-    function e(uint [] _x)internal {
-        x=_x;
-    }
-
-
 }

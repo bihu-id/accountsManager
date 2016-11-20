@@ -15,6 +15,9 @@ contract('reset owner of account', function(accounts) {
     var accountlogic = address.accountlogic
     var accountporxy = address.accountporxy
 
+
+
+
     it("reset owner of account ", function(){
         var accountmanager=AccountManager.at(accountManager)
             //console.log("accountManager.accountAmount()",res.toString());
@@ -28,18 +31,29 @@ contract('reset owner of account', function(accounts) {
                     var xinde=Xinde.at(xindedata)
                     return xinde.getRole(0).then(function(res){
                         console.log("use A1 key:",res.toString(16))
-                        return xinde.reSet(res1,[accounts[6]],[50],50,{from:res}).then(function(tx){
-                            console.log("reset account "+accountA.toString(16),"to :",accounts[6]);
-                    })
+                        return xinde.reSet(res1,[accounts[20]],[50],50,{from:res}).then(function(tx){
+                            console.log("reset account "+res1.toString(16),"to :",accounts[6]);
+                        })
 
                 });
 
         });
 
     });
+    it("get waiting operation ", function(){
+        var xinde=Xinde.at(xindedata)
 
-    it("reset owner of account ", function(){
+        console.log("operation detail:")
+        console.log("No", "account", "           data               ", "status")
+        return xinde.getWaitOperationNos(1,10,1).then(function(res){
+  
+            res.forEach(function (r) {
+                return xinde.getOperation(r).then(function (res) {
+                    console.log(res[0].toString(10), res[1].toString(16), res[2].toString(16), res[3].toString(10))
+                })
+            })
+        })
+    })
 
-    });
 
 })
