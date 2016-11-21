@@ -2,6 +2,13 @@ import "Erc20.sol";
 
 contract TokenInterface is Erc20 {
 
+     enum Status{
+
+        normal,
+        freeze
+
+     }
+
      struct Option{
 
             // operaton of this token must called by coreContract
@@ -33,12 +40,17 @@ contract TokenInterface is Erc20 {
             //hash of contract
             uint m_hash;
 
+
+            Status m_status;
+
     }
 
     Option m_option;
 
     mapping (address => uint256) m_balances;
     mapping (address => mapping (address => uint256)) m_allowed;
+
+    mapping (address=>bool) m_freezeLists;
 
     /// @notice Override send `_amount` tokens to `_to` from `_from`
     /// @param _from The address of the sender
@@ -59,7 +71,8 @@ contract TokenInterface is Erc20 {
         uint _registerTime,
         uint _closingTime,
         address _coreContract,
-        uint _hash
+        uint _hash,
+        Status _status
         );
 }
 
@@ -70,6 +83,9 @@ contract Token is TokenInterface {
     //check if the operation is called from core
     modifier ifCore() {if(msg.sender != m_option.m_core)throw; _;}
 
+    modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
+
+    modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
     //force transfer by core
     event ForceTransfer(address _from, address _to, uint _amount);
 
@@ -108,6 +124,7 @@ contract Token is TokenInterface {
             m_option.m_coreContract=_coreContract;
             m_option.m_registerTime=now;
             m_option.m_hash=_hash;
+            m_option.m_status=Status.normal;
 
             TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
         }
@@ -128,7 +145,7 @@ contract Token is TokenInterface {
 
     }
 
-    function transfer(address _to, uint256 _amount) notEnd returns (bool success) {
+    function transfer(address _to, uint256 _amount) notEnd notFreeze normal returns (bool success) {
 
         if (m_balances[msg.sender] >= _amount && _amount > 0) {
             m_balances[msg.sender] -= _amount;
@@ -151,7 +168,7 @@ contract Token is TokenInterface {
         }
     }
 
-function transferFrom(address _from, address _to, uint256 _amount) notEnd returns (bool success) {
+function transferFrom(address _from, address _to, uint256 _amount) notEnd notFreeze normal returns (bool success) {
 
         if (m_balances[_from] >= _amount
             && m_allowed[_from][msg.sender] >= _amount
@@ -166,12 +183,35 @@ function transferFrom(address _from, address _to, uint256 _amount) notEnd return
         }
     }
 
-    function approve(address _spender, uint256 _amount) notEnd returns (bool success) {
+    function approve(address _spender, uint256 _amount) notEnd notFreeze normal returns (bool success) {
         m_allowed[msg.sender][_spender] = _amount;
         Approval(msg.sender, _spender, _amount);
         return true;
     }
 
+    function freeze(address _account)ifCore{
+
+        m_freezeLists[_account]=true;
+
+    }
+
+    function unfreeze(address _account)ifCore{
+
+        m_freezeLists[_account]=false;
+
+    }
+
+    function freezeToken()ifCore{
+
+        m_option.m_status=Status.freeze;
+
+    }
+
+    function unfreezeToken()ifCore{
+
+        m_option.m_status=Status.normal;
+
+    }
 
     function surmmay()constant returns(
         address _issuer,
@@ -184,7 +224,8 @@ function transferFrom(address _from, address _to, uint256 _amount) notEnd return
         uint _registerTime,
         uint  _closingTime,
         address _coreContract,
-        uint _hash
+        uint _hash,
+        Status _status
         ){
             _issuer=m_option.m_issuer;
             _symbol=m_option.m_symbol;
@@ -197,6 +238,7 @@ function transferFrom(address _from, address _to, uint256 _amount) notEnd return
             _closingTime=m_option.m_closingTime;
             _coreContract=m_option.m_coreContract;
             _hash=m_option.m_hash;
+            _status=m_option.m_status;
         return;
     }
 }

@@ -1,4 +1,4 @@
-import "Token.sol"
+import "Token.sol";
 contract TokenManagerInterface {
 
     struct TokenSurmmary{
@@ -85,7 +85,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function setOption(uint _MinTerm,address _coreContract,_limit)ifCore{
+    function setOption(uint _MinTerm,address _coreContract,uint _limit)ifCore{
 
         m_MinTerm=_MinTerm;
         m_coreContract=_coreContract;
@@ -117,7 +117,7 @@ contract TokenManager is TokenManagerInterface{
         uint[] memory res=new uint[](t_end-_start+1);
 
         for(uint i=_start;i<=t_end;i++)
-            res[i-_start]=ids[i];
+            res[i-_start]=m_ids[i];
 
         return res;
 
