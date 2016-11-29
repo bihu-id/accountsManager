@@ -1,12 +1,12 @@
 var Address={
     //cpp:
-    xindeporxy:"0x59fc73ca53f79b095ed4a09e2659462dc020f59e",
-    xindedata:"0x82bf28464d98302b9993f7cc42670201389b86b4",
-    accountManager:"0x1626b5e0e6dc3981d6ae350d573efd5046069a02",
-    accountporxy:"0x4208b4c1313b42347b49ddf818d13a45eddd5004",
+    xindeporxy:"0xd7e7f71779e33f9a4d51a37afe1aff6ccbd837da",
+    xindelogic:"0xa6a53245365646d40b5f949e0e3ef81a3b114fa0",
+    xindedata:"0xd5678778adccefa4dc70a35efeb4141ecde9c1ec",
+    accountManager:"0x8a20fc49a12e907bddcd33db5befa1204e479e93",
+    accountlogic:"0x57acb0e21e523a85613a31c2ed7743d5a66f1f22",
+    accountporxy:"0xd80e88fb7e3e56d5a89874090884505aec48c802"
 
-    xindelogic:"0x4eb075480c14ae7b54d628ae7350674dc57dd908",
-    accountlogic:"0x2c4250af6fc09fb59b01524a6ee41a22849033c3"
 
 
 

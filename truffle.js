@@ -15,3 +15,5 @@ module.exports = {
   },
   strict:true
 };
+//host: "localhost",
+//host: "139.196.234.239",
