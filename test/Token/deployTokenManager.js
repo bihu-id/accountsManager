@@ -7,8 +7,8 @@ contract('deploy token manager', function(accounts) {
              txm=instance.address;
              console.log(accounts[0])
              console.log(accounts[13])
-         return instance.setOption(accounts[13],accounts[1],3600,200,{from:accounts[0]}).then(function(tx){
-            //console.log(getTransactionReceipt(tx));
+         return instance.setOption(accounts[13],accounts[1],7200,200,{from:accounts[0]}).then(function(tx){
+            console.log(web3.eth.getTransactionReceipt(tx));
             })
          });
      });
@@ -23,18 +23,11 @@ contract('deploy token manager', function(accounts) {
     it("set token able  " ,function(){
         var instance =TokenManager.at(txm);
         //console.log(instance);
-        return instance.setTokenAble(accounts[1],true,{from:accounts[12]}).then(function(tx){
-            console.log(getTransactionReceipt(tx));
+        return instance.setTokenAble(accounts[1],true,{from:accounts[13]}).then(function(tx){
+            console.log(web3.eth.getTransactionReceipt(tx));
         })
     })
 
-    /*it("set token able  " ,function(){
-        var instance =TokenManager.at(txm);
-        //console.log(instance);
-        instance.setTokenAble(accounts[1],true,{from:accounts[13]}).then(function(tx){
-            console.log(web3.eth.getTransactionReceipt(tx));
-        })
-    })*/
 
     it("get  token able  " ,function(){
         var instance =TokenManager.at(txm);

@@ -12,9 +12,6 @@ contract TokenManagerInterface {
 
     }
 
-    // Min term of token before expire
-    uint m_MinTerm=3600;
-
     // core of token contracts, core of token contracts can force transfer balance
     address m_coreToken;
 
@@ -24,11 +21,14 @@ contract TokenManagerInterface {
     // xindi contract xindi contract can set tokenAble;
     address m_xindi;
 
-    //the account (contract address) can create token
-    mapping(address=>bool) m_tokenAble;
+    // Min term of token before expire
+    uint m_MinTerm=3600;
 
     // max return max limit when call getTokenIds()
     uint m_limit=1000;
+
+    //the account (contract address) can create token
+    mapping(address=>uint) m_tokenAble;
 
     //record relationship between id and tokens;
     mapping(uint=>TokenSurmmary) m_tokenSurmmarys;
@@ -53,8 +53,12 @@ contract TokenManagerInterface {
         uint  _closingTime,
         string _description,
         uint  _hash);
+    function setTokenAble(address _account,uint _addtional);
+    function getTokenAble(address _account)constant returns(address t_account, bool _have);
     function setOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit);
     function getTokenAddress(uint _id)constant returns(address);
+    function getTokenSurmmary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
+    function getTokenIds(uint _start,uint _limit)constant returns(uint[]);
     function summary()constant returns (address _xindi,address _core,address _coreToken,uint _MinTerm,uint _tokenAmounts,uint _limit);
     event Err(uint _no);
     //0:权限错误
@@ -74,11 +78,23 @@ contract TokenManagerInterface {
     //60030001:  地址无创建资产权限
     //60030002:  无权限修改"可创建资产账户表"
     event SetOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit);
+    event SetTokenAble(_account,_tokenAmounts);
+    event CreateToken(address _issuer,
+                    string _symbol,
+                    uint _id,
+                    uint _maxSupply,
+                    uint _precision,
+                    uint _currentSupply,
+                    uint _closingTime,
+                    string _description,
+                    uint _hash);
+
 }
 
 contract TokenManager is TokenManagerInterface{
 
-    modifier ifCore() {if(msg.sender != m_core) Err(10000000);throw; _;}
+    //modifier ifCore() {if(msg.sender != m_core) {Err(10000000);throw; _;}}
+    function IfCore()internal {if(msg.sender != m_core) {Err(10000000);throw; }}
     function TokenManager(address _xindi){m_core=msg.sender; m_xindi=_xindi;}
     function createToken(
         string _symbol,
@@ -88,31 +104,40 @@ contract TokenManager is TokenManagerInterface{
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)ifCore{
+        uint  _hash){
 
-        if(!m_tokenAble[msg.sender])                        Err(60030001);  throw;
-        if(_closingTime<0||_closingTime<now+m_MinTerm)      Err(60031001);  throw;
+        // cannot create token
+        if(m_tokenAble[msg.sender]%uint32(-1)==0)           {Err(60030001);  throw;}
+        // 0: no expired term
+        if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_MinTerm))
+                                                            {Err(60031001);  throw;}
         // id used
-        if(m_tokenSurmmarys[_id].m_id!=0)                   Err(60031002);  throw;
+        if(m_tokenSurmmarys[_id].m_id!=0)                   {Err(60031002);  throw;}
         // symbol is used
-        if( m_symols[_symbol])                              Err(60031003);  throw;
+        if( m_symols[_symbol])                              {Err(60031003);  throw;}
+
+        if(_precision>8)                                    {Err(60031004);  throw;}
         // consider use 64 b VM for efficiency reason
-        if(_precision>8)                                    Err(60031004);  throw;
-        if(_maxSupply*_precision>=2^64)                     Err(60031005);  throw;
-        if(_currentSupply>_maxSupply)                       Err(60031006);  throw;
+        if(_maxSupply*_precision>=uint64(-1))               {Err(60031005);  throw;}
+        if(_currentSupply>_maxSupply)                       {Err(60031006);  throw;}
 
         Token t = new Token(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,m_coreToken);
-        if(t==address(0x0))                                 Err(60032001);  throw;
+        if(t==address(0x0))                                 {Err(60032001);  throw;}
         m_tokenSurmmarys[_id]=TokenSurmmary(_id,msg.sender,t);
         m_symols[_symbol]=true;
         m_ids[++m_amounts]=_id;
+        m_tokenAble[_account]=m_tokenAble[_account]+1;
+        //CreateToken(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
 
     }
 
-    function setTokenAble(address _account,bool _have){
+    function setTokenAble(address _account,uint _tokenAmounts){
 
-        if(msg.sender!=m_xindi)                             Err(60030002);  throw;
-        m_tokenAble[_account]=_have;
+        if(msg.sender!=m_xindi)                             {Err(60030002);  throw;}
+        // 0~31 : the account have created how many tokens
+        //32~63 :how many tokens this account can create
+        m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
+        SetTokenAble(_account,_tokenAmounts);
 
     }
     function getTokenAble(address _account)constant returns(address t_account, bool _have){
@@ -120,14 +145,16 @@ contract TokenManager is TokenManagerInterface{
         return (_account m_tokenAble[_account]);
 
     }
-    function setOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit)ifCore{
+    function setOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit){
+
+        IfCore();
 
         m_MinTerm=_MinTerm;
         m_coreToken=_coreToken;
         m_xindi=_xindi;
         m_limit=_limit;
 
-        SetOption(m_xindi,m_coreToken,m_MinTerm,m_limit);
+        SetOption(_xindi,_coreToken,_MinTerm,_limit);
 
     }
 
