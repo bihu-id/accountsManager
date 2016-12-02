@@ -1,12 +1,7 @@
 
 import "Data.sol";
 
-contract AccountInterface{
-
-    // not in use
-    LogicPorxy porxy;
-    function notUse(LogicPorxy _porxy)internal{porxy=_porxy;}
-    // above not in use
+contract AccountInterface is BaseLogic{
 
     enum status{
         normal,

@@ -1,13 +1,5 @@
-
-import "LogicPorxy.sol";
-//notice do not change any code of this contract.
-contract Data{
-
-    LogicPorxy porxy;
-    function Data(LogicPorxy _porxy){
-        porxy=_porxy;
-    }
-    event Call(address _porxy,bytes _data);
+import "BaseData.sol";
+contract Data is BaseLogic{
     function(){
         assembly {
             //store fun sig 0x20~0x3F of memery

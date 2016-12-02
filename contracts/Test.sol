@@ -1,18 +1,24 @@
-contract TestInterface{
+contract BaseData{
+    uint  porxy;
+    uint c;
 
-
-    uint[] a;
-    event Log(uint []);
 }
-contract Test is TestInterface{
 
-    function get()constant returns(uint[]){
-        Log(a);
-        return a;
+//notice do not change any code of this contract.
+contract Data1 is BaseData{
+
+    //LogicPorxy porxy;
+    function Data(uint _porxy){
+        porxy=_porxy;
     }
-    function set(uint[] _n){
-        //Log(a);
-        a=_n;
 
+}
+contract Test is BaseData{
+
+    mapping(uint=>uint) a;
+    mapping(uint=>uint) b;
+    function Data(uint _porxy){
+        a[_porxy]=_porxy;
+        b[_porxy]=_porxy;
     }
 }

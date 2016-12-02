@@ -8,12 +8,12 @@ contract(' test', function(accounts) {
     })
     it("set",function(){
         var t_test =Test.at(test);
-        return t_test.set([1,2,3,4,5,6],{from:accounts[0]}).then(function(tx){
+        return t_test.Data(1000,{from:accounts[0]}).then(function(tx){
             console.log(tx);
         })
     })
 
-    it("get",function(){
+    /*it("get",function(){
         var t_test =Test.at(test);
         return t_test.get.call().then(function(res){
             console.log("res:",res.toString(10))
