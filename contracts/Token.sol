@@ -1,4 +1,5 @@
 import "Erc20.sol";
+import "Err.sol";
 
 contract TokenInterface is Erc20 {
 
@@ -11,37 +12,37 @@ contract TokenInterface is Erc20 {
 
      struct Option{
 
-            // operaton of this token must called by coreContract
-            address m_coreContract;
-            // core can override transfer value from any address to any address
-            address m_core;
-            //symbol of taken;
-            string m_symbol;
+        // operaton of this token must called by coreContract
+        address m_coreContract;
+        // core can override transfer value from any address to any address
+        address m_core;
+        //symbol of taken;
+        string m_symbol;
 
-            //id of token, the low 48 is id ,and 48-64 is type;
-            uint m_id;
-            //the creator/owner of token
-            address m_issuer;
-            // max supply of token ,u256
-            uint m_maxSupply;
-            //
-            uint m_precision;
+        //id of token, the low 48 is id ,and 48-64 is type;
+        uint m_id;
+        //the creator/owner of token
+        address m_issuer;
+        // max supply of token ,u256
+        uint m_maxSupply;
+        //
+        uint m_precision;
 
-            uint m_currentSupply;
+        uint m_currentSupply;
 
-            //register date
-            uint m_registerTime;
+        //register date
+        uint m_registerTime;
 
-            // end time of this token
-            uint  m_closingTime;
+        // end time of this token
+        uint  m_closingTime;
 
-            string m_description;
+        string m_description;
 
-            //hash of contract
-            uint m_hash;
+        //hash of contract
+        uint m_hash;
 
 
-            Status m_status;
+        Status m_status;
 
     }
 
@@ -50,44 +51,57 @@ contract TokenInterface is Erc20 {
     mapping (address => uint256) m_balances;
     mapping (address => mapping (address => uint256)) m_allowed;
 
-    mapping (address=>bool) m_freezeLists;
+    mapping (address=>uint) m_freezeLists;
+
+    /// @notice 增发更多的资产,由资产的issuer 调用
+    /// @param _amounts 增发数量
+    function issueMore(uint _amounts);
+
+    /// @notice 销毁由issuer 持有的资产 只能由issuer调用
+    /// @param _amounts 销毁数量
+    function destroy(uint _amounts);
 
     /// @notice Override send `_amount` tokens to `_to` from `_from`
     /// @param _from The address of the sender
     /// @param _to The address of the recipient
     /// @param _amount The amount of tokens to be transferred
     /// @return Whether the transfer was successful or not
-    //function transferOverride(address _from,address _to,uint _amount)returns (bool success);
+    function forceTransfer(address _from,address _to,uint _amount)returns (bool success);
+
+    /// @notice 冻结账户 _account 只有 tokenManager 能调用
+    /// @param _account ..
+    function freeze(address _account);
+
+    /// @notice 解冻账户 _account 只有 tokenManager 能调用
+    /// @param _account ..
+    function unfreeze(address _account);
+
+    /// @notice 冻结整个资产 只有 tokenManager 能调用
+    function freezeToken();
+
+    /// @notice 解冻整个资产 只有 tokenManager 能调用
+    function unfreezeToken();
 
     /// @return the summary of this token
     function surmmay()constant returns(
-        address _issuer,
-        string _symbol,
-        uint _id,
-        uint _maxSupply,
-        uint _precision,
-        uint _currentSupply,
-        string _description,
-        uint _registerTime,
-        uint _closingTime,
-        address _coreContract,
-        uint _hash,
-        Status _status
-        );
-}
+        address _issuer,                    //拥有者
+        string _symbol,                     //代号
+        uint _id,                           //编号
+        uint _maxSupply,                    //最大供应量
+        uint _precision,                    //精度
+        uint _currentSupply,                //当前供应量
+        string _description,                //描述
+        uint _registerTime,                 //注册时间
+        uint _closingTime,                  //过期时间
+        address _coreContract,              //资产合约地址
+        uint _hash,                         //资产合同HASH
+        Status _status                      //资产状态 0:正常,1:冻结
+    );
 
-contract Token is TokenInterface {
-
-    //check token if end
-    modifier notEnd() {if(now < m_option.m_closingTime) throw; _;}
-    //check if the operation is called from core
-    modifier ifCore() {if(msg.sender != m_option.m_core)throw; _;}
-
-    modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
-
-    modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
-    //force transfer by core
-    event ForceTransfer(address _from, address _to, uint _amount);
+    /// @notice 获得账户 _account 的状态
+    /// @param _account ..
+    /// @return _status 账户状态 0:正常,1:冻结
+    function accountStatus(address _account)constant returns (Status _status);
 
     event TokenCreate(
         address _issuer,
@@ -100,6 +114,34 @@ contract Token is TokenInterface {
         string _description,
         uint _hash,
         address _coreContract);
+
+    event ForceTransfer(uint _id,address _from, address _to, uint _amount);
+
+    event IssueMore(address _issuer,uint _id,uint _amounts);
+
+    event Destroy(address _issuer,uint _id,uint _amounts);
+}
+
+contract Token is TokenInterface {
+
+    /*
+    modifier notEnd() {if(now < m_option.m_closingTime) throw; _;}
+    modifier ifCore() {if(msg.sender != m_option.m_core)throw; _;}
+    modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
+    modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
+    */
+
+    //check token if end
+    function ifEnd() {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
+    //check if the operation is called from core
+    function ifCore() {if(msg.sender != m_option.m_core)        {Err(10000000);throw;}  }
+
+    function ifIssuer(){if(msg.sender != m_option.m_issuer)     {Err(60040004);throw;}  }
+
+    function ifFreeze(){if(m_freezeLists[msg.sender]==1)        {Err(60040002);throw;}  }
+
+    function normal(){if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
+    //force transfer by core
 
     function Token(
         address _issuer,
@@ -130,7 +172,9 @@ contract Token is TokenInterface {
         }
 
     function balanceOf(address _owner) constant returns (uint256 balance) {
+
         return m_balances[_owner];
+
     }
 
     function totalSupply() constant returns (uint supply){
@@ -145,8 +189,11 @@ contract Token is TokenInterface {
 
     }
 
-    function transfer(address _to, uint256 _amount) notEnd notFreeze normal returns (bool success) {
+    function transfer(address _to, uint256 _amount)  returns (bool success) {
 
+        ifEnd();
+        ifFreeze();
+        normal();
         if (m_balances[msg.sender] >= _amount && _amount > 0) {
             m_balances[msg.sender] -= _amount;
             m_balances[_to] += _amount;
@@ -155,21 +202,50 @@ contract Token is TokenInterface {
         } else {
            return false;
         }
-    }
-    function forceTransfer(address _from,address _to,uint _amount)notEnd ifCore returns (bool success){
 
+    }
+
+    function issueMore(uint _amounts){
+
+        ifIssuer();
+        //check overflow
+        if(m_option.m_maxSupply-m_option.m_currentSupply<_amounts)           {Err(60041001);throw;}
+        m_option.m_currentSupply=m_option.m_currentSupply+_amounts;
+        m_balances[msg.sender]=m_balances[msg.sender]+_amounts;
+        IssueMore(m_option.m_issuer,m_option.m_id,_amounts);
+
+    }
+
+    function destroy(uint _amounts){
+
+        ifIssuer();
+        if(m_balances[msg.sender]<_amounts)                         {Err(60041002);throw;}
+        m_option.m_currentSupply-=_amounts;
+        m_balances[msg.sender]=m_balances[msg.sender]-_amounts;
+        Destroy(m_option.m_issuer,m_option.m_id,_amounts);
+
+    }
+
+    function forceTransfer(address _from,address _to,uint _amount)returns (bool success){
+
+        ifCore();
+        ifEnd();
+        normal();
         if (m_balances[_from] >= _amount && _amount > 0) {
             m_balances[_from] -= _amount;
             m_balances[_to] += _amount;
-            ForceTransfer(_from, _to, _amount);
+            ForceTransfer(m_option.m_id,_from, _to, _amount);
             return true;
         } else {
            return false;
         }
     }
 
-function transferFrom(address _from, address _to, uint256 _amount) notEnd notFreeze normal returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _amount) returns (bool success) {
 
+        ifEnd();
+        ifFreeze();
+        normal();
         if (m_balances[_from] >= _amount
             && m_allowed[_from][msg.sender] >= _amount
             && _amount > 0) {
@@ -183,32 +259,41 @@ function transferFrom(address _from, address _to, uint256 _amount) notEnd notFre
         }
     }
 
-    function approve(address _spender, uint256 _amount) notEnd notFreeze normal returns (bool success) {
+    function approve(address _spender, uint256 _amount)  returns (bool success) {
+
+        ifEnd();
+        ifFreeze();
+        normal();
         m_allowed[msg.sender][_spender] = _amount;
         Approval(msg.sender, _spender, _amount);
         return true;
-    }
-
-    function freeze(address _account)ifCore{
-
-        m_freezeLists[_account]=true;
 
     }
 
-    function unfreeze(address _account)ifCore{
+    function freeze(address _account){
 
-        m_freezeLists[_account]=false;
+        ifCore();
+        m_freezeLists[_account]=1;//Status.freeze=1
 
     }
 
-    function freezeToken()ifCore{
+    function unfreeze(address _account){
 
+        ifCore();
+        m_freezeLists[_account]=0;//Status.normal=0
+
+    }
+
+    function freezeToken(){
+
+        ifCore();
         m_option.m_status=Status.freeze;
 
     }
 
-    function unfreezeToken()ifCore{
+    function unfreezeToken(){
 
+        ifCore();
         m_option.m_status=Status.normal;
 
     }
@@ -240,6 +325,13 @@ function transferFrom(address _from, address _to, uint256 _amount) notEnd notFre
             _hash=m_option.m_hash;
             _status=m_option.m_status;
         return;
+
+    }
+
+    function accountStatus(address _account)constant returns (Status _status){
+
+        return Status(m_freezeLists[_account]);
+
     }
 }
 

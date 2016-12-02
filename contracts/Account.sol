@@ -1,5 +1,6 @@
-
 import "Data.sol";
+import "Err.sol";
+import "Token.sol";
 
 contract AccountInterface is BaseLogic{
 
@@ -50,8 +51,11 @@ contract AccountInterface is BaseLogic{
     AccountData m_data;
     // txHash => bool
 
+
     mapping(uint=>bool) m_signsPass;
 
+    // this is a temporary methods , only support one wait pass tx;
+    bytes32   m_waitPassTx;
 
     function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight);
 
@@ -104,24 +108,34 @@ contract AccountInterface is BaseLogic{
     /// @return _weight weight of this owner
     function getOwner(uint _no)returns(address _owner,uint _weight);
 
-}
-contract Account is AccountInterface{
-
-    modifier ifCore() {if (msg.sender != m_data.m_core) throw;_;}
-    modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
-
+    event ReSetOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold);
     event CreateAccount(    address _owner,
                             uint32 _weight,
                             uint32 _Tx_threshold,
                             address _core,
                             address _coreTx);
+
+}
+contract Account is AccountInterface{
+
+    /*modifier ifCore() {if (msg.sender != m_data.m_core) throw;_;}
+    modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
+    modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}*/
+
+    function ifCore() {if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
+
+    function ifCoreTx(){if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
+
+    function iffreeze(){if(m_data.m_status==status.freeze)  {Err(60020001);  throw;} }
+
     function init(
     address _owner,
     uint32 _weight,
     uint32 _Tx_threshold,
     address _core,
-    address _coreTx)returns (bool){
-        if(_weight<_Tx_threshold) throw;
+    address _coreTx)returns (bool)
+    {
+        if(_weight<_Tx_threshold)                           {Err(60021001);  throw;}
         m_data.m_core=_core;
         m_data.m_coreTx=_coreTx;
         m_data.m_Tx_threshold=_Tx_threshold;
@@ -132,13 +146,9 @@ contract Account is AccountInterface{
         return true;
     }
 
-    event ReSetOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold);
-
-    modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}
-
     // check owner weight amount make sure tx can been permit
     function checkOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold) constant returns(bool){
-        if (_owners.length!=_weight.length) throw;
+        if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
         uint32 t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
             t_Tx_threshold+=_weight[i];
@@ -148,8 +158,10 @@ contract Account is AccountInterface{
             return true;
     }
 
-    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight) onlyCore{
-        if (!checkOwner(_owners,_weight,_Tx_threshold)) throw;
+    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight) {
+
+        ifCore();
+        if (!checkOwner(_owners,_weight,_Tx_threshold))     {Err(60021001);  throw;}
         uint t_totalWeight=0;
         for(uint32 i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
@@ -158,56 +170,113 @@ contract Account is AccountInterface{
         m_data.m_ownerFind=_owners;
         m_data.m_weightAmount=uint32(t_totalWeight);
         ReSetOwner(_owners,_weight,_Tx_threshold);
+
     }
 
     function getApprove(address[] _owners)returns(bool){
+
         uint32  t_total=0;
         for(uint i=0;i<_owners.length;i++)
             t_total+=m_data.m_owners[_owners[i]];
         return t_total>=m_data.m_Tx_threshold;
+
     }
 
-/*    function transfer(
+    function transfer(
         address tokenContract,
         address _to,
-        uint256 _amount) iffreeze returns (bool success){
-        if(getApprove(msg.sender)){
+        uint256 _amount)returns (bool success)
+    {
+        iffreeze();
+        // it is a bad way now ,
+        checkPass(sha3(msg.data));
+        address []memory t_owner=new address[](1);
+        t_owner[0]=msg.sender;
+        if(getApprove(t_owner)){
             Token t=Token(tokenContract);
-            t.transfer(address(this),_to,_amount);
+            t.transfer(_to,_amount);
         }
-    }*/
 
-    function setPass(uint _hash)iffreeze returns (bool){
-        if(msg.sender!=m_data.m_coreTx) throw;
-            m_signsPass[_hash]=true;
-        return true;
     }
 
-    function setIdLevel(uint32 _level) ifCore returns(bool){
+    function issuerMore(address tokenContract,uint256 _amount)returns (bool success){
+
+        iffreeze();
+        // it is a bad way now ,
+        checkPass(sha3(msg.data));
+        address []memory t_owner=new address[](1);
+        t_owner[0]=msg.sender;
+        if(getApprove(t_owner)){
+            Token t=Token(tokenContract);
+            t.issueMore(_amount);
+        }
+
+    }
+
+    function destroy(address tokenContract,uint256 _amount)returns (bool success){
+
+        iffreeze();
+        // it is a bad way now ,
+        checkPass(sha3(msg.data));
+        address []memory t_owner=new address[](1);
+        t_owner[0]=msg.sender;
+        if(getApprove(t_owner)){
+            Token t=Token(tokenContract);
+            t.destroy(_amount);
+        }
+
+    }
+
+    function setPass(uint _hash) returns (bool){
+
+        iffreeze();
+        ifCoreTx();
+        if(msg.sender!=m_data.m_coreTx) throw;
+            m_waitPassTx=bytes32(_hash);
+        return true;
+
+    }
+
+    function setIdLevel(uint32 _level)  returns(bool){
+
+        ifCore();
         m_data.m_level=_level;
         return true;
+
     }
 
-    function setCA(address _CA)ifCore returns(bool){
+    function setCA(address _CA)returns(bool){
+
+        ifCore();
         if (m_data.m_level<100)
             m_data.m_level+=100;
         m_data.m_CA=_CA;
         return true;
+
     }
 
-    function revokeCA()ifCore returns(bool){
-        if (m_data.m_level<100) throw;
+    function revokeCA() returns(bool){
+
+        ifCore();
+        if (m_data.m_level<100)                 {Err(60021003);  throw;}
         m_data.m_level-=100;
         m_data.m_CA=address(0);
         return true;
+
     }
 
-    function freeze()ifCore returns(bool){
+    function freeze() returns(bool){
+
+        ifCore();
         m_data.m_status=status.freeze;
+
     }
 
-    function unfreeze()ifCore returns(bool){
+    function unfreeze() returns(bool){
+
+        ifCore();
         m_data.m_status=status.normal;
+
     }
 
     function summary()constant returns(
@@ -219,7 +288,8 @@ contract Account is AccountInterface{
         uint _tx_threshold,
         address _CA,
         address[] _owner,
-        uint[] _weight){
+        uint[] _weight)
+        {
             _core=m_data.m_core;
             _TxCore=m_data.m_coreTx;
             _status=uint(m_data.m_status);
@@ -233,10 +303,19 @@ contract Account is AccountInterface{
                 t_weight[i]=uint(m_data.m_owners[m_data.m_ownerFind[i]]);
             _weight=t_weight;
             return;
+
     }
 
     function getOwner(uint _no)returns(address _owner,uint _weight){
+
         address tmp=m_data.m_ownerFind[_no];
         return(tmp, m_data.m_owners[tmp]);
+
+    }
+
+    function checkPass(bytes32 _hash)internal {
+
+        if (m_waitPassTx!=_hash)                    {Err(60020002);  throw;}
+
     }
 }

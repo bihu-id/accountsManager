@@ -4,9 +4,11 @@ import "Account.sol";
 contract AccountManager {
 
     struct AccountCore {
+
         address m_core;
         address m_TxCore;
         address m_accountPorxy;
+
     }
 
     AccountCore m_accountCore;
@@ -25,14 +27,18 @@ contract AccountManager {
     event CreateData(address);
     event AccountRecode(uint,address);
     function resetOwner(address _newOwner)ifCore{
+
         m_owner=_newOwner;
+
     }
 
     function resetCore(address _newCore)ifCore{
+
         m_core=_newCore;
     }
 
     function AccountManager(address _core,address _accountCore,address _accountTxCore,address _accountPorxy){
+
         m_core=_core;
         m_owner=msg.sender;
         m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
@@ -40,7 +46,8 @@ contract AccountManager {
     }
 
     function createAccount(address _owner,uint32 _weight,uint32 _threshold)ifOwner returns(bool){
-        Data t_accountData=new Data(LogicPorxy(m_accountCore.m_accountPorxy));
+
+        Data t_accountData=new Data(uint(m_accountCore.m_accountPorxy));
         CreateData(t_accountData);
 
         //call data is made by Account(logic),but send to data (account data)
@@ -51,18 +58,25 @@ contract AccountManager {
         m_accounts[++m_accountAmounts]=t_accountData;
         AccountRecode(m_accountAmounts,m_accounts[m_accountAmounts]);
         return true;
+
     }
 
     function getAccountAddress(uint _no)constant returns(address){
+
         return  m_accounts[_no];
+
     }
 
     function accountAmount()constant returns(uint){
+
         return m_accountAmounts;
+
     }
 
     function summary()constant returns(address,address,address,address,address){
+
         return(m_core,m_owner,m_accountCore.m_core,m_accountCore.m_TxCore,m_accountCore.m_accountPorxy);
+
     }
 
 }
