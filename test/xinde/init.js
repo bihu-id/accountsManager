@@ -1,4 +1,4 @@
-address=require("./address.js")
+address=require("./../address.js")
 contract('init xindi', function(accounts) {
 
     var xindedata=address.xindedata

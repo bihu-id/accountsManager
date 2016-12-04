@@ -1,5 +1,5 @@
-address=require("./address.js")
-funs=require("./funs.js")
+address=require("./../address.js")
+funs=require("./../funs.js")
 contract('set xindi funs', function(accounts) {
 
     var xindeporxy = address.xindeporxy

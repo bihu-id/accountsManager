@@ -1,4 +1,4 @@
-address=require("./address.js")
+address=require("./../address.js")
 contract('xindi summary', function(accounts) {
     
     var xindedata=address.xindedata
@@ -16,7 +16,7 @@ contract('xindi summary', function(accounts) {
     it ("get all waiting operation resetMe",function() {
         var xinde = Xindi.at(xindedata);
 
-        return xinde.getWaitOperationNos(1,14 ,2).then(function (res) {
+        return xinde.getWaitOperationNos(1,16 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
             res.forEach(function(w){
                 return xinde.getOperation_resetMe(w).then(function (res) {

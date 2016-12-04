@@ -1,4 +1,4 @@
-address=require("./../xinde/address.js")
+address=require("./../address.js")
 contract("account summary ",function(accounts){
 
     var xindeporxy = address.xindeporxy

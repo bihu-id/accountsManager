@@ -142,7 +142,103 @@ var funs={
         gas : 300000
     },
     //bc645d96 test(address,uint8)
-]
+],
+    Accounts:[
+        {
+            name : 'freeze',
+            sig : 0x62a5af3b,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'getApprove',
+            sig : 0xba236dcd,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'getOwner',
+            sig : 0xc41a360a,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'init',
+            sig : 0x448ac35d,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'resetOwner',
+            sig : 0xd26cb679,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'revokeCA',
+            sig : 0xe698fc31,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'setCA',
+            sig : 0x2cab3b98,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'setIdLevel',
+            sig : 0x777af46f,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'summary',
+            sig : 0xb16a867c,
+            resSize : 32*20,
+            gas : 300000
+        },
+        {
+            name : 'unfreeze',
+            sig : 0x6a28f000,
+            resSize : 32,
+            gas : 300000
+        }
+    ],
+    /*
+    41748782 accountAmount()
+    e27d0cd8 createAccount(address,uint32,uint32)
+    db4cf8e6 getAccountAddress(uint256)
+    51b0b767 resetCore(address)
+    73cc802a resetOwner(address)
+    b16a867c summary()
+    */
+    AccountsManager:[
+        {
+            name : 'accountAmount',
+            sig : 0x41748782,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'createAccount',
+            sig : 0xe27d0cd8,
+            resSize : 32,
+            gas : 3000000
+        },
+        {
+            name : 'getAccountAddress',
+            sig : 0xdb4cf8e6,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'resetCore',
+            sig : 0xdb4cf8e6,
+            resSize : 32,
+            gas : 300000
+        },
+    ]
 }
 
 module.exports=funs;

@@ -1,4 +1,4 @@
-address=require("./address.js")
+address=require("./../address.js")
 contract('reset owner of account', function(accounts) {
 
     /*var xindeporxy="0xd3d0ba368c5cdeba40302ac3576d02a67a9d73e5"

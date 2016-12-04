@@ -1,4 +1,4 @@
-address=require("./address.js")
+address=require("./../address.js")
 contract('reset xindi key', function(accounts) {
 
     /*var xindeporxy="0xd3d0ba368c5cdeba40302ac3576d02a67a9d73e5"
@@ -26,22 +26,12 @@ contract('reset xindi key', function(accounts) {
     
     it ("set reset key ",function() {
 
-        console.log("balance :",web3.fromWei(web3.eth.getBalance(accounts[0]),'ether').toString())
-
         var xinde = Xindi.at(xindedata);
-        /*var Err = xinde.Err({fromBlock: "latest"});
-        Err.watch(function(error, result) {
-            // This will catch all Transfer events, regardless of how they originated.
-            if (error == null) {
-                console.log(result.args);
-            }
-        })*/
-        //var self=this
 
-        for(var i=0;i<14;i++)
-            console.log("reset key %d:%s",i,accounts[i]);
-            xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
+        for(var i=12;i<13;i++)
 
+            return xinde.resetMe(accounts[i], i, {from: accounts[14], gas: 2000000}).then(function (tx) {
+                console.log("reset key %d:%s",i,accounts[i]);
                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 console.log(tx);
 

@@ -1,4 +1,4 @@
-address=require("./../xinde/address.js")
+address=require("./../address.js")
 contract('create account', function(accounts) {
 
     /*var xindeporxy="0xd3d0ba368c5cdeba40302ac3576d02a67a9d73e5"
@@ -21,7 +21,7 @@ contract('create account', function(accounts) {
         //var accountManager=AccountManager.at(account_manager);
         var accountmanager=AccountManager.at(accountManager);
 
-        return accountmanager.createAccount(accounts[5],100,100,{from:accounts[0],gas:10000000}).then(function(tx){
+        return accountmanager.createAccount(accounts[25],100,100,{from:accounts[0],gas:10000000}).then(function(tx){
             console.log("create account use owner :",accounts[5]);
         });
 

@@ -1,5 +1,5 @@
 
-address=require("./address.js")
+address=require("./../address.js")
 contract('comfirm reset me', function(accounts) {
 
     var xindeporxy = address.xindeporxy
