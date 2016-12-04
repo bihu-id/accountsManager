@@ -138,6 +138,7 @@ contract Account is AccountInterface{
     address _core,
     address _coreTx)returns (bool)
     {
+        beforeInit();
         if(_weight<_Tx_threshold)                           {Err(60021001);  throw;}
         m_data.m_core=_core;
         m_data.m_coreTx=_coreTx;

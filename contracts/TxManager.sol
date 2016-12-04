@@ -18,7 +18,7 @@ contract TxManager is BaseLogic {
 
     function init(){
 
-        beforeInit()
+        beforeInit();
         m_core=uint(msg.sender);
         uint[] memory t_res=new uint[](1);
         t_res[0]=m_core;

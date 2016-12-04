@@ -12,11 +12,12 @@ contract AccountManager is BaseLogic {
     }
 
     AccountCore m_accountCore;
-    //owner of account
-    address m_owner;
+
     //core address can reset owner
     address m_core;
 
+    //owner of account
+    address m_owner;
     mapping(uint=>address) m_accounts;
 
     uint m_accountAmounts;
@@ -48,7 +49,7 @@ contract AccountManager is BaseLogic {
 
     function init(address _owner,address _accountCore,address _accountTxCore,address _accountPorxy){
 
-        beforeInit()
+        beforeInit();
         m_core=msg.sender;
         m_owner=_owner;
         m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);

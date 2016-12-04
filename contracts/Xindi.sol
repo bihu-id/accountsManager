@@ -90,7 +90,7 @@ contract Xindi is XindiInterface{
 
     function init(){
 
-        beforInit();
+        beforeInit();
         m_keys[uint(role.coreRole)]=msg.sender;
         m_keys[uint(role.coreRoleC)]=msg.sender;
 
@@ -104,7 +104,7 @@ contract Xindi is XindiInterface{
         m_accountFun.unfreeze       =0x6a28f000;
 
 
-        uint[] memoryt_res=new uint[](2) ;
+        uint[] memory t_res=new uint[](2) ;
 
         t_res[0]=uint(m_keys[uint(role.coreRole)]);
         t_res[1]=uint(m_keys[uint(role.coreRoleC)]);

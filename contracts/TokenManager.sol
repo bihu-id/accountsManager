@@ -171,10 +171,16 @@ contract TokenManager is TokenManagerInterface{
 
     //modifier ifCore() {if(msg.sender != m_core)                       {Err(10000000);throw; _;}}
     function IfCore()internal {if(msg.sender != m_core)                 {Err(10000000);throw; }}
-    function TokenManager(address _xindi){
+    function init(address _xindi){
 
+        beforeInit();
         m_core=msg.sender;
         m_xindi=_xindi;
+        uint[] memory t_res=new uint[](2);
+        t_res[0]=uint(m_core);
+        t_res[1]=uint(m_xindi);
+
+        afterInit(t_res);
 
     }
     function setFunSig(Fun _fun ,uint _sig){

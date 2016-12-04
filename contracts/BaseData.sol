@@ -13,7 +13,7 @@ contract BaseLogic is BaseData{
     function notuse(uint x)internal {
 
         porxy=x;
-        
+
     }
     function beforeInit()internal{
 
