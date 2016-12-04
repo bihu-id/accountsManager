@@ -38,7 +38,6 @@ contract XindiInterface is BaseManager_Xindi{
 
     AccountFun m_accountFun;
 
-    bool inited;
     /// @notice init xinde keys and account function sig;初始化合约,只会第一调用时生效
     function init();
 
@@ -90,7 +89,8 @@ contract XindiInterface is BaseManager_Xindi{
 contract Xindi is XindiInterface{
 
     function init(){
-        if(inited) throw;
+
+        beforInit();
         m_keys[uint(role.coreRole)]=msg.sender;
         m_keys[uint(role.coreRoleC)]=msg.sender;
 
@@ -103,11 +103,13 @@ contract Xindi is XindiInterface{
         m_accountFun.setPass        =0xf86cd7ad;
         m_accountFun.unfreeze       =0x6a28f000;
 
-        inited=true;
-        //uint[] t_res;
 
-        //t_res[0]=m_accountFun.freeze;
-        Init(msg.sender,m_keys[uint(role.coreRole)]);
+        uint[] memoryt_res=new uint[](2) ;
+
+        t_res[0]=uint(m_keys[uint(role.coreRole)]);
+        t_res[1]=uint(m_keys[uint(role.coreRoleC)]);
+
+        afterInit(t_res);
     }
 
     function comfirm(address _account,uint _no){

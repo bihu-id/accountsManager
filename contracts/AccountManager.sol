@@ -21,6 +21,8 @@ contract AccountManager is BaseLogic {
 
     uint m_accountAmounts;
 
+    uint inited;
+
     /*
     modifier ifCore() {if(msg.sender != m_core)throw; _;}
     modifier ifOwner() {if(msg.sender != m_owner)throw; _;}
@@ -44,12 +46,21 @@ contract AccountManager is BaseLogic {
 
     }
 
-    function AccountManager(address _core,address _accountCore,address _accountTxCore,address _accountPorxy){
+    function init(address _owner,address _accountCore,address _accountTxCore,address _accountPorxy){
 
-        m_core=_core;
-        m_owner=msg.sender;
+        beforeInit()
+        m_core=msg.sender;
+        m_owner=_owner;
         m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
         m_accountAmounts=0;
+
+        uint[] memory t_res=new uint[](5);
+        t_res[0]=uint(m_core);
+        t_res[1]=uint(m_owner);
+        t_res[2]=uint(_accountCore);
+        t_res[3]=uint(_accountTxCore);
+        t_res[4]=uint(_accountPorxy);
+        afterInit(t_res);
 
     }
 

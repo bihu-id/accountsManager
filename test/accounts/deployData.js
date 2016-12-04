@@ -1,12 +1,12 @@
 contract('deploy xindi data', function(accounts) {
 
-    var accountporxy;
+    var accountManagerporxy;
     var accountManager;
     it("set porxy", function(){
         return LogicPorxy.new().then(function(instance){
-            accountporxy=instance.address;
+            accountManagerporxy=instance.address;
             //console.log(xindeporxy)
-            return Data.new(accountporxy).then(function(instance){
+            return Data.new(accountManagerporxy).then(function(instance){
                 accountManager=instance.address;
                 //console.log(xindelogic)
             });
@@ -14,7 +14,7 @@ contract('deploy xindi data', function(accounts) {
     });
 
     it ("console",function(){
-        console.log('accountporxy:'+'"'+accountporxy+'",')
+        console.log('accountManagerporxy:'+'"'+accountManagerporxy+'",')
         console.log('accountManager:'+'"'+accountManager+'",')
     });
 

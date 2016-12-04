@@ -1,6 +1,7 @@
 import "Data.sol";
 import "Err.sol";
 import "Token.sol";
+import "BaseData.sol";
 
 contract AccountInterface is BaseLogic{
 
@@ -59,12 +60,14 @@ contract AccountInterface is BaseLogic{
 
     function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight);
 
-    function getApprove(address[] _owners)returns(bool);
-
-    /*function transfer(
+    function transferToken(
         address tokenContract,
         address _to,
-        uint256 _amount) returns (bool success);*/
+        uint256 _amount) returns (bool success);
+
+    function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success);
+
+    function destroyToken(address tokenContract,uint256 _amount)returns (bool success);
 
     /// @notice set pass a Tx
     /// @param _hash hash of Tx
@@ -122,11 +125,11 @@ contract Account is AccountInterface{
     modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
     modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}*/
 
-    function ifCore() {if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
+    function ifCore()internal{if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
 
-    function ifCoreTx(){if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
+    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
 
-    function iffreeze(){if(m_data.m_status==status.freeze)  {Err(60020001);  throw;} }
+    function iffreeze()internal{if(m_data.m_status==status.freeze)  {Err(60020001);  throw;} }
 
     function init(
     address _owner,
@@ -147,7 +150,7 @@ contract Account is AccountInterface{
     }
 
     // check owner weight amount make sure tx can been permit
-    function checkOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold) constant returns(bool){
+    function checkOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold) internal returns(bool){
         if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
         uint32 t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
@@ -173,7 +176,7 @@ contract Account is AccountInterface{
 
     }
 
-    function getApprove(address[] _owners)returns(bool){
+    function getApprove(address[] _owners)internal returns(bool){
 
         uint32  t_total=0;
         for(uint i=0;i<_owners.length;i++)
@@ -182,7 +185,7 @@ contract Account is AccountInterface{
 
     }
 
-    function transfer(
+    function transferToken(
         address tokenContract,
         address _to,
         uint256 _amount)returns (bool success)
@@ -199,7 +202,7 @@ contract Account is AccountInterface{
 
     }
 
-    function issuerMore(address tokenContract,uint256 _amount)returns (bool success){
+    function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
         // it is a bad way now ,
@@ -213,7 +216,7 @@ contract Account is AccountInterface{
 
     }
 
-    function destroy(address tokenContract,uint256 _amount)returns (bool success){
+    function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
         // it is a bad way now ,

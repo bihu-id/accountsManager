@@ -8,8 +8,13 @@ var Address={
     //xindedata:"0x040a1d455be4c6a7356bceaa57961ed287101349",
 
 
-    accountporxy:"0xac29175f95ffa92a66b8e97d6ff08bf2c678ca4a",
-    accountManager:"0x98075881b8eb09eb4bbcdce2d2638ab43ca52f9a",
+    accountManagerporxy:"0x4fa72c2c29a1e2221e6c00986e162c9b6eede432",
+    accountManager:"0xb1ac193229669158847db8fdfaaa3491d7cd3d2e",
+
+    TxManagerporxy:"0x14c7abf30dcde2c38e2992ec699eac63b02c85a6",
+    TxManagerData:"0x10ed3ed81bc8cd696584ab6ec379311da6e3306c",
+
+
     end:"0x"
 
 

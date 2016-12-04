@@ -143,16 +143,31 @@ var funs={
     },
     //bc645d96 test(address,uint8)
 ],
+    /*
+     9b1ad792 destroyToken(address,uint256)
+     62a5af3b freeze()
+     c41a360a getOwner(uint256)
+     448ac35d init(address,uint32,uint32,address,address)
+     fb9f28b5 issuerMoreToken(address,uint256)
+     00afc90b resetOwner(uint32,address[],uint32[])
+     e698fc31 revokeCA()
+     2cab3b98 setCA(address)
+     777af46f setIdLevel(uint32)
+     f86cd7ad setPass(uint256)
+     b16a867c summary()
+     f5537ede transferToken(address,address,uint256)
+     6a28f000 unfreeze()
+     */
     Accounts:[
+        {
+            name : 'destroyToken',
+            sig : 0x9b1ad792,
+            resSize : 32,
+            gas : 3000000
+        },
         {
             name : 'freeze',
             sig : 0x62a5af3b,
-            resSize : 32,
-            gas : 300000
-        },
-        {
-            name : 'getApprove',
-            sig : 0xba236dcd,
             resSize : 32,
             gas : 300000
         },
@@ -169,8 +184,14 @@ var funs={
             gas : 300000
         },
         {
+            name : 'issuerMoreToken',
+            sig : 0xfb9f28b5,
+            resSize : 32,
+            gas : 3000000
+        },
+        {
             name : 'resetOwner',
-            sig : 0xd26cb679,
+            sig : 0x00afc90b,
             resSize : 32,
             gas : 300000
         },
@@ -178,7 +199,7 @@ var funs={
             name : 'revokeCA',
             sig : 0xe698fc31,
             resSize : 32,
-            gas : 300000
+            gas : 3000000
         },
         {
             name : 'setCA',
@@ -197,6 +218,12 @@ var funs={
             sig : 0xb16a867c,
             resSize : 32*20,
             gas : 300000
+        },
+        {
+            name : 'transferToken',
+            sig : 0xf5537ede,
+            resSize : 32,
+            gas : 3000000
         },
         {
             name : 'unfreeze',
@@ -234,10 +261,60 @@ var funs={
         },
         {
             name : 'resetCore',
-            sig : 0xdb4cf8e6,
+            sig : 0x51b0b767,
             resSize : 32,
             gas : 300000
         },
+        {
+            name : 'resetOwner',
+            sig : 0x73cc802a,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'summary',
+            sig : 0xb16a867c,
+            resSize : 32*3,
+            gas : 300000
+        }
+    ],
+    /*
+    0573ea94 pass(uint256,uint256)
+     e3f18df3 resetCore(uint256)
+     959725d1 resetOwner(uint256)
+     b16a867c summary()
+    */
+    TxManager:[
+        {
+            name : 'pass',
+            sig : 0x0573ea94,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'resetCore',
+            sig : 0xe3f18df3,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'resetOwner',
+            sig : 0x959725d1,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'init',
+            sig : 0xe1c7392a,
+            resSize : 32,
+            gas : 300000
+        },
+        {
+            name : 'summary',
+            sig : 0xb16a867c,
+            resSize : 64,
+            gas : 300000
+        }
     ]
 }
 
