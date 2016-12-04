@@ -1,10 +1,14 @@
 var Address={
     //cpp:
-    xindeporxy:"0xd7e7f71779e33f9a4d51a37afe1aff6ccbd837da",
-    xindelogic:"0xa6a53245365646d40b5f949e0e3ef81a3b114fa0",
-    xindedata:"0xd5678778adccefa4dc70a35efeb4141ecde9c1ec",
+    /*xindeporxy:"0xe6c2a774cd55f3ff425e638def59da6d07482bde",
+    xindedata:"0x11900b3f583d5f9731ba1b2fe7d9933087a9b6f8",*/
+
+    //local
+    xindeporxy:"0xdac046ab989f31b4a449b57a778f70299562806c",
+    xindedata:"0x831a884cfd3980be9e3a30c61f85fa113ae29e15",
+
+
     accountManager:"0x8a20fc49a12e907bddcd33db5befa1204e479e93",
-    accountlogic:"0x57acb0e21e523a85613a31c2ed7743d5a66f1f22",
     accountporxy:"0xd80e88fb7e3e56d5a89874090884505aec48c802"
 
 

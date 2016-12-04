@@ -3,9 +3,7 @@ contract('deployData', function(accounts) {
     var xindeporxy;
     var xindelogic;
     var xindedata;
-
-
-
+    
     /*var accountManagerporxy;
      var accountManagerlogic;
      var accountManagerdata;*/
@@ -238,7 +236,7 @@ contract('deployData', function(accounts) {
 
     it("deploy xinde logic",function(){
 
-        return Xinde.new().then(function(instance){
+        return Xindi.new().then(function(instance){
             xindelogic=instance.address;
         })
     });

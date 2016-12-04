@@ -103,13 +103,14 @@ contract BaseManager_Xindi is BaseManagerInterface,RoleDefine_Xindi,Err{
 
     }
 
-    function ResetMeReject(address _key,uint _no){
+    function resetMeReject(address _key,uint _no){
 
         if(msg.sender!=m_keys[uint(role.coreRoleC)]) throw;
         if(m_operations_resetMe[_no].m_key!=_key) throw;
         if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm) {Err(11000005);throw;}
         m_operations_resetMe[_no].m_status=OperationStatus.reject;
         del2(_no);
+        ResetMeReject(_no,_key,m_operations_resetMe[_no].m_role);
 
     }
 

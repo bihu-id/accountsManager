@@ -81,7 +81,7 @@ contract BaseManagerInterface is BaseLogic {
     /// @notice reject resetMe operation                    拒绝一个重置Keys操作
     /// @param _key the new address of roler;               新的地址
     /// @param _no operation _no;                           重置操作的NO. 和_key同时输入起到双重验证作用。
-    function ResetMeReject(address _key,uint _no);
+    function resetMeReject(address _key,uint _no);
 
     /// @notice get resetMe operation amounts                                       获得重置Key 总的操作数量,包含拒绝,批准和等待批准
     /// @return _totalAmounts total amounts include rejected comfirmed and waiting  总的数量
@@ -131,6 +131,8 @@ contract BaseManagerInterface is BaseLogic {
 
     event ResetMe(uint _no,address _keyAddress,uint _role);
     event ResetMeC(uint _no,address _keyAddress,uint _role);
+    event ResetMeReject(uint _no,address _keyAddress,uint _role);
     event ConfirmOperation(uint _no);
+    event Reject(uint _no);
 
 }

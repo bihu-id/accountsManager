@@ -20,8 +20,6 @@ contract LogicPorxy{
 
     event SetFun(uint _fun,uint _resSize ,uint _gasNeed);
 
-    event GetFun(uint _fun,address _logic ,uint _resSize ,uint _gasNeed);
-
     function LogicPorxy(){
 
         m_coreAddress=uint(msg.sender);

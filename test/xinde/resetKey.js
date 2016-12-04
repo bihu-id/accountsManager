@@ -1,5 +1,5 @@
 address=require("./address.js")
-contract('check function', function(accounts) {
+contract('reset xindi key', function(accounts) {
 
     /*var xindeporxy="0xd3d0ba368c5cdeba40302ac3576d02a67a9d73e5"
     var xindelogic="0xfc7a9bf56a73a47fc6b3bc4276c67b92269ba2cd"
@@ -9,36 +9,30 @@ contract('check function', function(accounts) {
     var accountporxy="0xcd0bcaa76ec79ba7f27a2a1aef1271f009c996ed"*/
 
     var xindeporxy=address.xindeporxy
-    var xindelogic=address.xindelogic
     var xindedata=address.xindedata
-    var accountManager=address.accountManager
-    var accountlogic=address.accountlogic
-    var accountporxy=address.accountporxy
-
-
-    var t_accounts=web3.eth.accounts;
-    var amount;
-
+    
     var waiting;
     
-    it("xinde summary", function(){
+    /*it("xinde summary", function(){
 
-        var xinde=Xinde.at(xindedata);
+        var xinde=Xindi.at(xindedata);
         return xinde.summary.call().then(function(res){
             console.log("keys")
             for(var i=0;i<res.length;i++)
                 console.log("%s :%s ","key"+i,res[i].toString(16))
 
         })
-    });
+    });*/
     
     it ("set reset key ",function() {
 
-        var xinde = Xinde.at(xindedata);
-        for(var i=0;i<14;i++)
+        var xinde = Xindi.at(xindedata);
+        for(var i=0;i<1;i++)
+            console.log("reset key %d:%s",i,accounts[i]);
             xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
-                //console.log(web3.eth.getTransactionReceipt(tx));
-                console.log("reset key %d:%s",i,accounts[i]);
+                console.log(web3.eth.getTransactionReceipt(tx));
+                console.log(tx);
+
             })
     })
     /*it ("set reset key ",function() {
