@@ -16,7 +16,7 @@ contract('reset owner of account', function(accounts) {
     var accountporxy = address.accountporxy
 
     it("get waiting accounts operation and comfirm ", function(){
-        var xinde=Xinde.at(xindedata)
+        var xinde=Xindi.at(xindedata)
         xinde.getOperationAmounts().then(function(res){
             console.log(res.toString())
         })
@@ -24,7 +24,7 @@ contract('reset owner of account', function(accounts) {
 
 
     it("get waiting accounts operation and comfirm ", function(){
-        var xinde=Xinde.at(xindedata)
+        var xinde=Xindi.at(xindedata)
 
         console.log("operation detail:")
         console.log("No", "account", "           data               ", "status")

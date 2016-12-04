@@ -26,18 +26,30 @@ contract('reset xindi key', function(accounts) {
     
     it ("set reset key ",function() {
 
+        console.log("balance :",web3.fromWei(web3.eth.getBalance(accounts[0]),'ether').toString())
+
         var xinde = Xindi.at(xindedata);
-        for(var i=0;i<1;i++)
+        /*var Err = xinde.Err({fromBlock: "latest"});
+        Err.watch(function(error, result) {
+            // This will catch all Transfer events, regardless of how they originated.
+            if (error == null) {
+                console.log(result.args);
+            }
+        })*/
+        //var self=this
+
+        for(var i=0;i<14;i++)
             console.log("reset key %d:%s",i,accounts[i]);
             xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
-                console.log(web3.eth.getTransactionReceipt(tx));
+
+                //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 console.log(tx);
 
             })
     })
     /*it ("set reset key ",function() {
 
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.resetMe(accounts[2], 1, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 1 :",accounts[2]);
@@ -45,7 +57,7 @@ contract('reset xindi key', function(accounts) {
     })
     it ("set reset key ",function() {
 
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.resetMe(accounts[3], 2, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 2 :",accounts[3]);
@@ -53,7 +65,7 @@ contract('reset xindi key', function(accounts) {
     })
     it ("set reset key ",function() {
 
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.resetMe(accounts[4], 3, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 3 :",accounts[4]);
@@ -62,7 +74,7 @@ contract('reset xindi key', function(accounts) {
 
     /*it("get resetMe operation amounts", function(){
 
-        var xinde=Xinde.at(xindedata);
+        var xinde=xindi.at(xindedata);
         xinde.getOperationAmounts_resetMe.call().then(function(res){
             console.log( "total operation :",res[0].toString(10),"waiting comfirm operation :",res[1].toString(10))
             amount=res[0];
@@ -70,7 +82,7 @@ contract('reset xindi key', function(accounts) {
     })
 
     it ("get all waiting operation resetMe",function() {
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,4 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
@@ -86,7 +98,7 @@ contract('reset xindi key', function(accounts) {
     })
 
     it ("comfirm resetMe no 1",function() {
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
         return xinde.getOperation_resetMe(1).then(function (res) {
             console.log("try comfirm next operation :")
             console.log("No", "role", "           new address               ", "status")
@@ -97,7 +109,7 @@ contract('reset xindi key', function(accounts) {
     })
 
     it ("get all waiting operation resetMe",function() {
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
@@ -114,7 +126,7 @@ contract('reset xindi key', function(accounts) {
 
 
     it ("comfirm resetMe",function() {
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,8 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
@@ -141,7 +153,7 @@ contract('reset xindi key', function(accounts) {
 
     it("get resetMe operation ", function(){
 
-        var xinde=Xinde.at(xindedata);
+        var xinde=xindi.at(xindedata);
         xinde.getOperationAmounts_resetMe.call().then(function(res){
             console.log("wait resetMe amounts :",res.toString(10))
             amount=res[1];
@@ -149,7 +161,7 @@ contract('reset xindi key', function(accounts) {
     })
 
     it ("get all waiting operation resetMe",function() {
-        var xinde = Xinde.at(xindedata);
+        var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
             console.log( "wait comfirm operations :",res.toString(10))
@@ -166,7 +178,7 @@ contract('reset xindi key', function(accounts) {
 
     it("xinde summary", function(){
 
-        var xinde=Xinde.at(xindedata);
+        var xinde=xindi.at(xindedata);
         return xinde.summary.call().then(function(res){
             console.log("keys")
             for(var i=0;i<res.length;i++)

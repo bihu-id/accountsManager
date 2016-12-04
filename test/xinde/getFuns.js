@@ -11,7 +11,7 @@ contract('get xindi funs', function(accounts) {
         console.log("   name  ","           address        ","return size","gas needed")
         return XindiFuns.forEach(function(fun){
             porxy.get.call(fun.sig).then(function(res){
-                console.log(fun.name,"0x"+res[0].toString(16),res[1].toString(10)/32,res[2].toString(10))
+                console.log("0x"+res[0].toString(16),res[1].toString(10)/32,res[2].toString(10),fun.name)
 
             });
         })

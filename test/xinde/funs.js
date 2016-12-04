@@ -89,13 +89,13 @@ var funs={
     },
     {
         name : 'resetMe',
-        sig : 0x3c4421c1,
+        sig : 0xbc59f17b,
         resSize : 32*2,
         gas : 600000
     },
     {
         name : 'resetMeC',
-        sig : 0x49c00854,
+        sig : 0xda8c6514,
         resSize : 32*3,
         gas : 300000
     },
@@ -113,7 +113,7 @@ var funs={
     },
     {
         name : 'setCA',
-        sig : 0xa0ff66ba,
+        sig : 0x9f394af0,
         resSize : 32,
         gas : 300000
     },
@@ -134,7 +134,13 @@ var funs={
         sig : 0x45c8b1a6,
         resSize : 32,
         gas : 300000
-    }
+    },
+    {
+        name : 'summary1',
+        sig : 0xde5efd14,
+        resSize : 32*20,
+        gas : 300000
+    },
     //bc645d96 test(address,uint8)
 ]
 }

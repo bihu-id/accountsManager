@@ -128,8 +128,8 @@ contract Xindi is XindiInterface{
 
     function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold){
 
-        //if (msg.sender!=m_keys[uint(role.reSetRole)]) throw;
-        //if (_owners.length!=_weight.length) throw;
+        if (msg.sender!=m_keys[uint(role.reSetRole)])                       {Err(10000000);throw; }
+        if (_owners.length!=_weight.length)                                 {Err(60011001);throw; }
         // the follow code basely equil using code  btyes m_data=msg.data
             uint[] memory t_data=new uint[](1+2*_owners.length);
             t_data[0]=_Threshold;
@@ -159,8 +159,8 @@ contract Xindi is XindiInterface{
 
     function setIdLevel (address _account,uint _level){
 
-        if (_level>=100)throw;
-        if (msg.sender!=m_keys[uint(role.realNameRole)]) throw;
+        if (msg.sender!=m_keys[uint(role.realNameRole)])                    {Err(10000000);throw; }
+        if (_level>=100)                                                    {Err(60011002);throw; }
         uint[] memory t_data=new uint[](1);
         t_data[0]=_level;
 
@@ -178,7 +178,7 @@ contract Xindi is XindiInterface{
 
     function setCA (address _account,address _CA){
 
-        if (msg.sender!=m_keys[uint(role.CARole)]) throw;
+        if (msg.sender!=m_keys[uint(role.CARole)])                          {Err(10000000);throw; }
         uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_CA);
 
@@ -195,7 +195,7 @@ contract Xindi is XindiInterface{
 
     function revokeCA (address _account){
 
-        if (msg.sender!=m_keys[uint(role.revokeRole)]) throw;
+        if (msg.sender!=m_keys[uint(role.revokeRole)])                      {Err(10000000);throw; }
         uint[] memory t_data=new uint[](0);
         addOperation(_account,OperationType.revokeCAType,m_accountFun.revokeCA,t_data);
 
@@ -210,7 +210,7 @@ contract Xindi is XindiInterface{
 
     function freeze(address _account){
 
-        if (msg.sender!=m_keys[uint(role.freezeRole)]) throw;
+        if (msg.sender!=m_keys[uint(role.freezeRole)])                      {Err(10000000);throw; }
         uint[] memory t_data=new uint[](0);
         addOperation(_account,OperationType.freezeType,m_accountFun.freeze,t_data);
         Freeze(_account);
@@ -226,7 +226,7 @@ contract Xindi is XindiInterface{
 
     function unfreeze(address _account){
 
-        if (msg.sender!=m_keys[uint(role.unfreezeRole)]) throw;
+        if (msg.sender!=m_keys[uint(role.unfreezeRole)])                    {Err(10000000);throw; }
         uint[] memory t_data=new uint[](0);
         addOperation(_account,OperationType.unfreezeType,m_accountFun.unfreeze,t_data);
         Unfreeze(_account);
@@ -254,6 +254,17 @@ contract Xindi is XindiInterface{
     function getRole(role _role)constant returns(address){
 
         return m_keys[uint(_role)];
+
+    }
+
+    function summary1()constant returns(address[]){
+
+        address[] memory res= new address[](16);
+
+        for(uint i=0;i<16;i++)
+            res[i]=m_keys[i];
+
+        return (res);
 
     }
 

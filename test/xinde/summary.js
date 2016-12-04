@@ -5,7 +5,7 @@ contract('xindi summary', function(accounts) {
 
     
     it("get resetMe operation ", function(){
-
+        console.log(xindedata)
         var xinde=Xindi.at(xindedata);
         xinde.getOperationAmounts_resetMe.call().then(function(res){
             console.log("wait resetMe amounts :",res.toString(10))

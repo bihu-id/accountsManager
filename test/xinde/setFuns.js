@@ -8,17 +8,16 @@ contract('set xindi funs', function(accounts) {
     var XindiFuns=funs.Xindi;
     it("deploy xinde logic",function(){
 
-        return Xinde.new().then(function(instance){
+        return Xindi.new().then(function(instance){
             var porxy=LogicPorxy.at(xindeporxy)
             console.log("xindi logic:",instance.address);
+            var addr=instance.address;
+            //addr='0x06e115285a6793db09be46df83c021c100f8324b'
             return XindiFuns.forEach(function(fun){
                 //console.log(xindelogic)
-                porxy.setfun(instance.address,fun.sig,fun.resSize,fun.gas,{from:accounts[0],gas:500000}).then(function(tx){
-                    console.log(fun.name)
-                    console.log(web3.eth.getTransactionReceipt(tx))
-
-                });
-            })
+                porxy.setfun(addr,fun.sig,fun.resSize,fun.gas,{from:accounts[0],gas:150000}).then(function(tx){
+                    console.log(tx)
+                })
         })
     });
     /*it("deploy account logic",function(){
@@ -33,4 +32,5 @@ contract('set xindi funs', function(accounts) {
      })
      });*/
 
+    })
 })

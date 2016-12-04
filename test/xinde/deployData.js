@@ -17,13 +17,6 @@ contract('deploy xindi data', function(accounts) {
         console.log('xindeporxy:'+'"'+xindeporxy+'",')
         console.log('xindedata:'+'"'+xindedata+'",')
     });
-
-    it("xinde init", function(){
-
-        var xinde=Xindi.at(xindedata);
-        return xinde.init({from:accounts[0],gas:10000000}).then(function(tx){
-            //console.log(xinde.getTransactionReceipt(tx));
-        })
-    });
+    
 
 })
