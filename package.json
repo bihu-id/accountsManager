@@ -15,5 +15,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "solc": "^0.4.6"
+  }
 }
