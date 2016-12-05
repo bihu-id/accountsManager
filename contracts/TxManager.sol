@@ -13,8 +13,6 @@ contract TxManager is BaseLogic {
     modifier ifCore() {if(msg.sender != m_core)throw; _;}
     modifier ifOwner() {if(msg.sender != m_owner)throw; _;}
     */
-    function ifCore() internal{if(uint(msg.sender) != m_core)         {Err(10000000);throw; }}
-    function ifOwner()internal {if(uint(msg.sender) != m_owner)       {Err(10000000);throw; }}
 
     function init(){
 
@@ -26,13 +24,6 @@ contract TxManager is BaseLogic {
 
     }
 
-    function resetOwner(uint _newOwner){
-
-        ifCore();
-        m_owner=_newOwner;
-
-    }
-
     function pass(uint _account,uint _hash){
 
         ifCore();
@@ -40,14 +31,6 @@ contract TxManager is BaseLogic {
         t_account.setPass(_hash);
 
     }
-
-    function resetCore(uint _newCore){
-
-        ifCore();
-        m_core=_newCore;
-
-    }
-
 
     function summary()constant returns(uint _owner,uint _core){
 

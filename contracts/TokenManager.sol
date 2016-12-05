@@ -1,5 +1,6 @@
 import "Token.sol";
 import "BaseManager_Token.sol";
+import "AccountManager.sol";
 
 contract TokenManagerInterface is BaseManager_Token {
 
@@ -16,22 +17,22 @@ contract TokenManagerInterface is BaseManager_Token {
 
     enum Fun{
 
-        freeze,
+        freeze,         //0
 
-        unfreeze,
+        unfreeze,       //1
 
-        forceTransfer
+        forceTransfer   //2
 
     }
 
-    // core of this contract
-    address m_core;
-
     // core of token contracts, core of token contracts can force transfer balance
-    address m_coreToken;
+    //address m_coreToken;
 
     // xindi contract xindi contract can set tokenAble;
     address m_xindi;
+
+    // call accountManager to check account have right to create token
+    address m_accountManager;
 
     // Min term of token before expire
     uint m_MinTerm;
@@ -42,17 +43,20 @@ contract TokenManagerInterface is BaseManager_Token {
     //total amounts of symbols
     uint m_amounts=0;
 
+    //record the gas need of function call
+    mapping(uint=>uint) m_gasNeed;
+
     //the account (contract address) can create token
     mapping(address=>uint) m_tokenAble;
 
     //record relationship between id and tokens;
     mapping(uint=>TokenSurmmary) m_tokenSurmmarys;
 
-    //symbol=>ids
-    mapping(string=>uint) m_symols;
+    //symbol=>ids// recorede symbol if use
+    mapping(bytes32=>uint) m_symbols;
 
-    //record add symbols No.=>id
-    mapping(uint=>uint ) m_ids;
+    //record add id=>symbol
+    mapping(uint=>bytes32 ) m_ids;
 
     // Null address
     TokenSurmmary tokenSurmmaryNull;
@@ -64,7 +68,6 @@ contract TokenManagerInterface is BaseManager_Token {
 
     /// @notice create token ;                                                  创建token
     /// @param _symbol symbol of token;                                         token代号,不可重复
-    /// @param _id id of token ,0~47 is the id of token , 48~63 is token type;
     /// token id 不可重复,0~47位是token的ID代号,48~63位是TOKEN的类型代号,可由用户自由选择
     /// @param _maxSupply max supply of token can not been change ;            token的最大供应量,
     /// @param _precision precsion of token ;                                  token的精度,精度*总量<2^64 考虑将来使用64位虚拟机
@@ -74,8 +77,8 @@ contract TokenManagerInterface is BaseManager_Token {
     /// @param _description                                                           资产简单描述
     /// @param _hash hash of token contract                                           资产合同HASH
     function createToken(
-        string _symbol,
-        uint _id,
+        bytes32 _symbol,
+        /*uint _id,*/
         uint _maxSupply,
         uint _precision,
         uint _currentSupply,
@@ -86,7 +89,7 @@ contract TokenManagerInterface is BaseManager_Token {
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、
     /// @param _amounts 可以创建资产总个数,
-    function setTokenAble(address _account,uint _amounts);
+    //function setTokenAble(address _account,uint _amounts);
 
     /// @notice 获得账户可以创建多少个资产 ;
     /// @param _account 账户
@@ -96,10 +99,9 @@ contract TokenManagerInterface is BaseManager_Token {
 
     /// @notice 设置合约的参数 ;
     /// @param _xindi xindi合约地址,xindi合约能够调用setTokenAble
-    /// @param _coreToken 资产账户_core ,通常是本合约
     /// @param _MinTerm 默认的token 最短有效期,
     /// @param _limit 最大显示多个
-    function setOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit);
+   function setOption(address _xindi,address _accountManager,uint _MinTerm,uint _limit);
 
     /// @notice 获得TOKEN的地址
     /// @param _id token Id
@@ -113,18 +115,18 @@ contract TokenManagerInterface is BaseManager_Token {
      /// @return _tokenAddress  地址的合约地址
     function getTokenSurmmary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
 
-     /// @notice                遍历所有的资产ID
+     /// @notice                遍历所有的资产symbol
      /// @param _start          开始的资产顺序
      /// @param _limit          遍历多少个资产
-     /// @return uint[]         返回遍历资产的ID
-    function getTokenIds(uint _start,uint _limit)constant returns(uint[]);
+     /// @return bytes32[]      返回遍历资产的symbol
+    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]);
 
-     /// @notice                获得本合约的概况
-     /// @return xindi          Xindi合约地址
-     /// @return _coreToken     资产合约的core
-     /// @return _MinTerm       最小合约过期时间
-     /// @return _limit         最大遍历合约ID数量
-    function getOption()constant returns (address _xindi,address _coreToken,uint _MinTerm,uint _tokenAmounts,uint _limit);
+     /// @notice                    获得本合约的概况
+     /// @return xindi              Xindi合约地址
+     /// @return _accountManager    账户账户合约的core
+     /// @return _MinTerm           最小合约过期时间
+     /// @return _limit             最大遍历合约ID数量
+    function getOption()constant returns (address _xindi,address _accountManager,uint _MinTerm,uint _tokenAmounts,uint _limit);
 
     /// @notice         获得本合约的8个管理Keys 地址
     /// @return  _keys  8个管理Keys
@@ -147,10 +149,10 @@ contract TokenManagerInterface is BaseManager_Token {
     /// @param _value   转移数量,包含精度
     function forceTransfer(address _token,address _from,address _to,uint _value);
 
-    event SetOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit);
-    event SetTokenAble(address _account,uint _tokenAmounts);
+    event SetOption(address _xindi,address _accountManager,uint _MinTerm,uint _limit);
+    //event SetTokenAble(address _account,uint _tokenAmounts);
     event CreateToken(address _issuer,
-                    string _symbol,
+                    bytes32 _symbol,
                     uint _id,
                     uint _maxSupply,
                     uint _precision,
@@ -165,34 +167,49 @@ contract TokenManagerInterface is BaseManager_Token {
     event Freeze(address _Token,address _account);
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
+    event SetFunGas(uint _fun,uint _gas);
 }
 
 contract TokenManager is TokenManagerInterface{
 
     //modifier ifCore() {if(msg.sender != m_core)                       {Err(10000000);throw; _;}}
-    function IfCore()internal {if(msg.sender != m_core)                 {Err(10000000);throw; }}
     function init(address _xindi){
 
         beforeInit();
-        m_core=msg.sender;
+        m_core=uint(msg.sender);
         m_xindi=_xindi;
-        uint[] memory t_res=new uint[](2);
+
+        m_gasNeed[uint(Fun.freeze)]=1500000;
+        m_gasNeed[uint(Fun.unfreeze)]=1500000;
+        m_gasNeed[uint(Fun.forceTransfer)]=1500000;
+
+        uint[] memory t_res=new uint[](3);
         t_res[0]=uint(m_core);
         t_res[1]=uint(m_xindi);
+        t_res[1]=uint(1500000);
 
         afterInit(t_res);
 
     }
+
+    function setFunGas(uint _fun,uint _gas){
+
+        ifOwner();
+        m_gasNeed[_fun]=_gas;
+        SetFunGas(_fun,_gas);
+
+    }
+
     function setFunSig(Fun _fun ,uint _sig){
 
-        IfCore();
+        ifCore();
         m_fun[uint(_fun)]=_sig;
 
     }
 
     function createToken(
-        string _symbol,
-        uint _id,
+        bytes32 _symbol,
+        /*uint _id,*/
         uint _maxSupply,
         uint _precision,
         uint _currentSupply,
@@ -200,38 +217,43 @@ contract TokenManager is TokenManagerInterface{
         string _description,
         uint  _hash){
 
-        // cannot create token
-        if(tokenAble()==0)                                  {Err(60030001);  throw;}
+        // cannot create token  check it by server
+        //if(tokenAble()==0)                                  {Err(60030001);  throw;}
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_MinTerm))
                                                             {Err(60031001);  throw;}
         // id used
-        if(m_tokenSurmmarys[_id].m_id!=0)                   {Err(60031002);  throw;}
+        //if(m_tokenSurmmarys[_id].m_id!=0)                   {Err(60031002);  throw;}
         // symbol is used
-        if( m_symols[_symbol]>0)                            {Err(60031003);  throw;}
+        if( m_symbols[_symbol]>0)                            {Err(60031003);  throw;}
 
         if(_precision>8)                                    {Err(60031004);  throw;}
         // consider use 64 b VM for efficiency reason
         if(_maxSupply*_precision>=uint64(-1))               {Err(60031005);  throw;}
         if(_currentSupply>_maxSupply)                       {Err(60031006);  throw;}
 
-        Token t = new Token(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,address(m_coreToken));
+        uint t_id=m_amounts+1;
+        Token t = new Token(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this);
         if(t==address(0x0))                                 {Err(60032001);  throw;}
-        m_tokenSurmmarys[_id]=TokenSurmmary(_id,msg.sender,t);
-        m_symols[_symbol]=_id;
-        m_ids[++m_amounts]=_id;
-        m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
+        m_tokenSurmmarys[t_id]=TokenSurmmary(t_id,msg.sender,t);
+        m_symbols[_symbol]=t_id;
+        m_ids[t_id]=_symbol;
+
+        //m_ids[m_amounts]=_id;
+        //m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
         //CreateToken(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
 
     }
 
     function tokenAble()internal returns(uint32){
 
-        uint t=m_tokenAble[msg.sender];
-        return uint32((t-t%uint32(-1))/uint32(-1)-t%uint32(-1));
+
+        //uint t=m_tokenAble[msg.sender];
+        //return uint32((t-t%uint32(-1))/uint32(-1)-t%uint32(-1));
     }
 
-    function setTokenAble(address _account,uint _tokenAmounts){
+
+    /*function setTokenAble(address _account,uint _tokenAmounts){
 
         if(msg.sender!=m_xindi)                       {Err(60030002);  throw;}
         // 0~31 : the account have created how many tokens
@@ -239,7 +261,7 @@ contract TokenManager is TokenManagerInterface{
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
         SetTokenAble(_account,_tokenAmounts);
 
-    }
+    }*/
 
     function getTokenAble(address _account)constant returns(address t_account, uint _amounts){
 
@@ -247,16 +269,16 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function setOption(address _xindi,address _coreToken,uint _MinTerm,uint _limit){
+    function setOption(address _xindi,address _accountManager,uint _MinTerm,uint _limit){
 
-        IfCore();
+        ifCore();
 
         m_MinTerm=_MinTerm;
-        m_coreToken=_coreToken;
         m_xindi=_xindi;
         m_limit=_limit;
+        m_accountManager=_accountManager;
 
-        SetOption(_xindi,_coreToken,_MinTerm,_limit);
+        SetOption(_xindi,_accountManager,_MinTerm,_limit);
 
     }
 
@@ -265,13 +287,14 @@ contract TokenManager is TokenManagerInterface{
         return m_tokenSurmmarys[_id].m_address;
 
     }
+
     function getTokenSurmmary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress){
 
         return (m_tokenSurmmarys[_id].m_id,m_tokenSurmmarys[_id].m_owner,m_tokenSurmmarys[_id].m_address);
 
     }
 
-    function getTokenIds(uint _start,uint _limit)constant returns(uint[]){
+    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]){
 
         uint t_limit=_limit;
         uint t_end;
@@ -281,7 +304,7 @@ contract TokenManager is TokenManagerInterface{
 
         if(t_end>m_amounts)
             t_end=m_amounts;
-        uint[] memory res=new uint[](t_end-_start+1);
+        bytes32[] memory res=new bytes32[](t_end-_start+1);
 
         for(uint i=_start;i<=t_end;i++)
             res[i-_start]=m_ids[i];
@@ -293,7 +316,6 @@ contract TokenManager is TokenManagerInterface{
     function getOption()constant returns (address _xindi,address _coreToken,uint _MinTerm,uint _tokenAmounts,uint _limit){
 
         _xindi=m_xindi;
-        _coreToken=m_coreToken;
         _MinTerm=m_MinTerm;
         _tokenAmounts=m_amounts;
         _limit=m_limit;

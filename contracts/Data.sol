@@ -3,7 +3,10 @@ import "BaseData.sol";
 contract Data is BaseLogic{
 
     function Data(uint _porxy){
+
         porxy=_porxy;
+        m_core=uint(msg.sender);
+
     }
 
     //TODO  check sha3 function would cover memory 0x00~0x60 ?

@@ -13,13 +13,13 @@ contract AccountInterface is BaseLogic{
     struct AccountData{
 
         //交易阀值
-        uint32 m_Tx_threshold;
+        uint m_Tx_threshold;
 
         //重置拥有者最低阀值
-        uint32 m_Re_threshold;
+        uint m_Re_threshold;
 
         //全部权重总数
-        uint32 m_weightAmount;
+        uint m_weightAmount;
 
         // core can do many operation like refund
         address m_core;
@@ -31,7 +31,7 @@ contract AccountInterface is BaseLogic{
         address m_authority;
 
         //owner address=>weight;
-        mapping(address=>uint32) m_owners;
+        mapping(address=>uint) m_owners;
 
         //ca address
         address m_CA;
@@ -44,7 +44,7 @@ contract AccountInterface is BaseLogic{
         // 1:       e-mail and phone
         // 2:       railname
         // 100+:    have CA
-        uint32 m_level;
+        uint m_level;
 
         status m_status;
     }
@@ -58,7 +58,7 @@ contract AccountInterface is BaseLogic{
     // this is a temporary methods , only support one wait pass tx;
     bytes32   m_waitPassTx;
 
-    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight);
+    function reSetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight);
 
     function transferToken(
         address tokenContract,
@@ -77,7 +77,7 @@ contract AccountInterface is BaseLogic{
     /// @notice set account realname level
     /// @param _level realname level
     /// @return Whether this set was successful or not
-    function setIdLevel(uint32 _level)returns(bool);
+    function setIdLevel(uint _level)returns(bool);
 
     /// @notice freeze an account
     /// @return Whether freeze was successful or not
@@ -111,10 +111,10 @@ contract AccountInterface is BaseLogic{
     /// @return _weight weight of this owner
     function getOwner(uint _no)returns(address _owner,uint _weight);
 
-    event ReSetOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold);
+    event ReSetAccountOwner(address[] _owners,uint[] _weight,uint _Tx_threshold);
     event CreateAccount(    address _owner,
-                            uint32 _weight,
-                            uint32 _Tx_threshold,
+                            uint _weight,
+                            uint _Tx_threshold,
                             address _core,
                             address _coreTx);
 
@@ -133,8 +133,8 @@ contract Account is AccountInterface{
 
     function init(
     address _owner,
-    uint32 _weight,
-    uint32 _Tx_threshold,
+    uint _weight,
+    uint _Tx_threshold,
     address _core,
     address _coreTx)returns (bool)
     {
@@ -151,9 +151,9 @@ contract Account is AccountInterface{
     }
 
     // check owner weight amount make sure tx can been permit
-    function checkOwner(address[] _owners,uint32[] _weight,uint32 _Tx_threshold) internal returns(bool){
+    function checkOwner(address[] _owners,uint[] _weight,uint _Tx_threshold) internal returns(bool){
         if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
-        uint32 t_Tx_threshold=0;
+        uint t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
             t_Tx_threshold+=_weight[i];
         if (t_Tx_threshold<_Tx_threshold)
@@ -162,24 +162,24 @@ contract Account is AccountInterface{
             return true;
     }
 
-    function resetOwner(uint32 _Tx_threshold,address[] _owners,uint32[] _weight) {
+    function reSetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
 
         ifCore();
         if (!checkOwner(_owners,_weight,_Tx_threshold))     {Err(60021001);  throw;}
         uint t_totalWeight=0;
-        for(uint32 i=0;i<_owners.length;i++){
+        for(uint i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
             t_totalWeight+=_weight[i];
         }
         m_data.m_ownerFind=_owners;
-        m_data.m_weightAmount=uint32(t_totalWeight);
-        ReSetOwner(_owners,_weight,_Tx_threshold);
+        m_data.m_weightAmount=uint(t_totalWeight);
+        ReSetAccountOwner(_owners,_weight,_Tx_threshold);
 
     }
 
     function getApprove(address[] _owners)internal returns(bool){
 
-        uint32  t_total=0;
+        uint  t_total=0;
         for(uint i=0;i<_owners.length;i++)
             t_total+=m_data.m_owners[_owners[i]];
         return t_total>=m_data.m_Tx_threshold;
@@ -241,7 +241,7 @@ contract Account is AccountInterface{
 
     }
 
-    function setIdLevel(uint32 _level)  returns(bool){
+    function setIdLevel(uint _level)  returns(bool){
 
         ifCore();
         m_data.m_level=_level;

@@ -17,7 +17,7 @@ contract TokenInterface is Erc20 {
         // core can override transfer value from any address to any address
         address m_core;
         //symbol of taken;
-        string m_symbol;
+        bytes32 m_symbol;
 
         //id of token, the low 48 is id ,and 48-64 is type;
         uint m_id;
@@ -85,7 +85,7 @@ contract TokenInterface is Erc20 {
     /// @return the summary of this token
     function surmmay()constant returns(
         address _issuer,                    //拥有者
-        string _symbol,                     //代号
+        bytes32 _symbol,                     //代号
         uint _id,                           //编号
         uint _maxSupply,                    //最大供应量
         uint _precision,                    //精度
@@ -105,7 +105,7 @@ contract TokenInterface is Erc20 {
 
     event TokenCreate(
         address _issuer,
-        string _symbol,
+        bytes32 _symbol,
         uint _id,
         uint _maxSupply,
         uint _precision,
@@ -145,7 +145,7 @@ contract Token is TokenInterface {
 
     function Token(
         address _issuer,
-        string _symbol,
+        bytes32 _symbol,
         uint _id,
         uint _maxSupply,
         uint _precision,
@@ -300,7 +300,7 @@ contract Token is TokenInterface {
 
     function surmmay()constant returns(
         address _issuer,
-        string _symbol,
+        bytes32 _symbol,
         uint _id,
         uint _maxSupply,
         uint _precision,
