@@ -58,7 +58,7 @@ contract AccountInterface is BaseLogic{
     // this is a temporary methods , only support one wait pass tx;
     bytes32   m_waitPassTx;
 
-    function reSetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight);
+    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight);
 
     function transferToken(
         address tokenContract,
@@ -162,7 +162,7 @@ contract Account is AccountInterface{
             return true;
     }
 
-    function reSetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
+    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
 
         ifCore();
         if (!checkOwner(_owners,_weight,_Tx_threshold))     {Err(60021001);  throw;}

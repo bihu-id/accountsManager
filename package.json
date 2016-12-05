@@ -1,0 +1,19 @@
+{
+  "name": "accountsmanager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@139.196.234.239:accountsManager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

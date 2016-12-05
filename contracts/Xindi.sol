@@ -174,7 +174,7 @@ contract Xindi is XindiInterface{
             _owners[i]=address(_data[1+i]);
             _weight[i]=uint(_data[1+i+t_len]);
         }
-        t_a.resetOwner.gas(3000000)(_data[0],_owners,_weight);
+        t_a.resetAccountOwner.gas(3000000)(_data[0],_owners,_weight);
 
     }
 
