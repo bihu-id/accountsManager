@@ -1,11 +1,12 @@
 var Address={
     //remote:
-    xindeporxy:"0xf64c84195f992ccfcaa607b255e8570c47351ead",
-    xindedata:"0x70f9de604e6f8ec26f474ca08e1dc38099ce058a",
+    //xindeporxy:"0xf64c84195f992ccfcaa607b255e8570c47351ead",
+    //xindedata:"0x70f9de604e6f8ec26f474ca08e1dc38099ce058a",
 
     //local
-    //xindeporxy:"0xa47208caf9d58f8a98332d8227a66d40db28d50a",
-    //xindedata:"0x040a1d455be4c6a7356bceaa57961ed287101349",
+    xindeporxy:"0x66951d99a71a6140e164cf6c55807a6b34cfb62d",
+    xindedata:"0x7d023692b5d4b6003d494cf4bb350b45800a2847",
+
 
 
     accountManagerporxy:"0x4fa72c2c29a1e2221e6c00986e162c9b6eede432",

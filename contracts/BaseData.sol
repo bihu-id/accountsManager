@@ -38,7 +38,8 @@ contract BaseLogic is BaseData{
 
     }
 
-    function ifCore()internal {if(uint(msg.sender) != m_core)                 {Err(10000000);throw; }}
+    //##resetCore 300000 0
+    function ifCore()internal {if(uint(msg.sender) != m_core)                   {Err(10000000);throw; }}
 
     function ifOwner()internal {if(uint(msg.sender) != m_owner)                 {Err(10000000);throw; }}
 
