@@ -1,7 +1,7 @@
 var fs=require('fs');
 var path = require('path');
 var solc = require('solc');
-var oldAllFuns=require('./../funs.js');
+var oldAllFuns=require('./test/funs.js');
 
 
 var contracts_directory=path.join(process.cwd(),"./contracts");
@@ -82,7 +82,7 @@ fs.readdir("./contracts",function(err,files){
     })
     var raw=JSON.stringify(allFuns,null,4).replace(/\"/g, "")
     var str="var funs=\n"+raw+"\nmodule.exports=funs;";
-    fs.writeFile("./funs.js",str,function (err) {
+    fs.writeFile("./test/funs.js",str,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;
