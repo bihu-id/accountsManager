@@ -17,6 +17,10 @@ var Address=
     TxManagerporxy:"0x7f45f4fa3b18a404aa5940c9004ed6383786c46b",
     TxManagerData:"0x89e409d543d6f912eb9661a26dc323f607b742b9",
 
+    tokonManagerporxy:"0x469ebe02db23086fcc15a96e7069bb9ae8208322",
+    tokonManagerdata:"0x5e9633a6298d93cc7c2db6d9cec2054e6cae04b4",
+
+
     end: 111
 }
 module.exports=Address;

@@ -102,13 +102,13 @@ contract Xindi is XindiInterface{
         m_keys[uint(role.coreRole)]=msg.sender;
         m_keys[uint(role.coreRoleC)]=msg.sender;
 
-        m_funs[0]=Fun(0x62a5af3b,3000000);
-        m_funs[1]=Fun(0xe698fc31,3000000);
-        m_funs[2]=Fun(0x00afc90b,3000000);
-        m_funs[3]=Fun(0x2cab3b98,3000000);
-        m_funs[4]=Fun(0x777af46f,3000000);
-        m_funs[5]=Fun(0xf86cd7ad,3000000);
-        m_funs[6]=Fun(0xf86cd7ad,3000000);
+        m_funs[uint(FunType.freeze)]=Fun(0x62a5af3b,50000);
+        m_funs[uint(FunType.revokeCA)]=Fun(0xe698fc31,80000);
+        m_funs[uint(FunType.reSet)]=Fun(0x00afc90b,300000);
+        m_funs[uint(FunType.setCA)]=Fun(0x2cab3b98,100000);
+        m_funs[uint(FunType.setIdLevel)]=Fun(0x777af46f,100000);
+        m_funs[uint(FunType.setPass)]=Fun(0xf86cd7ad,100000);
+        m_funs[uint(FunType.unfreeze)]=Fun(0xf86cd7ad,100000);
 
         uint[] memory t_res=new uint[](2) ;
 
@@ -174,7 +174,7 @@ contract Xindi is XindiInterface{
             _owners[i]=address(_data[1+i]);
             _weight[i]=uint(_data[1+i+t_len]);
         }
-        t_a.resetAccountOwner.gas(3000000)(_data[0],_owners,_weight);
+        t_a.resetAccountOwner.gas(msg.gas-20000)(_data[0],_owners,_weight);
 
     }
 
@@ -193,7 +193,7 @@ contract Xindi is XindiInterface{
 
         Account t_a=Account(_account);
 
-        t_a.setIdLevel.gas(5000000)(uint(_data[0]));
+        t_a.setIdLevel.gas(msg.gas-20000)(uint(_data[0]));
 
     }
 
@@ -210,7 +210,7 @@ contract Xindi is XindiInterface{
     function setCAC (address _account,uint[] _data)internal{
 
         Account t_a=Account(_account);
-        t_a.setCA.gas(3000000)(address(_data[0]));
+        t_a.setCA.gas(msg.gas-20000)(address(_data[0]));
 
     }
 
@@ -225,7 +225,7 @@ contract Xindi is XindiInterface{
     function revokeCAC (address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.revokeCA.gas(3000000)();
+        t_a.revokeCA.gas(msg.gas-20000)();
 
     }
 
@@ -241,7 +241,7 @@ contract Xindi is XindiInterface{
     function freezeC(address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.freeze.gas(3000000)();
+        t_a.freeze.gas(msg.gas-20000)();
 
     }
 
@@ -257,7 +257,7 @@ contract Xindi is XindiInterface{
     function unfreezeC(address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.unfreeze.gas(3000000)();
+        t_a.unfreeze.gas(msg.gas-20000)();
 
     }
 

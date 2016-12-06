@@ -269,7 +269,7 @@ var funs=
             name: 'comfirm(address,uint256)',
             sig: 0x6db1e2f0,
             resSize: 32,
-            gas: 2000000
+            gas: 3000000
         },
         createToken: {
             name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256)',
@@ -453,7 +453,7 @@ var funs=
             name: 'comfirm(address,uint256)',
             sig: 0x6db1e2f0,
             resSize: 32,
-            gas: 200000
+            gas: 1200000
         },
         freeze: {
             name: 'freeze(address)',
