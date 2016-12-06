@@ -18,7 +18,7 @@ contract('set account and accountManager funs', function(accounts) {
             return keys.forEach(function (k) {
                 //console.log(xindelogic)
                 var fun=Funs[k]
-                porxy.setfun(addr, fun.sig, fun.resSize, fun.gas, {from: accounts[0], gas: 150000}).then(function (tx) {
+                porxy.setfun(addr, fun.sig, fun.resSize, {from: accounts[0], gas: 150000}).then(function (tx) {
                     console.log(tx)
                 })
             })
@@ -35,7 +35,7 @@ contract('set account and accountManager funs', function(accounts) {
             return keys.forEach(function (k) {
                 //console.log(xindelogic)
                 var fun=FunsAccount[k]
-                porxy.setfun(addr, fun.sig, fun.resSize, fun.gas, {from: accounts[0], gas: 150000}).then(function (tx) {
+                porxy.setfun(addr, fun.sig, fun.resSize, {from: accounts[0], gas: 150000}).then(function (tx) {
                     console.log(tx)
                 })
             })

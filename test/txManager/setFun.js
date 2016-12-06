@@ -11,7 +11,7 @@ contract('deploy TxManager data', function(accounts) {
         return TxManager.new().then(function(instance){
             return funs.forEach(function(fun){
                 console.log(fun.name)
-                return porxy.setfun(instance.address,fun.sig,fun.resSize,fun.gas,{from:accounts[0]}).then(function(tx){
+                return porxy.setfun(instance.address,fun.sig,fun.resSize,{from:accounts[0]}).then(function(tx){
                     console.log(web3.eth.getTransactionReceipt(tx));
                 })
             })
