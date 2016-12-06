@@ -58,6 +58,7 @@ contract AccountInterface is BaseLogic{
     // this is a temporary methods , only support one wait pass tx;
     bytes32   m_waitPassTx;
 
+    uint      m_other;
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight);
 
     function transferToken(
@@ -72,7 +73,7 @@ contract AccountInterface is BaseLogic{
     /// @notice set pass a Tx
     /// @param _hash hash of Tx
     /// @return Whether this set was successful or not
-    function setPass(uint _hash)returns (bool);
+    function setPass(uint _hash,uint _other) returns (bool);
 
     /// @notice set account realname level
     /// @param _level realname level
@@ -186,6 +187,27 @@ contract Account is AccountInterface{
 
     }
 
+    function createToken(
+        bytes32 _symbol,
+        uint _maxSupply,
+        uint _precision,
+        uint _currentSupply,
+        uint  _closingTime,
+        string _description,
+        uint  _hash)
+        {
+            //checkPass(sha3(msg.data));
+            uint t_address =m_other;
+            assembly{
+                mstore(0x160,0x9507d39a)
+                calldatacopy(0x180,0x04,calldatasize)
+                call(gas,t_address,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)
+
+            }
+
+
+        }
+
     function transferToken(
         address tokenContract,
         address _to,
@@ -193,7 +215,7 @@ contract Account is AccountInterface{
     {
         iffreeze();
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -207,7 +229,7 @@ contract Account is AccountInterface{
 
         iffreeze();
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -221,7 +243,7 @@ contract Account is AccountInterface{
 
         iffreeze();
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -231,12 +253,13 @@ contract Account is AccountInterface{
 
     }
 
-    function setPass(uint _hash) returns (bool){
+    function setPass(uint _hash,uint _other) returns (bool){
 
         iffreeze();
         ifCoreTx();
         if(msg.sender!=m_data.m_coreTx) throw;
             m_waitPassTx=bytes32(_hash);
+            m_other=_other;
         return true;
 
     }

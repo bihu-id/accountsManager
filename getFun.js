@@ -35,13 +35,13 @@ fs.readdir("./contracts",function(err,files){
             input[file] = fs.readFileSync(path.join(contracts_directory ,file), 'utf8');
     }
 
-    
+    //console.log(input)
     var outputs = solc.compile({sources: input}, 1);
     //console.log(JSON.stringify(outputs,null,2))
     Object.keys(outputs)
     var contracts=outputs.contracts;
     //console.log(Object.keys(contracts))
-
+    console.log(outputs.contracts)
     Object.keys(contracts).forEach(function(contractKey){
 
         //console.log(contractKey)

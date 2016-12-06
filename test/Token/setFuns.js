@@ -1,11 +1,11 @@
 address=require("./../address.js")
-funs=require("./../funs.js")
+Funs=require("./../funs.js")
 contract('set xindi funs', function(accounts) {
 
     var tokonManagerporxy = address.tokonManagerporxy
     var tokonManagerdata = address.tokonManagerdata
-
-    var XindiFuns=funs.Xindi;
+    
+    var funs=Funs.token;
 
     it("deploy xinde logic",function(){
 

@@ -5,20 +5,21 @@ var Address=
     //xindedata:"0xe8d135016f61b5841f8e3f37df9ade9605c6eff9",
 
     //local
-    xindeporxy:"0xfb5f3e54f97f965cce3dc3922f0b21b8a3c14681",
-    xindedata:"0xba37f87b20af975d2d31d68fed4005fea4f6c8c7",
+    xindeporxy:"0x9bacac6db1cf638d8ebb7b731a22c299cd3eb956",
+    xindedata:"0xf9d4e5165bda44076e0d82b95266fb675bfc43ee",
+
+    accountManagerporxy:"0x36c42f317981178f06c65d4536f65aab6956f445",
+    accountManager:"0x5c8c5d792d4c302991025d043ac2941546ae0ae7",
+    accountPorxy:"0x5170b50508aa33bc55371835cf278f1e4c8d88ba",
 
 
-    accountManagerporxy:"0x9fa329257844a712f5e98a254a5aed11291b62f2",
-    accountManager:"0x96c1ab608c7ca2f614a46d80b5bb13cff2e40a05",
-    accountPorxy:"0x1682bfc01a271f105addb52a0a501394ce3eca2f",
+    TxManagerporxy:"0xab58ce0644e8324e498e2fecbc43792e9b1c931a",
+    TxManagerData:"0x53ca8bfc11318d4db9e10617e1d78cbf1688c880",
 
 
-    TxManagerporxy:"0x7f45f4fa3b18a404aa5940c9004ed6383786c46b",
-    TxManagerData:"0x89e409d543d6f912eb9661a26dc323f607b742b9",
+    tokonManagerporxy:"0xe4f6774c4b7a9f0c9045b70b09f2ccd91697d5d0",
+    tokonManagerdata:"0x741758d1da37d8d7d62fa56caa0e86f5808b7164",
 
-    tokonManagerporxy:"0x469ebe02db23086fcc15a96e7069bb9ae8208322",
-    tokonManagerdata:"0x5e9633a6298d93cc7c2db6d9cec2054e6cae04b4",
 
 
     end: 111
