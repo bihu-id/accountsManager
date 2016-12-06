@@ -26,7 +26,7 @@ contract TxManager is BaseLogic {
 
     function pass(uint _account,uint _hash){
 
-        ifCore();
+        ifOwner();
         Account t_account=Account(address(_account));
         t_account.setPass(_hash);
 

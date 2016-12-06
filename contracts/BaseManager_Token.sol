@@ -76,7 +76,7 @@ contract BaseManager_Token is BaseManagerInterface,RoleDefine_Token,Err{
 
     }
 
-    function ResetMeReject(address _key,uint _no){
+    function resetMeReject(address _key,uint _no){
 
         if(msg.sender!=m_keys[uint(role.coreRoleC)]) throw;
         if(m_operations_resetMe[_no].m_key!=_key) throw;

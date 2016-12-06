@@ -278,15 +278,4 @@ contract Xindi is XindiInterface{
 
     }
 
-    function summary1()constant returns(address[]){
-
-        address[] memory res= new address[](16);
-
-        for(uint i=0;i<16;i++)
-            res[i]=m_keys[i];
-
-        return (res);
-
-    }
-
 }

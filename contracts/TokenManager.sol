@@ -85,7 +85,7 @@ contract TokenManagerInterface is BaseManager_Token {
         uint  _closingTime,
         string _description,
         uint  _hash);
-
+/*
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、
     /// @param _amounts 可以创建资产总个数,
@@ -95,8 +95,8 @@ contract TokenManagerInterface is BaseManager_Token {
     /// @param _account 账户
     /// @return t_account 账户
     /// @return _amounts 可以创建资产总个数,
-    function getTokenAble(address _account)constant returns(address t_account, uint _amounts);
-
+    //function getTokenAble(address _account)constant returns(address t_account, uint _amounts);
+*/
     /// @notice 设置合约的参数 ;
     /// @param _xindi xindi合约地址,xindi合约能够调用setTokenAble
     /// @param _MinTerm 默认的token 最短有效期,
@@ -130,7 +130,7 @@ contract TokenManagerInterface is BaseManager_Token {
 
     /// @notice         获得本合约的8个管理Keys 地址
     /// @return  _keys  8个管理Keys
-    function get_keys()constant returns(address[] _keys);
+    function getKeys()constant returns(address[] _keys);
 
     /// @notice         冻结某个账户持有的资产
     /// @param _token   资产合约的地址
@@ -263,11 +263,11 @@ contract TokenManager is TokenManagerInterface{
 
     }*/
 
-    function getTokenAble(address _account)constant returns(address t_account, uint _amounts){
+    /*function getTokenAble(address _account)constant returns(address t_account, uint _amounts){
 
         return (_account m_tokenAble[_account]);
 
-    }
+    }*/
 
     function setOption(address _xindi,address _accountManager,uint _MinTerm,uint _limit){
 
@@ -313,9 +313,10 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function getOption()constant returns (address _xindi,address _coreToken,uint _MinTerm,uint _tokenAmounts,uint _limit){
+    function getOption()constant returns (address _xindi,address _accountManager,uint _MinTerm,uint _tokenAmounts,uint _limit){
 
         _xindi=m_xindi;
+        _accountManager=m_accountManager;
         _MinTerm=m_MinTerm;
         _tokenAmounts=m_amounts;
         _limit=m_limit;
@@ -323,7 +324,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function get_keys()constant returns(address[] _keys){
+    function getKeys()constant returns(address[] _keys){
 
         address[] memory t_keys=new address[](8);
         for(uint32 i=0;i<8;i++)

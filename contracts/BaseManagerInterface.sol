@@ -62,10 +62,6 @@ contract BaseManagerInterface is BaseLogic {
     mapping(uint=>uint) m_waitComfirms_resetMe;
 
     mapping(uint=>address) m_keys;
-    //please do not add any
-        /// @notice init xinde keys and account function sig;初始化合约,只会第一调用时生效
-    function init();
-
 
     /// @notice reset all address by core of this contract; 重置Xinde合约的KEY
     /// @param _keyAddress the new address of roler;        新的地址

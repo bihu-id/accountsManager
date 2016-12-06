@@ -65,9 +65,9 @@ fs.readdir("./contracts",function(err,files){
                 //console.log("contract :\n",contractKey,"fun external:\n",contracts[contractKey]["gasEstimates"].external)
                 //console.log(k)
                 if(contracts[contractKey]["gasEstimates"].external[k]!=undefined)
-                    fun["gas"]=contracts[contractKey]["gasEstimates"].external[k]*2+100000;
+                    fun["gas"]=contracts[contractKey]["gasEstimates"].external[k]*2+150000;
                 else
-                    fun["gas"]=300000
+                    fun["gas"]=600000
                 if(oldAllFuns[contractKey]!=undefined)
                     if(oldAllFuns[contractKey][purek]!=undefined)
                         if(oldAllFuns[contractKey][purek].gas!=undefined&&oldAllFuns[contractKey][purek].gas!=0)
