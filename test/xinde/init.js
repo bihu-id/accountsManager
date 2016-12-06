@@ -7,7 +7,7 @@ contract('init xindi', function(accounts) {
 
         var xinde=Xindi.at(xindedata);
         return xinde.init({from:accounts[0],gas:10000000}).then(function(tx){
-            //console.log(xinde.getTransactionReceipt(tx));
+            console.log(web3.eth.getTransactionReceipt(tx));
         })
     });
 

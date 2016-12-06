@@ -1,5 +1,97 @@
 var funs=
 {
+    Account: {
+        destroyToken: {
+            name: 'destroyToken(address,uint256)',
+            sig: 0x9b1ad792,
+            resSize: 32,
+            gas: 600000
+        },
+        freeze: {
+            name: 'freeze()',
+            sig: 0x62a5af3b,
+            resSize: 32,
+            gas: 190910
+        },
+        getOwner: {
+            name: 'getOwner(uint256)',
+            sig: 0xc41a360a,
+            resSize: 32*2,
+            gas: 151744
+        },
+        init: {
+            name: 'init(address,uint256,uint256,address,address)',
+            sig: 0x01c580e4,
+            resSize: 32,
+            gas: 600000
+        },
+        issuerMoreToken: {
+            name: 'issuerMoreToken(address,uint256)',
+            sig: 0xfb9f28b5,
+            resSize: 32,
+            gas: 600000
+        },
+        resetAccountOwner: {
+            name: 'resetAccountOwner(uint256,address[],uint256[])',
+            sig: 0xa9704520,
+            resSize: 32,
+            gas: 1000000
+        },
+        resetCore: {
+            name: 'resetCore(uint256)',
+            sig: 0xe3f18df3,
+            resSize: 32,
+            gas: 193840
+        },
+        resetOwner: {
+            name: 'resetOwner(uint256)',
+            sig: 0x959725d1,
+            resSize: 32,
+            gas: 193620
+        },
+        revokeCA: {
+            name: 'revokeCA()',
+            sig: 0xe698fc31,
+            resSize: 32,
+            gas: 231656
+        },
+        setCA: {
+            name: 'setCA(address)',
+            sig: 0x2cab3b98,
+            resSize: 32,
+            gas: 231322
+        },
+        setIdLevel: {
+            name: 'setIdLevel(uint256)',
+            sig: 0x7a033648,
+            resSize: 32,
+            gas: 190900
+        },
+        setPass: {
+            name: 'setPass(uint256)',
+            sig: 0xf86cd7ad,
+            resSize: 32,
+            gas: 600000
+        },
+        summary: {
+            name: 'summary()',
+            sig: 0xb16a867c,
+            resSize: 32*21,
+            gas: 1000000
+        },
+        transferToken: {
+            name: 'transferToken(address,address,uint256)',
+            sig: 0xf5537ede,
+            resSize: 32,
+            gas: 600000
+        },
+        unfreeze: {
+            name: 'unfreeze()',
+            sig: 0x6a28f000,
+            resSize: 32,
+            gas: 190942
+        }
+    },
     AccountManager: {
         accountAmount: {
             name: 'accountAmount()',
@@ -11,7 +103,7 @@ var funs=
             name: 'createAccount(address,uint32,uint32)',
             sig: 0xe27d0cd8,
             resSize: 32,
-            gas: 600000
+            gas: 2000000
         },
         getAccountAddress: {
             name: 'getAccountAddress(uint256)',
@@ -46,7 +138,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 96,
+            resSize: 32*5,
             gas: 151490
         }
     },
@@ -486,7 +578,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 512,
+            resSize: 576,
             gas: 600000
         },
         unfreeze: {

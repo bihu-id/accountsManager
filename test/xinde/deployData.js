@@ -1,3 +1,7 @@
+var fs=require('fs');
+var path = require('path');
+var address=require('./../address.js')
+
 contract('deploy xindi data', function(accounts) {
 
     var xindeporxy;
@@ -13,10 +17,19 @@ contract('deploy xindi data', function(accounts) {
         });
     });
 
-    it ("console",function(){
+    it ("console and set",function(){
         console.log('xindeporxy:'+'"'+xindeporxy+'",')
         console.log('xindedata:'+'"'+xindedata+'",')
+        address["xindeporxy"]=xindeporxy;
+        address["xindedata"]=xindedata;
+
+/*        var raw=JSON.stringify(address,null,4).replace(/\"/g, "")
+        var str="var Address=\n"+raw+"\nmodule.exports=Address;";
+        fs.writeFile("./test/address.js",str,function (err) {
+            if (err) throw err ;
+            console.log("File Saved !"); //文件被保存
+        }) ;
+        */
     });
-    
 
 })

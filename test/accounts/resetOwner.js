@@ -28,11 +28,12 @@ contract('reset owner of account', function(accounts) {
                 accountmanager.getAccountAddress(1).then(function (res1) {
                     var account = Account.at(res1);
                     console.log("reset owner of",res1.toString(16))
-                    var xinde=Xinde.at(xindedata)
+                    var xinde=Xindi.at(xindedata)
                     return xinde.getRole(0).then(function(res){
                         console.log("use A1 key:",res.toString(16))
                         return xinde.reSet(res1,[accounts[20]],[50],50,{from:res}).then(function(tx){
                             console.log("reset account "+res1.toString(16),"to :",accounts[6]);
+                            console.log(web3.eth.getTransactionReceipt(tx));
                         })
 
                 });
@@ -41,7 +42,7 @@ contract('reset owner of account', function(accounts) {
 
     });
     it("get waiting operation ", function(){
-        var xinde=Xinde.at(xindedata)
+        var xinde=Xindi.at(xindedata)
 
         console.log("operation detail:")
         console.log("No", "account", "           data               ", "status")

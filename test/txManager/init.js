@@ -8,7 +8,7 @@ contract('init', function(accounts) {
 
     it ("init",function(){
         var txManager=TxManager.at(TxManagerData)
-        return txManager.init({from:accounts[18]}).then(function(tx){
+        return txManager.init({from:accounts[0]}).then(function(tx){
             console.log(web3.eth.getTransactionReceipt(tx));
         })
     });

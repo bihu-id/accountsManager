@@ -1,18 +1,18 @@
 address=require("./../address.js")
 funs=require("./../funs.js")
-contract('get xindi funs', function(accounts) {
+contract('get account funs', function(accounts) {
 
-    var xindeporxy = address.xindeporxy
-    var xindedata = address.xindedata
+    var accountManagerporxy = address.accountManagerporxy
+    var accountPorxy = address.accountPorxy
 
-    var XindiFuns=funs.Xindi;
-    it("deploy xinde logic",function(){
-        var porxy=LogicPorxy.at(xindeporxy)
+    var Funs=funs.Account;
+    it("get account  fun",function(){
+        var porxy=LogicPorxy.at(accountPorxy)
         console.log("   name  ","           address        ","return size","gas needed")
-        var keys=Object.keys(XindiFuns)
+        var keys=Object.keys(Funs)
         return keys.forEach(function(k){
             //console.log(xindelogic)
-            var fun=XindiFuns[k];
+            var fun=Funs[k];
             return porxy.get.call(fun.sig).then(function(res){
                 console.log("0x"+res[0].toString(16),res[1].toString(10)/32,res[2].toString(10),fun.name)
 

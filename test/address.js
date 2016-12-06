@@ -1,38 +1,22 @@
-var Address={
-    //remote:
-    //xindeporxy:"0xf64c84195f992ccfcaa607b255e8570c47351ead",
-    //xindedata:"0x70f9de604e6f8ec26f474ca08e1dc38099ce058a",
+var Address=
+{
+    //remote
+    //xindeporxy:"0x8816f4946640902a91f1847cccde0baa232469fc",
+    //xindedata:"0xe8d135016f61b5841f8e3f37df9ade9605c6eff9",
 
     //local
-    xindeporxy:"0x66951d99a71a6140e164cf6c55807a6b34cfb62d",
-    xindedata:"0x7d023692b5d4b6003d494cf4bb350b45800a2847",
+    xindeporxy:"0xf5980def37ce2fd348fbac6fadc864892b786280",
+    xindedata:"0xb5fda975d2ea27b05d1ca657e56915386acd565e",
 
 
-
-    accountManagerporxy:"0x4fa72c2c29a1e2221e6c00986e162c9b6eede432",
-    accountManager:"0xb1ac193229669158847db8fdfaaa3491d7cd3d2e",
-
-    TxManagerporxy:"0x14c7abf30dcde2c38e2992ec699eac63b02c85a6",
-    TxManagerData:"0x10ed3ed81bc8cd696584ab6ec379311da6e3306c",
+    accountManagerporxy:"0x9fa329257844a712f5e98a254a5aed11291b62f2",
+    accountManager:"0x96c1ab608c7ca2f614a46d80b5bb13cff2e40a05",
+    accountPorxy:"0x1682bfc01a271f105addb52a0a501394ce3eca2f",
 
 
-    end:"0x"
+    TxManagerporxy:"0x7f45f4fa3b18a404aa5940c9004ed6383786c46b",
+    TxManagerData:"0x89e409d543d6f912eb9661a26dc323f607b742b9",
 
-
-
-
-
-
-
-    //testrpc
-    /*xindeporxy:"0xc2d5d3d95fed0e6246ae26e16bff8a8d504f538b",
-    xindelogic:"0xf9bd1bd5129904f2801724d96c06ca69cdb02601",
-    xindedata:"0x86d5f71d7b9fc5ddfc3ee18452857399835604ad",
-    accountManager:"0x3b2eae14638616ecabcff9e9d7995b7905c72894",
-    accountlogic:"0x260aff89ece9496927a0b9540a9a83d166b59287",
-    accountporxy:"0xf7b44a0c14f8aa3d1bec24e9011590f2cbc8ccc7"*/
-
-
+    end: 111
 }
-
 module.exports=Address;

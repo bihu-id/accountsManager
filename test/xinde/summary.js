@@ -12,7 +12,6 @@ contract('xindi summary', function(accounts) {
             amount=res[1];
         })
     })
-
     it ("get all waiting operation resetMe",function() {
         var xinde = Xindi.at(xindedata);
 

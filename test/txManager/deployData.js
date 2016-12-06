@@ -24,7 +24,9 @@ contract('deploy TxManager data', function(accounts) {
     it ("set function",function(){
         var porxy=LogicPorxy.at(TxManagerporxy)
         return TxManager.new().then(function(instance){
-            return funs.forEach(function(fun){
+            var keys=Object.keys(funs)
+            return keys.forEach(function(k){
+                var fun =funs[k]
                 return porxy.setfun(instance.address,fun.sig,fun.resSize,fun.gas,{from:accounts[0]}).then(function(tx){
                     console.log(tx);
                 })
@@ -34,7 +36,9 @@ contract('deploy TxManager data', function(accounts) {
     });
     it ("get function",function(){
         var porxy=LogicPorxy.at(TxManagerporxy)
-        return funs.forEach(function(fun){
+        var keys=Object.keys(funs)
+        return keys.forEach(function(k){
+            var fun =funs[k]
             return porxy.get(fun.sig).then(function(res){
                 console.log(res.toString());
             })

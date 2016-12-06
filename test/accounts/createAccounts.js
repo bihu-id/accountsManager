@@ -21,8 +21,9 @@ contract('create account', function(accounts) {
         //var accountManager=AccountManager.at(account_manager);
         var accountmanager=AccountManager.at(accountManager);
 
-        return accountmanager.createAccount(accounts[25],100,100,{from:accounts[0],gas:10000000}).then(function(tx){
-            console.log("create account use owner :",accounts[5]);
+        return accountmanager.createAccount(accounts[25],100,100,{from:accounts[20],gas:10000000}).then(function(tx){
+            console.log("create account use owner :",accounts[25]);
+            console.log(web3.eth.getTransactionReceipt(tx));
         });
 
     });
