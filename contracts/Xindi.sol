@@ -111,16 +111,16 @@ contract Xindi is XindiInterface{
         afterInit(t_res);
     }
 
-    function setFun(uint _fun,uint32 _sig,uint224 _gas){
+    function setFun(uint _fun,uint32 _sig){
 
         if (_fun>=uint(FunType.end))                                        {Err(60011003);throw; }
-        m_funs[_fun]=Fun(_sig,_gas);
+        m_funs[_fun]=_sig;
 
     }
 
-    function getFun(uint _fun)constant returns(bytes32 _sig,uint224 _gas){
+    function getFun(uint _fun)constant returns(bytes32 _sig){
 
-        return(bytes32(m_funs[_fun].m_sig),m_funs[_fun].m_gas);
+        return(bytes32(m_funs[_fun]));
 
     }
 
@@ -153,7 +153,7 @@ contract Xindi is XindiInterface{
                 t_data[i+1+_owners.length]=_weight[i];
             }
 
-        addOperation(_account,OperationType.reSetType,uint(m_funs[uint(FunType.reSet)].m_sig),t_data);
+        addOperation(_account,OperationType.reSetType,uint(m_funs[uint(FunType.reSet)]),t_data);
 
     }
 
@@ -178,7 +178,7 @@ contract Xindi is XindiInterface{
         uint[] memory t_data=new uint[](1);
         t_data[0]=_level;
 
-        addOperation(_account,OperationType.setIdLevelType,m_funs[uint(FunType.setIdLevel)].m_sig,t_data);
+        addOperation(_account,OperationType.setIdLevelType,m_funs[uint(FunType.setIdLevel)],t_data);
 
     }
 
@@ -196,7 +196,7 @@ contract Xindi is XindiInterface{
         uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_CA);
 
-        addOperation(_account,OperationType.setCAType,m_funs[uint(FunType.setCA)].m_sig,t_data);
+        addOperation(_account,OperationType.setCAType,m_funs[uint(FunType.setCA)],t_data);
 
     }
 
@@ -211,7 +211,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.revokeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.revokeCAType,m_funs[uint(FunType.revokeCA)].m_sig,t_data);
+        addOperation(_account,OperationType.revokeCAType,m_funs[uint(FunType.revokeCA)],t_data);
 
     }
 
@@ -226,7 +226,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.freezeType,m_funs[uint(FunType.freeze)].m_sig,t_data);
+        addOperation(_account,OperationType.freezeType,m_funs[uint(FunType.freeze)],t_data);
         Freeze(_account);
 
     }
@@ -242,7 +242,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.unfreezeType,m_funs[uint(FunType.unfreeze)].m_sig,t_data);
+        addOperation(_account,OperationType.unfreezeType,m_funs[uint(FunType.unfreeze)],t_data);
         Unfreeze(_account);
 
     }

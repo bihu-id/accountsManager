@@ -198,7 +198,7 @@ contract Account is AccountInterface{
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
             Token t=Token(tokenContract);
-            t.gas(msg.gas).transfer(_to,_amount);
+            t.transfer.gas(msg.gas)(_to,_amount);
         }
 
     }
@@ -212,7 +212,7 @@ contract Account is AccountInterface{
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
             Token t=Token(tokenContract);
-            t.gas(msg.gas).issueMore(_amount);
+            t.issueMore.gas(msg.gas)(_amount);
         }
 
     }
@@ -226,7 +226,7 @@ contract Account is AccountInterface{
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
             Token t=Token(tokenContract);
-            t.gas(msg.gas).destroy(_amount);
+            t.destroy.gas(msg.gas)(_amount);
         }
 
     }

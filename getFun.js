@@ -49,8 +49,7 @@ fs.readdir("./contracts",function(err,files){
 
             var funs={}
             var funhash=contracts[contractKey].functionHashes
-            console.log(contractKey,"\n",funhash)
-            console.log("gasEstimates:\n",contracts[contractKey]["gasEstimates"])
+
             Object.keys(funhash).forEach(function(k){
 
                 //console.log("fun:",k)
@@ -66,14 +65,6 @@ fs.readdir("./contracts",function(err,files){
 
                 //console.log("contract :\n",contractKey,"fun external:\n",contracts[contractKey]["gasEstimates"].external)
                 //console.log(k)
-                if(contracts[contractKey]["gasEstimates"].external[k]!=undefined)
-                    fun["gas"]=contracts[contractKey]["gasEstimates"].external[k]*2+150000;
-                else
-                    fun["gas"]=600000
-                if(oldAllFuns[contractKey]!=undefined)
-                    if(oldAllFuns[contractKey][purek]!=undefined)
-                        if(oldAllFuns[contractKey][purek].gas!=undefined&&oldAllFuns[contractKey][purek].gas!=0)
-                            fun["gas"]=oldAllFuns[contractKey][purek].gas;
 
                 funs[purek]=fun
                 //console.log(contractKey,funs)
