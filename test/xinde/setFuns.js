@@ -19,7 +19,7 @@ contract('set xindi funs', function(accounts) {
                 //console.log(xindelogic)
                 var fun=XindiFuns[k];
                 porxy.setfun(addr,fun.sig,fun.resSize,{from:accounts[0],gas:150000}).then(function(tx){
-                    console.log(tx)
+                    console.log(web3.eth.getTransactionReceipt(tx));
                 })
         })
     });

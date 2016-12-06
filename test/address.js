@@ -5,8 +5,8 @@ var Address=
     //xindedata:"0xe8d135016f61b5841f8e3f37df9ade9605c6eff9",
 
     //local
-    xindeporxy:"0xf5980def37ce2fd348fbac6fadc864892b786280",
-    xindedata:"0xb5fda975d2ea27b05d1ca657e56915386acd565e",
+    xindeporxy:"0xfb5f3e54f97f965cce3dc3922f0b21b8a3c14681",
+    xindedata:"0xba37f87b20af975d2d31d68fed4005fea4f6c8c7",
 
 
     accountManagerporxy:"0x9fa329257844a712f5e98a254a5aed11291b62f2",

@@ -19,13 +19,6 @@ contract XindiInterface is BaseManager_Xindi{
 
     }
 
-    struct Fun{
-
-        uint32 m_sig;
-        uint224 m_gas;
-
-    }
-
     /*account function sig tabel, notice if the account function change name/parameter
     should update this
     784b452a checkOwner(address[],uint[],uint)
@@ -43,7 +36,7 @@ contract XindiInterface is BaseManager_Xindi{
 
     //recode the operations
 
-    mapping(uint=>Fun) m_funs;
+    mapping(uint=>uint) m_funs;
 
     /// @notice reset owner of account;                     重置用户账户拥有者
     /// @param _account account contract address;           操作的用户合约账号地址
@@ -102,13 +95,13 @@ contract Xindi is XindiInterface{
         m_keys[uint(role.coreRole)]=msg.sender;
         m_keys[uint(role.coreRoleC)]=msg.sender;
 
-        m_funs[uint(FunType.freeze)]=Fun(0x62a5af3b,50000);
-        m_funs[uint(FunType.revokeCA)]=Fun(0xe698fc31,80000);
-        m_funs[uint(FunType.reSet)]=Fun(0x00afc90b,300000);
-        m_funs[uint(FunType.setCA)]=Fun(0x2cab3b98,100000);
-        m_funs[uint(FunType.setIdLevel)]=Fun(0x777af46f,100000);
-        m_funs[uint(FunType.setPass)]=Fun(0xf86cd7ad,100000);
-        m_funs[uint(FunType.unfreeze)]=Fun(0xf86cd7ad,100000);
+        m_funs[uint(FunType.freeze)]=       0x62a5af3b;
+        m_funs[uint(FunType.revokeCA)]=     0xe698fc31;
+        m_funs[uint(FunType.reSet)]=        0x00afc90b;
+        m_funs[uint(FunType.setCA)]=        0x2cab3b98;
+        m_funs[uint(FunType.setIdLevel)]=   0x777af46f;
+        m_funs[uint(FunType.setPass)]=      0xf86cd7ad;
+        m_funs[uint(FunType.unfreeze)]=     0xf86cd7ad;
 
         uint[] memory t_res=new uint[](2) ;
 
@@ -174,7 +167,7 @@ contract Xindi is XindiInterface{
             _owners[i]=address(_data[1+i]);
             _weight[i]=uint(_data[1+i+t_len]);
         }
-        t_a.resetAccountOwner.gas(msg.gas-20000)(_data[0],_owners,_weight);
+        t_a.resetAccountOwner.gas(msg.gas)(_data[0],_owners,_weight);
 
     }
 
@@ -193,7 +186,7 @@ contract Xindi is XindiInterface{
 
         Account t_a=Account(_account);
 
-        t_a.setIdLevel.gas(msg.gas-20000)(uint(_data[0]));
+        t_a.setIdLevel.gas(msg.gas)(uint(_data[0]));
 
     }
 
@@ -210,7 +203,7 @@ contract Xindi is XindiInterface{
     function setCAC (address _account,uint[] _data)internal{
 
         Account t_a=Account(_account);
-        t_a.setCA.gas(msg.gas-20000)(address(_data[0]));
+        t_a.setCA.gas(msg.gas)(address(_data[0]));
 
     }
 
@@ -225,7 +218,7 @@ contract Xindi is XindiInterface{
     function revokeCAC (address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.revokeCA.gas(msg.gas-20000)();
+        t_a.revokeCA.gas(msg.gas)();
 
     }
 
@@ -241,7 +234,7 @@ contract Xindi is XindiInterface{
     function freezeC(address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.freeze.gas(msg.gas-20000)();
+        t_a.freeze.gas(msg.gas)();
 
     }
 
@@ -257,7 +250,7 @@ contract Xindi is XindiInterface{
     function unfreezeC(address _account)internal{
 
         Account t_a=Account(_account);
-        t_a.unfreeze.gas(msg.gas-20000)();
+        t_a.unfreeze.gas(msg.gas)();
 
     }
 

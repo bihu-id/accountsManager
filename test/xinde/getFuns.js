@@ -8,13 +8,13 @@ contract('get xindi funs', function(accounts) {
     var XindiFuns=funs.Xindi;
     it("deploy xinde logic",function(){
         var porxy=LogicPorxy.at(xindeporxy)
-        console.log("   name  ","           address        ","return size","gas needed")
+        console.log("   name  ","           address        ","return size")
         var keys=Object.keys(XindiFuns)
         return keys.forEach(function(k){
             //console.log(xindelogic)
             var fun=XindiFuns[k];
             return porxy.get.call(fun.sig).then(function(res){
-                console.log("0x"+res[0].toString(16),res[1].toString(10)/32,res[2].toString(10),fun.name)
+                console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
 
             });
         })

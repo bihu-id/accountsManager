@@ -36,7 +36,6 @@ contract AccountManager is BaseLogic {
         m_owner=uint(_owner);
         m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
         m_accountAmounts=0;
-        m_createGas=1500000;
 
         uint[] memory t_res=new uint[](6);
         t_res[0]=uint(m_core);
@@ -44,7 +43,6 @@ contract AccountManager is BaseLogic {
         t_res[2]=uint(_accountCore);
         t_res[3]=uint(_accountTxCore);
         t_res[4]=uint(_accountPorxy);
-        t_res[5]=uint(m_createGas);
         afterInit(t_res);
 
     }
@@ -66,7 +64,7 @@ contract AccountManager is BaseLogic {
         //call data is made by Account(logic),but send to data (account data)
         Account t_account=Account(t_accountData);
         // check the gas need.
-        if(!t_account.init.gas(m_createGas)(_owner,_weight,_threshold,m_accountCore.m_core,m_accountCore.m_TxCore))
+        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,m_accountCore.m_core,m_accountCore.m_TxCore))
             {Err(60022001);throw;}
         m_accounts[++m_accountAmounts]=t_accountData;
         AccountRecode(m_accountAmounts,m_accounts[m_accountAmounts]);

@@ -179,14 +179,9 @@ contract TokenManager is TokenManagerInterface{
         m_core=uint(msg.sender);
         m_xindi=_xindi;
 
-        m_gasNeed[uint(Fun.freeze)]=1500000;
-        m_gasNeed[uint(Fun.unfreeze)]=1500000;
-        m_gasNeed[uint(Fun.forceTransfer)]=1500000;
-
-        uint[] memory t_res=new uint[](3);
+        uint[] memory t_res=new uint[](2);
         t_res[0]=uint(m_core);
         t_res[1]=uint(m_xindi);
-        t_res[1]=uint(1500000);
 
         afterInit(t_res);
 
@@ -255,7 +250,7 @@ contract TokenManager is TokenManagerInterface{
 
     /*function setTokenAble(address _account,uint _tokenAmounts){
 
-        if(msg.sender!=m_xindi)                       {Err(60030002);  throw;}
+        if(msg.sender!=m_xindi)                                 {Err(60030002);  throw;}
         // 0~31 : the account have created how many tokens
         //32~63 :how many tokens this account can create
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
@@ -366,7 +361,7 @@ contract TokenManager is TokenManagerInterface{
 
         Token t_t=Token(_token);
 
-        t_t.freeze.gas(1000000)(address(_data[0]));
+        t_t.freeze.gas(msg.gas)(address(_data[0]));
 
     }
 
@@ -383,7 +378,7 @@ contract TokenManager is TokenManagerInterface{
     function unfreezeC(address _token,uint [] _data)internal{
 
         Token t_t=Token(_token);
-        t_t.unfreeze.gas(1000000)(address(_data[0]));
+        t_t.unfreeze.gas(msg.gas)(address(_data[0]));
 
     }
 
@@ -401,7 +396,7 @@ contract TokenManager is TokenManagerInterface{
     function forceTransferC(address _token,uint [] _data)internal{
 
         Token t_t=Token(_token);
-        t_t.forceTransfer.gas(1000000)(address(_data[0]),address(_data[1]),_data[2]);
+        t_t.forceTransfer.gas(msg.gas)(address(_data[0]),address(_data[1]),_data[2]);
 
     }
 

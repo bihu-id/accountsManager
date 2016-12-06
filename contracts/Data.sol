@@ -23,7 +23,7 @@ contract Data is BaseLogic{
 
             //call LogicPorxy.get() to get the logic address and fun return result size
             //call(g, a, v, in, insize, out, outsize)
-            //100000: call gas
+            //gas: call gas
             //sload(0x0):logicPorxy address is stored with key 0x0,notice sload derectly to stake ,so do not use memery
             //callvalue: call value
             //0x3c:call data start from 0x3c
@@ -33,7 +33,7 @@ contract Data is BaseLogic{
             //return the logic address is stored on memery from 0x20~0x3F,
             //return fun return result size is stored on memery from 0x40~0x5F,
             //mem free start 0x80
-            call(100000,sload(0x0),callvalue,0x3c, 0x24, 0x20, 0x40)
+            call(gas,sload(0x0),callvalue,0x3c, 0x24, 0x20, 0x40)
 
             //copy call data to memery
             //0x80:copy data to memery start 0x80
