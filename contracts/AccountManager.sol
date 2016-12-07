@@ -1,5 +1,4 @@
 import "Account.sol";
-import "Err.sol";
 import "BaseData.sol";
 
 contract AccountManager is BaseLogic {

@@ -1,5 +1,4 @@
 import "BaseManagerInterface.sol";
-import "Err.sol";
 
 contract RoleDefine_Token{
 
@@ -44,7 +43,7 @@ contract RoleDefine_Token{
 
 }
 
-contract BaseManager_Token is BaseManagerInterface,RoleDefine_Token,Err{
+contract BaseManager_Token is BaseManagerInterface,RoleDefine_Token{
 
     function resetMe(address _keyAddress,uint _role){
 

@@ -1,5 +1,4 @@
 import "BaseManagerInterface.sol";
-import "Err.sol";
 
 contract RoleDefine_Xindi{
 
@@ -71,7 +70,7 @@ contract RoleDefine_Xindi{
 
 }
 
-contract BaseManager_Xindi is BaseManagerInterface,RoleDefine_Xindi,Err{
+contract BaseManager_Xindi is BaseManagerInterface,RoleDefine_Xindi{
 
     function resetMe(address _keyAddress,uint _role){
 

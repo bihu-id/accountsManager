@@ -30,6 +30,7 @@ contract('set account and accountManager funs', function(accounts) {
         return Account.new().then(function (instance) {
             var porxy = LogicPorxy.at(accountPorxy)
             var addr = instance.address;
+            console.log("account logic:",addr)
             //addr='0x06e115285a6793db09be46df83c021c100f8324b'
             var keys=Object.keys(FunsAccount)
             return keys.forEach(function (k) {

@@ -1,5 +1,4 @@
 import "Data.sol";
-import "Err.sol";
 import "Token.sol";
 import "BaseData.sol";
 

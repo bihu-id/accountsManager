@@ -208,7 +208,6 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    event temp(address ,address);
     function createToken(
         bytes32 _symbol,
         /*uint _id,*/
@@ -251,7 +250,7 @@ contract TokenManager is TokenManagerInterface{
 
         CreateToken(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
 
-        temp(msg.sender,d);
+        //temp(msg.sender,d);
         return true;
     }
 

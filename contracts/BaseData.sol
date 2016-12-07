@@ -1,7 +1,7 @@
-import "Err.sol";
+import "Error.sol";
 
 //数据合约必须继承这个类,不能更改这个类,如果更改会导致合约读取数据错误,
-contract BaseData{
+contract BaseData is Error{
 
     // use uint256 to void compiler merge several variable destroy store structure when add new variable when contract upgrade
     uint  porxy;

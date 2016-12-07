@@ -1,5 +1,4 @@
 import "Erc20.sol";
-import "Err.sol";
 import "BaseData.sol";
 
 contract TokenInterface is BaseLogic,Erc20 {
@@ -176,9 +175,9 @@ contract Token is TokenInterface {
 
             uint[] memory t_res=new uint[](1);
             t_res[0]=1;
-            afterInit(t_res);
 
-            //TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
+            //afterInit(t_res);
+            inited=1;
             return true;
         }
 
