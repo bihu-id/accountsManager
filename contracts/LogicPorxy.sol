@@ -5,8 +5,6 @@ contract LogicPorxy{
         uint m_logic;
         // retutn result size of function, 32/0x20 per parameter;
         uint m_resSize;
-        // gas need to run this function
-        uint m_gasNeed;
     }
     //address core and set the logic address and register function
     uint m_coreAddress;
@@ -18,7 +16,7 @@ contract LogicPorxy{
 
     event SetLogic(address _logic);
 
-    event SetFun(uint _fun,uint _resSize ,uint _gasNeed);
+    event SetFun(uint _fun,uint _resSize);
 
     function LogicPorxy(){
 
@@ -35,18 +33,18 @@ contract LogicPorxy{
 
     }
 
-    function setfun(uint _logic,uint _fun,uint _resSize ,uint _gasNeed)onlyCore(){
+    function setfun(uint _logic,uint _fun,uint _resSize )onlyCore(){
 
-        m_funs[_fun]=FunDetail(_logic,_resSize,_gasNeed);
-        SetFun(_fun,_resSize,_gasNeed);
+        m_funs[_fun]=FunDetail(_logic,_resSize);
+        SetFun(_fun,_resSize);
 
     }
 
     // do not change the function name and parameter ,because the sig of this function was hard wirte in Data contract,
-    function get(uint _fun)returns(uint,uint,uint){
+    function get(uint _fun)returns(uint,uint){
 
         //GetFun(_fun,address(m_funs[_fun].m_logic),m_funs[_fun].m_resSize,m_funs[_fun].m_gasNeed);
-        return (m_funs[_fun].m_logic,m_funs[_fun].m_resSize,m_funs[_fun].m_gasNeed);
+        return (m_funs[_fun].m_logic,m_funs[_fun].m_resSize);
 
     }
 
