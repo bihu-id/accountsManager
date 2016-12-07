@@ -213,7 +213,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 32*12
+            resSize: 32*20
         },
         totalSupply: {
             name: 'totalSupply()',

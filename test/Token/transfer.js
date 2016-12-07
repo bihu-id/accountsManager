@@ -16,7 +16,7 @@ contract('transfer', function(accounts) {
         var tokenManager=TokenManager.at(tokenmanager);
 
 
-            tokenManager.getTokenSurmmary(1).then(function(res1){
+            tokenManager.getTokenSummary(1).then(function(res1){
                 var token=Token.at(res1[2]);
                 token.summary().then(function(res2){
                     console.log(res2.toString())

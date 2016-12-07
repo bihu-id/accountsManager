@@ -310,31 +310,31 @@ contract Token is TokenInterface {
     }
 
     function summary()constant returns(
-        uint _id,
-        address _issuer,
-        bytes32 _symbol,
-        uint _maxSupply,
-        uint _precision,
-        uint _currentSupply,
-        string _description,
-        uint _registerTime,
-        uint  _closingTime,
-        address _coreContract,
-        uint _hash,
-        Status _status
-        ){
-            _id=                m_option.m_id;
-            _issuer=            m_option.m_issuer;
-            _symbol=            m_option.m_symbol;
-            _maxSupply=         m_option.m_maxSupply;
-            _precision=         m_option.m_precision;
-            _currentSupply=     m_option.m_currentSupply;
-            _description=       m_option.m_description;
-            _registerTime=      m_option.m_registerTime;
-            _closingTime=       m_option.m_closingTime;
-            _coreContract=      m_option.m_coreContract;
-            _hash=              m_option.m_hash;
-            _status=            m_option.m_status;
+        uint        _id,
+        address     _issuer,
+        bytes32     _symbol,
+        uint        _maxSupply,
+        uint        _precision,
+        uint        _currentSupply,
+        string      _description,
+        uint        _registerTime,
+        uint        _closingTime,
+        address     _coreContract,
+        uint        _hash,
+        Status      _status
+    ){
+        _id=                m_option.m_id;
+        _issuer=            m_option.m_issuer;
+        _symbol=            m_option.m_symbol;
+        _maxSupply=         m_option.m_maxSupply;
+        _precision=         m_option.m_precision;
+        _currentSupply=     m_option.m_currentSupply;
+        _description=       m_option.m_description;
+        _registerTime=      m_option.m_registerTime;
+        _closingTime=       m_option.m_closingTime;
+        _coreContract=      m_option.m_coreContract;
+        _hash=              m_option.m_hash;
+        _status=            m_option.m_status;
         return;
 
     }

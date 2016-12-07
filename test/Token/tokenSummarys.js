@@ -6,14 +6,14 @@ contract('all tokens summary', function(accounts) {
 
     it("get  token", function() {
         var token = Token.at("0x0fd4e3915f510475f2c69aecf3724a8fea41f5fd");
-        token.summary().then(function (res) {
-            console.log(res)
-            /*token.balanceOf(res[1]).then(function (res) {
+        //token.summary().then(function (res) {
+            //console.log(res)
+            token.balanceOf("0x51b91f8ab10d03cc04e5dab19e0ee6e65b710ff").then(function (res) {
                 console.log(res.toString())
-            })*/
+            })
             //console.log( String.fromCgarCode(res[1]))
             //console.log(Buffer(res[1],"ASCII"))
-        })
+        //})
     })
 
     /*it("get  token", function() {
