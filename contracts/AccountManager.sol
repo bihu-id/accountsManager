@@ -47,11 +47,10 @@ contract AccountManager is BaseLogic {
 
     }
 
-    function setOption(address _accountCore,address _accountTxCore,address _accountPorxy,uint _createGas){
+    function setOption(address _accountCore,address _accountTxCore,address _accountPorxy){
 
         ifOwner();
         m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
-        m_createGas=_createGas;
         Success(true);
 
     }

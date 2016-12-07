@@ -76,7 +76,6 @@ contract XindiInterface is BaseManager_Xindi{
     /// @return address of _role key                        _role的地址
     function getRole(role _role)constant returns(address);
 
-    event Init(address,address);
     event Reset(address _account,address[] _owners,uint[] _weight,uint[] _Threshold);
     event SetIdLevel (address _account,uint level);
     event Freeze(address _account);
@@ -132,6 +131,7 @@ contract Xindi is XindiInterface{
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;
+
         if(m_operations[_no].m_type==uint(OperationType.reSetType))
             reSetC(_account,t_data);
 
@@ -152,7 +152,6 @@ contract Xindi is XindiInterface{
                 t_data[i+1]=uint(_owners[i]);
                 t_data[i+1+_owners.length]=_weight[i];
             }
-
         addOperation(_account,OperationType.reSetType,uint(m_funs[uint(FunType.reSet)]),t_data);
 
     }
@@ -167,6 +166,7 @@ contract Xindi is XindiInterface{
             _owners[i]=address(_data[1+i]);
             _weight[i]=uint(_data[1+i+t_len]);
         }
+        Err(uint(_account));
         t_a.resetAccountOwner.gas(msg.gas)(_data[0],_owners,_weight);
 
     }

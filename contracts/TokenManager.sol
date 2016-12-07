@@ -236,8 +236,8 @@ contract TokenManager is TokenManagerInterface{
         uint t_id=m_amounts+1;
         m_amounts=t_id;
         Data d = new Data(uint(m_tokenPorxy));
-        if(t==address(0x0))                                     {Err(60032001);  throw;}
-        Token t=Token(t);
+        if(d==address(0x0))                                     {Err(60032001);  throw;}
+        Token t=Token(d);
         t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this);
         m_tokenSurmmarys[t_id]=TokenSurmmary(t_id,msg.sender,t);
         m_symbols[_symbol]=t_id;

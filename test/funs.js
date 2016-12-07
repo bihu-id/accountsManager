@@ -114,8 +114,8 @@ var funs=
             resSize: 32
         },
         setOption: {
-            name: 'setOption(address,address,address,uint256)',
-            sig: 0x58f12900,
+            name: 'setOption(address,address,address)',
+            sig: 0xfc80e8a7,
             resSize: 32
         },
         summary: {

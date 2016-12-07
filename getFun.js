@@ -40,13 +40,14 @@ fs.readdir("./contracts",function(err,files){
     //console.log(JSON.stringify(outputs,null,2))
     Object.keys(outputs)
     var contracts=outputs.contracts;
-    //console.log(Object.keys(contracts))
+
     //console.log(outputs.contracts)
     Object.keys(contracts).forEach(function(contractKey){
 
         //console.log(contractKey)
         if(funContract.indexOf(contractKey)>=0){
 
+            console.log(contractKey)
             var funs={}
             var funhash=contracts[contractKey].functionHashes
 

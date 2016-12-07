@@ -22,7 +22,13 @@ contract('init accountManager', function(accounts) {
 
         var accountmanager=AccountManager.at(accountManager);
         return accountmanager.summary().then(function(res){
-            console.log(res);
+
+            console.log("core:",res[0]);
+            console.log("owner::",res[1]);
+            console.log("account owner::",res[2]);
+            assert(res[2]==xindi,"xindi contract error")
+            console.log("Tx core::",res[3]);
+            console.log("account porxy :",res[4]);
 
         })
     })
