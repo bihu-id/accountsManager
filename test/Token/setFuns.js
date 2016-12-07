@@ -5,7 +5,8 @@ contract('set tokenmanager fun', function(accounts) {
     var tokonManagerporxy = address.tokonManagerporxy
     var tokonManagerdata = address.tokonManagerdata
 
-    var token=address.token
+
+    var tokenporxy=address.tokenporxy;
     var funs=Funs.TokenManager;
     var funs2=Funs.Token;
 
@@ -29,7 +30,7 @@ contract('set tokenmanager fun', function(accounts) {
     it("set token fun ",function(){
 
         return Token.new().then(function(instance){
-            var porxy=LogicPorxy.at(token)
+            var porxy=LogicPorxy.at(tokenporxy)
             console.log("tokon logic:",instance.address);
             var addr=instance.address;
             //addr='0x37f550f3a596ae16a297d6a305e90e66551ebb9e'

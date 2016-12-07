@@ -33,9 +33,10 @@ contract('reset owner of account', function(accounts) {
 
             res.forEach(function (r) {
                 return xinde.getOperation(r).then(function (res) {
+                    console.log("reset account owner use %s",accounts[1])
                     console.log(res[0].toString(10), res[1].toString(16), res[2].toString(16),res[3].toString(10), res[4][0].toString(10),'0x'+res[4][1].toString(16),res[4][2].toString(10))
                     return xinde.comfirm(res[1],res[0],{from:accounts[1],gas:4000000}).then(function(tx){
-                        console.log(tx)
+                        console.log(web3.eth.getTransactionReceipt(tx))
                     })
                 })
             })
