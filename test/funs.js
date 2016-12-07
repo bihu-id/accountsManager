@@ -165,9 +165,9 @@ var funs=
             sig: 0x8ccbd6da,
             resSize: 32
         },
-        ifCore: {
-            name: 'ifCore()',
-            sig: 0xdbd0a575,
+        ifCoreL: {
+            name: 'ifCoreL()',
+            sig: 0xfc56182f,
             resSize: 32
         },
         ifEnd: {
@@ -185,6 +185,11 @@ var funs=
             sig: 0x18595eca,
             resSize: 32
         },
+        init: {
+            name: 'init(address,bytes32,uint256,uint256,uint256,uint256,uint256,string,uint256,address)',
+            sig: 0xae368bca,
+            resSize: 32
+        },
         issueMore: {
             name: 'issueMore(uint256)',
             sig: 0xb7cd32c2,
@@ -193,6 +198,16 @@ var funs=
         normal: {
             name: 'normal()',
             sig: 0xfd255aef,
+            resSize: 32
+        },
+        resetCore: {
+            name: 'resetCore(uint256)',
+            sig: 0xe3f18df3,
+            resSize: 32
+        },
+        resetOwner: {
+            name: 'resetOwner(uint256)',
+            sig: 0x959725d1,
             resSize: 32
         },
         surmmay: {
@@ -303,8 +318,8 @@ var funs=
             resSize: 960
         },
         init: {
-            name: 'init(address)',
-            sig: 0x19ab453c,
+            name: 'init(address,address)',
+            sig: 0xf09a4016,
             resSize: 32
         },
         reject: {
@@ -348,8 +363,8 @@ var funs=
             resSize: 32
         },
         setOption: {
-            name: 'setOption(address,address,uint256,uint256)',
-            sig: 0x8b1055ef,
+            name: 'setOption(address,address,address,uint256,uint256)',
+            sig: 0x058e87e7,
             resSize: 32
         },
         unfreeze: {

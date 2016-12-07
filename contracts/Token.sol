@@ -1,7 +1,8 @@
 import "Erc20.sol";
 import "Err.sol";
+import "BaseData.sol";
 
-contract TokenInterface is Erc20 {
+contract TokenInterface is BaseLogic,Erc20 {
 
      enum Status{
 
@@ -126,7 +127,7 @@ contract Token is TokenInterface {
 
     /*
     modifier notEnd() {if(now < m_option.m_closingTime) throw; _;}
-    modifier ifCore() {if(msg.sender != m_option.m_core)throw; _;}
+    modifier ifCoreL() {if(msg.sender != m_option.m_core)throw; _;}
     modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
     modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
     */
@@ -134,7 +135,7 @@ contract Token is TokenInterface {
     //check token if end
     function ifEnd() {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
     //check if the operation is called from core
-    function ifCore() {if(msg.sender != m_option.m_core)        {Err(10000000);throw;}  }
+    function ifCoreL() {if(msg.sender != m_option.m_core)        {Err(10000000);throw;}  }
 
     function ifIssuer(){if(msg.sender != m_option.m_issuer)     {Err(60040004);throw;}  }
 
@@ -143,7 +144,7 @@ contract Token is TokenInterface {
     function normal(){if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
     //force transfer by core
 
-    function Token(
+    function init(
         address _issuer,
         bytes32 _symbol,
         uint _id,
@@ -155,6 +156,7 @@ contract Token is TokenInterface {
         uint _hash,
         address _coreContract
         ){
+            beforeInit();
             //if(now<_closingTime) throw;
             m_option.m_issuer=          _issuer;
             m_option.m_symbol=          _symbol;
@@ -170,6 +172,10 @@ contract Token is TokenInterface {
             m_option.m_status=          Status.normal;
 
             m_balances[_issuer]=_currentSupply;
+
+            uint[] memory t_res=new uint[](1);
+            t_res[0]=1;
+            afterInit(t_res);
 
             TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
         }
@@ -231,7 +237,7 @@ contract Token is TokenInterface {
 
     function forceTransfer(address _from,address _to,uint _amount)returns (bool success){
 
-        ifCore();
+        ifCoreL();
         ifEnd();
         normal();
         if (m_balances[_from] >= _amount && _amount > 0) {
@@ -275,28 +281,28 @@ contract Token is TokenInterface {
 
     function freeze(address _account){
 
-        ifCore();
+        ifCoreL();
         m_freezeLists[_account]=1;//Status.freeze=1
 
     }
 
     function unfreeze(address _account){
 
-        ifCore();
+        ifCoreL();
         m_freezeLists[_account]=0;//Status.normal=0
 
     }
 
     function freezeToken(){
 
-        ifCore();
+        ifCoreL();
         m_option.m_status=Status.freeze;
 
     }
 
     function unfreezeToken(){
 
-        ifCore();
+        ifCoreL();
         m_option.m_status=Status.normal;
 
     }
