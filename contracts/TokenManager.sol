@@ -4,7 +4,7 @@ import "AccountManager.sol";
 
 contract TokenManagerInterface is BaseManager_Token {
 
-    struct TokenSurmmary{
+    struct TokenSummary{
 
         // id
         uint m_id;
@@ -50,7 +50,7 @@ contract TokenManagerInterface is BaseManager_Token {
     mapping(address=>uint) m_tokenAble;
 
     //record relationship between id and tokens;
-    mapping(uint=>TokenSurmmary) m_tokenSurmmarys;
+    mapping(uint=>TokenSummary) m_tokenSummarys;
 
     //symbol=>ids// recorede symbol if use
     mapping(bytes32=>uint) m_symbols;
@@ -59,7 +59,7 @@ contract TokenManagerInterface is BaseManager_Token {
     mapping(uint=>bytes32 ) m_ids;
 
     // Null address
-    TokenSurmmary tokenSurmmaryNull;
+    TokenSummary tokenSummaryNull;
 
     //fun=>sig
     mapping(uint=>uint) m_fun;
@@ -116,7 +116,7 @@ contract TokenManagerInterface is BaseManager_Token {
      /// @return r_ids          资产的ID
      /// @return _owner         资产的拥有者
      /// @return _tokenAddress  地址的合约地址
-    function getTokenSurmmary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
+    function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
 
      /// @notice                遍历所有的资产symbol
      /// @param _start          开始的资产顺序
@@ -224,7 +224,7 @@ contract TokenManager is TokenManagerInterface{
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_MinTerm))
                                                                 {Err(60031001);  throw;}
         // id used
-        //if(m_tokenSurmmarys[_id].m_id!=0)                     {Err(60031002);  throw;}
+        //if(m_tokenSummarys[_id].m_id!=0)                     {Err(60031002);  throw;}
         // symbol is used
         if( m_symbols[_symbol]>0)                               {Err(60031003);  throw;}
 
@@ -239,7 +239,7 @@ contract TokenManager is TokenManagerInterface{
         if(d==address(0x0))                                     {Err(60032001);  throw;}
         Token t=Token(d);
         t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this);
-        m_tokenSurmmarys[t_id]=TokenSurmmary(t_id,msg.sender,t);
+        m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,t);
         m_symbols[_symbol]=t_id;
         m_ids[t_id]=_symbol;
 
@@ -289,13 +289,13 @@ contract TokenManager is TokenManagerInterface{
 
     function getTokenAddress(uint _id)constant returns(address){
 
-        return m_tokenSurmmarys[_id].m_address;
+        return m_tokenSummarys[_id].m_address;
 
     }
 
-    function getTokenSurmmary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress){
+    function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress){
 
-        return (m_tokenSurmmarys[_id].m_id,m_tokenSurmmarys[_id].m_owner,m_tokenSurmmarys[_id].m_address);
+        return (m_tokenSummarys[_id].m_id,m_tokenSummarys[_id].m_owner,m_tokenSummarys[_id].m_address);
 
     }
 
