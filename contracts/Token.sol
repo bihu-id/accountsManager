@@ -84,7 +84,7 @@ contract TokenInterface is BaseLogic,Erc20 {
     function unfreezeToken();
 
     /// @return the summary of this token
-    function surmmay()constant returns(
+    function summary()constant returns(
         uint _id,                           //编号
         address _issuer,                    //拥有者
         bytes32 _symbol,                    //字符代码
@@ -307,7 +307,7 @@ contract Token is TokenInterface {
 
     }
 
-    function surmmay()constant returns(
+    function summary()constant returns(
         uint _id,
         address _issuer,
         bytes32 _symbol,

@@ -25,6 +25,7 @@ contract('create token', function(accounts) {
                 return account.createToken("BBB3",10000000,2,500000,0,"测试BBB1",0x10000bbb,tokenmanager,{from:res[7].toString(16),gas:20000000}).then(function(tx){
                     console.log(tx);
                     console.log(web3.eth.getTransactionReceipt(tx));
+                    console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 });
             });
         });
@@ -36,10 +37,10 @@ contract('create token', function(accounts) {
         return tokenManager.getTokenAmounts().then(function(res){
             console.log(res.toString())
             for(var i=1;i<=res;i++)
-                tokenManager.getTokenSurmmary(i).then(function(res){
+                tokenManager.getTokenSummary(i).then(function(res){
                     var token=Token.at(res[2]);
-                    token.surmmay().then(function(res){
-                        console.log(res.toString())
+                    token.summary().then(function(res){
+                        console.log("token summary:",res.toString())
                         token.balanceOf(res[1]).then(function(res){
                             console.log(res.toString())
                         })

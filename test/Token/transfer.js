@@ -18,7 +18,7 @@ contract('transfer', function(accounts) {
 
             tokenManager.getTokenSurmmary(1).then(function(res1){
                 var token=Token.at(res1[2]);
-                token.surmmay().then(function(res2){
+                token.summary().then(function(res2){
                     console.log(res2.toString())
                     token.balanceOf(res2[1]).then(function(res3){
                         console.log(res3.toString())

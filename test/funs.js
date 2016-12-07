@@ -210,10 +210,10 @@ var funs=
             sig: 0x959725d1,
             resSize: 32
         },
-        surmmay: {
-            name: 'surmmay()',
-            sig: 0x096e9e2e,
-            resSize: 384
+        summary: {
+            name: 'summary()',
+            sig: 0xb16a867c,
+            resSize: 32
         },
         totalSupply: {
             name: 'totalSupply()',
@@ -302,10 +302,10 @@ var funs=
             sig: 0xd73cc4df,
             resSize: 32
         },
-        getTokenSurmmary: {
-            name: 'getTokenSurmmary(uint256)',
-            sig: 0x4156581a,
-            resSize: 96
+        getTokenSummary: {
+            name: 'getTokenSummary(uint256)',
+            sig: 0xbcafaf1f,
+            resSize: 32
         },
         getTokensSymbol: {
             name: 'getTokensSymbol(uint256,uint256)',

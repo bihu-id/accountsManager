@@ -17,9 +17,9 @@ var Address=
     TxManagerData:"0xe7c5823bac16251aa38d7d9f53deeb9f9f0e7329",
 
 
-    tokonManagerporxy:"0x40fa04968666e41bcaceaa31cc2f3b2f4696a173",
-    tokonManagerdata:"0x0ecdc43da868bcb7a202ecf79fd964ca1522194a",
-    tokenporxy:"0xd8f16d6e3c36f4a46c43c7134e363e74e96cc0e2",
+    tokonManagerporxy:"0x8dd54682984088cb803580b9093964972daf9a5c",
+    tokonManagerdata:"0x9f894319c4df7babc9921af9cc17eecd65f1e883",
+    tokenporxy:"0x11d0bb292a7ba634efdf39ea7cdf8f681c468118",
 
 
     end: 111
