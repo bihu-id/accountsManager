@@ -187,6 +187,14 @@ contract Account is AccountInterface{
 
     }
 
+    function checkOwners(address _owner)internal returns(bool){
+
+        address[] memory _owners=new address[](1);
+        _owners[0]=msg.sender;
+        return getApprove(_owners);
+
+    }
+
     function createToken(
         bytes32 _symbol,
         uint _maxSupply,
@@ -198,14 +206,13 @@ contract Account is AccountInterface{
         uint _tokenManager)
         {
             //checkPass(sha3(msg.data));
-            Err(0x1111111);
             //uint t_address =m_other;
+            if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
             assembly{
                 mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
                 calldatacopy(0x180,0x04,sub(calldatasize,0x04))
                 jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
             }
-            Err(0x999999);
         }
 
     function transferToken(
@@ -214,6 +221,7 @@ contract Account is AccountInterface{
         uint256 _amount)returns (bool success)
     {
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -228,6 +236,7 @@ contract Account is AccountInterface{
     function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -242,6 +251,7 @@ contract Account is AccountInterface{
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
