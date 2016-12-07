@@ -17,8 +17,12 @@ var Address=
     TxManagerData:"0x53ca8bfc11318d4db9e10617e1d78cbf1688c880",
 
 
-    tokonManagerporxy:"0xe4f6774c4b7a9f0c9045b70b09f2ccd91697d5d0",
-    tokonManagerdata:"0x741758d1da37d8d7d62fa56caa0e86f5808b7164",
+    tokonManagerporxy:"0xb9a972065de4e0397fb3b64500c8275435b8c451",
+    tokonManagerdata:"0xf8ec933dc295b31d8c2e87a53b3448469ee3da9f",
+
+
+
+
 
 
 

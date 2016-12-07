@@ -1,6 +1,11 @@
 var funs=
 {
     Account: {
+        createToken: {
+            name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256,uint256)',
+            sig: 0x13512d89,
+            resSize: 32
+        },
         destroyToken: {
             name: 'destroyToken(address,uint256)',
             sig: 0x9b1ad792,
@@ -57,8 +62,8 @@ var funs=
             resSize: 32
         },
         setPass: {
-            name: 'setPass(uint256)',
-            sig: 0xf86cd7ad,
+            name: 'setPass(uint256,uint256)',
+            sig: 0xb487b66c,
             resSize: 32
         },
         summary: {
@@ -277,6 +282,11 @@ var funs=
             sig: 0x67ccdf38,
             resSize: 32
         },
+        getTokenAmounts: {
+            name: 'getTokenAmounts()',
+            sig: 0xd73cc4df,
+            resSize: 32
+        },
         getTokenSurmmary: {
             name: 'getTokenSurmmary(uint256)',
             sig: 0x4156581a,
@@ -355,8 +365,8 @@ var funs=
             resSize: 32
         },
         pass: {
-            name: 'pass(uint256,uint256)',
-            sig: 0x0573ea94,
+            name: 'pass(uint256,uint256,uint256)',
+            sig: 0x20309fcf,
             resSize: 32
         },
         resetCore: {

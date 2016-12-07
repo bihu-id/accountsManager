@@ -194,18 +194,16 @@ contract Account is AccountInterface{
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)
+        uint  _hash,
+        uint _tokenManager)
         {
             //checkPass(sha3(msg.data));
-            uint t_address =m_other;
+            //uint t_address =m_other;
             assembly{
-                mstore(0x160,0x9507d39a)
-                calldatacopy(0x180,0x04,calldatasize)
-                call(gas,t_address,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)
-
+                mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
+                calldatacopy(0x180,0x04,sub(calldatasize,0x04))
+                jumpi(0x01,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
             }
-
-
         }
 
     function transferToken(
@@ -218,10 +216,10 @@ contract Account is AccountInterface{
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
-        if(getApprove(t_owner)){
+        //if(getApprove(t_owner)){
             Token t=Token(tokenContract);
             t.transfer.gas(msg.gas)(_to,_amount);
-        }
+        //}
 
     }
 

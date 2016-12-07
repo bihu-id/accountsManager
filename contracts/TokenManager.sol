@@ -168,6 +168,8 @@ contract TokenManagerInterface is BaseManager_Token {
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
     event SetFunGas(uint _fun,uint _gas);
+
+    event Which(address);
 }
 
 contract TokenManager is TokenManagerInterface{
@@ -228,12 +230,14 @@ contract TokenManager is TokenManagerInterface{
         if(_currentSupply>_maxSupply)                       {Err(60031006);  throw;}
 
         uint t_id=m_amounts+1;
+        m_amounts=t_id;
         Token t = new Token(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this);
         if(t==address(0x0))                                 {Err(60032001);  throw;}
         m_tokenSurmmarys[t_id]=TokenSurmmary(t_id,msg.sender,t);
         m_symbols[_symbol]=t_id;
         m_ids[t_id]=_symbol;
 
+        Which(this);
         //m_ids[m_amounts]=_id;
         //m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
         //CreateToken(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
@@ -319,6 +323,11 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
+    function getTokenAmounts()constant returns(uint){
+
+        return m_amounts;
+
+    }
     function getKeys()constant returns(address[] _keys){
 
         address[] memory t_keys=new address[](8);

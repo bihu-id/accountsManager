@@ -84,9 +84,9 @@ contract TokenInterface is Erc20 {
 
     /// @return the summary of this token
     function surmmay()constant returns(
-        address _issuer,                    //拥有者
-        bytes32 _symbol,                     //代号
         uint _id,                           //编号
+        address _issuer,                    //拥有者
+        bytes32 _symbol,                    //字符代码
         uint _maxSupply,                    //最大供应量
         uint _precision,                    //精度
         uint _currentSupply,                //当前供应量
@@ -156,17 +156,20 @@ contract Token is TokenInterface {
         address _coreContract
         ){
             //if(now<_closingTime) throw;
-            m_option.m_issuer=_issuer;
-            m_option.m_symbol=_symbol;
-            m_option.m_id=_id;
-            m_option.m_maxSupply=_maxSupply;
-            m_option.m_precision=_precision;
-            m_option.m_description=_description;
-            m_option.m_closingTime=_closingTime;
-            m_option.m_coreContract=_coreContract;
-            m_option.m_registerTime=now;
-            m_option.m_hash=_hash;
-            m_option.m_status=Status.normal;
+            m_option.m_issuer=          _issuer;
+            m_option.m_symbol=          _symbol;
+            m_option.m_id=              _id;
+            m_option.m_maxSupply=       _maxSupply;
+            m_option.m_precision=       _precision;
+            m_option.m_currentSupply=   _currentSupply;
+            m_option.m_description=     _description;
+            m_option.m_closingTime=     _closingTime;
+            m_option.m_coreContract=    _coreContract;
+            m_option.m_registerTime=    now;
+            m_option.m_hash=            _hash;
+            m_option.m_status=          Status.normal;
+
+            m_balances[_issuer]=_currentSupply;
 
             TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
         }
@@ -299,9 +302,9 @@ contract Token is TokenInterface {
     }
 
     function surmmay()constant returns(
+        uint _id,
         address _issuer,
         bytes32 _symbol,
-        uint _id,
         uint _maxSupply,
         uint _precision,
         uint _currentSupply,
@@ -312,18 +315,18 @@ contract Token is TokenInterface {
         uint _hash,
         Status _status
         ){
-            _issuer=m_option.m_issuer;
-            _symbol=m_option.m_symbol;
-            _id=m_option.m_id;
-            _maxSupply=m_option.m_maxSupply;
-            _precision=m_option.m_precision;
-            _currentSupply=m_option.m_currentSupply;
-            _description=m_option.m_description;
-            _registerTime=m_option.m_registerTime;
-            _closingTime=m_option.m_closingTime;
-            _coreContract=m_option.m_coreContract;
-            _hash=m_option.m_hash;
-            _status=m_option.m_status;
+            _id=                m_option.m_id;
+            _issuer=            m_option.m_issuer;
+            _symbol=            m_option.m_symbol;
+            _maxSupply=         m_option.m_maxSupply;
+            _precision=         m_option.m_precision;
+            _currentSupply=     m_option.m_currentSupply;
+            _description=       m_option.m_description;
+            _registerTime=      m_option.m_registerTime;
+            _closingTime=       m_option.m_closingTime;
+            _coreContract=      m_option.m_coreContract;
+            _hash=              m_option.m_hash;
+            _status=            m_option.m_status;
         return;
 
     }

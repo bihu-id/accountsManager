@@ -41,7 +41,7 @@ fs.readdir("./contracts",function(err,files){
     Object.keys(outputs)
     var contracts=outputs.contracts;
     //console.log(Object.keys(contracts))
-    console.log(outputs.contracts)
+    //console.log(outputs.contracts)
     Object.keys(contracts).forEach(function(contractKey){
 
         //console.log(contractKey)

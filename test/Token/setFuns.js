@@ -1,23 +1,23 @@
 address=require("./../address.js")
 Funs=require("./../funs.js")
-contract('set xindi funs', function(accounts) {
+contract('set tokenmanager fun', function(accounts) {
 
     var tokonManagerporxy = address.tokonManagerporxy
     var tokonManagerdata = address.tokonManagerdata
     
-    var funs=Funs.token;
+    var funs=Funs.TokenManager;
 
-    it("deploy xinde logic",function(){
+    it("set tokenmanager fun ",function(){
 
-        return Xindi.new().then(function(instance){
-            var porxy=LogicPorxy.at(xindeporxy)
-            console.log("xindi logic:",instance.address);
+        return TokenManager.new().then(function(instance){
+            var porxy=LogicPorxy.at(tokonManagerporxy)
+            console.log("tokonManager logic:",instance.address);
             var addr=instance.address;
             //addr='0x37f550f3a596ae16a297d6a305e90e66551ebb9e'
-            var keys=Object.keys(XindiFuns)
+            var keys=Object.keys(funs)
             return keys.forEach(function(k){
-                //console.log(xindelogic)
-                var fun=XindiFuns[k];
+
+                var fun=funs[k];
                 porxy.setfun(addr,fun.sig,fun.resSize,{from:accounts[0],gas:150000}).then(function(tx){
                     console.log(tx)
                 })
