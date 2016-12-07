@@ -155,7 +155,8 @@ contract Token is TokenInterface {
         string _description,
         uint _hash,
         address _coreContract
-        ){
+        )returns (bool)
+        {
             beforeInit();
             //if(now<_closingTime) throw;
             m_option.m_issuer=          _issuer;
@@ -177,7 +178,8 @@ contract Token is TokenInterface {
             t_res[0]=1;
             afterInit(t_res);
 
-            TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
+            //TokenCreate(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash, _coreContract);
+            return true;
         }
 
     function balanceOf(address _owner) constant returns (uint256 balance) {

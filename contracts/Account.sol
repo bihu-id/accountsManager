@@ -199,12 +199,14 @@ contract Account is AccountInterface{
         uint _tokenManager)
         {
             //checkPass(sha3(msg.data));
+            Err(0x1111111);
             //uint t_address =m_other;
             assembly{
                 mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
                 calldatacopy(0x180,0x04,sub(calldatasize,0x04))
-                jumpi(0x01,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
+                jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
             }
+            Err(0x999999);
         }
 
     function transferToken(

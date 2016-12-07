@@ -213,7 +213,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 32
+            resSize: 32*12
         },
         totalSupply: {
             name: 'totalSupply()',
@@ -305,7 +305,7 @@ var funs=
         getTokenSummary: {
             name: 'getTokenSummary(uint256)',
             sig: 0xbcafaf1f,
-            resSize: 32
+            resSize: 32*3
         },
         getTokensSymbol: {
             name: 'getTokensSymbol(uint256,uint256)',

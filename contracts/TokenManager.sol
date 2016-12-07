@@ -87,7 +87,7 @@ contract TokenManagerInterface is BaseManager_Token {
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash);
+        uint  _hash)returns(bool);
 /*
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、
@@ -208,6 +208,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
+    event temp(address ,address);
     function createToken(
         bytes32 _symbol,
         /*uint _id,*/
@@ -216,37 +217,42 @@ contract TokenManager is TokenManagerInterface{
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash){
+        uint  _hash)returns(bool){
 
         // cannot create token  check it by server
         //if(tokenAble()==0)                                    {Err(60030001);  throw;}
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_MinTerm))
-                                                                {Err(60031001);  throw;}
+                                                                {Err(60031001);     throw;}
         // id used
-        //if(m_tokenSummarys[_id].m_id!=0)                     {Err(60031002);  throw;}
+        //if(m_tokenSummarys[_id].m_id!=0)                      {Err(60031002);     throw;}
         // symbol is used
-        if( m_symbols[_symbol]>0)                               {Err(60031003);  throw;}
+        if( m_symbols[_symbol]>0)                               {Err(60031003);     throw;}
 
-        if(_precision>8)                                        {Err(60031004);  throw;}
+        if(_precision>8)                                        {Err(60031004);     throw;}
         // consider use 64 b VM for efficiency reason
-        if(_maxSupply*_precision>=uint64(-1))                   {Err(60031005);  throw;}
-        if(_currentSupply>_maxSupply)                           {Err(60031006);  throw;}
+        if(_maxSupply*_precision>=uint64(-1))                   {Err(60031005);     throw;}
+        if(_currentSupply>_maxSupply)                           {Err(60031006);     throw;}
 
         uint t_id=m_amounts+1;
         m_amounts=t_id;
         Data d = new Data(uint(m_tokenPorxy));
-        if(d==address(0x0))                                     {Err(60032001);  throw;}
+        if(d==address(0x0))                                     {Err(60032001);     throw;}
         Token t=Token(d);
-        t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this);
-        m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,t);
+        if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
+                                                                {Err(60032002);     throw;}
+        m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
+
         m_symbols[_symbol]=t_id;
         m_ids[t_id]=_symbol;
 
         //m_ids[m_amounts]=_id;
         //m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
-        //CreateToken(msg.sender,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
 
+        CreateToken(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
+
+        temp(msg.sender,d);
+        return true;
     }
 
     function tokenAble()internal returns(uint32){

@@ -30,6 +30,8 @@ contract('init accountManager', function(accounts) {
             console.log("Tx core::",res[3]);
             console.log("account porxy :",res[4]);
 
+            assert(res[4]==accountPorxy,"xindi contract error")
+
         })
     })
 })
