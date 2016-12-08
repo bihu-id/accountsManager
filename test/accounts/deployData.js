@@ -5,7 +5,7 @@ contract('deploy Account logic', function(accounts) {
 
     it("deploy Account logic", function(){
 
-        return _deploy.deploy("Account",null,Account)
+        return _deploy.deploy("Account",LogicPorxy,Account)
 
     });
 })

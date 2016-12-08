@@ -4,7 +4,7 @@ contract('deploy txManger Logic', function(accounts) {
 
     it("deploy txManger Logic", function(){
 
-        return _deploy.deploy("TxManager",TxManager)
+        return _deploy.deploy("TxManager",null,TxManager)
 
     });
 })

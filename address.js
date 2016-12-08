@@ -1,4 +1,4 @@
-var address=require("./test/address1.js")
+var address=require("./test/address.js")
 var rpc=require("./getRpcServe.js")
 module.exports ={
     get:function(){

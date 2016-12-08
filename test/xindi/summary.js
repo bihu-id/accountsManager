@@ -3,8 +3,8 @@ var getRpcStr=require("./../../getRpcServe.js")
 contract('xindi summary', function(accounts) {
 
     var address=getRpcStr.get()
-    var xindedata=address.xindedata
-
+    var xindedata=address.XindiData
+    console.log(address)
     
     it("get resetMe operation ", function(){
         console.log(xindedata)

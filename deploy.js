@@ -4,8 +4,6 @@ module.exports ={
 
     deployData:function(contract,proxy,data){
 
-        var y='"';
-        console.log(y)
         var rpcAddress=getRpcStr.get()
 
         var proxyAddress=contract+"Proxy";
@@ -21,14 +19,32 @@ module.exports ={
             });
         });
     },
-    deploy:function(contract,logic){
+
+    deployLogic:function(contract,proxy,logic){
         var rpcAddress=getRpcStr.get()
         var logicAddress=contract+"Logic";
-        logic.new().then(function(instance){
-            console.log('deploy %s:%s',logicAddress,instance.address)
-            rpcAddress[logicAddress]='"'+instance.address+'"';
-            getRpcStr.save(rpcAddress)
-        });
-    }
+        var proxyAddress=contract+"Proxy";
 
+        logic.new().then(function(instance){
+
+            rpcAddress[logicAddress]='"'+instance.address+'"';
+            console.log('deploy %s:%s',logicAddress,instance.address)
+            if(proxy!=null)
+            proxy.new().then(function(instance){
+                rpcAddress[proxyAddress]='"'+instance.address+'"';
+                getRpcStr.save(rpcAddress)
+            })
+        });
+    },
+    deployProxy:function(contract,proxy){
+        var rpcAddress=getRpcStr.get()
+
+        var proxyAddress=contract+"Proxy";
+
+        logicProxy=proxy.new().then(function(instance){
+            rpcAddress[proxyAddress]='"'+instance.address+'"';
+            getRpcStr.save(rpcAddress)
+        })
+
+    }
 }
