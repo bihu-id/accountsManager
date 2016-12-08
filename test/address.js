@@ -11,10 +11,10 @@ var Address=
         "TokenManagerData": "0xb974b0d609c2ce199caae40648d4cd2eedd3052a",
         "TokenManagerLogic": "0x58bbd8cfdc94406466c2f12423a4e2da6177bc24",
         "TokenLogic": "0x7ba45d41fe2c553a5fdaa637f43b798937ac53b8",
-        "AccountManagerProxy": "0xa2c0536930977d005eff213ba10c9931c27aefb5",
-        "AccountManagerData": "0x3ecd26af51ccac21a85bda7d31904f58877fe121",
+        "AccountManagerProxy": "0x5b2a80ce3d617c5551c26404faad480499fdb675",
+        "AccountManagerData": "0x0b61de0180d50cedf3361ea618a8ae3f5a520108",
         "AccountManagerLogic": "0x57b5c1871ccbe28deedef9e1556b096707151b4d",
-        "AccountLogic": "0x415240fe070676b817e64623279364c06b049d7d",
+        "AccountLogic": "0x84b609567b362d91109dc400ea3ee68d585b59cb",
         "TokenProxy": "0x7ba45d41fe2c553a5fdaa637f43b798937ac53b8",
         "AccountProxy": "0x415240fe070676b817e64623279364c06b049d7d"
     },

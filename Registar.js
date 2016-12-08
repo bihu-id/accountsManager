@@ -11,10 +11,15 @@ module.exports ={
 
         var funs=Funs[contract]
         var keys=Object.keys(funs)
+        var instance=proxy.at(proxyAddress)
+        instance.summary().then(function(res){
+            console.log(res.toString(16))
+        })
+
         keys.forEach(function(k){
             var fun=funs[k]
             console.log(fun.name,fun.sig,fun.resSize)
-            var instance=proxy.at(proxyAddress)
+
             return instance.get.call(fun.sig).then(function(res) {
                 //console.log(res[0].toString(16),logicAddress)
                 if(("0x"+res[0].toString(16))!=logicAddress)

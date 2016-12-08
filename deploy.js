@@ -20,7 +20,7 @@ module.exports ={
         });
     },
 
-    deployLogic:function(contract,proxy,logic){
+    deploy:function(contract,proxy,logic){
         var rpcAddress=getRpcStr.get()
         var logicAddress=contract+"Logic";
         var proxyAddress=contract+"Proxy";

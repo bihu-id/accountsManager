@@ -1,3 +1,4 @@
+import "Error.sol"
 
 contract LogicPorxy{
 
@@ -21,15 +22,33 @@ contract LogicPorxy{
     function LogicPorxy(){
 
         m_coreAddress=uint(msg.sender);
+        m_ownerAddress=uint(msg.sender);
 
     }
 
-    modifier onlyCore() {if (uint(msg.sender) != m_coreAddress) throw; _;}
+    function onlyCore()internal {
 
-    function setLogic(uint _logicAddress)onlyCore(){
+        if (uint(msg.sender) != m_coreAddress)  { Err(10000002);throw; }
 
-        m_logicAddress=_logicAddress;
-        SetLogic(address(_logicAddress));
+    }
+
+    function onlyOwner()internal {
+
+        if (uint(msg.sender) != m_ownerAddress) { Err(10000003);throw; }
+
+    }
+
+    function resetCore(uint _newCore){
+
+        onlyCore();
+        m_coreAddress=_newCore;
+
+    }
+
+    function resetOwner(uint _newOwner){
+
+        onlyCore();
+        m_ownerAddress=_newOwner;
 
     }
 
