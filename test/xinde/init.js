@@ -1,12 +1,13 @@
-address=require("./../address.js")
+var getRpcStr=require("./../../getRpcServe.js")
 contract('init xindi', function(accounts) {
 
-    var xindedata=address.xindedata
+    var address=getRpcStr.get()
+    var xindedata=address.XindiData
 
     it("xinde init", function(){
 
-        var xinde=Xindi.at(xindedata);
-        return xinde.init({from:accounts[0],gas:10000000}).then(function(tx){
+        var instance=Xindi.at(xindedata);
+        return instance.init({from:accounts[0],gas:10000000}).then(function(tx){
             console.log(web3.eth.getTransactionReceipt(tx));
         })
     });

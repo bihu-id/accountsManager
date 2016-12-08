@@ -1,6 +1,8 @@
-address=require("./../address.js")
+var getRpcStr=require("./../../getRpcServe.js")
+
 contract('xindi summary', function(accounts) {
-    
+
+    var address=getRpcStr.get()
     var xindedata=address.xindedata
 
     

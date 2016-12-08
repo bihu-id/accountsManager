@@ -1,8 +1,10 @@
-var address=require('./../address.js')
-contract('create token', function(accounts) {
+var getRpcStr=require("./../../getRpcServe.js")
 
-    var tokenmanager=address.tokonManagerdata
-    var accountManager=address.accountManager
+contract('create token', function(accounts) {
+    
+    var address=getRpcStr.get()
+    var tokenmanager=address.TokenManagerData
+    var accountManager=address.AccountManagerData
     
 
    /*it("create token directly", function(){

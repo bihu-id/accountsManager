@@ -1,34 +1,29 @@
-address=require("./../address.js")
+var getRpcStr=require("./../../getRpcServe.js")
+
 contract('reset xindi key', function(accounts) {
-
-    /*var xindeporxy="0xd3d0ba368c5cdeba40302ac3576d02a67a9d73e5"
-    var xindelogic="0xfc7a9bf56a73a47fc6b3bc4276c67b92269ba2cd"
-    var xindedata="0xadad94ba7073b245cf5e6df985889af5cdd5bb36"
-    var accountManager="0xb4ae67f0c948ce1b65e85583a8f71c7c3a73b152"
-    var accountlogic="0x1579ae66a887ad8417103b457cd0446bbec8432e"
-    var accountporxy="0xcd0bcaa76ec79ba7f27a2a1aef1271f009c996ed"*/
-
-    var xindeporxy=address.xindeporxy
-    var xindedata=address.xindedata
     
-    var waiting;
-    
-    /*it("xinde summary", function(){
+    var address=getRpcStr.get()
+    var xindedata=address.XindiData
+
+    var keys=[];
+    it("xinde summary", function(){
 
         var xinde=Xindi.at(xindedata);
         return xinde.summary.call().then(function(res){
             console.log("keys")
+            keys=res;
             for(var i=0;i<res.length;i++)
                 console.log("%s :%s ","key"+i,res[i].toString(16))
 
         })
-    });*/
+    });
     
     it ("set reset key ",function() {
 
         var xinde = Xindi.at(xindedata);
 
         for(var i=0;i<14;i++)
+        if(parseInt(keys[i])==0)
             xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
                 console.log("reset key %d:%s",i,accounts[i]);
                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));

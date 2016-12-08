@@ -1,12 +1,10 @@
-address=require("./../address.js")
-contract("account summary ",function(accounts){
+var getRpcStr=require("./../../getRpcServe.js")
 
-    var xindeporxy = address.xindeporxy
-    var xindelogic = address.xindelogic
-    var xindedata = address.xindedata
-    var accountManager = address.accountManager
-    var accountlogic = address.accountlogic
-    var accountporxy = address.accountporxy
+contract("account summary ",function(accounts){
+    var address=getRpcStr.get()
+
+    var accountManager = address.AccountManagerData
+
     it("get account summary ", function(){
         var accountmanager=AccountManager.at(accountManager)
         accountmanager.accountAmount().then(function(res){

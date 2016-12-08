@@ -1,10 +1,16 @@
-var fs=require('fs');
-var path = require('path');
-var address=require('./../address.js')
+var _deploy=require("./../../deploy.js")
 
-contract('deploy Token manager data', function(accounts) {
+contract('deploy TokenManager data', function(accounts) {
 
-    var tokonManagerporxy;
+    it("set TokenManager porxy and data", function(){
+
+        return _deploy.deployData("TokenManager",LogicPorxy,Data)
+
+    });
+})
+
+
+/*    var tokonManagerporxy;
     var tokonManagerdata;
     var tokenporxy;
 
@@ -42,7 +48,6 @@ contract('deploy Token manager data', function(accounts) {
          if (err) throw err ;
          console.log("File Saved !"); //文件被保存
          }) ;
-         */
+         
     });
-
-})
+*/

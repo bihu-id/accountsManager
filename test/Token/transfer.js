@@ -1,6 +1,9 @@
-var address=require('./../address.js')
+var getRpcStr=require("./../../getRpcServe.js")
+
 contract('transfer', function(accounts) {
 
+    var address=getRpcStr.get()
+    var address=getRpcStr.get()
     var tokenmanager=address.tokonManagerdata
     var accountManager=address.accountManager
 
@@ -14,7 +17,6 @@ contract('transfer', function(accounts) {
 
     it("transfer ", function(){
         var tokenManager=TokenManager.at(tokenmanager);
-
 
             tokenManager.getTokenSummary(1).then(function(res1){
                 var token=Token.at(res1[2]);

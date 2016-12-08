@@ -1,13 +1,11 @@
+var getRpcStr=require("./../../getRpcServe.js")
 
-address=require("./../address.js")
 contract('comfirm reset me', function(accounts) {
 
-    var xindeporxy = address.xindeporxy
-    var xindelogic = address.xindelogic
-    var xindedata = address.xindedata
-    var accountManager = address.accountManager
-    var accountlogic = address.accountlogic
-    var accountporxy = address.accountporxy
+    var address=getRpcStr.get()
+
+    var xindedata = address.XindiData
+
     it("get all waiting operation resetMe", function () {
         var xinde = Xindi.at(xindedata);
         return xinde.getWaitOperationNos(1, 14, 2).then(function (res) {

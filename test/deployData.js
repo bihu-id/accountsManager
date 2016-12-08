@@ -1,3 +1,5 @@
+funs=require("./../funs.js")
+
 contract('deployData', function(accounts) {
 
     var xindeporxy;

@@ -1,6 +1,12 @@
 var Address=
 {
-    //remote
+    //remote aliyun
+    /*
+    xindeporxy:"0xdae0a39ed85224b662044107cc6d9f4c3bdb45fd",
+    xindedata:"0x1c34b870052d456d928f712fc477894fdd9a1cf0",
+*/
+    //remote tencent
+
     xindeporxy:"0x2b4df48267b18c7dac497ecb802403a13f81ff3e",
     xindedata:"0x0e9c929656fe437ada9263f7ac4a498bd80046eb",
 
