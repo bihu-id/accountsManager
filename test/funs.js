@@ -19,7 +19,7 @@ var funs=
         getOwner: {
             name: 'getOwner(uint256)',
             sig: 0xc41a360a,
-            resSize: 64
+            resSize: 32
         },
         init: {
             name: 'init(address,uint256,uint256,address,address)',
@@ -69,7 +69,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 672
+            resSize: 32
         },
         transferToken: {
             name: 'transferToken(address,address,uint256)',
@@ -121,7 +121,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 160
+            resSize: 32
         }
     },
     Token: {
@@ -213,7 +213,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 640
+            resSize: 32
         },
         totalSupply: {
             name: 'totalSupply()',
@@ -265,32 +265,32 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 256
+            resSize: 32
         },
         getOperation: {
             name: 'getOperation(uint256)',
             sig: 0x202e3924,
-            resSize: 256
+            resSize: 32
         },
         getOperationAmounts: {
             name: 'getOperationAmounts()',
             sig: 0xedc3ed39,
-            resSize: 64
+            resSize: 32
         },
         getOperationAmounts_resetMe: {
             name: 'getOperationAmounts_resetMe()',
             sig: 0x0a2fc8b2,
-            resSize: 64
+            resSize: 32
         },
         getOperation_resetMe: {
             name: 'getOperation_resetMe(uint256)',
             sig: 0x084c32fa,
-            resSize: 128
+            resSize: 32
         },
         getOption: {
             name: 'getOption()',
             sig: 0x92ed2df6,
-            resSize: 160
+            resSize: 32
         },
         getTokenAddress: {
             name: 'getTokenAddress(uint256)',
@@ -305,17 +305,17 @@ var funs=
         getTokenSummary: {
             name: 'getTokenSummary(uint256)',
             sig: 0xbcafaf1f,
-            resSize: 96
+            resSize: 32
         },
         getTokensSymbol: {
             name: 'getTokensSymbol(uint256,uint256)',
             sig: 0x5b769783,
-            resSize: 960
+            resSize: 32
         },
         getWaitOperationNos: {
             name: 'getWaitOperationNos(uint256,uint256,uint256)',
             sig: 0xee20c380,
-            resSize: 960
+            resSize: 32
         },
         init: {
             name: 'init(address,address)',
@@ -414,27 +414,27 @@ var funs=
         getFun: {
             name: 'getFun(uint256)',
             sig: 0x70c86863,
-            resSize: 64
+            resSize: 32
         },
         getOperation: {
             name: 'getOperation(uint256)',
             sig: 0x202e3924,
-            resSize: 480
+            resSize: 32
         },
         getOperationAmounts: {
             name: 'getOperationAmounts()',
             sig: 0xedc3ed39,
-            resSize: 64
+            resSize: 32
         },
         getOperationAmounts_resetMe: {
             name: 'getOperationAmounts_resetMe()',
             sig: 0x0a2fc8b2,
-            resSize: 64
+            resSize: 32
         },
         getOperation_resetMe: {
             name: 'getOperation_resetMe(uint256)',
             sig: 0x084c32fa,
-            resSize: 128
+            resSize: 32
         },
         getRole: {
             name: 'getRole(uint8)',
@@ -444,7 +444,7 @@ var funs=
         getWaitOperationNos: {
             name: 'getWaitOperationNos(uint256,uint256,uint256)',
             sig: 0xee20c380,
-            resSize: 960
+            resSize: 32
         },
         init: {
             name: 'init()',
@@ -509,7 +509,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 576
+            resSize: 32
         },
         unfreeze: {
             name: 'unfreeze(address)',

@@ -1,6 +1,6 @@
-import "Error.sol"
+import "Error.sol";
 
-contract LogicPorxy{
+contract LogicPorxy is Error{
 
     struct FunDetail{
         uint m_logic;
@@ -9,13 +9,11 @@ contract LogicPorxy{
     }
     //address core and set the logic address and register function
     uint m_coreAddress;
-    //address of logic contract
-    uint m_logicAddress;
+    //address of owner
+    uint m_ownerAddress;
     //recode one data address, it only use for have one data contract like xindecontract ,accountManager contract
     uint m_dataAddress;
     mapping (uint =>FunDetail) public m_funs;
-
-    event SetLogic(address _logic);
 
     event SetFun(uint _fun,uint _resSize);
 
@@ -52,8 +50,9 @@ contract LogicPorxy{
 
     }
 
-    function setfun(uint _logic,uint _fun,uint _resSize )onlyCore(){
+    function setfun(uint _logic,uint _fun,uint _resSize ){
 
+        m_ownerAddress;
         m_funs[_fun]=FunDetail(_logic,_resSize);
         SetFun(_fun,_resSize);
 
@@ -69,7 +68,7 @@ contract LogicPorxy{
 
     function summary()constant returns(uint,uint){
 
-        return(m_coreAddress,m_logicAddress);
+        return(m_coreAddress,m_ownerAddress);
 
     }
 }
