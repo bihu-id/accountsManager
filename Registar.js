@@ -21,7 +21,7 @@ module.exports ={
 
         keys.forEach(function(k){
             var fun=funs[k]
-
+            console.log("wait keys:")
             return instance.getWait.call(fun.sig).then(function(res) {
                 console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
                 if(("0x"+res[0].toString(16))!=logicAddress) {

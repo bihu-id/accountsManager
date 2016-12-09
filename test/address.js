@@ -9,9 +9,9 @@ var Address=
         "XindiData": "0x4164ac7bbc8cfe18a20904b30f6c960462429114"
     },
     "rpc139199743": {
-        "XindiProxy": "0x6a52799079f39cf76e9a623cc1cf6ea436513940",
-        "XindiData": "0x72552cf5be516acfe572e3fd280bc80c1d880efa",
-        "XindiLogic": "0xcd3f1657558ed8fadfaa146c8cd445d073eee1cd"
+        "XindiProxy": "0x6bf2646389e70ae9ac48d6e3ef72f2b8d1f4c034",
+        "XindiData": "0xde51552a353a5a8dcaf9cd9c3973b3310e6cf1a4",
+        "XindiLogic": "0x8e7fa3689e7f8ccd6e20f09166a03449a85e8fab"
     }
 }
 module.exports=Address;
