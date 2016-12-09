@@ -12,18 +12,20 @@ module.exports ={
         var funs=Funs[contract]
         var keys=Object.keys(funs)
         var instance=proxy.at(proxyAddress)
-        instance.summary().then(function(res){
+
+        console.log(proxyAddress)
+
+        /*instance.getKeys().then(function(res){
             console.log(res.toString(16))
-        })
+        })*/
 
         keys.forEach(function(k){
             var fun=funs[k]
-            console.log(fun.name,fun.sig,fun.resSize)
 
-            return instance.get.call(fun.sig).then(function(res) {
-                //console.log(res[0].toString(16),logicAddress)
-                if(("0x"+res[0].toString(16))!=logicAddress)
-                {return instance.setfun(logicAddress, fun.sig, fun.resSize, {from: keyT}).then(function (tx) {
+            return instance.getWait.call(fun.sig).then(function(res) {
+                console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
+                if(("0x"+res[0].toString(16))!=logicAddress) {
+                    return instance.setfun(logicAddress, fun.sig, fun.resSize, {from: keyT}).then(function (tx) {
                         console.log(web3.eth.getTransactionReceipt(tx));
                     })
                 }
@@ -60,7 +62,7 @@ module.exports ={
 
         keys.forEach(function(k){
             var fun=funs[k]
-            console.log(fun.name)
+            //console.log(fun.name)
             var instance=proxy.at(proxyAddress)
             console.log(instance.address)
             return instance.get.call(fun.sig).then(function(res){

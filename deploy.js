@@ -30,10 +30,12 @@ module.exports ={
             rpcAddress[logicAddress]='"'+instance.address+'"';
             console.log('deploy %s:%s',logicAddress,instance.address)
             if(proxy!=null)
-            proxy.new().then(function(instance){
-                rpcAddress[proxyAddress]='"'+instance.address+'"';
+                proxy.new().then(function(instance){
+                    rpcAddress[proxyAddress]='"'+instance.address+'"';
+                    getRpcStr.save(rpcAddress)
+                })
+            else
                 getRpcStr.save(rpcAddress)
-            })
         });
     },
     deployProxy:function(contract,proxy){

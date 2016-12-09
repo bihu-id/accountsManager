@@ -551,7 +551,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 32
+            resSize: 576
         },
         unfreeze: {
             name: 'unfreeze(address)',
