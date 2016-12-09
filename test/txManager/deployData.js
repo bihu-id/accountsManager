@@ -4,7 +4,7 @@ contract('deploy txManger data', function(accounts) {
 
     it("deploy txManger data", function(){
 
-        return _deploy.deployData("TxManager",LogicPorxy,Data)
+        return _deploy.deployData("TxManager",LogicProxy,Data)
 
     });
 })

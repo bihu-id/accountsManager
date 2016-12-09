@@ -4,6 +4,6 @@ contract('registar fun of Xindi', function(accounts) {
 
     it("registar fun of Xindi", function () {
 
-        return registar.register("Xindi", LogicPorxy, accounts)
+        return registar.register("Xindi", LogicProxy, accounts)
     })
 })

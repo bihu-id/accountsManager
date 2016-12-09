@@ -4,7 +4,7 @@ contract('deploy TokenManager data', function(accounts) {
 
     it("set TokenManager porxy and data", function(){
 
-        return _deploy.deployData("TokenManager",LogicPorxy,Data)
+        return _deploy.deployData("TokenManager",LogicProxy,Data)
 
     });
 })
@@ -15,7 +15,7 @@ contract('deploy TokenManager data', function(accounts) {
     var tokenporxy;
 
     it("set token manager porxy", function(){
-        return LogicPorxy.new().then(function(instance){
+        return LogicProxy.new().then(function(instance){
             tokonManagerporxy=instance.address;
             //console.log(xindeporxy)
             return Data.new(tokonManagerporxy).then(function(instance){
@@ -26,7 +26,7 @@ contract('deploy TokenManager data', function(accounts) {
     });
 
     it("set token porxy", function(){
-        return LogicPorxy.new().then(function(instance){
+        return LogicProxy.new().then(function(instance){
             tokenporxy=instance.address;
             //console.log(xindeporxy)
         });

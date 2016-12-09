@@ -224,7 +224,7 @@ contract('deployData', function(accounts) {
 
 
     it("set porxy", function(){
-        return LogicPorxy.new().then(function(instance){
+        return LogicProxy.new().then(function(instance){
             xindeporxy=instance.address;
             //console.log(xindeporxy)
             return Data.new(xindeporxy).then(function(instance){
@@ -243,13 +243,13 @@ contract('deployData', function(accounts) {
 
     it("deploy account porxy",function(){
 
-        return LogicPorxy.new().then(function(instance){
+        return LogicProxy.new().then(function(instance){
             accountporxy=instance.address;
         })
     });
 
     /*it("set account manager porxy", function(){
-     return LogicPorxy.new().then(function(instance){
+     return LogicProxy.new().then(function(instance){
      accountManagerporxy=instance.address;
      //console.log(xindeporxy)
      return Data.new(accountManagerporxy).then(function(instance){
@@ -292,7 +292,7 @@ contract('deployData', function(accounts) {
 
 
     it("register xinde function ", function(){
-        var porxy=LogicPorxy.at(xindeporxy)
+        var porxy=LogicProxy.at(xindeporxy)
 
         return XindeFuns.forEach(function(fun){
             //console.log(xindelogic)
@@ -303,7 +303,7 @@ contract('deployData', function(accounts) {
     });
 
     it("register account function ", function(){
-        var porxy=LogicPorxy.at(accountporxy)
+        var porxy=LogicProxy.at(accountporxy)
         return AccountFuns.forEach(function(fun){
             porxy.setfun(accountlogic,fun.sig,fun.resSize,fun.gas,{from:accounts[0],gas:500000}).then(function(tx){
                 //console.log(funs[i].name);
@@ -312,7 +312,7 @@ contract('deployData', function(accounts) {
     });
 
     /*it("check xinde register function ", function(){
-     var porxy=LogicPorxy.at(xindeporxy)
+     var porxy=LogicProxy.at(xindeporxy)
      return XindeFuns.forEach(function(fun) {
 
      porxy.get.call(fun.sig).then(function(res){
@@ -323,7 +323,7 @@ contract('deployData', function(accounts) {
      });
 
      it("check account register function ", function(){
-     var porxy=LogicPorxy.at(accountporxy)
+     var porxy=LogicProxy.at(accountporxy)
      return AccountFuns.forEach(function(fun) {
 
      porxy.get.call(fun.sig).then(function(res){

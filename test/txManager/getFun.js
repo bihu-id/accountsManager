@@ -4,6 +4,6 @@ contract('get fun of TxManager', function(accounts) {
 
     it("get fun of TxManager", function () {
 
-        return registar.get("TxManager", LogicPorxy)
+        return registar.get("TxManager", LogicProxy)
     })
 })

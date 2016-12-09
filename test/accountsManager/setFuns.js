@@ -4,13 +4,13 @@ contract('registar fun of accountManager', function(accounts) {
 
     it("registar fun of accountManager", function () {
 
-        return registar.register("AccountManager",LogicPorxy,accounts)
+        return registar.register("AccountManager",LogicProxy,accounts)
     })
 
     /*it("registar fun of accountManager", function () {
 
         return AccountManager.new().then(function (instance) {
-            var porxy = LogicPorxy.at(accountManagerporxy)
+            var porxy = LogicProxy.at(accountManagerporxy)
             var addr = instance.address;
             addr='0xa0a587c2fdb519931363978e5e56ea4b964613ca'
             var keys=Object.keys(Funs)
@@ -27,7 +27,7 @@ contract('registar fun of accountManager', function(accounts) {
     it("set account fun", function () {
 
         return Account.new().then(function (instance) {
-            var porxy = LogicPorxy.at(accountPorxy)
+            var porxy = LogicProxy.at(accountPorxy)
             var addr = instance.address;
             console.log("account logic:",addr)
             //addr='0x06e115285a6793db09be46df83c021c100f8324b'

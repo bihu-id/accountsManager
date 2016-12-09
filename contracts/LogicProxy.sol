@@ -17,7 +17,7 @@ contract LogicProxy is Error{
 
     }
 
-    //Type  0:Key,1:Fun
+    //Type  0:Fun,1:key
 
     //Type=>(Keys=>address)
     mapping(uint=>mapping(uint=>uint))    m_key;
@@ -68,27 +68,29 @@ contract LogicProxy is Error{
 
     function onlyKey(uint _no)internal {
 
-        checKey(m_key[m_leg[0]][_no]);
+        checKey(m_key[m_leg[1]][_no]);
 
     }
 
+    function changeLeg(uint _leg) internal returns(uint){return (_leg+1)%2;}
     function resetKey(uint _no,uint _newKey){
 
         onlyKey(2);
-        uint t_leg=m_leg[0];
+        uint t_leg=m_leg[1];
+        uint t_legc=changeLeg(t_leg);
 
-        m_key[(t_leg+1)%2][0]=m_key[t_leg][0];
-        m_key[(t_leg+1)%2][1]=m_key[t_leg][1];
-        m_key[(t_leg+1)%2][2]=m_key[t_leg][2];
-        m_key[(t_leg+1)%2][3]=m_key[t_leg][3];
-        m_key[(t_leg+1)%2][_no]=_newKey;
+        m_key[t_legc][0]=m_key[t_leg][0];
+        m_key[t_legc][1]=m_key[t_leg][1];
+        m_key[t_legc][2]=m_key[t_leg][2];
+        m_key[t_legc][3]=m_key[t_leg][3];
+        m_key[t_legc][_no]=_newKey;
 
     }
 
     function setfun(uint _logic,uint _fun,uint _resSize ){
 
         onlyKey(0);
-        m_funs[(m_leg[1]+1)%2][_fun]=FunDetail(_logic,_resSize);
+        m_funs[changeLeg(m_leg[0])][_fun]=FunDetail(_logic,_resSize);
         SetFun(_fun,_resSize);
 
     }
@@ -100,37 +102,37 @@ contract LogicProxy is Error{
 
     }
 
-    function get(uint _fun)returns(uint,uint){
+    function get(uint _fun)constant returns(uint,uint){
 
-        return get_(m_leg[1],_fun);
-
-    }
-
-    function getWait(uint _fun)returns(uint,uint){
-
-        return get_((m_leg[1]+1)%2,_fun);
+        return get_(m_leg[0],_fun);
 
     }
 
-    function getkey(uint _leg)internal returns (uint A,uint AC,uint T,uint TC){
+    function getWait(uint _fun)constant returns(uint,uint){
+
+        return get_(changeLeg(m_leg[0]),_fun);
+
+    }
+
+    function getkey(uint _leg)internal returns (address A,address AC,address T,address TC){
 
         //int t_leg=t_leg;
         return(
-                m_key[_leg][0],
-                m_key[_leg][1],
-                m_key[_leg][2],
-                m_key[_leg][3]
+                address(m_key[_leg][0]),
+                address(m_key[_leg][1]),
+                address(m_key[_leg][2]),
+                address(m_key[_leg][3])
         );
     }
-    function getKeys()constant returns(uint A,uint AC,uint T,uint TC){
+    function getKeys()constant returns(address A,address AC,address T,address TC){
 
-        return getkey(m_leg[0]);
+        return getkey(m_leg[1]);
 
     }
 
-    function getWaitKeys()constant returns(uint A,uint AC,uint T,uint TC){
+    function getWaitKeys()constant returns(address A,address AC,address T,address TC){
 
-        return getkey((m_leg[0]+1)%2);
+        return getkey(changeLeg(m_leg[1]));
 
     }
 }

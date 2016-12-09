@@ -14,17 +14,17 @@ contract Data is BaseLogic{
         assembly {
             //store fun sig 0x20~0x3F of memery
             //0x20:start from 0x20 of memery
-            //0x2801617e is the function of LogicPorxy.get()  do not change the function name "get" of contract logicporxy.
+            //0x2801617e is the function of LogicProxy.get()  do not change the function name "get" of contract LogicProxy.
             mstore(0x20,0x9507d39a)
 
             //store fun sig 4 Bityes to memery 0x5C~0x5F,mem start 0x20 ( can release memery 0x20~0x5F )
             calldatacopy(0x5C,0x0,0x04)
 
 
-            //call LogicPorxy.get() to get the logic address and fun return result size
+            //call LogicProxy.get() to get the logic address and fun return result size
             //call(g, a, v, in, insize, out, outsize)
             //gas: call gas
-            //sload(0x0):logicPorxy address is stored with key 0x0,notice sload derectly to stake ,so do not use memery
+            //sload(0x0):LogicProxy address is stored with key 0x0,notice sload derectly to stake ,so do not use memery
             //callvalue: call value
             //0x3c:call data start from 0x3c
             //0x24:call data size  notice : 0x6d4ce63c+fun sig is store from 0x3c~0x60 in memery

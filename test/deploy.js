@@ -3,7 +3,7 @@ var _deploy=require("./../deploy.js")
 contract('deploy xindi data', function(accounts) {
 
     it("set xindi porxy", function () {
-        return _deploy.deployData("Xindi", LogicPorxy, Data)
+        return _deploy.deployData("Xindi", LogicProxy, Data)
 
     })
 
@@ -14,7 +14,7 @@ contract('deploy xindi data', function(accounts) {
 
     it("deploy txManger data", function(){
 
-        return _deploy.deployData("TxManager",LogicPorxy,Data)
+        return _deploy.deployData("TxManager",LogicProxy,Data)
 
     })
 
@@ -26,7 +26,7 @@ contract('deploy xindi data', function(accounts) {
 
     it("set TokenManager porxy and data", function(){
 
-        return _deploy.deployData("TokenManager",LogicPorxy,Data)
+        return _deploy.deployData("TokenManager",LogicProxy,Data)
 
     })
     
@@ -44,7 +44,7 @@ contract('deploy xindi data', function(accounts) {
 
     it("set accountManager porxy and data", function(){
 
-        return _deploy.deployData("AccountManager",LogicPorxy,Data)
+        return _deploy.deployData("AccountManager",LogicProxy,Data)
 
     })
 
