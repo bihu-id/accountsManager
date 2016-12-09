@@ -736,6 +736,200 @@ var abis=
             "type": "event"
         }
     ],
+    "LogicProxy": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_newKey",
+                    "type": "uint256"
+                }
+            ],
+            "name": "resetKey",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getKeys",
+            "outputs": [
+                {
+                    "name": "A",
+                    "type": "address"
+                },
+                {
+                    "name": "AC",
+                    "type": "address"
+                },
+                {
+                    "name": "T",
+                    "type": "address"
+                },
+                {
+                    "name": "TC",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_type",
+                    "type": "uint256"
+                }
+            ],
+            "name": "comfirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_logic",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_fun",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_resSize",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setfun",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getWaitKeys",
+            "outputs": [
+                {
+                    "name": "A",
+                    "type": "address"
+                },
+                {
+                    "name": "AC",
+                    "type": "address"
+                },
+                {
+                    "name": "T",
+                    "type": "address"
+                },
+                {
+                    "name": "TC",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_fun",
+                    "type": "uint256"
+                }
+            ],
+            "name": "get",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_fun",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getWait",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_type",
+                    "type": "uint256"
+                }
+            ],
+            "name": "requestComfirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_fun",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_resSize",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetFun",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Err",
+            "type": "event"
+        }
+    ],
     "Token": [
         {
             "constant": false,

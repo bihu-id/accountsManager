@@ -124,6 +124,48 @@ var funs=
             resSize: 32
         }
     },
+    LogicProxy: {
+        comfirm: {
+            name: 'comfirm(uint256)',
+            sig: 0x4753395a,
+            resSize: 32
+        },
+        get: {
+            name: 'get(uint256)',
+            sig: 0x9507d39a,
+            resSize: 32
+        },
+        getKeys: {
+            name: 'getKeys()',
+            sig: 0x2150c518,
+            resSize: 32
+        },
+        getWait: {
+            name: 'getWait(uint256)',
+            sig: 0xe8a96387,
+            resSize: 32
+        },
+        getWaitKeys: {
+            name: 'getWaitKeys()',
+            sig: 0x74f818b2,
+            resSize: 32
+        },
+        requestComfirm: {
+            name: 'requestComfirm(uint256)',
+            sig: 0xee9d40b3,
+            resSize: 32
+        },
+        resetKey: {
+            name: 'resetKey(uint256,uint256)',
+            sig: 0x1c1c0fbc,
+            resSize: 32
+        },
+        setfun: {
+            name: 'setfun(uint256,uint256,uint256)',
+            sig: 0x5b63f551,
+            resSize: 32
+        }
+    },
     Token: {
         accountStatus: {
             name: 'accountStatus(address)',

@@ -17,7 +17,8 @@ var funContract=
         'TokenManager',
         'TxManager',
         'Xindi',
-        'Account'
+        'Account',
+        'LogicProxy'
     ]
 
 fs.readdir("./contracts",function(err,files){
