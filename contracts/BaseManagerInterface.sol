@@ -63,14 +63,14 @@ contract BaseManagerInterface is BaseLogic {
 
     mapping(uint=>address) m_keys;
 
-    /// @notice reset all address by core of this contract; 重置Xinde合约的KEY
+    /// @notice reset all address by core of this contract; 重置合约的KEY
     /// @param _keyAddress the new address of roler;        新的地址
-    /// @param _role what roller to been reset;             重置哪个KEY A1~A8,A1_confirm~A8_confirm
+    /// @param _role what roller to been reset;             重置哪个KEY
     function resetMe(address _keyAddress,uint _role);
 
     /// @notice comfirm resetMe operation                   批准一个重置Keys操作
     /// @param _keyAddress the new address of roler;        新的地址
-    /// @param _role what roller to been reset;             重置哪个KEY A1~A8,A1_confirm~A8_confirm
+    /// @param _role what roller to been reset;             重置哪个KEY
     /// @param _no operation _no;                           重置操作的NO. 和_keyAddress和_role 同时输入起到双重验证作用。
     function resetMeC(address _keyAddress,uint _role,uint _no);
 

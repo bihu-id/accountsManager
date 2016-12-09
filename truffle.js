@@ -11,8 +11,8 @@ module.exports = {
   },
   rpc: {
     //host: "60.205.4.235",
-    host: "139.199.7.43",
-    //host: "127.0.0.1",
+    //host: "139.199.7.43",
+    host: "127.0.0.1",
     port: 8545
   },
   strict:true
