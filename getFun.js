@@ -65,7 +65,11 @@ fs.readdir("./contracts",function(err,files){
                     if(oldAllFuns[contractKey][purek]!=undefined)
                         if(oldAllFuns[contractKey][purek]["resSize"]!=undefined &&oldAllFuns[contractKey][purek]["resSize"]!=0)
                             fun["resSize"] = oldAllFuns[contractKey][purek].resSize;
-
+                fun["register"] = false;
+                if(oldAllFuns[contractKey]!=undefined)
+                    if(oldAllFuns[contractKey][purek]!=undefined)
+                        if(oldAllFuns[contractKey][purek]["register"]!=undefined )
+                            fun["register"] = oldAllFuns[contractKey][purek].register;
                 //console.log("contract :\n",contractKey,"fun external:\n",contracts[contractKey]["gasEstimates"].external)
                 //console.log(k)
 

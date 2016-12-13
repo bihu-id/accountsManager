@@ -1,42 +1,89 @@
 import "Account.sol";
-import "BaseManager_Xindi.sol";
+import "BaseManager.sol";
+import "AccountManager.sol";
 
-contract XindiInterface is BaseManager_Xindi{
+contract RoleDefine_Xindi{
 
-    //account function sig tabel, notice if the account function change name/parameter
-    //should update this
-    enum FunType{
+    //角色类型
+    enum role{
 
-        freeze,
-        revokeCA,
-        reSet,
-        setCA,
-        setIdLevel,
-        setPass,
-        unfreeze,
+        //控制KEY和批准KEY的Role,分别对应A8,A8_confirm
+        coreRole,
+        coreRoleC,
+
+        //Manager合约会管理一些sub manager合约，
+        //setSubManagerRole 设置sub manager合约的keys
+        setSubKeyRole,
+        setSubKeyRoleC,
+
+        resetOptionRole,
+        resetOptionRoleC,
+        //重置账户的拥护者的KEY和批准KEY的Role,分别对应A1,A1_confirm
+        reSetRole,
+        reSetRoleC,
+
+        //实名认证标签KEY和批准KEY的Role,分别对应A2,A2_confirm
+        realNameRole,
+        realNameRoleC,
+
+        //CA认证标签KEY和批准KEY的Role,分别对应A3,A3_confirm
+        CARole,
+        CARoleC,
+
+        //撤销CA认证标签KEY和批准KEY的Role,分别对应A4,A4_confirm
+        revokeRole,
+        revokeRoleC,
+
+        //冻结账号KEY和批准KEY的Role,分别对应A5,A5_confirm
+        freezeRole,
+        freezeRoleC,
+
+        //解冻账号KEY和批准KEY的Role,分别对应A6,A6_confirm
+        unfreezeRole,
+        unfreezeRoleC,
+
+        //强制转移资产KEY和批准KEY的Role,分别对应A7,A7_confirm
+        forceTransferRole,
+        forceTransferRoleC,
+
+        //标示END
+        end
+
+    }
+
+    //账户操作类型
+    enum OperationType{
+
+        setOptionType,
+
+        setSubKeyType,
+        //重置账户拥有者
+        reSetType,
+
+        //设置账户实名等级
+        setIdLevelType,
+
+        //设置账户CA标签
+        setCAType,
+
+        //取消账户CA
+        revokeCAType,
+
+        //冻结账户
+        freezeType,
+
+        //解冻账户
+        unfreezeType,
+
+        //强制转移
+        forceTransferType,
 
         end
 
     }
 
-    /*account function sig tabel, notice if the account function change name/parameter
-    should update this
-    784b452a checkOwner(address[],uint[],uint)
-    62a5af3b freeze()
-    ba236dcd getApprove(address[])
-    c41a360a getOwner(uint256)
-    448ac35d init(address,uint,uint,address,address)
-    d26cb679 resetOwner(address[],uint[],uint)
-    e698fc31 revokeCA()
-    2cab3b98 setCA(address)
-    777af46f setIdLevel(uint)
-    f86cd7ad setPass(uint256)
-    b16a867c summary()
-    6a28f000 unfreeze()*/
-
-    //recode the operations
-
-    mapping(uint=>uint) m_funs;
+}
+contract XindiInterface is BaseManager ,RoleDefine_Xindi{
 
     /// @notice reset owner of account;                     重置用户账户拥有者
     /// @param _account account contract address;           操作的用户合约账号地址
@@ -67,15 +114,6 @@ contract XindiInterface is BaseManager_Xindi{
     /// @param _account account contract address;   操作的用户合约账号地址
     function unfreeze(address _account);
 
-    /// @notice get summary of this contract;                           获得Xinde合约的KEYS地址
-    /// @return 16 addresses of control this contract as address[];     A1~A8,A1~A8_confirm的地址
-    function summary()constant returns(address[]);
-
-    /// @notice get the role address;                       获得地址
-    /// @param _role type;                                  哪个KEY A1~A8,A1_confirm~A8_confirm
-    /// @return address of _role key                        _role的地址
-    function getRole(role _role)constant returns(address);
-
     event Reset(address _account,address[] _owners,uint[] _weight,uint[] _Threshold);
     event SetIdLevel (address _account,uint level);
     event Freeze(address _account);
@@ -84,23 +122,25 @@ contract XindiInterface is BaseManager_Xindi{
 }
 contract Xindi is XindiInterface{
 
-    function checKey(address _key)internal{
-        if(msg.sender!=_key)                                      {Err(10000000);throw; }
-    }
     //xindi contract do not use m_core and m_owner
     function init(){
 
         beforeInit();
-        m_keys[uint(role.coreRole)]=msg.sender;
-        m_keys[uint(role.coreRoleC)]=msg.sender;
 
-        m_funs[uint(FunType.freeze)]=       0x62a5af3b;
-        m_funs[uint(FunType.revokeCA)]=     0xe698fc31;
-        m_funs[uint(FunType.reSet)]=        0x00afc90b;
-        m_funs[uint(FunType.setCA)]=        0x2cab3b98;
-        m_funs[uint(FunType.setIdLevel)]=   0x777af46f;
-        m_funs[uint(FunType.setPass)]=      0xf86cd7ad;
-        m_funs[uint(FunType.unfreeze)]=     0xf86cd7ad;
+        m_options[0]=20;
+        m_options[1]=2;
+        m_options[2]=7;
+
+        m_keys[uint(role.coreRole)]=uint(msg.sender);
+        m_keys[uint(role.coreRoleC)]=uint(msg.sender);
+
+        m_funs[uint(OperationType.freezeType)]=                     0x62a5af3b;
+        m_funs[uint(OperationType.revokeCAType)]=                   0xe698fc31;
+        m_funs[uint(OperationType.reSetType)]=                      0x00afc90b;
+        m_funs[uint(OperationType.setCAType)]=                      0x2cab3b98;
+        m_funs[uint(OperationType.setIdLevelType)]=                 0x777af46f;
+        m_funs[uint(OperationType.unfreezeType)]=                   0xf86cd7ad;
+        m_funs[uint(OperationType.setSubKeyType)]=                  0x1c1c0fbc;
 
         uint[] memory t_res=new uint[](2) ;
 
@@ -108,19 +148,6 @@ contract Xindi is XindiInterface{
         t_res[1]=uint(m_keys[uint(role.coreRoleC)]);
 
         afterInit(t_res);
-    }
-
-    function setFun(uint _fun,uint32 _sig){
-
-        if (_fun>=uint(FunType.end))                                        {Err(60011003);throw; }
-        m_funs[_fun]=_sig;
-
-    }
-
-    function getFun(uint _fun)constant returns(bytes32 _sig){
-
-        return(bytes32(m_funs[_fun]));
-
     }
 
     function comfirm(address _account,uint _no){
@@ -132,8 +159,29 @@ contract Xindi is XindiInterface{
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;
 
+        if(m_operations[_no].m_type==uint(OperationType.setOptionType))
+            setOptionC(t_data);
+
+        if(m_operations[_no].m_type==uint(OperationType.setSubKeyType))
+            setSubKeyC(_account,t_data);
+
         if(m_operations[_no].m_type==uint(OperationType.reSetType))
             reSetC(_account,t_data);
+
+        if(m_operations[_no].m_type==uint(OperationType.setIdLevelType))
+            setIdLevelC(_account,t_data);
+
+        if(m_operations[_no].m_type==uint(OperationType.setCAType))
+            setCAC(_account,t_data);
+
+        if(m_operations[_no].m_type==uint(OperationType.revokeCAType))
+            revokeCAC(_account);
+
+        if(m_operations[_no].m_type==uint(OperationType.freezeType))
+            freezeC(_account);
+
+        if(m_operations[_no].m_type==uint(OperationType.unfreezeType))
+            unfreezeC(_account);
 
         del(_no);
         ConfirmOperation(_no);
@@ -152,7 +200,7 @@ contract Xindi is XindiInterface{
                 t_data[i+1]=uint(_owners[i]);
                 t_data[i+1+_owners.length]=_weight[i];
             }
-        addOperation(_account,OperationType.reSetType,uint(m_funs[uint(FunType.reSet)]),t_data);
+        addOperation(_account,uint(OperationType.reSetType),uint(m_funs[uint(OperationType.reSetType)]),t_data);
 
     }
 
@@ -166,7 +214,6 @@ contract Xindi is XindiInterface{
             _owners[i]=address(_data[1+i]);
             _weight[i]=uint(_data[1+i+t_len]);
         }
-        Err(uint(_account));
         t_a.resetAccountOwner.gas(msg.gas)(_data[0],_owners,_weight);
 
     }
@@ -178,7 +225,7 @@ contract Xindi is XindiInterface{
         uint[] memory t_data=new uint[](1);
         t_data[0]=_level;
 
-        addOperation(_account,OperationType.setIdLevelType,m_funs[uint(FunType.setIdLevel)],t_data);
+        addOperation(_account,uint(OperationType.setIdLevelType),m_funs[uint(OperationType.setIdLevelType)],t_data);
 
     }
 
@@ -196,7 +243,7 @@ contract Xindi is XindiInterface{
         uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_CA);
 
-        addOperation(_account,OperationType.setCAType,m_funs[uint(FunType.setCA)],t_data);
+        addOperation(_account,uint(OperationType.setCAType),m_funs[uint(OperationType.setCAType)],t_data);
 
     }
 
@@ -211,7 +258,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.revokeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.revokeCAType,m_funs[uint(FunType.revokeCA)],t_data);
+        addOperation(_account,uint(OperationType.revokeCAType),m_funs[uint(OperationType.revokeCAType)],t_data);
 
     }
 
@@ -226,7 +273,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.freezeType,m_funs[uint(FunType.freeze)],t_data);
+        addOperation(_account,uint(OperationType.freezeType),m_funs[uint(OperationType.freezeType)],t_data);
         Freeze(_account);
 
     }
@@ -242,7 +289,7 @@ contract Xindi is XindiInterface{
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](0);
-        addOperation(_account,OperationType.unfreezeType,m_funs[uint(FunType.unfreeze)],t_data);
+        addOperation(_account,uint(OperationType.unfreezeType),m_funs[uint(OperationType.unfreezeType)],t_data);
         Unfreeze(_account);
 
     }
@@ -254,20 +301,20 @@ contract Xindi is XindiInterface{
 
     }
 
-    function summary()constant returns(address[]){
+    function setSubKey(address _subContract,uint _role,address _key){
 
-        address[] memory res= new address[](16);
-
-        for(uint i=0;i<16;i++)
-            res[i]=m_keys[i];
-
-        return (res);
+        checKey(m_keys[uint(role.setSubKeyRole)]);
+        uint[] memory t_data=new uint[](2);
+        t_data[0]=_role;
+        t_data[1]=uint(_key);
+        addOperation(_subContract,uint(OperationType.setSubKeyType),uint(m_funs[uint(OperationType.setSubKeyType)]),t_data);
 
     }
 
-    function getRole(role _role)constant returns(address){
+    function setSubKeyC(address _subContract ,uint[] _data)internal{
 
-        return m_keys[uint(_role)];
+        AccountManager am=AccountManager(_subContract);
+        am.resetKey.gas(msg.gas)(_data[0],_data[1]);
 
     }
 

@@ -1,4 +1,5 @@
 import "BaseManagerInterface.sol";
+import "AccountManager.sol";
 
 contract RoleDefine_Xindi{
 
@@ -33,6 +34,13 @@ contract RoleDefine_Xindi{
         forceTransferRole,
         forceTransferRoleC,
 
+        //Manager合约会管理一些sub manager合约，
+        //setSubManagerRole 设置sub manager合约的keys
+        setSubKeyRole,
+        setSubKeyRoleC,
+
+        resetOptionRole,
+        resetOptionRoleC,
         //XinDe合约控制KEY和批准KEY的Role,分别对应A8,A8_confirm
         coreRole,
         coreRoleC,
@@ -64,7 +72,13 @@ contract RoleDefine_Xindi{
         unfreezeType,
 
         //强制转移
-        forceTransferType
+        forceTransferType,
+
+        setSubKeyType,
+
+        resetOptionType,
+
+        end
 
     }
 
@@ -94,7 +108,7 @@ contract BaseManager_Xindi is BaseManagerInterface,RoleDefine_Xindi{
         if(m_operations_resetMe[_no].m_role!=uint(_role))                   {Err(11000002);throw;}
         if(m_operations_resetMe[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
         if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm) {Err(11000004);throw;}
-        m_keys[uint(_role)]=_keyAddress;
+        m_keys[uint(_role)]=m_operations_resetMe[_no].m_key;
         m_operations_resetMe[_no].m_status=OperationStatus.comfirm;
         del2(_no);
         ResetMeC(_no,_keyAddress,uint(_role));

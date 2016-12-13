@@ -5,7 +5,7 @@ contract Data is BaseLogic{
     function Data(uint _porxy){
 
         porxy=_porxy;
-        m_core=uint(msg.sender);
+        m_initor=uint(msg.sender);
 
     }
 

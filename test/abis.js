@@ -487,19 +487,19 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_core",
+                    "type": "address"
+                },
+                {
                     "name": "_owner",
                     "type": "address"
                 },
                 {
-                    "name": "_accountCore",
+                    "name": "_TxCore",
                     "type": "address"
                 },
                 {
-                    "name": "_accountTxCore",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountPorxy",
+                    "name": "_accountProxy",
                     "type": "address"
                 }
             ],
@@ -548,15 +548,11 @@ var abis=
                     "type": "address"
                 },
                 {
-                    "name": "_accountCore",
-                    "type": "address"
-                },
-                {
                     "name": "_TxCore",
                     "type": "address"
                 },
                 {
-                    "name": "_accountPorxy",
+                    "name": "_accountProxy",
                     "type": "address"
                 }
             ],
@@ -619,15 +615,11 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_accountCore",
+                    "name": "_TxCore",
                     "type": "address"
                 },
                 {
-                    "name": "_accountTxCore",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountPorxy",
+                    "name": "_accountProxy",
                     "type": "address"
                 }
             ],
@@ -968,14 +960,6 @@ var abis=
         },
         {
             "constant": false,
-            "inputs": [],
-            "name": "ifIssuer",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
             "inputs": [
                 {
                     "name": "_from",
@@ -1277,22 +1261,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [],
-            "name": "ifFreeze",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "ifEnd",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -1323,14 +1291,6 @@ var abis=
                 }
             ],
             "name": "resetCore",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "ifCoreL",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2663,6 +2623,19 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_accountManager",
+                    "type": "address"
+                }
+            ],
+            "name": "init",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_fun",
                     "type": "uint256"
                 },
@@ -2913,14 +2886,6 @@ var abis=
                 }
             ],
             "name": "resetMeC",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "init",
             "outputs": [],
             "payable": false,
             "type": "function"

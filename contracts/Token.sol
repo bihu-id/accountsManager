@@ -132,13 +132,13 @@ contract Token is TokenInterface {
     */
 
     //check token if end
-    function ifEnd() {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
+    function ifEnd() internal {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
     //check if the operation is called from core
-    function ifCoreL() {if(msg.sender != m_option.m_core)        {Err(10000000);throw;}  }
+    function ifCoreL() internal {if(msg.sender != m_option.m_core)       {Err(10000000);throw;}  }
 
-    function ifIssuer(){if(msg.sender != m_option.m_issuer)     {Err(60040004);throw;}  }
+    function ifIssuer()internal {if(msg.sender != m_option.m_issuer)     {Err(60040004);throw;}  }
 
-    function ifFreeze(){if(m_freezeLists[msg.sender]==1)        {Err(60040002);throw;}  }
+    function ifFreeze()internal {if(m_freezeLists[msg.sender]==1)        {Err(60040002);throw;}  }
 
     function normal(){if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
     //force transfer by core

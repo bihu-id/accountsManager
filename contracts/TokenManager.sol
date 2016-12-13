@@ -1,8 +1,59 @@
 import "Token.sol";
-import "BaseManager_Token.sol";
 import "AccountManager.sol";
+import "BaseManager.sol";
 
-contract TokenManagerInterface is BaseManager_Token {
+contract RoleDefine_Token{
+
+    //角色类型
+   enum role{
+
+        //控制KEY和批准KEY的Role,分别对应A8,A8_confirm
+        coreRole,
+        coreRoleC,
+
+        //Manager合约会管理一些sub manager合约，
+        //setSubManagerRole 设置sub manager合约的keys
+        setSubKeyRole,
+        setSubKeyRoleC,
+
+        //冻结账号KEY和批准KEY的Role,分别对应K1,K1_confirm
+        freezeRole,
+        freezeRoleC,
+
+        //解冻账号KEY和批准KEY的Role,分别对应K2,K2_confirm
+        unfreezeRole,
+        unfreezeRoleC,
+
+        //强制转移资产KEY和批准KEY的Role,分别对应K3,K3_confirm
+        forceTransferRole,
+        forceTransferRoleC,
+
+        //标示END
+        end
+
+    }
+
+    //账户操作类型
+   enum OperationType{
+
+        setOptionType,
+
+        setSubKeyType,
+
+        //冻结账户
+        freezeType,
+
+        //解冻账户
+        unfreezeType,
+
+        //强制转移
+        forceTransferType
+
+   }
+
+}
+
+contract TokenManagerInterface is BaseManager,RoleDefine_Token {
 
     struct TokenSummary{
 
@@ -25,20 +76,18 @@ contract TokenManagerInterface is BaseManager_Token {
 
     }
 
-    // core of token contracts, core of token contracts can force transfer balance
-    //address m_coreToken;
+    enum Option{
 
-    // xindi contract xindi contract can set tokenAble;
-    address m_xindi;
+        keysAmount,
+        optionsAmount,
+        funAmount,
+        xindi,
+        accountManager,
+        tokenProxy,
+        MinTerm,
+        limit
 
-    // call accountManager to check account have right to create token
-    address m_accountManager;
-
-    // Min term of token before expire
-    uint m_MinTerm;
-
-    // max return max limit when call getTokenIds()
-    uint m_limit;
+    }
 
     //total amounts of symbols
     uint m_amounts=0;
@@ -60,14 +109,6 @@ contract TokenManagerInterface is BaseManager_Token {
 
     // Null address
     TokenSummary tokenSummaryNull;
-
-    //fun=>sig
-    mapping(uint=>uint) m_fun;
-    /// @notice  ;
-
-    address m_tokenPorxy;
-
-    function setFunSig(Fun _fun ,uint _sig);
 
     /// @notice create token ;                                                  创建token
     /// @param _symbol symbol of token;                                         token代号,不可重复
@@ -124,17 +165,6 @@ contract TokenManagerInterface is BaseManager_Token {
      /// @return bytes32[]      返回遍历资产的symbol
     function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]);
 
-     /// @notice                    获得本合约的概况
-     /// @return xindi              Xindi合约地址
-     /// @return _accountManager    账户账户合约的core
-     /// @return _MinTerm           最小合约过期时间
-     /// @return _limit             最大遍历合约ID数量
-     function getOption()constant returns (address _xindi,address _accountManager,address _tokenPorxy,uint _MinTerm,uint _tokenAmounts,uint _limit);
-
-    /// @notice         获得本合约的8个管理Keys 地址
-    /// @return  _keys  8个管理Keys
-    function getKeys()constant returns(address[] _keys);
-
     /// @notice         冻结某个账户持有的资产
     /// @param _token   资产合约的地址
     /// @param _account 哪个账户持有的,如果_account =0x0 :冻结整个资产
@@ -170,41 +200,31 @@ contract TokenManagerInterface is BaseManager_Token {
     event Freeze(address _Token,address _account);
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
-    event SetFunGas(uint _fun,uint _gas);
 
 }
 
 contract TokenManager is TokenManagerInterface{
 
-    //modifier ifCore() {if(msg.sender != m_core)                       {Err(10000000);throw; _;}}
-    function init(address _xindi,address _tokenPorxy){
+    function init(address _xindi,address _accountManager,address _tokenPorxy){
 
         beforeInit();
-        m_core=uint(msg.sender);
-        m_xindi=_xindi;
-        m_tokenPorxy=_tokenPorxy;
+
+        m_options[uint(Option.keysAmount)]=10;
+        m_options[uint(Option.optionsAmount)]=8;
+        m_options[uint(Option.funAmount)]=3;
+
+        m_options[uint(Option.xindi)]=uint(_accountManager);
+        m_options[uint(Option.accountManager)]=uint(_xindi);
+        m_options[uint(Option.tokenProxy)]=uint(_tokenPorxy);
+        m_options[uint(Option.MinTerm)]=24*3600;
+        m_options[uint(Option.limit)]=100;
 
         uint[] memory t_res=new uint[](3);
-        t_res[0]=uint(m_core);
-        t_res[1]=uint(m_xindi);
-        t_res[2]=uint(m_tokenPorxy);
+        t_res[0]=uint(_xindi);
+        t_res[1]=uint(_accountManager);
+        t_res[2]=uint(_tokenPorxy);
 
         afterInit(t_res);
-
-    }
-
-    function setFunGas(uint _fun,uint _gas){
-
-        ifOwner();
-        m_gasNeed[_fun]=_gas;
-        SetFunGas(_fun,_gas);
-
-    }
-
-    function setFunSig(Fun _fun ,uint _sig){
-
-        ifCore();
-        m_fun[uint(_fun)]=_sig;
 
     }
 
@@ -218,10 +238,12 @@ contract TokenManager is TokenManagerInterface{
         string _description,
         uint  _hash)returns(bool){
 
-        // cannot create token  check it by server
-        //if(tokenAble()==0)                                    {Err(60030001);  throw;}
+        // just check the sender if the account manager by accountManager ,other check is done by server
+        AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
+        if(am.getAccountNo(msg.sender)!=0)                      {Err(60030001);     throw;}
+        //if(tokenAble()==0)                                    {Err(60030001);     throw;}
         // 0: no expired term
-        if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_MinTerm))
+        if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
                                                                 {Err(60031001);     throw;}
         // id used
         //if(m_tokenSummarys[_id].m_id!=0)                      {Err(60031002);     throw;}
@@ -235,7 +257,7 @@ contract TokenManager is TokenManagerInterface{
 
         uint t_id=m_amounts+1;
         m_amounts=t_id;
-        Data d = new Data(uint(m_tokenPorxy));
+        Data d = new Data(m_options[uint(Option.tokenProxy)]);
         if(d==address(0x0))                                     {Err(60032001);     throw;}
         Token t=Token(d);
         if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
@@ -254,7 +276,7 @@ contract TokenManager is TokenManagerInterface{
         return true;
     }
 
-    function tokenAble()internal returns(uint32){
+    /*function tokenAble()internal returns(uint32){
 
 
         //uint t=m_tokenAble[msg.sender];
@@ -262,7 +284,7 @@ contract TokenManager is TokenManagerInterface{
     }
 
 
-    /*function setTokenAble(address _account,uint _tokenAmounts){
+    function setTokenAble(address _account,uint _tokenAmounts){
 
         if(msg.sender!=m_xindi)                                 {Err(60030002);  throw;}
         // 0~31 : the account have created how many tokens
@@ -270,9 +292,9 @@ contract TokenManager is TokenManagerInterface{
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
         SetTokenAble(_account,_tokenAmounts);
 
-    }*/
+    }
 
-    /*function getTokenAble(address _account)constant returns(address t_account, uint _amounts){
+    function getTokenAble(address _account)constant returns(address t_account, uint _amounts){
 
         return (_account m_tokenAble[_account]);
 
@@ -282,11 +304,11 @@ contract TokenManager is TokenManagerInterface{
 
         ifCore();
 
-        m_MinTerm=_MinTerm;
-        m_xindi=_xindi;
-        m_limit=_limit;
-        m_accountManager=_accountManager;
-        m_tokenPorxy=_tokenPorxy;
+        m_options[uint(Option.MinTerm)]=_MinTerm;
+        m_options[uint(Option.xindi)]=uint(_xindi);
+        m_options[uint(Option.limit)]=_limit;
+        m_options[uint(Option.accountManager)]=uint(_accountManager);
+        m_options[uint(Option.tokenProxy)]=uint(_tokenPorxy);
 
         SetOption(_xindi,_accountManager,_MinTerm,_limit);
 
@@ -308,8 +330,8 @@ contract TokenManager is TokenManagerInterface{
 
         uint t_limit=_limit;
         uint t_end;
-        if(t_limit>m_limit)
-            t_limit=m_limit;
+        if(t_limit>m_options[uint(Option.limit)])
+            t_limit=m_options[uint(Option.limit)];
         t_end=_start+t_limit-1;
 
         if(t_end>m_amounts)
@@ -325,12 +347,12 @@ contract TokenManager is TokenManagerInterface{
 
     function getOption()constant returns (address _xindi,address _accountManager,address _tokenPorxy,uint _MinTerm,uint _tokenAmounts,uint _limit){
 
-        _xindi=             m_xindi;
-        _accountManager=    m_accountManager;
-        _tokenPorxy=        m_tokenPorxy;
-        _MinTerm=           m_MinTerm;
+        _xindi=             address(m_options[uint(Option.xindi)]);
+        _accountManager=    address(m_options[uint(Option.accountManager)]);
+        _tokenPorxy=        address(m_options[uint(Option.tokenProxy)]);
+        _MinTerm=           m_options[uint(Option.MinTerm)];
         _tokenAmounts=      m_amounts;
-        _limit=             m_limit;
+        _limit=             m_options[uint(Option.limit)];
         return;
 
     }
@@ -340,18 +362,10 @@ contract TokenManager is TokenManagerInterface{
         return m_amounts;
 
     }
-    function getKeys()constant returns(address[] _keys){
-
-        address[] memory t_keys=new address[](8);
-        for(uint32 i=0;i<8;i++)
-            t_keys[i]=m_keys[i];
-        return t_keys;
-
-    }
 
     function comfirm(address _account,uint _no){
 
-        if(msg.sender!=m_keys[uint(m_operations[_no].m_type)*2+1])          {Err(10000000);throw; }
+        checKey(m_keys[uint(m_operations[_no].m_type)*2+1]);
         if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw; }
         if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000004);throw; }
 
@@ -370,10 +384,10 @@ contract TokenManager is TokenManagerInterface{
 
     function freeze(address _token,address _account){
 
-        if (msg.sender!=m_keys[uint(role.freezeRole)])                          {Err(10000000);throw; }
+        checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_account);
-        addOperation(_token,OperationType.unfreezeType,m_fun[uint(Fun.freeze)],t_data);
+        addOperation(_token,uint(OperationType.unfreezeType),m_funs[uint(Fun.freeze)],t_data);
         Freeze(_token,_account);
 
     }
@@ -388,10 +402,10 @@ contract TokenManager is TokenManagerInterface{
 
     function unfreeze(address _token,address _account){
 
-        if (msg.sender!=m_keys[uint(role.unfreezeRole)])                        {Err(10000000);throw; }
+        checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](1);
         t_data[0]=uint(_account);
-        addOperation(_token,OperationType.unfreezeType,m_fun[uint(Fun.unfreeze)],t_data);
+        addOperation(_token,uint(OperationType.unfreezeType),m_funs[uint(Fun.unfreeze)],t_data);
         Unfreeze(_token,_account);
 
     }
@@ -405,12 +419,12 @@ contract TokenManager is TokenManagerInterface{
 
     function forceTransfer(address _token,address _from,address _to,uint _value){
 
-        if (msg.sender!=m_keys[uint(role.forceTransferRole)])                   {Err(10000000);throw; }
+        checKey(m_keys[uint(role.forceTransferRole)]);
         uint[] memory t_data=new uint[](3);
         t_data[0]=uint(_from);
         t_data[1]=uint(_to);
         t_data[2]=uint(_value);
-        addOperation(_token,OperationType.forceTransferType,m_fun[uint(Fun.forceTransfer)],t_data);
+        addOperation(_token,uint(OperationType.forceTransferType),m_funs[uint(Fun.forceTransfer)],t_data);
 
     }
 

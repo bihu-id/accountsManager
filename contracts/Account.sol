@@ -46,11 +46,18 @@ contract AccountInterface is BaseLogic{
         uint m_level;
 
         status m_status;
+
+        // sign of token
+        uint sign_r;
+
+        uint sign_s;
+
+        uint sign_v;
+        //notice cannot add only variable above!!!
     }
 
     AccountData m_data;
     // txHash => bool
-
 
     mapping(uint=>bool) m_signsPass;
 
@@ -200,7 +207,7 @@ contract Account is AccountInterface{
         uint _maxSupply,
         uint _precision,
         uint _currentSupply,
-        uint  _closingTime,
+        uint _closingTime,
         string _description,
         uint  _hash,
         uint _tokenManager)

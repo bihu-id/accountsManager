@@ -43,7 +43,7 @@ contract LogicProxy is Error{
     function comfirm(uint _type){
 
         onlyKey(_type*2+1);
-        if(!m_haveWait[_type])          { Err(60000002);throw; }
+        if(!m_haveWait[_type])              { Err(60000002);    throw; }
         m_leg[_type]=(m_leg[_type]+1)%2;
         m_haveWait[_type]=false;
 
@@ -62,7 +62,7 @@ contract LogicProxy is Error{
 
     function checKey(uint _key)internal{
 
-        if (uint(msg.sender) != _key)  { Err(10000002);throw; }
+        if (uint(msg.sender) != _key)       { Err(10000002);    throw; }
 
     }
 
@@ -73,6 +73,7 @@ contract LogicProxy is Error{
     }
 
     function changeLeg(uint _leg) internal returns(uint){return (_leg+1)%2;}
+
     function resetKey(uint _no,uint _newKey){
 
         onlyKey(2);

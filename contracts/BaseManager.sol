@@ -139,7 +139,8 @@ contract BaseManagerInterface is BaseLogic {
     function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,OperationStatus _status,uint[] _data);
 
     function getKeys()constant returns(address[] _keys);
-    function getKey(uint _role)constant returns(address _key);
+
+    function getOptions()constant returns(address[] _options);
 
     event ResetMe(uint _no,address _keyAddress,uint _role);
     event ResetMeC(uint _no,address _keyAddress,uint _role);
@@ -395,6 +396,7 @@ contract BaseManager is BaseManagerInterface{
         m_waitComfirms[++m_waitComfirmAmounts]=m_operationAmounts;
 
     }
+
     function getKeys()constant returns(address[] _keys){
 
         uint t_size=m_options[0];
@@ -418,4 +420,5 @@ contract BaseManager is BaseManagerInterface{
         return (res);
 
     }
+
 }
