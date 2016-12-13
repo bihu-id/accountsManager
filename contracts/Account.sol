@@ -132,6 +132,7 @@ contract Account is AccountInterface{
     modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
     modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}*/
 
+    function Account()BaseData(uint(msg.sender)){}
     function ifCoreL()internal{if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
 
     function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }

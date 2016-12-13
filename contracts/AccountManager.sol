@@ -19,6 +19,8 @@ contract AccountManager is SubManager {
     event CreateAccountData(address);
     event AccountRecode(uint,address);
 
+    function AccountManager()BaseData(uint(msg.sender)){}
+
     function init(address _core,address _owner,address _TxCore,address _accountProxy){
 
         beforeInit();

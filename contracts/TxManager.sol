@@ -6,6 +6,8 @@ contract TxManager is SubManager {
     //use uint replace address to get high
     uint /*address*/ m_owner;
 
+    function TxManager()BaseData(uint(msg.sender)){}
+
     function init(){
 
         beforeInit();

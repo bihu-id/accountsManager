@@ -8,23 +8,24 @@ contract('reset xindi key', function(accounts) {
     var keys=[];
     it("xinde summary", function(){
 
-        var xinde=Xindi.at(xindedata);
-        return xinde.summary.call().then(function(res){
-            console.log("keys")
+        var xindi=Xindi.at(xindedata);
+        return xindi.getKeys.call().then(function(res){
+            console.log("keys:")
             keys=res;
             for(var i=0;i<res.length;i++)
                 console.log("%s :%s ","key"+i,res[i].toString(16))
 
         })
+
     });
     
     it ("set reset key ",function() {
 
         var xinde = Xindi.at(xindedata);
 
-        for(var i=0;i<14;i++)
+        for(var i=1;i<20;i++)
         if(parseInt(keys[i])==0)
-            xinde.resetMe(accounts[i], i, {from: accounts[0], gas: 2000000}).then(function (tx) {
+            xinde.resetMe(i,accounts[i], {from: accounts[0], gas: 2000000}).then(function (tx) {
                 console.log("reset key %d:%s",i,accounts[i]);
                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 console.log(tx);

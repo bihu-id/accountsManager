@@ -142,19 +142,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetOwner",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "tokenContract",
                     "type": "address"
                 },
@@ -358,6 +345,11 @@ var abis=
             "type": "function"
         },
         {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
+        },
+        {
             "anonymous": false,
             "inputs": [
                 {
@@ -510,6 +502,83 @@ var abis=
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "name": "_account",
+                    "type": "address"
+                }
+            ],
+            "name": "getAccountNo",
+            "outputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_key",
+                    "type": "uint256"
+                }
+            ],
+            "name": "resetKey",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getKeys",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "BaseInit",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOptionsWait",
+            "outputs": [
+                {
+                    "name": "_res",
+                    "type": "uint256[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "accountAmount",
             "outputs": [
@@ -525,11 +594,15 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
+                    "name": "_key",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_value",
                     "type": "uint256"
                 }
             ],
-            "name": "resetOwner",
+            "name": "resetOption",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -537,25 +610,21 @@ var abis=
         {
             "constant": true,
             "inputs": [],
-            "name": "summary",
+            "name": "getOptions",
             "outputs": [
                 {
-                    "name": "_core",
-                    "type": "address"
-                },
-                {
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_TxCore",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountProxy",
-                    "type": "address"
+                    "name": "_res",
+                    "type": "uint256[]"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "requestComfirm",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -574,6 +643,14 @@ var abis=
                     "type": "address"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "comfirm",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -612,21 +689,9 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_TxCore",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountProxy",
-                    "type": "address"
-                }
-            ],
-            "name": "setOption",
-            "outputs": [],
+            "inputs": [],
             "payable": false,
-            "type": "function"
+            "type": "constructor"
         },
         {
             "anonymous": false,
@@ -655,6 +720,23 @@ var abis=
                 }
             ],
             "name": "AccountRecode",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_key",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "ResetOption",
             "type": "event"
         },
         {
@@ -1092,19 +1174,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetOwner",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_amounts",
                     "type": "uint256"
                 }
@@ -1302,6 +1371,11 @@ var abis=
             "outputs": [],
             "payable": false,
             "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
         },
         {
             "anonymous": false,
@@ -1641,6 +1715,27 @@ var abis=
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_xindi",
+                    "type": "address"
+                },
+                {
+                    "name": "_accountManager",
+                    "type": "address"
+                },
+                {
+                    "name": "_tokenPorxy",
+                    "type": "address"
+                }
+            ],
+            "name": "init",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [
                 {
@@ -1691,32 +1786,19 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_key",
-                    "type": "address"
-                },
-                {
                     "name": "_no",
                     "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
                 }
             ],
             "name": "resetMeReject",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_fun",
-                    "type": "uint8"
-                },
-                {
-                    "name": "_sig",
-                    "type": "uint256"
-                }
-            ],
-            "name": "setFunSig",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -1760,6 +1842,40 @@ var abis=
                     "type": "bool"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetMe",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_keyNo",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setOption",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1839,6 +1955,24 @@ var abis=
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "name": "_fun",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getFun",
+            "outputs": [
+                {
+                    "name": "_sig",
+                    "type": "bytes32"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "getOption",
             "outputs": [
@@ -1867,19 +2001,6 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_newOwner",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetOwner",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1926,23 +2047,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_keyAddress",
-                    "type": "address"
-                },
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetMe",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -1972,16 +2076,33 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_fun",
+                    "name": "_no",
                     "type": "uint256"
                 },
                 {
-                    "name": "_gas",
+                    "name": "_role",
                     "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
                 }
             ],
-            "name": "setFunGas",
+            "name": "resetMeC",
             "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOptions",
+            "outputs": [
+                {
+                    "name": "_options",
+                    "type": "address[]"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2002,19 +2123,11 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_keyAddress",
-                    "type": "address"
-                },
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_no",
+                    "name": "_newCore",
                     "type": "uint256"
                 }
             ],
-            "name": "resetMeC",
+            "name": "resetCore",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2023,11 +2136,15 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newCore",
+                    "name": "_fun",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_sig",
                     "type": "uint256"
                 }
             ],
-            "name": "resetCore",
+            "name": "setFun",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2076,21 +2193,9 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_xindi",
-                    "type": "address"
-                },
-                {
-                    "name": "_tokenPorxy",
-                    "type": "address"
-                }
-            ],
-            "name": "init",
-            "outputs": [],
+            "inputs": [],
             "payable": false,
-            "type": "function"
+            "type": "constructor"
         },
         {
             "anonymous": false,
@@ -2293,23 +2398,6 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_fun",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_gas",
-                    "type": "uint256"
-                }
-            ],
-            "name": "SetFunGas",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 },
@@ -2415,6 +2503,23 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_key",
+                    "type": "uint256"
+                }
+            ],
+            "name": "resetKey",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_account",
                     "type": "uint256"
                 },
@@ -2433,14 +2538,60 @@ var abis=
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "getKeys",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "name": "",
+                    "type": "address"
+                },
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "BaseInit",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOptionsWait",
+            "outputs": [
+                {
+                    "name": "_res",
+                    "type": "uint256[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
+                    "name": "_key",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_value",
                     "type": "uint256"
                 }
             ],
-            "name": "resetOwner",
+            "name": "resetOption",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2459,6 +2610,35 @@ var abis=
                     "type": "uint256"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOptions",
+            "outputs": [
+                {
+                    "name": "_res",
+                    "type": "uint256[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "requestComfirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "comfirm",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2482,6 +2662,28 @@ var abis=
             "outputs": [],
             "payable": false,
             "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_key",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "ResetOption",
+            "type": "event"
         },
         {
             "anonymous": false,
@@ -2620,36 +2822,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_accountManager",
-                    "type": "address"
-                }
-            ],
-            "name": "init",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_fun",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_sig",
-                    "type": "uint32"
-                }
-            ],
-            "name": "setFun",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -2684,19 +2856,15 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "getKeys",
+            "outputs": [
                 {
-                    "name": "_key",
-                    "type": "address"
-                },
-                {
-                    "name": "_no",
-                    "type": "uint256"
+                    "name": "_keys",
+                    "type": "address[]"
                 }
             ],
-            "name": "resetMeReject",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2714,20 +2882,57 @@ var abis=
             "type": "function"
         },
         {
-            "constant": true,
+            "constant": false,
             "inputs": [
                 {
-                    "name": "_role",
-                    "type": "uint8"
-                }
-            ],
-            "name": "getRole",
-            "outputs": [
+                    "name": "_no",
+                    "type": "uint256"
+                },
                 {
-                    "name": "",
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
                     "type": "address"
                 }
             ],
+            "name": "resetMeReject",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetMe",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_keyNo",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setOption",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2796,19 +3001,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetOwner",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_account",
                     "type": "address"
                 },
@@ -2840,31 +3032,22 @@ var abis=
             "type": "function"
         },
         {
-            "constant": true,
-            "inputs": [],
-            "name": "summary",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "address[]"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": false,
             "inputs": [
                 {
-                    "name": "_keyAddress",
+                    "name": "_subContract",
                     "type": "address"
                 },
                 {
                     "name": "_role",
                     "type": "uint256"
+                },
+                {
+                    "name": "_key",
+                    "type": "address"
                 }
             ],
-            "name": "resetMe",
+            "name": "setSubKey",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2873,19 +3056,40 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_keyAddress",
-                    "type": "address"
+                    "name": "_no",
+                    "type": "uint256"
                 },
                 {
                     "name": "_role",
                     "type": "uint256"
                 },
                 {
-                    "name": "_no",
-                    "type": "uint256"
+                    "name": "_keyAddress",
+                    "type": "address"
                 }
             ],
             "name": "resetMeC",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOptions",
+            "outputs": [
+                {
+                    "name": "_options",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "init",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2899,6 +3103,23 @@ var abis=
                 }
             ],
             "name": "resetCore",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_fun",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_sig",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setFun",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2970,6 +3191,11 @@ var abis=
             "outputs": [],
             "payable": false,
             "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
         },
         {
             "anonymous": false,

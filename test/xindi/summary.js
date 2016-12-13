@@ -31,11 +31,17 @@ contract('xindi summary', function(accounts) {
     })
     it("xinde summary", function(){
 
-        var xinde=Xindi.at(xindedata);
-        return xinde.summary.call().then(function(res){
+        var xindi=Xindi.at(xindedata);
+        xindi.getKeys.call().then(function(res){
             console.log("keys:")
             for(var i=0;i<res.length;i++)
                 console.log("%s :%s ","key"+i,res[i].toString(16))
+
+        })
+        xindi.getOptions.call().then(function(res){
+            console.log("options:")
+
+            console.log("key amounts:%s \n option amounts: %s ",parseInt(res[0],16) ,parseInt(res[1],16))
 
         })
     });

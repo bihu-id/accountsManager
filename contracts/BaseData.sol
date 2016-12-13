@@ -10,6 +10,12 @@ contract BaseData is Error{
     uint  m_core;//base core of data contract , can init contract ,can reset m_onwer;
     //uint  m_owner; //can set option of contract;
 
+    function BaseData(uint _porxy){
+
+        porxy=_porxy;
+        m_initor=uint(msg.sender);
+
+    }
 }
 //逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,必须严格检查编译器版本,防止编译器优化掉变量porxy;
 contract BaseLogic is BaseData{
@@ -22,11 +28,6 @@ contract BaseLogic is BaseData{
     function checKey(uint _key)internal{
         if(uint(msg.sender)!=_key)                                      {Err(10000000);throw; }
     }
-    function notuse(uint x)internal {
-
-        porxy=x;
-
-    }
 
     function beforeInit()internal{
 
@@ -37,17 +38,13 @@ contract BaseLogic is BaseData{
 
     function afterInit(uint[] _res)internal{
 
-        inited==1;
+        inited=1;
         Init(_res);
 
     }
 
     //##resetCore 300000 0
     function ifCore()internal {checKey(m_core);}
-
-    //function ifInitor()internal {if(uint(msg.sender))!=m_initor}                {Err(10000000);throw; }}
-
-    //function ifOwner()internal {if(uint(msg.sender) != m_owner)                 {Err(10000000);throw; }}
 
     function resetCore(uint _newCore){
 

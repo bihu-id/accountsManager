@@ -115,7 +115,7 @@ contract BaseManagerInterface is BaseLogic {
     /// @notice comfirm operation;                                      批准一个操作
     /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
     /// @param _no operation _no;                                       操作编号
-    function comfirm(address _account,uint _no);
+    function comfirm(uint _no,address _account);
 
     /// @notice reject operation;                                       拒绝一个操作
     /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
@@ -387,6 +387,14 @@ contract BaseManager is BaseManagerInterface{
         }
         if(t_start)
             m_waitComfirmAmounts_resetMe--;
+
+    }
+
+    function subComfirm(uint _no,address _account)internal{
+
+        checKey(m_keys[uint(m_operations[_no].m_type)*2+3]);
+        if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw; }
+        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000004);throw; }
 
     }
 

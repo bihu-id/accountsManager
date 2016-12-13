@@ -131,6 +131,8 @@ contract Token is TokenInterface {
     modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
     */
 
+    function Token()BaseData(uint(msg.sender)){}
+
     //check token if end
     function ifEnd() internal {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
     //check if the operation is called from core

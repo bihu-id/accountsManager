@@ -205,6 +205,8 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
 
 contract TokenManager is TokenManagerInterface{
 
+    function TokenManager()BaseData(uint(msg.sender)){}
+
     function init(address _xindi,address _accountManager,address _tokenPorxy){
 
         beforeInit();
@@ -363,11 +365,9 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function comfirm(address _account,uint _no){
+    function comfirm(uint _no,address _account){
 
-        checKey(m_keys[uint(m_operations[_no].m_type)*2+1]);
-        if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw; }
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000004);throw; }
+        subComfirm(_no,_account);
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;

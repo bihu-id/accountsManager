@@ -2,10 +2,7 @@ import "BaseData.sol";
 
 contract Data is BaseLogic{
 
-    function Data(uint _porxy){
-
-        porxy=_porxy;
-        m_initor=uint(msg.sender);
+    function Data(uint _proxy) BaseData(_proxy){
 
     }
 

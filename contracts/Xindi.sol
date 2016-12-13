@@ -122,6 +122,7 @@ contract XindiInterface is BaseManager ,RoleDefine_Xindi{
 }
 contract Xindi is XindiInterface{
 
+    function Xindi() BaseData(uint(msg.sender)){}
     //xindi contract do not use m_core and m_owner
     function init(){
 
@@ -148,13 +149,12 @@ contract Xindi is XindiInterface{
         t_res[1]=uint(m_keys[uint(role.coreRoleC)]);
 
         afterInit(t_res);
+
     }
 
-    function comfirm(address _account,uint _no){
+    function comfirm(uint _no,address _account){
 
-        checKey(m_keys[uint(m_operations[_no].m_type)*2+1]);
-        if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw; }
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000004);throw; }
+        subComfirm(_no,_account);
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;
