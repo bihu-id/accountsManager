@@ -5,10 +5,10 @@ contract BaseManagerInterface is BaseLogic {
     enum OperationStatus{
 
         //等待批准
-        waitComfirm,
+        waitConfirm,
 
         //已经批准
-        comfirm,
+        confirm,
 
         //已经拒绝
         reject
@@ -58,10 +58,10 @@ contract BaseManagerInterface is BaseLogic {
     uint m_operationAmounts;
     mapping(uint=>Operation) m_operations;
 
-    // recode all waiting comfirm operation amounts.
-    uint m_waitComfirmAmounts;
-    // all wait comfirms operations
-    mapping(uint=>uint) m_waitComfirms;
+    // recode all waiting confirm operation amounts.
+    uint m_waitConfirmAmounts;
+    // all wait Confirms operations
+    mapping(uint=>uint) m_waitConfirms;
 
 
     // recode all resetMeoperations
@@ -70,18 +70,18 @@ contract BaseManagerInterface is BaseLogic {
     //recode all resetMe operations
     mapping(uint=>ResetMeOperation) m_operations_resetMe;
 
-    // recode all waiting comfirm resetMe operation amounts.
-    uint m_waitComfirmAmounts_resetMe;
+    // recode all waiting confirm resetMe operation amounts.
+    uint m_waitConfirmAmounts_resetMe;
 
-    // all wait comfirms resetMe operations No.
-    mapping(uint=>uint) m_waitComfirms_resetMe;
+    // all wait Confirms resetMe operations No.
+    mapping(uint=>uint) m_waitConfirms_resetMe;
 
     /// @notice reset all address by core of this contract; 重置合约的KEY
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _role what roller to been reset;             重置哪个KEY
     function resetMe(uint _role,address _keyAddress);
 
-    /// @notice comfirm resetMe operation                   批准一个重置Keys操作
+    /// @notice confirm resetMe operation                   批准一个重置Keys操作
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _role what roller to been reset;             重置哪个KEY
     /// @param _no operation _no;                           重置操作的NO. 和_keyAddress和_role 同时输入起到双重验证作用。
@@ -93,7 +93,7 @@ contract BaseManagerInterface is BaseLogic {
     function resetMeReject(uint _no,uint _role,address _keyAddress);
 
     /// @notice get resetMe operation amounts                                       获得重置Key 总的操作数量,包含拒绝,批准和等待批准
-    /// @return _totalAmounts total amounts include rejected comfirmed and waiting  总的数量
+    /// @return _totalAmounts total amounts include rejected Confirmed and waiting  总的数量
     /// @return _waitAmounts  waiting operation amounts                             等待批准的数量
     function getOperationAmounts_resetMe()constant returns(uint _totalAmounts,uint _waitAmounts);
 
@@ -112,10 +112,10 @@ contract BaseManagerInterface is BaseLogic {
     function getOperation_resetMe(uint _no)constant returns(uint r_no,uint _role,address _key,OperationStatus _status);
 
 
-    /// @notice comfirm operation;                                      批准一个操作
+    /// @notice confirm operation;                                      批准一个操作
     /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
     /// @param _no operation _no;                                       操作编号
-    function comfirm(uint _no,address _account);
+    function confirm(uint _no,address _account);
 
     /// @notice reject operation;                                       拒绝一个操作
     /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
@@ -123,8 +123,8 @@ contract BaseManagerInterface is BaseLogic {
     function reject(address _account,uint _no);
 
     /// @notice get opertaion amount include total and wait;                            获得等待批准的操作总数
-    /// @return _totalAmounts total operation amounts include wait,comfirm and reject;  所有操作总数
-    /// @return _waitAmounts wait comfirm operation amount                              等待批准的操作的总数
+    /// @return _totalAmounts total operation amounts include wait,confirm and reject;  所有操作总数
+    /// @return _waitAmounts wait confirm operation amount                              等待批准的操作的总数
     function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts);
 
     /// @notice get operation detail;                                   获得操作的详情
@@ -159,12 +159,12 @@ contract BaseManager is BaseManagerInterface{
 
         //map  m_operations_resetMe start from 1
         m_operationAmounts_resetMe++;
-        m_operations_resetMe[m_operationAmounts_resetMe]=ResetMeOperation(uint(_role),_keyAddress,OperationStatus.waitComfirm);
+        m_operations_resetMe[m_operationAmounts_resetMe]=ResetMeOperation(uint(_role),_keyAddress,OperationStatus.waitConfirm);
 
-        //map  m_waitComfirms_resetMe start from 1
-        m_waitComfirmAmounts_resetMe++;
-        m_waitComfirms_resetMe[m_waitComfirmAmounts_resetMe]=m_operationAmounts_resetMe;
-        ResetMe(m_waitComfirms_resetMe[m_waitComfirmAmounts_resetMe],_keyAddress,uint(_role));
+        //map  m_waitConfirms_resetMe start from 1
+        m_waitConfirmAmounts_resetMe++;
+        m_waitConfirms_resetMe[m_waitConfirmAmounts_resetMe]=m_operationAmounts_resetMe;
+        ResetMe(m_waitConfirms_resetMe[m_waitConfirmAmounts_resetMe],_keyAddress,uint(_role));
 
     }
 
@@ -173,9 +173,9 @@ contract BaseManager is BaseManagerInterface{
         checKey(m_keys[1]);
         if(m_operations_resetMe[_no].m_role!=uint(_role))                   {Err(11000002);throw;}
         if(m_operations_resetMe[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
-        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm) {Err(11000004);throw;}
+        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitConfirm) {Err(11000004);throw;}
         m_keys[_role]=uint(m_operations_resetMe[_no].m_key);
-        m_operations_resetMe[_no].m_status=OperationStatus.comfirm;
+        m_operations_resetMe[_no].m_status=OperationStatus.confirm;
         del2(_no);
         ResetMeC(_no,_keyAddress,uint(_role));
 
@@ -185,7 +185,7 @@ contract BaseManager is BaseManagerInterface{
 
         checKey(m_keys[1]);
         if(m_operations_resetMe[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
-        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitComfirm) {Err(11000004);throw;}
+        if(m_operations_resetMe[_no].m_status!=OperationStatus.waitConfirm) {Err(11000004);throw;}
         m_operations_resetMe[_no].m_status=OperationStatus.reject;
         del2(_no);
         ResetMeReject(_no,_keyAddress,m_operations_resetMe[_no].m_role);
@@ -194,7 +194,7 @@ contract BaseManager is BaseManagerInterface{
 
     function getOperationAmounts_resetMe()constant returns(uint _totalAmounts,uint _waitAmounts){
 
-        return  (m_operationAmounts_resetMe,m_waitComfirmAmounts_resetMe);
+        return  (m_operationAmounts_resetMe,m_waitConfirmAmounts_resetMe);
 
     }
 
@@ -249,9 +249,9 @@ contract BaseManager is BaseManagerInterface{
         if(_limit>20)
             t_limit=20;
         if (_type==1)
-            t_max=m_waitComfirmAmounts;
+            t_max=m_waitConfirmAmounts;
         if(_type==2)
-            t_max=m_waitComfirmAmounts_resetMe;
+            t_max=m_waitConfirmAmounts_resetMe;
 
         if((_start+t_limit-1)<=t_max)
             t_end=_start+t_limit-1;
@@ -263,10 +263,10 @@ contract BaseManager is BaseManagerInterface{
         // notice operation no start from 1 ,becasue  0 is default return when null
         for(uint i=_start;i<=t_end;i++){
             if (_type==1)
-                res[i-_start]=m_waitComfirms[i];
+                res[i-_start]=m_waitConfirms[i];
 
             if (_type==2)
-                res[i-_start]=m_waitComfirms_resetMe[i];
+                res[i-_start]=m_waitConfirms_resetMe[i];
         }
 
         return res;
@@ -283,11 +283,11 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    /*function comfirm(address _account,uint _no){
+    /*function confirm(address _account,uint _no){
 
      if(msg.sender!=m_keys[uint(m_operations[_no].m_type)*2+1]) throw;
         if(m_operations[_no].m_account!=_account) throw;
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)throw;
+        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)throw;
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;
@@ -300,11 +300,11 @@ contract BaseManager is BaseManagerInterface{
     }*/
 
     // it is very good way ,but should wait ..
-    /*function comfirm(address _account,uint _no){
+    /*function confirm(address _account,uint _no){
 
         if(msg.sender!=m_keys[uint(m_operations[_no].m_type)]) throw;
         if(m_operations[_no].m_account!=_account) throw;
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)throw;
+        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)throw;
         uint r;
         address t_to=m_operations[_no].m_account;
         //use memory from t_startMemory to void cover other using memory
@@ -331,7 +331,7 @@ contract BaseManager is BaseManagerInterface{
 
         if(uint(msg.sender)!=m_keys[uint(m_operations[_no].m_type)])              {Err(10000001);throw;}
         if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw;}
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000005);throw;}
+        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)         {Err(11000005);throw;}
         m_operations[_no].m_status=OperationStatus.reject;
         del(_no);
 
@@ -339,7 +339,7 @@ contract BaseManager is BaseManagerInterface{
 
     function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts){
 
-        return  (m_operationAmounts,m_waitComfirmAmounts);
+        return  (m_operationAmounts,m_waitConfirmAmounts);
 
     }
 
@@ -361,47 +361,47 @@ contract BaseManager is BaseManagerInterface{
     function del(uint _no)internal{
 
         bool t_start=false;
-        for (uint i=1;i<=m_waitComfirmAmounts;i++){
-            if(m_waitComfirms[i]==_no){
+        for (uint i=1;i<=m_waitConfirmAmounts;i++){
+            if(m_waitConfirms[i]==_no){
                 t_start=true;
                 i++;
             }
             if(t_start)
-                m_waitComfirms[i-1]=m_waitComfirms[i];
+                m_waitConfirms[i-1]=m_waitConfirms[i];
         }
         if(t_start)
-            m_waitComfirmAmounts--;
+            m_waitConfirmAmounts--;
 
     }
 
     function del2(uint _no)internal{
 
         bool t_start=false;
-        for (uint i=1;i<=m_waitComfirmAmounts_resetMe;i++){
-            if(m_waitComfirms_resetMe[i]==_no){
+        for (uint i=1;i<=m_waitConfirmAmounts_resetMe;i++){
+            if(m_waitConfirms_resetMe[i]==_no){
                 t_start=true;
                 i++;
             }
             if(t_start)
-                m_waitComfirms_resetMe[i-1]=m_waitComfirms_resetMe[i];
+                m_waitConfirms_resetMe[i-1]=m_waitConfirms_resetMe[i];
         }
         if(t_start)
-            m_waitComfirmAmounts_resetMe--;
+            m_waitConfirmAmounts_resetMe--;
 
     }
 
-    function subComfirm(uint _no,address _account)internal{
+    function subConfirm(uint _no,address _account)internal{
 
         checKey(m_keys[uint(m_operations[_no].m_type)*2+3]);
         if(m_operations[_no].m_account!=_account)                           {Err(11000006);throw; }
-        if(m_operations[_no].m_status!=OperationStatus.waitComfirm)         {Err(11000004);throw; }
+        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)         {Err(11000004);throw; }
 
     }
 
     function addOperation(address _account,uint _type,uint _accountFun,uint[] _data)internal{
 
-        m_operations[++m_operationAmounts]=Operation(_account,uint(_type),_accountFun,_data,OperationStatus.waitComfirm);
-        m_waitComfirms[++m_waitComfirmAmounts]=m_operationAmounts;
+        m_operations[++m_operationAmounts]=Operation(_account,uint(_type),_accountFun,_data,OperationStatus.waitConfirm);
+        m_waitConfirms[++m_waitConfirmAmounts]=m_operationAmounts;
 
     }
 

@@ -21,23 +21,26 @@ contract AccountManager is SubManager {
 
     function AccountManager()BaseData(uint(msg.sender)){}
 
-    function init(address _core,address _owner,address _TxCore,address _accountProxy){
+    function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner,uint _TxCore,uint _accountProxy){
 
         beforeInit();
-        m_core =uint(_core);
-        subInit(uint(msg.sender),uint(msg.sender),uint(_owner));
+        BaseInit();
+        m_keys[0]=_core;
+        m_keys[1]=_resetKey;
+        m_keys[2]=_resetKeyC;
+        m_keys[3]=_owner;
 
-        m_options[m_leg][0]=uint(_accountProxy);
-        m_options[m_leg][1]=uint(_TxCore);
+        initOption(0,4);// keys amounts
+        initOption(1,5);// options amounts
+        initOption(2,0);// fun amoutns
+        initOption(3,_accountProxy);
+        initOption(4,_TxCore);
 
-        m_accountProxy=_accountProxy;
         m_accountAmounts=0;
 
-        uint[] memory t_res=new uint[](4);
-        //t_res[0]=uint(m_core);
-        //t_res[1]=uint(m_owner);
-        t_res[2]=uint(m_TxCore);
-        t_res[3]=uint(m_accountProxy);
+        uint[] memory t_res=new uint[](2);
+        t_res[0]=uint(m_TxCore);
+        t_res[1]=uint(m_accountProxy);
 
         afterInit(t_res);
 
@@ -46,13 +49,13 @@ contract AccountManager is SubManager {
 
     function createAccount(address _owner,uint32 _weight,uint32 _threshold) {
 
-        onlyKey(2);
-        Data t_accountData=new Data(uint(m_accountProxy));
+        onlyKey(3);
+        Data t_accountData=new Data(getOption(3));
         CreateAccountData(t_accountData);
         //call data is made by Account(logic),but send to data (account data)
         Account t_account=Account(t_accountData);
         // check the gas need.
-        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,address(m_options[m_leg][0]),address(m_options[m_leg][1])))
+        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,address(m_keys[0]),address(getOption(4))))
             {Err(60022001);throw;}
         m_accounts[++m_accountAmounts]=t_accountData;
         m_addresses[t_accountData]=m_accountAmounts;
@@ -77,6 +80,5 @@ contract AccountManager is SubManager {
         return m_accountAmounts;
 
     }
-
 
 }

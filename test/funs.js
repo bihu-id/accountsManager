@@ -29,7 +29,7 @@ var funs=
             name: 'init(address,uint256,uint256,address,address)',
             sig: 0x01c580e4,
             resSize: 32,
-            register: false
+            register: true
         },
         issuerMoreToken: {
             name: 'issuerMoreToken(address,uint256)',
@@ -93,21 +93,15 @@ var funs=
         }
     },
     AccountManager: {
-        BaseInit: {
-            name: 'BaseInit()',
-            sig: 0x3898c514,
-            resSize: 32,
-            register: false
-        },
         accountAmount: {
             name: 'accountAmount()',
             sig: 0x41748782,
             resSize: 32,
             register: true
         },
-        comfirm: {
-            name: 'comfirm()',
-            sig: 0xdfe723a3,
+        confirm: {
+            name: 'confirm()',
+            sig: 0x7022b58e,
             resSize: 32,
             register: false
         },
@@ -132,30 +126,30 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 32,
-            register: false
+            resSize: 320,
+            register: true
         },
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 32,
-            register: false
+            resSize: 320,
+            register: true
         },
         getOptionsWait: {
             name: 'getOptionsWait()',
             sig: 0x40bdce3c,
-            resSize: 32,
+            resSize: 320,
             register: false
         },
         init: {
-            name: 'init(address,address,address,address)',
-            sig: 0x06552ff3,
+            name: 'init(uint256,uint256,uint256,uint256,uint256,uint256)',
+            sig: 0x9db1e461,
             resSize: 32,
             register: true
         },
-        requestComfirm: {
-            name: 'requestComfirm()',
-            sig: 0xd2f5eeb1,
+        requestConfirm: {
+            name: 'requestConfirm()',
+            sig: 0x0ef5f461,
             resSize: 32,
             register: false
         },
@@ -179,11 +173,11 @@ var funs=
         }
     },
     LogicProxy: {
-        comfirm: {
-            name: 'comfirm(uint256)',
-            sig: 0x4753395a,
+        confirm: {
+            name: 'confirm(uint256)',
+            sig: 0xba0179b5,
             resSize: 32,
-            register: true
+            register: false
         },
         get: {
             name: 'get(uint256)',
@@ -209,11 +203,11 @@ var funs=
             resSize: 32,
             register: true
         },
-        requestComfirm: {
-            name: 'requestComfirm(uint256)',
-            sig: 0xee9d40b3,
+        requestConfirm: {
+            name: 'requestConfirm(uint256)',
+            sig: 0xb585b95b,
             resSize: 32,
-            register: true
+            register: false
         },
         resetKey: {
             name: 'resetKey(uint256,uint256)',
@@ -339,11 +333,11 @@ var funs=
         }
     },
     TokenManager: {
-        comfirm: {
-            name: 'comfirm(address,uint256)',
-            sig: 0x6db1e2f0,
+        confirm: {
+            name: 'confirm(uint256,address)',
+            sig: 0xbe5fb5d8,
             resSize: 32,
-            register: true
+            register: false
         },
         createToken: {
             name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256)',
@@ -408,7 +402,7 @@ var funs=
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 32,
+            resSize: 320,
             register: false
         },
         getTokenAddress: {
@@ -442,8 +436,8 @@ var funs=
             register: true
         },
         init: {
-            name: 'init(address,address,address)',
-            sig: 0x184b9559,
+            name: 'init(uint256,uint256,uint256,uint256,uint256)',
+            sig: 0x9dabc978,
             resSize: 32,
             register: true
         },
@@ -497,15 +491,9 @@ var funs=
         }
     },
     TxManager: {
-        BaseInit: {
-            name: 'BaseInit()',
-            sig: 0x3898c514,
-            resSize: 32,
-            register: false
-        },
-        comfirm: {
-            name: 'comfirm()',
-            sig: 0xdfe723a3,
+        confirm: {
+            name: 'confirm()',
+            sig: 0x7022b58e,
             resSize: 32,
             register: false
         },
@@ -539,9 +527,9 @@ var funs=
             resSize: 32,
             register: true
         },
-        requestComfirm: {
-            name: 'requestComfirm()',
-            sig: 0xd2f5eeb1,
+        requestConfirm: {
+            name: 'requestConfirm()',
+            sig: 0x0ef5f461,
             resSize: 32,
             register: false
         },
@@ -571,11 +559,11 @@ var funs=
         }
     },
     Xindi: {
-        comfirm: {
-            name: 'comfirm(address,uint256)',
-            sig: 0x6db1e2f0,
+        confirm: {
+            name: 'confirm(uint256,address)',
+            sig: 0xbe5fb5d8,
             resSize: 32,
-            register: true
+            register: false
         },
         freeze: {
             name: 'freeze(address)',

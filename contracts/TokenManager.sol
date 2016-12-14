@@ -16,6 +16,9 @@ contract RoleDefine_Token{
         setSubKeyRole,
         setSubKeyRoleC,
 
+        resetOptionRole,
+        resetOptionRoleC,
+
         //冻结账号KEY和批准KEY的Role,分别对应K1,K1_confirm
         freezeRole,
         freezeRoleC,
@@ -200,6 +203,7 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
     event Freeze(address _Token,address _account);
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
+    event CreateTokenData(address _token);
 
 }
 
@@ -207,17 +211,20 @@ contract TokenManager is TokenManagerInterface{
 
     function TokenManager()BaseData(uint(msg.sender)){}
 
-    function init(address _xindi,address _accountManager,address _tokenPorxy){
+    function init(uint _core,uint _coreC,uint _xindi,uint _accountManager,uint _tokenPorxy){
 
         beforeInit();
 
-        m_options[uint(Option.keysAmount)]=10;
+        m_keys[0]=_core;
+        m_keys[1]=_coreC;
+
+        m_options[uint(Option.keysAmount)]=12;
         m_options[uint(Option.optionsAmount)]=8;
         m_options[uint(Option.funAmount)]=3;
 
-        m_options[uint(Option.xindi)]=uint(_accountManager);
-        m_options[uint(Option.accountManager)]=uint(_xindi);
-        m_options[uint(Option.tokenProxy)]=uint(_tokenPorxy);
+        m_options[uint(Option.xindi)]=_accountManager;
+        m_options[uint(Option.accountManager)]=_xindi;
+        m_options[uint(Option.tokenProxy)]=_tokenPorxy;
         m_options[uint(Option.MinTerm)]=24*3600;
         m_options[uint(Option.limit)]=100;
 
@@ -242,7 +249,7 @@ contract TokenManager is TokenManagerInterface{
 
         // just check the sender if the account manager by accountManager ,other check is done by server
         AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
-        if(am.getAccountNo(msg.sender)!=0)                      {Err(60030001);     throw;}
+        if(am.getAccountNo(msg.sender)==0)                      {Err(60030001);     throw;}
         //if(tokenAble()==0)                                    {Err(60030001);     throw;}
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
@@ -261,6 +268,7 @@ contract TokenManager is TokenManagerInterface{
         m_amounts=t_id;
         Data d = new Data(m_options[uint(Option.tokenProxy)]);
         if(d==address(0x0))                                     {Err(60032001);     throw;}
+        CreateTokenData(d);
         Token t=Token(d);
         if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
                                                                 {Err(60032002);     throw;}
@@ -365,9 +373,9 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function comfirm(uint _no,address _account){
+    function confirm(uint _no,address _account){
 
-        subComfirm(_no,_account);
+        subConfirm(_no,_account);
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;

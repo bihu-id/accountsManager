@@ -1,6 +1,6 @@
 var getRpcStr=require("./../../getRpcServe.js")
 
-contract('comfirm reset me', function(accounts) {
+contract('Confirm reset me', function(accounts) {
 
     var address=getRpcStr.get()
 
@@ -12,7 +12,7 @@ contract('comfirm reset me', function(accounts) {
         var xinde = Xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,30 ,2).then(function (res) {
-            console.log( "wait comfirm operations :",res.toString(10))
+            console.log( "wait Confirm operations :",res.toString(10))
             res.forEach(function(r){
                 return xinde.getOperation_resetMe(r).then(function (res) {
                     //console.log( "operation detail:")

@@ -42,7 +42,7 @@ contract('deployproxy', function(accounts) {
             })
 
             return instance.requestComfirm(0,{from:accounts[0]}).then(function(tx){
-                instance.comfirm(0,{from:accounts[0]}).then(function(tx){
+                instance.Confirm(0,{from:accounts[0]}).then(function(tx){
                     instance.getKeys().then(function(res){
                         console.log("keys ater reset:")
                         res.forEach(function(key){
@@ -74,7 +74,7 @@ contract('deployproxy', function(accounts) {
             })
 
             return instance.requestComfirm(0,{from:accounts[0]}).then(function(tx){
-                instance.comfirm(0,{from:accounts[0]}).then(function(tx){
+                instance.Confirm(0,{from:accounts[0]}).then(function(tx){
                     instance.getKeys().then(function(res){
                         console.log("keys ater reset:")
                         res.forEach(function(key){

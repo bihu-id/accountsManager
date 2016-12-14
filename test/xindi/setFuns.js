@@ -7,7 +7,7 @@ contract('registar fun of Xindi', function(accounts) {
         return registar.register("Xindi", LogicProxy, accounts[0])
     })
 
-    /*it("comfirm registar fun ", function () {
+    /*it("Confirm registar fun ", function () {
 
         return registar.register("Xindi", LogicProxy, accounts[0],accounts[0])
     })*/

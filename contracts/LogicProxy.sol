@@ -11,9 +11,9 @@ contract LogicProxy is Error{
     enum Keys{
 
         m_A,   //contract update key                0
-        m_AC,  //contract update comfirm key        1
+        m_AC,  //contract update confirm key        1
         m_T,   //reset keys key                     2
-        m_TC  //reset keys comfirm key              3
+        m_TC  //reset keys confirm key              3
 
     }
 
@@ -33,14 +33,14 @@ contract LogicProxy is Error{
 
     event SetFun(uint _fun,uint _resSize);
 
-    function requestComfirm(uint _type){
+    function requestConfirm(uint _type){
 
         onlyKey(_type*2);
         m_haveWait[_type]=true;
 
     }
 
-    function comfirm(uint _type){
+    function confirm(uint _type){
 
         onlyKey(_type*2+1);
         if(!m_haveWait[_type])              { Err(60000002);    throw; }

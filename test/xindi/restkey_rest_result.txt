@@ -25,8 +25,8 @@ reset key 2 : 0x0b6e790a282f8cb27a04f92839b7eea75c237ea8
 reset key 3 : 0xdea208f714fc201a54b5157124ac634c9f8292b1
     ✓ set reset key  (45ms)
     ✓ get resetMe operation amounts
-total operation : 4 waiting comfirm operation : 4
-wait comfirm operations : 1,2,3,4
+total operation : 4 waiting Confirm operation : 4
+wait Confirm operations : 1,2,3,4
 operation detail:
 No role            new address                status
     ✓ get all waiting operation resetMe (176ms)
@@ -34,31 +34,31 @@ No role            new address                status
 2 1 0xbaf68e96ef761382534297b68f8af6e83b2c5921 0
 3 2 0x0b6e790a282f8cb27a04f92839b7eea75c237ea8 0
 4 3 0xdea208f714fc201a54b5157124ac634c9f8292b1 0
-try comfirm next operation :
+try Confirm next operation :
 No role            new address                status
 1 0 0xdfdfd99afc87477e8f9a11e984ba6cc66be2db7b 0
-    ✓ comfirm resetMe no 1 (354ms)
-wait comfirm operations : 2,3,4
+    ✓ Confirm resetMe no 1 (354ms)
+wait Confirm operations : 2,3,4
 operation detail:
 No role            new address                status
     ✓ get all waiting operation resetMe (87ms)
 2 1 0xbaf68e96ef761382534297b68f8af6e83b2c5921 0
 3 2 0x0b6e790a282f8cb27a04f92839b7eea75c237ea8 0
 4 3 0xdea208f714fc201a54b5157124ac634c9f8292b1 0
-wait comfirm operations : 2,3,4
-    ✓ comfirm resetMe (246ms)
+wait Confirm operations : 2,3,4
+    ✓ Confirm resetMe (246ms)
     ✓ get resetMe operation
-try comfirm next operation :
+try Confirm next operation :
 No role            new address                status
 2 1 0xbaf68e96ef761382534297b68f8af6e83b2c5921 0
-try comfirm next operation :
+try Confirm next operation :
 No role            new address                status
 3 2 0x0b6e790a282f8cb27a04f92839b7eea75c237ea8 0
-try comfirm next operation :
+try Confirm next operation :
 No role            new address                status
 4 3 0xdea208f714fc201a54b5157124ac634c9f8292b1 0
 wait resetMe amounts : 4,3
-wait comfirm operations : 2,3,4
+wait Confirm operations : 2,3,4
     ✓ get all waiting operation resetMe (392ms)
 operation detail:
 No role            new address                status
@@ -93,7 +93,7 @@ key15 :0xdcf723011cc7314503f35fb9373064654c96e407
 
     ✓ get resetMe operation
 wait resetMe amounts : 4,0
-wait comfirm operations :
+wait Confirm operations :
     ✓ get all waiting operation resetMe (167ms)
 keys:
 key0 :0xdfdfd99afc87477e8f9a11e984ba6cc66be2db7b

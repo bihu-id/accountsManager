@@ -3,7 +3,7 @@ var getRpcStr=require("./../../getRpcServe.js")
 contract('transfer', function(accounts) {
 
     var address=getRpcStr.get()
-    var tokenmanager=address.tokonManagerdata
+    var tokenmanager=address.TokenManagerData
     var accountManager=address.accountManager
 
 

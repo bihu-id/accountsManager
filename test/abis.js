@@ -477,25 +477,8 @@ var abis=
     "AccountManager": [
         {
             "constant": false,
-            "inputs": [
-                {
-                    "name": "_core",
-                    "type": "address"
-                },
-                {
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_TxCore",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountProxy",
-                    "type": "address"
-                }
-            ],
-            "name": "init",
+            "inputs": [],
+            "name": "requestConfirm",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -542,25 +525,9 @@ var abis=
             "outputs": [
                 {
                     "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
-                    "type": "address"
+                    "type": "address[]"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "BaseInit",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -587,6 +554,47 @@ var abis=
                     "type": "uint256"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "confirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_core",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_resetKey",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_resetKeyC",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_owner",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_TxCore",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_accountProxy",
+                    "type": "uint256"
+                }
+            ],
+            "name": "init",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -621,14 +629,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [],
-            "name": "requestComfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -643,14 +643,6 @@ var abis=
                     "type": "address"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "comfirm",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -857,19 +849,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_type",
-                    "type": "uint256"
-                }
-            ],
-            "name": "comfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_logic",
                     "type": "uint256"
                 },
@@ -935,6 +914,32 @@ var abis=
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_type",
+                    "type": "uint256"
+                }
+            ],
+            "name": "requestConfirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_type",
+                    "type": "uint256"
+                }
+            ],
+            "name": "confirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [
                 {
@@ -953,19 +958,6 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_type",
-                    "type": "uint256"
-                }
-            ],
-            "name": "requestComfirm",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1715,27 +1707,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_xindi",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountManager",
-                    "type": "address"
-                },
-                {
-                    "name": "_tokenPorxy",
-                    "type": "address"
-                }
-            ],
-            "name": "init",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -1937,23 +1908,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_account",
-                    "type": "address"
-                },
-                {
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "comfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -2033,6 +1987,35 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_core",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_coreC",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_xindi",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_accountManager",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_tokenPorxy",
+                    "type": "uint256"
+                }
+            ],
+            "name": "init",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_account",
                     "type": "address"
                 },
@@ -2069,6 +2052,23 @@ var abis=
                     "type": "address"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_account",
+                    "type": "address"
+                }
+            ],
+            "name": "confirm",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2398,6 +2398,18 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
+                    "name": "_token",
+                    "type": "address"
+                }
+            ],
+            "name": "CreateTokenData",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 },
@@ -2501,6 +2513,14 @@ var abis=
     "TxManager": [
         {
             "constant": false,
+            "inputs": [],
+            "name": "requestConfirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
             "inputs": [
                 {
                     "name": "_role",
@@ -2544,25 +2564,9 @@ var abis=
             "outputs": [
                 {
                     "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
-                    "type": "address"
+                    "type": "address[]"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "BaseInit",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2576,6 +2580,14 @@ var abis=
                     "type": "uint256[]"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "confirm",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2623,22 +2635,6 @@ var abis=
                     "type": "uint256[]"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "requestComfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "comfirm",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2950,23 +2946,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_account",
-                    "type": "address"
-                },
-                {
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "comfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -3027,6 +3006,23 @@ var abis=
                 }
             ],
             "name": "reject",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_account",
+                    "type": "address"
+                }
+            ],
+            "name": "confirm",
             "outputs": [],
             "payable": false,
             "type": "function"

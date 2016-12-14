@@ -2,36 +2,48 @@ import "BaseData.sol";
 
 contract BaseOption is BaseLogic{
 
-    //0:option setting key                  reset by Superior ,set the option of this contract
-    //1:option setting comfirm key          reset by Superior ,comfirm the options of this contract
-    //2++:owner                               do operation do not need comfirm like create account ..
+    //0:core
+    //1:option setting key                  reset by Superior ,set the option of this contract
+    //2:option setting confirm key          reset by Superior ,confirm the options of this contract
+    //3++:owner                               do operation do not need confirm like create account ..
     mapping (uint=>uint)    m_keys;
 
+    //leg=>m_options
+    //options[0]:keys amounts
+    //options[1]:option amounts
+    //options[2++]:other options
     mapping(uint=>mapping(uint=>uint)) m_options;
 
-    //leg=>optionAmounts
-    mapping(uint=>uint) m_optionAmounts;
     uint m_leg;
 
     bool m_haveWait;
     event ResetOption(uint _key,uint _value);
 
-    function BaseInit(){
+    function BaseInit()internal{
 
         m_leg=0;
-        m_optionAmounts[0]=0;
-        m_optionAmounts[1]=0;
 
     }
 
-    function requestComfirm(){
+    function initOption(uint _no,uint _value)internal{
+
+        m_options[m_leg][_no]=_value;
+
+    }
+    function getOption(uint _no)internal returns(uint){
+
+        return m_options[m_leg][_no];
+
+    }
+
+    function requestConfirm(){
 
         onlyKey(0);
         m_haveWait=true;
 
     }
 
-    function comfirm(){
+    function confirm(){
 
         onlyKey(1);
         if(!m_haveWait)                                 { Err(60000002);    throw; }
@@ -51,11 +63,12 @@ contract BaseOption is BaseLogic{
     function resetOption(uint _key,uint _value){
 
         onlyKey(1);
+        if(_key<=0)                                 {                   throw; }
         uint nextLeg=changeLeg(m_leg);
-        if(_key>m_optionAmounts[nextLeg])           {                   throw; }
-        if(m_optionAmounts[nextLeg]==_key)
-            m_optionAmounts[nextLeg]=_key+1;
-        for(uint i=0;i<m_optionAmounts[m_leg];i++)
+        if(_key>m_options[nextLeg][1])              {                   throw; }
+        if(m_options[nextLeg][1]==_key)
+            m_options[nextLeg][1]=_key+1;
+        for(uint i=0;i<m_options[m_leg][1];i++)
             m_options[nextLeg][i]=m_options[m_leg][i];
         m_options[nextLeg][_key]=_value;
         ResetOption(_key,m_options[nextLeg][_key]);
@@ -64,9 +77,9 @@ contract BaseOption is BaseLogic{
 
     function _getOptions(uint _leg) internal returns(uint [] _res){
 
-        uint t_size=m_optionAmounts[_leg];
+        uint t_size=m_options[_leg][1];
         uint[] memory res=new uint[](t_size);
-        for(uint i=0;i<m_optionAmounts[_leg];i++)
+        for(uint i=0;i<t_size;i++)
             res[i]=m_options[_leg][i];
         return res;
 
@@ -89,23 +102,20 @@ contract SubManager is BaseOption{
 
     event ResetOption(uint _key,uint _value);
 
-    function subInit(uint _setKey,uint _setKeyC,uint _owner) internal{
-
-        m_keys[0]=_setKey;
-        m_keys[1]=_setKeyC;
-        m_keys[2]=_owner;
-
-        BaseInit();
-    }
-
     function resetKey(uint _role,uint _key){
 
-        ifCore();
+        onlyKey(0);
         m_keys[_role]=_key;
     }
 
-    function getKeys()constant returns(address,address,address){
-        return(address(m_keys[0]),address(m_keys[1]),address(m_keys[2]));
+    function getKeys()constant returns(address[]){
+
+        uint t_size=m_options[m_leg][0];
+        address[] memory res=new address[](t_size);
+            for(uint i=0;i<t_size;i++)
+                res[i]=address(m_keys[i]);
+        return res;
+
     }
 
 }

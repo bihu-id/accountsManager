@@ -7,14 +7,14 @@ contract('create token', function(accounts) {
     var accountManager=address.AccountManagerData
     
 
-   /*it("create token directly", function(){
+   it("create token directly", function(){
         var tokenManager=TokenManager.at(tokenmanager);
         return tokenManager.createToken("ABC12",10000000,2,500000,0,"测试AAA",0x10000aaa,{from:accounts[1],gas:10000000}).then(function(tx){
-            console.log(web3.getTransactionReceipt(tx))
+            console.log(web3.eth.getTransactionReceipt(tx))
         })
-    });*/
+    });
 
-        it("create token by account ", function(){
+     /*   it("create token by account ", function(){
         console.log("tokenManager:",tokenmanager)
         var accountmanager=AccountManager.at(accountManager);
         return accountmanager.getAccountAddress(1).then(function (res1) {
@@ -27,12 +27,12 @@ contract('create token', function(accounts) {
                 return account.createToken("DDD10",10000000,2,500000,0,"测试BBB1",0x10000bbb,tokenmanager,{from:res[7].toString(16),gas:20000000}).then(function(tx){
                     console.log(tx);
                     console.log(web3.eth.getTransactionReceipt(tx));
-                    console.log(getTransactionReceipt(tx));
+                    //console.log(getTransactionReceipt(tx));
                     //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 });
             });
         });
-    });
+    });*/
 
     it("get  token", function(){
         var tokenManager=TokenManager.at(tokenmanager);

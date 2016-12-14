@@ -32,13 +32,13 @@ contract('create account', function(accounts) {
 
 
     /*it("reset owner of account ",function(){
-        var xinde=Xinde.at(xindedata)
-        //function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold);
-        return xinde.reset(accountA,[accounts[6]],[50],50,{from:accounts[0]}).then(function(tx){
-            console.log("reset account "+accountA.toString(16),"to :",accounts[6]);
+     var xinde=Xinde.at(xindedata)
+     //function reSet (address _account,address[] _owners,uint32[] _weight,uint32 _Threshold);
+     return xinde.reset(accountA,[accounts[6]],[50],50,{from:accounts[0]}).then(function(tx){
+     console.log("reset account "+accountA.toString(16),"to :",accounts[6]);
 
-        });
-    })*/
+     });
+     })*/
     it("get account summary ", function(){
         var accountmanager=AccountManager.at(accountManager)
         accountmanager.accountAmount().then(function(res){

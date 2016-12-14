@@ -26,14 +26,15 @@ module.exports ={
                 console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
                 if(("0x"+res[0].toString(16))!=logicAddress) {
                     return instance.setfun(logicAddress, fun.sig, fun.resSize, {from: keyT}).then(function (tx) {
-                        console.log(web3.eth.getTransactionReceipt(tx));
+                        //console.log(web3.eth.getTransactionReceipt(tx));
+                        console.log(tx);
                     })
                 }
             })
         })
     },
 
-    comfirm:function(contract,proxy,keyT,keyTC){
+    confirm:function(contract,proxy,keyT,keyTC){
 
         var address=Address.get()
 
@@ -43,8 +44,8 @@ module.exports ={
         var funs=Funs[contract]
         var keys=Object.keys(funs)
         var instance=proxy.at(proxyAddress)
-        return instance.requestComfirm(0,{from:keyT}).then(function(tx){
-            instance.comfirm(0,{from:keyT}).then(function(tx){
+        return instance.requestConfirm(0,{from:keyT}).then(function(tx){
+            instance.confirm(0,{from:keyT}).then(function(tx){
                 console.log(tx);
             })
         })

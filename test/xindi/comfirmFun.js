@@ -1,9 +1,9 @@
 registar=require("./../../registar")
 
-contract('comfirm registar fun', function(accounts) {
+contract('Confirm registar fun', function(accounts) {
 
-    it("comfirm registar fun ", function () {
+    it("Confirm registar fun ", function () {
 
-        return registar.comfirm("Xindi", LogicProxy, accounts[0],accounts[0])
+        return registar.confirm("Xindi", LogicProxy, accounts[0],accounts[0])
     })
 })

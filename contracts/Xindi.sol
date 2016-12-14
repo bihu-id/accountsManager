@@ -152,9 +152,9 @@ contract Xindi is XindiInterface{
 
     }
 
-    function comfirm(uint _no,address _account){
+    function confirm(uint _no,address _account){
 
-        subComfirm(_no,_account);
+        subConfirm(_no,_account);
 
         uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
         t_data=m_operations[_no].m_data;

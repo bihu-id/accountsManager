@@ -10,7 +10,7 @@ contract('deployData', function(accounts) {
     var accountManager;
     /*
      02a6e12f ResetMeReject(address,uint256)
-     6db1e2f0 comfirm(address,uint256)
+     6db1e2f0 Confirm(address,uint256)
      8d1fdf2f freeze(address)
      202e3924 getOperation(uint256)
      edc3ed39 getOperationAmounts()
@@ -37,7 +37,7 @@ contract('deployData', function(accounts) {
             gas : 300000
         },
         {
-            name : 'comfirm',
+            name : 'Confirm',
             sig : 0x6db1e2f0,
             resSize : 32,
             gas : 300000

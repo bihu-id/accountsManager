@@ -215,6 +215,7 @@ contract Account is AccountInterface{
         {
             //checkPass(sha3(msg.data));
             //uint t_address =m_other;
+
             if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
             assembly{
                 mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
