@@ -17,7 +17,8 @@ var funContract=
         'TokenManager',
         'TxManager',
         'Xindi',
-        'Account'
+        'Account',
+        'LogicProxy'
     ]
 
 fs.readdir("./contracts",function(err,files){
@@ -28,25 +29,27 @@ fs.readdir("./contracts",function(err,files){
     //console.log(files)
     var i;
 
-    //files=["Test.sol"]
+    //files=["Error.sol"]
     for (i in files) {
         var file = files[i];
         if(file.indexOf(".sol")>=0)
             input[file] = fs.readFileSync(path.join(contracts_directory ,file), 'utf8');
     }
 
-    //console.log(input)
     var outputs = solc.compile({sources: input}, 1);
-    //console.log(JSON.stringify(outputs,null,2))
+    
+
     Object.keys(outputs)
     var contracts=outputs.contracts;
+
+    var abis={}
     //console.log(Object.keys(contracts))
-    //console.log(outputs.contracts)
     Object.keys(contracts).forEach(function(contractKey){
 
         //console.log(contractKey)
         if(funContract.indexOf(contractKey)>=0){
-
+            
+            //console.log(contractKey)
             var funs={}
             var funhash=contracts[contractKey].functionHashes
 
@@ -62,7 +65,11 @@ fs.readdir("./contracts",function(err,files){
                     if(oldAllFuns[contractKey][purek]!=undefined)
                         if(oldAllFuns[contractKey][purek]["resSize"]!=undefined &&oldAllFuns[contractKey][purek]["resSize"]!=0)
                             fun["resSize"] = oldAllFuns[contractKey][purek].resSize;
-
+                fun["register"] = false;
+                if(oldAllFuns[contractKey]!=undefined)
+                    if(oldAllFuns[contractKey][purek]!=undefined)
+                        if(oldAllFuns[contractKey][purek]["register"]!=undefined )
+                            fun["register"] = oldAllFuns[contractKey][purek].register;
                 //console.log("contract :\n",contractKey,"fun external:\n",contracts[contractKey]["gasEstimates"].external)
                 //console.log(k)
 
@@ -70,6 +77,8 @@ fs.readdir("./contracts",function(err,files){
                 //console.log(contractKey,funs)
             })
             allFuns[contractKey]=funs;
+
+            abis[contractKey]=JSON.parse(contracts[contractKey].interface)
         }
 
     })
@@ -80,5 +89,14 @@ fs.readdir("./contracts",function(err,files){
         console.log("File Saved !"); //文件被保存
     }) ;
 
+    var raw1=JSON.stringify(abis,null,4);
+    var str1="var abis=\n"+raw1+"\nmodule.exports=abis;";
+
+
+    fs.writeFile("./test/abis.js",str1,function (err) {
+        if (err) throw err ;
+        console.log("File Saved !"); //文件被保存
+    }) ;
+    
 });
 

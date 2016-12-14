@@ -1,5 +1,4 @@
 import "Data.sol";
-import "Err.sol";
 import "Token.sol";
 import "BaseData.sol";
 
@@ -47,11 +46,18 @@ contract AccountInterface is BaseLogic{
         uint m_level;
 
         status m_status;
+
+        // sign of token
+        uint sign_r;
+
+        uint sign_s;
+
+        uint sign_v;
+        //notice cannot add only variable above!!!
     }
 
     AccountData m_data;
     // txHash => bool
-
 
     mapping(uint=>bool) m_signsPass;
 
@@ -122,11 +128,12 @@ contract AccountInterface is BaseLogic{
 }
 contract Account is AccountInterface{
 
-    /*modifier ifCore() {if (msg.sender != m_data.m_core) throw;_;}
+    /*modifier ifCoreL() {if (msg.sender != m_data.m_core) throw;_;}
     modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
     modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}*/
 
-    function ifCore()internal{if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
+    function Account()BaseData(uint(msg.sender)){}
+    function ifCoreL()internal{if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
 
     function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
 
@@ -165,13 +172,14 @@ contract Account is AccountInterface{
 
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
 
-        ifCore();
+        ifCoreL();
         if (!checkOwner(_owners,_weight,_Tx_threshold))     {Err(60021001);  throw;}
         uint t_totalWeight=0;
         for(uint i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
             t_totalWeight+=_weight[i];
         }
+        m_data.m_Tx_threshold=_Tx_threshold;
         m_data.m_ownerFind=_owners;
         m_data.m_weightAmount=uint(t_totalWeight);
         ReSetAccountOwner(_owners,_weight,_Tx_threshold);
@@ -187,22 +195,32 @@ contract Account is AccountInterface{
 
     }
 
+    function checkOwners(address _owner)internal returns(bool){
+
+        address[] memory _owners=new address[](1);
+        _owners[0]=msg.sender;
+        return getApprove(_owners);
+
+    }
+
     function createToken(
         bytes32 _symbol,
         uint _maxSupply,
         uint _precision,
         uint _currentSupply,
-        uint  _closingTime,
+        uint _closingTime,
         string _description,
         uint  _hash,
         uint _tokenManager)
         {
             //checkPass(sha3(msg.data));
             //uint t_address =m_other;
+
+            if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
             assembly{
                 mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
                 calldatacopy(0x180,0x04,sub(calldatasize,0x04))
-                jumpi(0x01,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
+                jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
             }
         }
 
@@ -212,6 +230,7 @@ contract Account is AccountInterface{
         uint256 _amount)returns (bool success)
     {
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -226,6 +245,7 @@ contract Account is AccountInterface{
     function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -240,6 +260,7 @@ contract Account is AccountInterface{
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
+        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
         //checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -264,7 +285,7 @@ contract Account is AccountInterface{
 
     function setIdLevel(uint _level)  returns(bool){
 
-        ifCore();
+        ifCoreL();
         m_data.m_level=_level;
         return true;
 
@@ -272,7 +293,7 @@ contract Account is AccountInterface{
 
     function setCA(address _CA)returns(bool){
 
-        ifCore();
+        ifCoreL();
         if (m_data.m_level<100)
             m_data.m_level+=100;
         m_data.m_CA=_CA;
@@ -282,7 +303,7 @@ contract Account is AccountInterface{
 
     function revokeCA() returns(bool){
 
-        ifCore();
+        ifCoreL();
         if (m_data.m_level<100)                 {Err(60021003);  throw;}
         m_data.m_level-=100;
         m_data.m_CA=address(0);
@@ -292,14 +313,14 @@ contract Account is AccountInterface{
 
     function freeze() returns(bool){
 
-        ifCore();
+        ifCoreL();
         m_data.m_status=status.freeze;
 
     }
 
     function unfreeze() returns(bool){
 
-        ifCore();
+        ifCoreL();
         m_data.m_status=status.normal;
 
     }

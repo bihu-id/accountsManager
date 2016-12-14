@@ -1,18 +1,12 @@
-import "Err.sol";
 import "Account.sol";
-import "BaseData.sol";
+import "SubManager.sol";
 
-contract TxManager is BaseLogic {
+contract TxManager is SubManager {
 
     //use uint replace address to get high
     uint /*address*/ m_owner;
-    //core address can reset owner
-    uint /*address*/ m_core;
 
-    /*
-    modifier ifCore() {if(msg.sender != m_core)throw; _;}
-    modifier ifOwner() {if(msg.sender != m_owner)throw; _;}
-    */
+    function TxManager()BaseData(uint(msg.sender)){}
 
     function init(){
 
@@ -26,7 +20,7 @@ contract TxManager is BaseLogic {
 
     function pass(uint _account,uint _hash,uint _other){
 
-        ifOwner();
+        onlyKey(2);
         Account t_account=Account(address(_account));
         t_account.setPass(_hash,_other);
 

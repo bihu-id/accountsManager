@@ -1,72 +1,64 @@
 import "Account.sol";
-import "Err.sol";
-import "BaseData.sol";
+import "SubManager.sol";
 
-contract AccountManager is BaseLogic {
+//m_core : xindi
+//m_owner : account creator
+contract AccountManager is SubManager {
 
-    struct AccountCore {
+    address m_TxCore;
+    address m_accountProxy;
 
-        address m_core;
-        address m_TxCore;
-        address m_accountPorxy;
-
-    }
-
-    AccountCore m_accountCore;
-
+    //_no=>account address
     mapping(uint=>address) m_accounts;
 
-    //gas need to create account (account.init())
-    uint m_createGas;
+    //addcount address=>_no
+    mapping(address=>uint) m_addresses;
 
     uint m_accountAmounts;
-
-    /*
-    modifier ifCore() {if(msg.sender != m_core)throw; _;}
-    modifier ifOwner() {if(msg.sender != m_owner)throw; _;}
-    */
 
     event CreateAccountData(address);
     event AccountRecode(uint,address);
 
-    function init(address _owner,address _accountCore,address _accountTxCore,address _accountPorxy){
+    function AccountManager()BaseData(uint(msg.sender)){}
+
+    function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner,uint _TxCore,uint _accountProxy){
 
         beforeInit();
+        BaseInit();
+        m_keys[0]=_core;
+        m_keys[1]=_resetKey;
+        m_keys[2]=_resetKeyC;
+        m_keys[3]=_owner;
 
-        m_owner=uint(_owner);
-        m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
+        initOption(0,4);// keys amounts
+        initOption(1,5);// options amounts
+        initOption(2,0);// fun amoutns
+        initOption(3,_accountProxy);
+        initOption(4,_TxCore);
+
         m_accountAmounts=0;
 
-        uint[] memory t_res=new uint[](6);
-        t_res[0]=uint(m_core);
-        t_res[1]=uint(m_owner);
-        t_res[2]=uint(_accountCore);
-        t_res[3]=uint(_accountTxCore);
-        t_res[4]=uint(_accountPorxy);
+        uint[] memory t_res=new uint[](2);
+        t_res[0]=uint(m_TxCore);
+        t_res[1]=uint(m_accountProxy);
+
         afterInit(t_res);
 
     }
 
-    function setOption(address _accountCore,address _accountTxCore,address _accountPorxy,uint _createGas){
-
-        ifOwner();
-        m_accountCore=AccountCore(_accountCore,_accountTxCore,_accountPorxy);
-        m_createGas=_createGas;
-        Success(true);
-
-    }
 
     function createAccount(address _owner,uint32 _weight,uint32 _threshold) {
 
-        ifOwner();
-        Data t_accountData=new Data(uint(m_accountCore.m_accountPorxy));
+        onlyKey(3);
+        Data t_accountData=new Data(getOption(3));
         CreateAccountData(t_accountData);
         //call data is made by Account(logic),but send to data (account data)
         Account t_account=Account(t_accountData);
         // check the gas need.
-        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,m_accountCore.m_core,m_accountCore.m_TxCore))
+        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,address(m_keys[0]),address(getOption(4))))
             {Err(60022001);throw;}
         m_accounts[++m_accountAmounts]=t_accountData;
+        m_addresses[t_accountData]=m_accountAmounts;
         AccountRecode(m_accountAmounts,m_accounts[m_accountAmounts]);
 
     }
@@ -77,15 +69,15 @@ contract AccountManager is BaseLogic {
 
     }
 
-    function accountAmount()constant returns(uint){
+    function getAccountNo(address _account)constant returns(uint _no){
 
-        return m_accountAmounts;
+        return m_addresses[_account];
 
     }
 
-    function summary()constant returns(address _core,address _owner,address _accountCore,address _TxCore,address _accountPorxy){
+    function accountAmount()constant returns(uint){
 
-        return(address(m_core),address(m_owner),m_accountCore.m_core,m_accountCore.m_TxCore,m_accountCore.m_accountPorxy);
+        return m_accountAmounts;
 
     }
 
