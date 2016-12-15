@@ -22,9 +22,10 @@ contract BaseManagerInterface is BaseLogic {
         uint                m_type; //OperationType
 
         //account logic function sig
-        uint                funsig;
+        //uint                funsig;
 
-        //store call data exclude function sig
+        //store call data include function sig
+        //0:funsig
         uint[]              m_data;
 
         OperationStatus     m_status;
@@ -113,9 +114,9 @@ contract BaseManagerInterface is BaseLogic {
 
 
     /// @notice confirm operation;                                      批准一个操作
-    /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
+    /// @param _destination account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
     /// @param _no operation _no;                                       操作编号
-    function confirm(uint _no,address _account);
+    function confirm(uint _no,address _destination);
 
     /// @notice reject operation;                                       拒绝一个操作
     /// @param _account account contract address operation carry on;    操作的用户合约账号地址和_no是一个双重验证作用
@@ -205,7 +206,7 @@ contract BaseManager is BaseManagerInterface{
         t_data[0]=_keyNo;
         t_data[1]=_value;
 
-        addOperation(0,0,0,t_data);
+        addOperation(0,0,t_data);
 
     }
 
@@ -222,7 +223,7 @@ contract BaseManager is BaseManagerInterface{
         uint[] memory t_data=new uint[](2);
         t_data[0]=_fun;
         t_data[1]=_sig;
-        addOperation(0,0,0,t_data);
+        addOperation(0,0,t_data);
 
     }
 
@@ -283,49 +284,31 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    /*function confirm(address _account,uint _no){
+    function confirm(uint _no,address _destination){
 
-     if(msg.sender!=m_keys[uint(m_operations[_no].m_type)*2+1]) throw;
-        if(m_operations[_no].m_account!=_account) throw;
-        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)throw;
-
-        uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
-        t_data=m_operations[_no].m_data;
-        if(m_operations[_no].m_type==OperationType.reSetType)
-            reSetC(_account,t_data);
-
-        del(_no);
-        ConfirmOperation(_no);
-
-    }*/
-
-    // it is very good way ,but should wait ..
-    /*function confirm(address _account,uint _no){
-
-        if(msg.sender!=m_keys[uint(m_operations[_no].m_type)]) throw;
-        if(m_operations[_no].m_account!=_account) throw;
-        if(m_operations[_no].m_status!=OperationStatus.waitConfirm)throw;
+        subConfirm(_no,_destination);
         uint r;
-        address t_to=m_operations[_no].m_account;
-        //use memory from t_startMemory to void cover other using memory
-        //and store funsig before t_startMemory ,
-        uint t_startMemory=0x120;
-        uint t_dataSize=m_operations[_no].m_data.length*0x20+4;
-        uint t_funSig=m_operations[_no].funsig;
-
-        uint[] memory t_data=new uint[](m_operations[_no].m_data.length);
+        uint t_len=m_operations[_no].m_data.length;
+        uint t_len32=t_len*32;
+        uint[] memory t_data=new uint[](t_len);
         t_data=m_operations[_no].m_data;
 
         assembly{
-            mstore(sub(t_startMemory,0x20),t_funSig)
-            r:=call(3000000,t_to,callvalue,sub(t_startMemory,0x04), t_dataSize, 0x100, 0x20)
+
+            r:=call(gas,_destination,callvalue,add(t_data,0x1c), sub(t_len32,0x1c), 0x60, 0x20)
+
         }
-        if (r != 1) { throw;}
+        if(r!=1)
+            {Err(12000001); throw;}
 
         del(_no);
-        ConfirmOperation(_no);
 
-    }*/
+        ConfirmOperation(_no);
+        assembly{
+            return(0x60,0x20)
+        }
+
+    }
 
     function reject(address _account,uint _no){
 
@@ -398,9 +381,9 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function addOperation(address _account,uint _type,uint _accountFun,uint[] _data)internal{
+    function addOperation(address _account,uint _type,uint[] _data)internal{
 
-        m_operations[++m_operationAmounts]=Operation(_account,uint(_type),_accountFun,_data,OperationStatus.waitConfirm);
+        m_operations[++m_operationAmounts]=Operation(_account,uint(_type),_data,OperationStatus.waitConfirm);
         m_waitConfirms[++m_waitConfirmAmounts]=m_operationAmounts;
 
     }

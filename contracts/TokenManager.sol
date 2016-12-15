@@ -196,10 +196,6 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
                     uint _closingTime,
                     string _description,
                     uint _hash);
-
-    event ResetMe(uint _no,address _keyAddress,role _role);
-    event ResetMeC(uint _no,address _keyAddress,role _role);
-    event ConfirmOperation(uint _no);
     event Freeze(address _Token,address _account);
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
@@ -373,7 +369,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function confirm(uint _no,address _account){
+    /*function confirm(uint _no,address _account){
 
         subConfirm(_no,_account);
 
@@ -388,14 +384,16 @@ contract TokenManager is TokenManagerInterface{
         del(_no);
         ConfirmOperation(_no);
 
-    }
+    }*/
 
     function freeze(address _token,address _account){
 
         checKey(m_keys[uint(role.freezeRole)]);
-        uint[] memory t_data=new uint[](1);
-        t_data[0]=uint(_account);
-        addOperation(_token,uint(OperationType.unfreezeType),m_funs[uint(Fun.freeze)],t_data);
+        uint[] memory t_data=new uint[](2);
+
+        t_data[0]=m_funs[uint(Fun.freeze)];
+        t_data[1]=uint(_account);
+        addOperation(_token,uint(OperationType.unfreezeType),t_data);
         Freeze(_token,_account);
 
     }
@@ -411,9 +409,10 @@ contract TokenManager is TokenManagerInterface{
     function unfreeze(address _token,address _account){
 
         checKey(m_keys[uint(role.unfreezeRole)]);
-        uint[] memory t_data=new uint[](1);
-        t_data[0]=uint(_account);
-        addOperation(_token,uint(OperationType.unfreezeType),m_funs[uint(Fun.unfreeze)],t_data);
+        uint[] memory t_data=new uint[](2);
+        t_data[0]=m_funs[uint(Fun.unfreeze)];
+        t_data[1]=uint(_account);
+        addOperation(_token,uint(OperationType.unfreezeType),t_data);
         Unfreeze(_token,_account);
 
     }
@@ -428,11 +427,13 @@ contract TokenManager is TokenManagerInterface{
     function forceTransfer(address _token,address _from,address _to,uint _value){
 
         checKey(m_keys[uint(role.forceTransferRole)]);
-        uint[] memory t_data=new uint[](3);
-        t_data[0]=uint(_from);
-        t_data[1]=uint(_to);
-        t_data[2]=uint(_value);
-        addOperation(_token,uint(OperationType.forceTransferType),m_funs[uint(Fun.forceTransfer)],t_data);
+        uint[] memory t_data=new uint[](4);
+
+        t_data[0]=m_funs[uint(Fun.forceTransfer)];
+        t_data[1]=uint(_from);
+        t_data[2]=uint(_to);
+        t_data[3]=uint(_value);
+        addOperation(_token,uint(OperationType.forceTransferType),t_data);
 
     }
 

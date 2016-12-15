@@ -3,12 +3,12 @@ import "Error.sol";
 //数据合约必须继承这个类,不能更改这个类,如果更改会导致合约读取数据错误,
 contract BaseData is Error{
 
-    // use uint256 to void compiler merge several variable destroy store structure when add new variable when contract upgrade
+    // use type uint256/uint to void compiler merge several variables destroy store structure ,it would make error when contract upgrade with addtional variable
+    // use uint replace address type to make contract more simple
     uint  porxy;
     uint  inited;
     uint  m_initor;
     uint  m_core;//base core of data contract , can init contract ,can reset m_onwer;
-    //uint  m_owner; //can set option of contract;
 
     function BaseData(uint _porxy){
 
@@ -17,7 +17,7 @@ contract BaseData is Error{
 
     }
 }
-//逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,必须严格检查编译器版本,防止编译器优化掉变量porxy;
+//逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,
 contract BaseLogic is BaseData{
 
     event Init(uint[] _res);

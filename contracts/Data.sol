@@ -1,6 +1,6 @@
 import "BaseData.sol";
 
-contract Data is BaseLogic{
+contract Data is BaseData{
 
     function Data(uint _proxy) BaseData(_proxy){
 
