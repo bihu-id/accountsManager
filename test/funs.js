@@ -626,8 +626,8 @@ var funs=
             register: true
         },
         reSet: {
-            name: 'reSet(address,address[],uint256[],uint256)',
-            sig: 0xf74753a3,
+            name: 'reSet(address,uint256,address[],uint256[])',
+            sig: 0xfa9b672a,
             resSize: 32,
             register: true
         },

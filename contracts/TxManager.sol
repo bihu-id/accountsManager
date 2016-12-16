@@ -32,4 +32,5 @@ contract TxManager is SubManager {
 
     }
 
+    function resetCore(uint _newCore){}
 }

@@ -19,22 +19,22 @@ var Address=
         "TokenManagerLogic": "0x6b4b5ffa509fc4e69ed8e5e110e932812d3f67c5"
     },
     "rpc127001": {
-        "AccountManagerLogic": "0xf5c361cc1c7194e8a37d6b28bc9a7888c40a0ac6",
-        "XindiLogic": "0x79345aa4d52536f00b2749cf3a17fff69d599272",
-        "TxManagerLogic": "0xec0fb1122378873119b9ec4227fd54a14aaa3a40",
-        "TokenManagerLogic": "0x6424e2514e883baaf8489504fcb5895c79da1dda",
-        "AccountLogic": "0xa63bfc5bb523b3766e289dd8e143469179fe389a",
-        "AccountProxy": "0x20e6bec6be1062b6a9c9f562a1fe888073cfda19",
-        "TokenLogic": "0x4d39ecee7e2565c4fdca6edcfb03d9b48f825f7d",
-        "TokenProxy": "0x693b4c14c04fdf8a70fc4c81bb570425e04e96e8",
-        "TxManagerProxy": "0xf51782468986432e2905c685c4bd5ed8e2b5613d",
-        "TxManagerData": "0x93bbed62cdfb6cdf13fd7bd942c1c876b949674d",
-        "TokenManagerProxy": "0x0f0d242995158db9ddec1defc9304142aaa18cc5",
-        "TokenManagerData": "0xb97a6743c9d84bf2d758342a207c323010a1fb71",
-        "XindiProxy": "0xfe5e3ee54d7257eaa97ee803a18c363da14f8a99",
-        "XindiData": "0x270716c6aa5b9d1556432f17a2d8dfc23686697e",
-        "AccountManagerProxy": "0xf3993d893dad21b31cf4fd822d385692c51650e2",
-        "AccountManagerData": "0xb5936d99c73c6e397671c75c894122b2c208e478"
+        "XindiLogic": "0x7a6e2ecdfbc225beaa2f87e1564649f5cc2ca49f",
+        "TxManagerLogic": "0x29f4f7e6df830a2cbada02eccfcd3f3654dcb164",
+        "TokenManagerLogic": "0x6b266b93c0230732d9557ae3c43e8b89e755e635",
+        "AccountManagerLogic": "0xfe376aa92eae4ca035ddc74c14eba013c0484bf8",
+        "TokenManagerProxy": "0xa69017df4159535982f1bc28fd3d71c146c9a0df",
+        "TokenManagerData": "0x3dfc98b54629c9103cfbf630cee7a2d8974639aa",
+        "XindiProxy": "0x940a5d586440ffe00c4ea9dd52b840e91cfaf1e5",
+        "XindiData": "0x1e1834eb4e9a9ac2a43019633733125ca9bc90eb",
+        "TxManagerProxy": "0x265a32b2df60285c45d86f208a36b79e16d34117",
+        "TxManagerData": "0x97bdf69c3608a05756305b4de6118c203eef51ea",
+        "AccountManagerProxy": "0x0049352243df85a33ab5b1d11cdb60ab5b582673",
+        "AccountManagerData": "0x759145d7f033baae50fe89f8bc6078aeda30b68e",
+        "TokenLogic": "0x8dec843a57ff0327090ba8276238f6fde6bf980e",
+        "TokenProxy": "0xbb38021dc74c0f2735f6428f1d1bb06b9bf54365",
+        "AccountLogic": "0x3284481dccab2a203b55ab578571400b7c55f40f",
+        "AccountProxy": "0xd1d6f0ab77af3f9a4d4f1e2120454e194512b7b2"
     }
 }
 module.exports=Address;
