@@ -137,14 +137,13 @@ contract BaseManagerInterface is BaseLogic {
 
     /// @notice get operation detail;                                   获得操作的详情
     /// @param _no operation no;                                        操作编号
-    /// @return detail of operation as array type of structure Operation
-    /// 返回操作详情:
-    /// r_no:编号
-    /// _account:操作地址
-    /// _type:类型
-    /// _status:状态
-    /// _data:数据
-    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,OperationStatus _status,uint[] _data);
+    /// @return r_no:编号
+    /// @return _account:操作地址
+    /// @return _type:类型
+    /// @return _confirmKey 批准key 地址
+    /// @return _status:状态
+    /// @return _data:数据
+    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,address _confirmKey,OperationStatus _status,uint[] _data);
 
     /// @notice 获得本合约的所有Key
     /// @return _keys 所有Key的数组
@@ -357,16 +356,17 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,OperationStatus _status,uint[] _data){
+    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,address _confirmKey,OperationStatus _status,uint[] _data){
 
         //zero Operation
         //Operation nullOperation;
         Operation t_operation=m_operations[_no];
-        r_no=_no;
-        _account=address(t_operation.m_destinationAddress);
-        _type=uint(t_operation.m_type);
-        _status=OperationStatus(t_operation.m_status);
-        _data=t_operation.m_data;
+        r_no=                   _no;
+        _account=               address(t_operation.m_destinationAddress);
+        _type=                  uint(t_operation.m_type);
+        _confirmKey=            address(m_keys[t_operation.m_confirmKeyNo]);
+        _status=                OperationStatus(t_operation.m_status);
+        _data=                  t_operation.m_data;
 
         return ;
 
@@ -382,17 +382,34 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
+    function subConfirm(address _destination,uint _type,uint[] _data)internal returns(bool _called,bool _success){
+
+        return (false,true);
+
+    }
+
     function confirm(uint _no,address _destination) returns (bool){
 
-        subConfirm(_no,_destination);
+        checKey(m_keys[m_operations[_no].m_confirmKeyNo]);
+        //temp(m_operations[_no].m_destinationAddress,uint(_destination));
+        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {Err(11000006);throw; }
+        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {Err(11000004);throw; }
+
         uint ifLocal;
         uint r;
         uint t_len=m_operations[_no].m_data.length;
         uint t_len32=t_len*32;
         uint[] memory t_data=new uint[](t_len);
+        uint t_type=m_operations[_no].m_type;
         t_data=m_operations[_no].m_data;
 
+        bool t_called;
+        bool t_success;
 
+        (t_called,t_success)=subConfirm(_destination,t_type,t_data);
+
+        if(t_called &&t_success)
+            return t_success;
         if(m_operations[_no].m_type<=uint(BaseOperationType.setFunType)){
 
             ifLocal=100;
@@ -418,7 +435,7 @@ contract BaseManager is BaseManagerInterface{
         {
             assembly{
 
-                r:=call(gas,_destination,callvalue,add(t_data,0x1c), sub(t_len32,0x1c), 0x60, 0x20)
+                r:=call(gas,_destination,callvalue,add(t_data,0x3c), sub(t_len32,0x1c), 0x60, 0x20)
 
             }
             if(r!=1)
@@ -485,18 +502,11 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function subConfirm(uint _no,address _destination)internal{
-
-        checKey(m_keys[m_operations[_no].m_confirmKeyNo]);
-        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {Err(11000006);throw; }
-        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {Err(11000004);throw; }
-
-    }
-
     function addOperation(address _destinationAddress,uint _type,uint _confirmKeyNo,uint[] _data)internal{
 
         m_operations[++m_operationAmounts]=Operation(uint(_destinationAddress),_type,_confirmKeyNo,uint(OperationStatus.waitConfirm),_data);
         m_waitConfirms[++m_waitConfirmAmounts]=m_operationAmounts;
+
 
     }
 

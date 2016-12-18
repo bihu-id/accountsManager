@@ -1617,28 +1617,21 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_xindi",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountManager",
-                    "type": "address"
-                },
-                {
-                    "name": "_tokenPorxy",
-                    "type": "address"
-                },
-                {
-                    "name": "_MinTerm",
+                    "name": "_no",
                     "type": "uint256"
                 },
                 {
-                    "name": "_limit",
-                    "type": "uint256"
+                    "name": "_destination",
+                    "type": "address"
                 }
             ],
-            "name": "setOption",
-            "outputs": [],
+            "name": "reject",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1650,7 +1643,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "getOperation_resetMe",
+            "name": "getOperation_resetKey",
             "outputs": [
                 {
                     "name": "r_no",
@@ -1667,23 +1660,6 @@ var abis=
                 {
                     "name": "_status",
                     "type": "uint8"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getOperationAmounts_resetMe",
-            "outputs": [
-                {
-                    "name": "_totalAmounts",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_waitAmounts",
-                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -1729,6 +1705,10 @@ var abis=
                     "type": "uint256"
                 },
                 {
+                    "name": "_confirmKey",
+                    "type": "address"
+                },
+                {
                     "name": "_status",
                     "type": "uint8"
                 },
@@ -1750,27 +1730,6 @@ var abis=
                     "type": "address[]"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_keyAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "resetMeReject",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1813,23 +1772,6 @@ var abis=
                     "type": "bool"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_keyAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "resetMe",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1908,6 +1850,27 @@ var abis=
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKeyC",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [
                 {
@@ -1926,35 +1889,19 @@ var abis=
             "type": "function"
         },
         {
-            "constant": true,
-            "inputs": [],
-            "name": "getOption",
-            "outputs": [
+            "constant": false,
+            "inputs": [
                 {
-                    "name": "_xindi",
-                    "type": "address"
-                },
-                {
-                    "name": "_accountManager",
-                    "type": "address"
-                },
-                {
-                    "name": "_tokenPorxy",
-                    "type": "address"
-                },
-                {
-                    "name": "_MinTerm",
+                    "name": "_role",
                     "type": "uint256"
                 },
                 {
-                    "name": "_tokenAmounts",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_limit",
-                    "type": "uint256"
+                    "name": "_keyAddress",
+                    "type": "address"
                 }
             ],
+            "name": "resetKey",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1979,6 +1926,27 @@ var abis=
                 }
             ],
             "name": "forceTransfer",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKeyReject",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2013,19 +1981,35 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
+            "constant": true,
+            "inputs": [],
+            "name": "summary",
+            "outputs": [
                 {
-                    "name": "_account",
+                    "name": "_xindi",
                     "type": "address"
                 },
                 {
-                    "name": "_no",
+                    "name": "_accountManager",
+                    "type": "address"
+                },
+                {
+                    "name": "_tokenPorxy",
+                    "type": "address"
+                },
+                {
+                    "name": "_MinTerm",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_tokenAmounts",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_limit",
                     "type": "uint256"
                 }
             ],
-            "name": "reject",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -2068,7 +2052,12 @@ var abis=
                 }
             ],
             "name": "confirm",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2076,19 +2065,19 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_no",
-                    "type": "uint256"
+                    "name": "_subContract",
+                    "type": "address"
                 },
                 {
                     "name": "_role",
                     "type": "uint256"
                 },
                 {
-                    "name": "_keyAddress",
+                    "name": "_key",
                     "type": "address"
                 }
             ],
-            "name": "resetMeC",
+            "name": "setSubKey",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2100,7 +2089,7 @@ var abis=
             "outputs": [
                 {
                     "name": "_options",
-                    "type": "address[]"
+                    "type": "uint256[]"
                 }
             ],
             "payable": false,
@@ -2113,6 +2102,23 @@ var abis=
             "outputs": [
                 {
                     "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOperationAmounts_resetKey",
+            "outputs": [
+                {
+                    "name": "_totalAmounts",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_waitAmounts",
                     "type": "uint256"
                 }
             ],
@@ -2202,26 +2208,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_xindi",
+                    "name": "_token",
                     "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "name": "_accountManager",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "name": "_MinTerm",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_limit",
-                    "type": "uint256"
                 }
             ],
-            "name": "SetOption",
+            "name": "CreateTokenData",
             "type": "event"
         },
         {
@@ -2342,11 +2333,21 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_token",
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_keyAddress",
                     "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_role",
+                    "type": "uint256"
                 }
             ],
-            "name": "CreateTokenData",
+            "name": "ResetKey",
             "type": "event"
         },
         {
@@ -2368,7 +2369,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "ResetMe",
+            "name": "ResetKeyC",
             "type": "event"
         },
         {
@@ -2390,29 +2391,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "ResetMeC",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_keyAddress",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "name": "_role",
-                    "type": "uint256"
-                }
-            ],
-            "name": "ResetMeReject",
+            "name": "ResetKeyReject",
             "type": "event"
         },
         {
@@ -2437,6 +2416,40 @@ var abis=
                 }
             ],
             "name": "Reject",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetOption",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_sig",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetFun",
             "type": "event"
         },
         {
@@ -2754,6 +2767,53 @@ var abis=
     ],
     "Xindi": [
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_destination",
+                    "type": "address"
+                }
+            ],
+            "name": "reject",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_account",
+                    "type": "address"
+                },
+                {
+                    "name": "_Threshold",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_owners",
+                    "type": "address[]"
+                },
+                {
+                    "name": "_weight",
+                    "type": "uint256[]"
+                }
+            ],
+            "name": "resetAccountOwner",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [
                 {
@@ -2761,7 +2821,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "getOperation_resetMe",
+            "name": "getOperation_resetKey",
             "outputs": [
                 {
                     "name": "r_no",
@@ -2778,23 +2838,6 @@ var abis=
                 {
                     "name": "_status",
                     "type": "uint8"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getOperationAmounts_resetMe",
-            "outputs": [
-                {
-                    "name": "_totalAmounts",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_waitAmounts",
-                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -2840,6 +2883,10 @@ var abis=
                     "type": "uint256"
                 },
                 {
+                    "name": "_confirmKey",
+                    "type": "address"
+                },
+                {
                     "name": "_status",
                     "type": "uint8"
                 },
@@ -2881,6 +2928,23 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_keyNo",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setOption",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_no",
                     "type": "uint256"
                 },
@@ -2893,41 +2957,7 @@ var abis=
                     "type": "address"
                 }
             ],
-            "name": "resetMeReject",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_keyAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "resetMe",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_keyNo",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_value",
-                    "type": "uint256"
-                }
-            ],
-            "name": "setOption",
+            "name": "resetKeyC",
             "outputs": [],
             "payable": false,
             "type": "function"
@@ -2980,6 +3010,44 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKey",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKeyReject",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_account",
                     "type": "address"
                 },
@@ -2997,23 +3065,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_account",
-                    "type": "address"
-                },
-                {
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "reject",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_no",
                     "type": "uint256"
                 },
@@ -3023,7 +3074,12 @@ var abis=
                 }
             ],
             "name": "confirm",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3049,34 +3105,30 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_keyAddress",
-                    "type": "address"
-                }
-            ],
-            "name": "resetMeC",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [],
             "name": "getOptions",
             "outputs": [
                 {
                     "name": "_options",
-                    "type": "address[]"
+                    "type": "uint256[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getOperationAmounts_resetKey",
+            "outputs": [
+                {
+                    "name": "_totalAmounts",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_waitAmounts",
+                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -3164,31 +3216,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_account",
-                    "type": "address"
-                },
-                {
-                    "name": "_Threshold",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_owners",
-                    "type": "address[]"
-                },
-                {
-                    "name": "_weight",
-                    "type": "uint256[]"
-                }
-            ],
-            "name": "reSet",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "inputs": [],
             "payable": false,
             "type": "constructor"
@@ -3203,6 +3230,11 @@ var abis=
                 },
                 {
                     "indexed": false,
+                    "name": "_Threshold",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
                     "name": "_owners",
                     "type": "address[]"
                 },
@@ -3210,14 +3242,9 @@ var abis=
                     "indexed": false,
                     "name": "_weight",
                     "type": "uint256[]"
-                },
-                {
-                    "indexed": false,
-                    "name": "_Threshold",
-                    "type": "uint256[]"
                 }
             ],
-            "name": "Reset",
+            "name": "ResetAccountOwner",
             "type": "event"
         },
         {
@@ -3235,6 +3262,35 @@ var abis=
                 }
             ],
             "name": "SetIdLevel",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_account",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_CA",
+                    "type": "address"
+                }
+            ],
+            "name": "SetCA",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_account",
+                    "type": "address"
+                }
+            ],
+            "name": "RevokeCA",
             "type": "event"
         },
         {
@@ -3280,7 +3336,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "ResetMe",
+            "name": "ResetKey",
             "type": "event"
         },
         {
@@ -3302,7 +3358,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "ResetMeC",
+            "name": "ResetKeyC",
             "type": "event"
         },
         {
@@ -3324,7 +3380,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "ResetMeReject",
+            "name": "ResetKeyReject",
             "type": "event"
         },
         {
@@ -3349,6 +3405,40 @@ var abis=
                 }
             ],
             "name": "Reject",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetOption",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_sig",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetFun",
             "type": "event"
         },
         {

@@ -3,7 +3,7 @@ var getRpcStr=require("./../../getRpcServe.js")
 contract('xindi summary', function(accounts) {
 
     var address=getRpcStr.get()
-    var xindedata=address.XindiData
+    var xindidata=address.XindiData
     console.log(address)
 
     var roles={
@@ -52,22 +52,22 @@ contract('xindi summary', function(accounts) {
         return str
     }
 
-    it("get resetMe operation ", function(){
-        console.log(xindedata)
-        var xinde=Xindi.at(xindedata);
-        xinde.getOperationAmounts_resetMe.call().then(function(res){
-            console.log("wait resetMe amounts :",res.toString(10))
+    it("get resetKey operation ", function(){
+        console.log(xindidata)
+        var xindi=Xindi.at(xindidata);
+        xindi.getOperationAmounts_resetKey.call().then(function(res){
+            console.log("wait resetKey amounts :",res.toString(10))
             amount=res[1];
         })
     })
-    it ("get all waiting operation resetMe",function() {
-        var xinde = Xindi.at(xindedata);
+    it ("get all waiting operation resetKey",function() {
+        var xindi = Xindi.at(xindidata);
 
 
-        return xinde.getWaitOperationNos(1,16 ,2).then(function (res) {
+        return xindi.getWaitOperationNos(1,16 ,2).then(function (res) {
             console.log( "wait Confirm operations :",res.toString(10))
             res.forEach(function(w){
-                return xinde.getOperation_resetMe(w).then(function (res) {
+                return xindi.getOperation_resetKey(w).then(function (res) {
                     console.log( "operation detail:")
                     console.log("No","role","           new address               ","status")
 
@@ -77,10 +77,10 @@ contract('xindi summary', function(accounts) {
             })
         })
     })
-    it("xinde summary", function(){
+    it("xindi summary", function(){
 
         var str;
-        var xindi=Xindi.at(xindedata);
+        var xindi=Xindi.at(xindidata);
         xindi.getKeys.call().then(function(res){
             console.log("keys:")
             for(var i=0;i<res.length;i++){

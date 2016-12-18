@@ -18,7 +18,7 @@ contract('reset owner of account', function(accounts) {
                 var xindi=Xindi.at(xindidata)
                 return xindi.getKeys().then(function(res){
                     console.log("use reset key:",res[6].toString(16))
-                    return xindi.reSet(res1,50,[accounts[20]],[50],{from:res[6]}).then(function(tx){
+                    return xindi.resetAccountOwner(res1,50,[accounts[20]],[50],{from:res[6]}).then(function(tx){
                         console.log("reset account "+res1.toString(16),"to :",accounts[6]);
                         console.log(web3.eth.getTransactionReceipt(tx));
                     })

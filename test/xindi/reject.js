@@ -8,13 +8,13 @@ contract('Confirm reset me', function(accounts) {
 
 
 
-    it ("reject resetMe",function() {
+    it ("reject resetKey",function() {
         var xinde = Xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,30 ,2).then(function (res) {
             console.log( "wait Confirm operations :",res.toString(10))
             res.forEach(function(r){
-                return xinde.getOperation_resetMe(r).then(function (res) {
+                return xinde.getOperation_resetKey(r).then(function (res) {
                     //console.log( "operation detail:")
                     //console.log("No","role","           new address               ","status")
                     //console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))

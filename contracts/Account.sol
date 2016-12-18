@@ -128,12 +128,12 @@ contract AccountInterface is BaseLogic{
 }
 contract Account is AccountInterface{
 
-    /*modifier ifCoreL() {if (msg.sender != m_data.m_core) throw;_;}
+    /*modifier ifCore() {if (msg.sender != m_data.m_core) throw;_;}
     modifier iffreeze(){if(m_data.m_status==status.freeze) throw;_;}
     modifier onlyCore() {if (msg.sender != m_data.m_core) throw;_;}*/
 
     function Account()BaseData(uint(msg.sender)){}
-    function ifCoreL()internal{if (msg.sender != m_data.m_core)     {Err(10000000);  throw;} }
+    function ifCore()internal{if (msg.sender != m_data.m_core)     {Err(60020000);  throw;} }
 
     function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
 
@@ -172,7 +172,7 @@ contract Account is AccountInterface{
 
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
 
-        ifCoreL();
+        ifCore();
         if (!checkOwner(_owners,_weight,_Tx_threshold))     {Err(60021001);  throw;}
         uint t_totalWeight=0;
         for(uint i=0;i<_owners.length;i++){
@@ -285,7 +285,7 @@ contract Account is AccountInterface{
 
     function setIdLevel(uint _level)  returns(bool){
 
-        ifCoreL();
+        ifCore();
         m_data.m_level=_level;
         return true;
 
@@ -293,7 +293,7 @@ contract Account is AccountInterface{
 
     function setCA(address _CA)returns(bool){
 
-        ifCoreL();
+        ifCore();
         if (m_data.m_level<100)
             m_data.m_level+=100;
         m_data.m_CA=_CA;
@@ -303,7 +303,7 @@ contract Account is AccountInterface{
 
     function revokeCA() returns(bool){
 
-        ifCoreL();
+        ifCore();
         if (m_data.m_level<100)                 {Err(60021003);  throw;}
         m_data.m_level-=100;
         m_data.m_CA=address(0);
@@ -313,14 +313,14 @@ contract Account is AccountInterface{
 
     function freeze() returns(bool){
 
-        ifCoreL();
+        ifCore();
         m_data.m_status=status.freeze;
 
     }
 
     function unfreeze() returns(bool){
 
-        ifCoreL();
+        ifCore();
         m_data.m_status=status.normal;
 
     }

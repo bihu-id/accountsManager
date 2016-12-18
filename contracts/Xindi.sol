@@ -54,10 +54,14 @@ contract RoleDefine_Xindi{
     //账户操作类型
     enum OperationType{
 
+        //set sub manager contract keys if have     重置子管理合约key
         setSubKeyType,
 
-        //include set option and set fun
+        //use set option key                        设置本合约选项
         setOptionType,
+
+        //use set option key                        设置本合约将调用的函数的Sig
+        setFunType,
 
         //重置账户拥有者
         resetAccountOwnerType,
@@ -170,7 +174,23 @@ contract Xindi is XindiInterface{
                 t_data[i+2+_owners.length]=_weight[i];
             }
         addOperation(_account,uint(OperationType.resetAccountOwnerType),uint(role.resetAccountOwnerRoleC),t_data);
+
         ResetAccountOwner(_account,_Threshold,_owners,_weight);
+
+    }
+
+    function resetAccountOwnerC (address _account,uint[] _data)internal returns (bool){
+
+        Account t_a=Account(_account);
+        uint t_len=(_data.length-2)/2;
+        address[] memory _owners=new address[] (t_len);
+        uint[] memory _weight=new uint[] (t_len);
+        for(uint i=0;i<t_len;i++){
+            _owners[i]=address(_data[2+i]);
+            _weight[i]=uint(_data[2+i+t_len]);
+        }
+        t_a.resetAccountOwner.gas(msg.gas)(_data[1],_owners,_weight);
+        return true;
 
     }
 
@@ -243,5 +263,12 @@ contract Xindi is XindiInterface{
         AccountManager am=AccountManager(_subContract);
         am.resetKey.gas(msg.gas)(_data[0],_data[1]);
 
+    }
+
+    function subConfirm(address _destination,uint _type,uint[] _data)internal returns(bool _called,bool _success){
+
+        if(_type==uint(OperationType.resetAccountOwnerType))
+            return (true,resetAccountOwnerC(_destination,_data));
+        return (false true);
     }
 }

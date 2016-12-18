@@ -381,23 +381,17 @@ var funs=
             resSize: 64,
             register: true
         },
-        getOperationAmounts_resetMe: {
-            name: 'getOperationAmounts_resetMe()',
-            sig: 0x0a2fc8b2,
-            resSize: 64,
-            register: true
+        getOperationAmounts_resetKey: {
+            name: 'getOperationAmounts_resetKey()',
+            sig: 0xd9c34a33,
+            resSize: 32,
+            register: false
         },
-        getOperation_resetMe: {
-            name: 'getOperation_resetMe(uint256)',
-            sig: 0x084c32fa,
-            resSize: 128,
-            register: true
-        },
-        getOption: {
-            name: 'getOption()',
-            sig: 0x92ed2df6,
-            resSize: 160,
-            register: true
+        getOperation_resetKey: {
+            name: 'getOperation_resetKey(uint256)',
+            sig: 0x0eeb3969,
+            resSize: 32,
+            register: false
         },
         getOptions: {
             name: 'getOptions()',
@@ -442,8 +436,8 @@ var funs=
             register: true
         },
         reject: {
-            name: 'reject(address,uint256)',
-            sig: 0xa0ff66ba,
+            name: 'reject(uint256,address)',
+            sig: 0x03ab52fd,
             resSize: 32,
             register: true
         },
@@ -453,23 +447,23 @@ var funs=
             resSize: 32,
             register: false
         },
-        resetMe: {
-            name: 'resetMe(uint256,address)',
-            sig: 0x4e437f63,
+        resetKey: {
+            name: 'resetKey(uint256,address)',
+            sig: 0x91e176e8,
             resSize: 32,
-            register: true
+            register: false
         },
-        resetMeC: {
-            name: 'resetMeC(uint256,uint256,address)',
-            sig: 0xc39ae7ed,
+        resetKeyC: {
+            name: 'resetKeyC(uint256,uint256,address)',
+            sig: 0x68d99c0e,
             resSize: 32,
-            register: true
+            register: false
         },
-        resetMeReject: {
-            name: 'resetMeReject(uint256,uint256,address)',
-            sig: 0x4a73b09b,
+        resetKeyReject: {
+            name: 'resetKeyReject(uint256,uint256,address)',
+            sig: 0x994ccee0,
             resSize: 32,
-            register: true
+            register: false
         },
         setFun: {
             name: 'setFun(uint256,uint256)',
@@ -482,6 +476,18 @@ var funs=
             sig: 0x5754e959,
             resSize: 32,
             register: true
+        },
+        setSubKey: {
+            name: 'setSubKey(address,uint256,address)',
+            sig: 0xc26a668d,
+            resSize: 32,
+            register: false
+        },
+        summary: {
+            name: 'summary()',
+            sig: 0xb16a867c,
+            resSize: 32,
+            register: false
         },
         unfreeze: {
             name: 'unfreeze(address,address)',
@@ -586,7 +592,7 @@ var funs=
         getOperation: {
             name: 'getOperation(uint256)',
             sig: 0x202e3924,
-            resSize: 480,
+            resSize: 512,
             register: true
         },
         getOperationAmounts: {
@@ -595,17 +601,17 @@ var funs=
             resSize: 64,
             register: true
         },
-        getOperationAmounts_resetMe: {
-            name: 'getOperationAmounts_resetMe()',
-            sig: 0x0a2fc8b2,
-            resSize: 64,
-            register: true
+        getOperationAmounts_resetKey: {
+            name: 'getOperationAmounts_resetKey()',
+            sig: 0xd9c34a33,
+            resSize: 32,
+            register: false
         },
-        getOperation_resetMe: {
-            name: 'getOperation_resetMe(uint256)',
-            sig: 0x084c32fa,
+        getOperation_resetKey: {
+            name: 'getOperation_resetKey(uint256)',
+            sig: 0x0eeb3969,
             resSize: 128,
-            register: true
+            register: false
         },
         getOptions: {
             name: 'getOptions()',
@@ -625,17 +631,17 @@ var funs=
             resSize: 32,
             register: true
         },
-        reSet: {
-            name: 'reSet(address,uint256,address[],uint256[])',
-            sig: 0xfa9b672a,
+        reject: {
+            name: 'reject(uint256,address)',
+            sig: 0x03ab52fd,
             resSize: 32,
             register: true
         },
-        reject: {
-            name: 'reject(address,uint256)',
-            sig: 0xa0ff66ba,
+        resetAccountOwner: {
+            name: 'resetAccountOwner(address,uint256,address[],uint256[])',
+            sig: 0x09df09c5,
             resSize: 32,
-            register: true
+            register: false
         },
         resetCore: {
             name: 'resetCore(uint256)',
@@ -643,23 +649,23 @@ var funs=
             resSize: 32,
             register: true
         },
-        resetMe: {
-            name: 'resetMe(uint256,address)',
-            sig: 0x4e437f63,
+        resetKey: {
+            name: 'resetKey(uint256,address)',
+            sig: 0x91e176e8,
             resSize: 32,
-            register: true
+            register: false
         },
-        resetMeC: {
-            name: 'resetMeC(uint256,uint256,address)',
-            sig: 0xc39ae7ed,
+        resetKeyC: {
+            name: 'resetKeyC(uint256,uint256,address)',
+            sig: 0x68d99c0e,
             resSize: 32,
-            register: true
+            register: false
         },
-        resetMeReject: {
-            name: 'resetMeReject(uint256,uint256,address)',
-            sig: 0x4a73b09b,
+        resetKeyReject: {
+            name: 'resetKeyReject(uint256,uint256,address)',
+            sig: 0x994ccee0,
             resSize: 32,
-            register: true
+            register: false
         },
         revokeCA: {
             name: 'revokeCA(address)',

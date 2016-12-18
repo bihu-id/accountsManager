@@ -67,7 +67,7 @@ module.exports ={
             //console.log(fun.name)
             var instance=proxy.at(proxyAddress)
             return instance.get.call(fun.sig).then(function(res){
-                console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
+                console.log(fun.sig.toString(16),"0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
 
             });
         })

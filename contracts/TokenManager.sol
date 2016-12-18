@@ -92,27 +92,6 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
 
     }
 
-    //total amounts of symbols
-    uint m_amounts=0;
-
-    //record the gas need of function call
-    mapping(uint=>uint) m_gasNeed;
-
-    //the account (contract address) can create token
-    mapping(address=>uint) m_tokenAble;
-
-    //record relationship between id and tokens;
-    mapping(uint=>TokenSummary) m_tokenSummarys;
-
-    //symbol=>ids// recorede symbol if use
-    mapping(bytes32=>uint) m_symbols;
-
-    //record add id=>symbol
-    mapping(uint=>bytes32 ) m_ids;
-
-    // Null address
-    TokenSummary tokenSummaryNull;
-
     /// @notice create token ;                                                  创建token
     /// @param _symbol symbol of token;                                         token代号,不可重复
     /// @param _maxSupply max supply of token can not been change ;            token的最大供应量,
@@ -199,6 +178,24 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
 }
 
 contract TokenManager is TokenManagerInterface{
+
+    //total amounts of symbols
+    uint m_amounts=0;
+
+    //record the gas need of function call
+    mapping(uint=>uint) m_gasNeed;
+
+    //the account (contract address) can create token
+    mapping(address=>uint) m_tokenAble;
+
+    //record relationship between id and tokens;
+    mapping(uint=>TokenSummary) m_tokenSummarys;
+
+    //symbol=>ids// recorede symbol if use
+    mapping(bytes32=>uint) m_symbols;
+
+    //record add id=>symbol
+    mapping(uint=>bytes32 ) m_ids;
 
     function TokenManager()BaseData(uint(msg.sender)){}
 
@@ -334,7 +331,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    /*function getOptions()constant returns (address _xindi,address _accountManager,address _tokenPorxy,uint _MinTerm,uint _tokenAmounts,uint _limit){
+    function summary()constant returns (address _xindi,address _accountManager,address _tokenPorxy,uint _MinTerm,uint _tokenAmounts,uint _limit){
 
         _xindi=             address(m_options[uint(Option.xindi)]);
         _accountManager=    address(m_options[uint(Option.accountManager)]);
@@ -344,7 +341,7 @@ contract TokenManager is TokenManagerInterface{
         _limit=             m_options[uint(Option.limit)];
         return;
 
-    }*/
+    }
 
     function getTokenAmounts()constant returns(uint){
 

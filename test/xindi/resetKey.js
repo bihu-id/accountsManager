@@ -25,7 +25,7 @@ contract('reset xindi key', function(accounts) {
 
         for(var i=1;i<20;i++)
         if(parseInt(keys[i])==0)
-            xinde.resetMe(i,accounts[i], {from: accounts[0], gas: 2000000}).then(function (tx) {
+            xinde.resetKey(i,accounts[i], {from: accounts[0], gas: 2000000}).then(function (tx) {
                 console.log("reset key %d:%s",i,accounts[i]);
                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 console.log(tx);
@@ -36,7 +36,7 @@ contract('reset xindi key', function(accounts) {
 
         var xinde = xindi.at(xindedata);
 
-        return xinde.resetMe(accounts[2], 1, {from: accounts[0], gas: 2000000}).then(function (tx) {
+        return xinde.resetKey(accounts[2], 1, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 1 :",accounts[2]);
         })
     })
@@ -44,7 +44,7 @@ contract('reset xindi key', function(accounts) {
 
         var xinde = xindi.at(xindedata);
 
-        return xinde.resetMe(accounts[3], 2, {from: accounts[0], gas: 2000000}).then(function (tx) {
+        return xinde.resetKey(accounts[3], 2, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 2 :",accounts[3]);
         })
     })
@@ -52,21 +52,21 @@ contract('reset xindi key', function(accounts) {
 
         var xinde = xindi.at(xindedata);
 
-        return xinde.resetMe(accounts[4], 3, {from: accounts[0], gas: 2000000}).then(function (tx) {
+        return xinde.resetKey(accounts[4], 3, {from: accounts[0], gas: 2000000}).then(function (tx) {
             console.log("reset key 3 :",accounts[4]);
         })
     })*/
 
-    /*it("get resetMe operation amounts", function(){
+    /*it("get resetKey operation amounts", function(){
 
         var xinde=xindi.at(xindedata);
-        xinde.getOperationAmounts_resetMe.call().then(function(res){
+        xinde.getOperationAmounts_resetKey.call().then(function(res){
             console.log( "total operation :",res[0].toString(10),"waiting Confirm operation :",res[1].toString(10))
             amount=res[0];
         })
     })
 
-    it ("get all waiting operation resetMe",function() {
+    it ("get all waiting operation resetKey",function() {
         var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,4 ,2).then(function (res) {
@@ -74,7 +74,7 @@ contract('reset xindi key', function(accounts) {
             console.log( "operation detail:")
             console.log("No","role","           new address               ","status")
             res.forEach(function(w){
-                return xinde.getOperation_resetMe(w).then(function (res) {
+                return xinde.getOperation_resetKey(w).then(function (res) {
                     console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
 
                 })
@@ -82,18 +82,18 @@ contract('reset xindi key', function(accounts) {
         })
     })
 
-    it ("Confirm resetMe no 1",function() {
+    it ("Confirm resetKey no 1",function() {
         var xinde = xindi.at(xindedata);
-        return xinde.getOperation_resetMe(1).then(function (res) {
+        return xinde.getOperation_resetKey(1).then(function (res) {
             console.log("try Confirm next operation :")
             console.log("No", "role", "           new address               ", "status")
             console.log(res[0].toString(10), res[1].toString(10), res[2].toString(16), res[3].toString(10))
-            return xinde.resetMeC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
+            return xinde.resetKeyC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
             })
         })
     })
 
-    it ("get all waiting operation resetMe",function() {
+    it ("get all waiting operation resetKey",function() {
         var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
@@ -101,7 +101,7 @@ contract('reset xindi key', function(accounts) {
             console.log( "operation detail:")
             console.log("No","role","           new address               ","status")
             res.forEach(function(w){
-                return xinde.getOperation_resetMe(w).then(function (res) {
+                return xinde.getOperation_resetKey(w).then(function (res) {
                     console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
 
                 })
@@ -110,13 +110,13 @@ contract('reset xindi key', function(accounts) {
     })
 
 
-    it ("Confirm resetMe",function() {
+    it ("Confirm resetKey",function() {
         var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,8 ,2).then(function (res) {
             console.log( "wait Confirm operations :",res.toString(10))
             res.forEach(function(r){
-                return xinde.getOperation_resetMe(r).then(function (res) {
+                return xinde.getOperation_resetKey(r).then(function (res) {
                     //console.log( "operation detail:")
                     //console.log("No","role","           new address               ","status")
                     //console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
@@ -125,7 +125,7 @@ contract('reset xindi key', function(accounts) {
                     if(res[3]==0) {
                         console.log("No", "role", "           new address               ", "status")
                         console.log(res[0].toString(10), res[1].toString(10), res[2].toString(16), res[3].toString(10))
-                        return xinde.resetMeC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
+                        return xinde.resetKeyC(res[2], res[1], res[0], {from: accounts[0]}).then(function (tx) {
 
                         })
                     }
@@ -136,22 +136,22 @@ contract('reset xindi key', function(accounts) {
         })
     })
 
-    it("get resetMe operation ", function(){
+    it("get resetKey operation ", function(){
 
         var xinde=xindi.at(xindedata);
-        xinde.getOperationAmounts_resetMe.call().then(function(res){
-            console.log("wait resetMe amounts :",res.toString(10))
+        xinde.getOperationAmounts_resetKey.call().then(function(res){
+            console.log("wait resetKey amounts :",res.toString(10))
             amount=res[1];
         })
     })
 
-    it ("get all waiting operation resetMe",function() {
+    it ("get all waiting operation resetKey",function() {
         var xinde = xindi.at(xindedata);
 
         return xinde.getWaitOperationNos(1,5 ,2).then(function (res) {
             console.log( "wait Confirm operations :",res.toString(10))
             res.forEach(function(w){
-                return xinde.getOperation_resetMe(w).then(function (res) {
+                return xinde.getOperation_resetKey(w).then(function (res) {
                     console.log( "operation detail:")
                     console.log("No","role","           new address               ","status")
                     console.log(res[0].toString(10),res[1].toString(10),res[2].toString(16) ,res[3].toString(10))
