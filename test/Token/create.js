@@ -7,6 +7,15 @@ contract('create token', function(accounts) {
     var accountManager=address.AccountManagerData
     
 
+    function toChar(asciiStr){
+        var i=0;
+        var res=""
+        while(parseInt( asciiStr.substring(i,i+2),16)!=0){
+            res+=String.fromCharCode(parseInt( asciiStr.substring(i,i+2),16))
+            i=i+2
+        }
+        return res
+    }
    it("create token directly", function(){
         var tokenManager=TokenManager.at(tokenmanager);
         return tokenManager.createToken("ABC12",10000000,2,500000,0,"测试AAA",0x10000aaa,{from:accounts[1],gas:10000000}).then(function(tx){
@@ -45,6 +54,7 @@ contract('create token', function(accounts) {
                 var token = Token.at(res[2]);
                 token.summary().then(function (res) {
                     console.log(res.toString())
+                    console.log(toChar(res[2]))
                     token.balanceOf(res[1]).then(function (res) {
                         console.log(res.toString())
                     })
