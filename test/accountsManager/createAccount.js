@@ -13,7 +13,7 @@ contract('create account', function(accounts) {
         var accountmanager=AccountManager.at(accountManager);
 
         return accountmanager.createAccount(accounts[25],100,100,{from:accounts[22],gas:10000000}).then(function(tx){
-            console.log("create account use owner :",accounts[25]);
+            console.log("create account use owner :",accounts[22]);
             console.log(web3.eth.getTransactionReceipt(tx));
         });
 
@@ -39,7 +39,7 @@ contract('create account', function(accounts) {
 
      });
      })*/
-    it("get account summary ", function(){
+    /*it("get account summary ", function(){
         var accountmanager=AccountManager.at(accountManager)
         accountmanager.accountAmount().then(function(res){
             console.log("accountManager.accountAmount()",res.toString());
@@ -59,6 +59,6 @@ contract('create account', function(accounts) {
                 });
             }
         });
-    })
+    })*/
 
 })

@@ -55,7 +55,7 @@ contract AccountManager is SubManager {
         //call data is made by Account(logic),but send to data (account data)
         Account t_account=Account(t_accountData);
         // check the gas need.
-        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,address(m_keys[0]),address(getOption(4))))
+        if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,_threshold,address(m_keys[0]),address(getOption(4))))
             {Err(60022001);throw;}
         m_accounts[++m_accountAmounts]=t_accountData;
         m_addresses[t_accountData]=m_accountAmounts;

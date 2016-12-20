@@ -18,9 +18,27 @@ contract TxManager is SubManager {
 
     }
 
+    function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner){
+
+        beforeInit();
+        BaseInit();
+        m_keys[0]=_core;
+        m_keys[1]=_resetKey;
+        m_keys[2]=_resetKeyC;
+        m_keys[3]=_owner;
+
+        initOption(0,4);// keys amounts
+        initOption(1,5);// options amounts
+        initOption(2,0);// fun amoutns
+
+        uint[] memory t_res=new uint[](1);
+        afterInit(t_res);
+
+    }
+
     function pass(uint _account,uint _hash,uint _other){
 
-        onlyKey(2);
+        onlyKey(uint(Role.ownerRole));
         Account t_account=Account(address(_account));
         t_account.setPass(_hash,_other);
 

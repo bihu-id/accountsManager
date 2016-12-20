@@ -1,11 +1,15 @@
 import "BaseData.sol";
+import "Data.sol";
 
 contract BaseOption is BaseLogic{
 
-    //0:core
-    //1:option setting key                  reset by Superior ,set the option of this contract
-    //2:option setting confirm key          reset by Superior ,confirm the options of this contract
-    //3++:owner                               do operation do not need confirm like create account ..
+    enum Role{
+        coreRole,
+        optionRole,                         //reset by Superior ,set the option of this contract
+        optionRoleC,                        //reset by Superior ,confirm the options of this contract
+        ownerRole                           //do operation do not need confirm like create account ..
+    }
+
     mapping (uint=>uint)    m_keys;
 
     //leg=>m_options
