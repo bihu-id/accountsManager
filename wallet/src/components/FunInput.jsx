@@ -3,17 +3,18 @@ require("./../../css/app.css");
 
 class FunInput extends React.Component{
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            value:""
+            value:"",
+            state:this.props.label
         };
     }
     onInputChange(e){
         this.setState({value: e.target.value});
     }
     render() {
-        var label=this.props.label
+        var label=this.state.label
 
         return (
             <div >
@@ -21,7 +22,7 @@ class FunInput extends React.Component{
                     <label className="label"> {label}</label>
                 </div>
                 <div>
-                    <input type="text" className="input " value="" onChange={this.onInputChange.bind(this)}/>
+                    <input type="text" className="input " value={this.state.value} onChange={this.onInputChange.bind(this)}/>
                 </div>
 
             </div>

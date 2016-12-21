@@ -16,7 +16,7 @@ input {
     font-size: 16px;
 }
 
-button {
+.button {
     font-size: 16px;
     padding: 5px;
     width: 100px;

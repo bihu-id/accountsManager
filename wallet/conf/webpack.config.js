@@ -48,7 +48,8 @@ module.exports = function(options){
                     query: {compact: false, cacheDirectory: true}
                 },
                 { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-                { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
+                { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
+                { test: /\.json/, loader: "json" }
             ]
         },
         //其它解决方案配置

@@ -1,7 +1,8 @@
 var abis1=
 {
     "Account": {
-        "label": "账户管理合约",
+        "label": "账户合约",
+        "address": "",
         "fun": {
             "createToken": {
                 "label": "创建资产",
@@ -193,15 +194,14 @@ var abis1=
                         "label": "状态",
                         "type": "uint256",
                         "select": {
-                            "0":"正常",
-                            "1":"冻结"
+                            "0": "正常",
+                            "1": "冻结"
                         }
                     },
                     "_level": {
                         "label": "实名等级",
                         "type": "uint256",
-                        "select": {
-                        }
+                        "select": {}
                     },
                     "_ownerAmount": {
                         "label": "账户拥有者数",
@@ -284,7 +284,7 @@ var abis1=
                         "select": {}
                     }
                 },
-                "constant": false,
+                "constant": true,
                 "type": "function",
                 "showLevel": 2
             },
@@ -544,6 +544,7 @@ var abis1=
     },
     "AccountManager": {
         "label": "账户管理合约",
+        "address": "",
         "fun": {
             "requestConfirm": {
                 "label": "请求批准参数设置",
@@ -897,18 +898,24 @@ var abis1=
         }
     },
     "LogicProxy": {
-        "label": "LogicProxy",
+        "label": "逻辑代理合约",
+        "address": "",
         "fun": {
             "resetKey": {
-                "label": "resetKey",
+                "label": "重置Key",
                 "inputs": {
                     "_no": {
-                        "label": "_no",
+                        "label": "角色",
                         "type": "uint256",
-                        "select": {}
+                        "select": {
+                            "0":"合约升级",
+                            "1":"合约升级批准",
+                            "2":"重置Key",
+                            "3":"重置Key批准"
+                        }
                     },
                     "_newKey": {
-                        "label": "_newKey",
+                        "label": "新Key",
                         "type": "uint256",
                         "select": {}
                     }
@@ -922,36 +929,36 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "getKeys": {
                 "label": "getKeys",
                 "inputs": {},
                 "outputs": {
                     "A": {
-                        "label": "A",
+                        "label": "合约升级",
                         "type": "address",
                         "select": {}
                     },
                     "AC": {
-                        "label": "AC",
+                        "label": "合约升级批准",
                         "type": "address",
                         "select": {}
                     },
                     "T": {
-                        "label": "T",
+                        "label": "重置key",
                         "type": "address",
                         "select": {}
                     },
                     "TC": {
-                        "label": "TC",
+                        "label": "重置key批准",
                         "type": "address",
                         "select": {}
                     }
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "setfun": {
                 "label": "setfun",
@@ -981,10 +988,10 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "getWaitKeys": {
-                "label": "getWaitKeys",
+                "label": "查询待批准Key",
                 "inputs": {},
                 "outputs": {
                     "A": {
@@ -1010,7 +1017,7 @@ var abis1=
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "get": {
                 "label": "get",
@@ -1035,7 +1042,7 @@ var abis1=
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "requestConfirm": {
                 "label": "requestConfirm",
@@ -1055,7 +1062,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "confirm": {
                 "label": "confirm",
@@ -1075,7 +1082,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
             "getWait": {
                 "label": "getWait",
@@ -1100,9 +1107,8 @@ var abis1=
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 1
             },
-            "undefined": {},
             "SetFun": {
                 "label": "SetFun",
                 "inputs": {
@@ -1118,7 +1124,7 @@ var abis1=
                     }
                 },
                 "type": "event",
-                "showLevel": 0
+                "showLevel": 1
             },
             "Err": {
                 "label": "Err",
@@ -1136,6 +1142,7 @@ var abis1=
     },
     "Token": {
         "label": "资产合约",
+        "address": "",
         "fun": {
             "approve": {
                 "label": "批准/approve",
@@ -1270,8 +1277,8 @@ var abis1=
                         "label": "状态",
                         "type": "uint8",
                         "select": {
-                            "0":"正常",
-                            "1":"冻结"
+                            "0": "正常",
+                            "1": "冻结"
                         }
                     }
                 },
@@ -1520,8 +1527,8 @@ var abis1=
                         "label": "状态",
                         "type": "uint8",
                         "select": {
-                            "0":"正常",
-                            "1":"冻结"
+                            "0": "正常",
+                            "1": "冻结"
                         }
                     }
                 },
@@ -1588,15 +1595,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "normal": {
-                "label": "normal",
-                "inputs": {},
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
-            "undefined": {},
             "TokenCreate": {
                 "label": "TokenCreate",
                 "inputs": {
@@ -1843,6 +1841,7 @@ var abis1=
     },
     "TokenManager": {
         "label": "资产管理合约",
+        "address": "",
         "fun": {
             "reject": {
                 "label": "拒绝操作",
@@ -2562,8 +2561,8 @@ var abis1=
                     }
                 },
                 "outputs": {
-                    "": {
-                        "label": "",
+                    "_nos": {
+                        "label": "_nos",
                         "type": "uint256[]",
                         "select": {}
                     }
@@ -2572,7 +2571,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "undefined": {},
             "CreateTokenData": {
                 "label": "CreateTokenData",
                 "inputs": {
@@ -2896,6 +2894,7 @@ var abis1=
     },
     "TxManager": {
         "label": "交易管理合约",
+        "address": "",
         "fun": {
             "requestConfirm": {
                 "label": "requestConfirm",
@@ -3058,7 +3057,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "undefined": {},
             "ResetOption": {
                 "label": "ResetOption",
                 "inputs": {
@@ -3150,6 +3148,7 @@ var abis1=
     },
     "Xindi": {
         "label": "Xindi",
+        "address": "",
         "fun": {
             "reject": {
                 "label": "拒绝操作",
@@ -3230,36 +3229,26 @@ var abis1=
                         "label": "角色",
                         "type": "uint256",
                         "select": {
-                            "0":		    "重置所有keys",
-                            "1":		    "重置所有keys批准",
-
-                            "2": 	        "设置子管理合约key",
-                            "3":	        "设置子管理合约key批准",
-
-                            "4":	        "设置合约参数",
-                            "5":	        "设置合约参数批准",
-
-                            "6":            "重置用户",
-                            "7":            "重置用户批准",
-
-                            "8":            "实名认证",
-                            "9":            "实名认证批准",
-
-                            "10":            "设置CA",
-                            "11":            "设置CA批准",
-
-                            "12":            "撤销CA",
-                            "13":            "撤销CA批准",
-
-                            "14":            "冻结账户",
-                            "15":            "冻结账户批准",
-
-                            "16":            "解冻账户",
-                            "17":            "解冻账户批准",
-
-
-                            "18":            "强制转移",
-                            "19":            "强制转移批准"
+                            "0": "重置所有keys",
+                            "1": "重置所有keys批准",
+                            "2": "设置子管理合约key",
+                            "3": "设置子管理合约key批准",
+                            "4": "设置合约参数",
+                            "5": "设置合约参数批准",
+                            "6": "重置用户",
+                            "7": "重置用户批准",
+                            "8": "实名认证",
+                            "9": "实名认证批准",
+                            "10": "设置CA",
+                            "11": "设置CA批准",
+                            "12": "撤销CA",
+                            "13": "撤销CA批准",
+                            "14": "冻结账户",
+                            "15": "冻结账户批准",
+                            "16": "解冻账户",
+                            "17": "解冻账户批准",
+                            "18": "强制转移",
+                            "19": "强制转移批准"
                         }
                     },
                     "_key": {
@@ -3336,9 +3325,9 @@ var abis1=
                         "label": "状态",
                         "type": "uint8",
                         "select": {
-                            "0":"等待批准",
-                            "1":"已经批准",
-                            "2":"已经拒绝"
+                            "0": "等待批准",
+                            "1": "已经批准",
+                            "2": "已经拒绝"
                         }
                     },
                     "_data": {
@@ -3359,36 +3348,26 @@ var abis1=
                         "label": "Keys",
                         "type": "address[]",
                         "select": {
-                            "0":		    "重置所有keys",
-                            "1":		    "重置所有keys批准",
-
-                            "2": 	        "设置子管理合约key",
-                            "3":	        "设置子管理合约key批准",
-
-                            "4":	        "设置合约参数",
-                            "5":	        "设置合约参数批准",
-
-                            "6":            "重置用户",
-                            "7":            "重置用户批准",
-
-                            "8":            "实名认证",
-                            "9":            "实名认证批准",
-
-                            "10":            "设置CA",
-                            "11":            "设置CA批准",
-
-                            "12":            "撤销CA",
-                            "13":            "撤销CA批准",
-
-                            "14":            "冻结账户",
-                            "15":            "冻结账户批准",
-
-                            "16":            "解冻账户",
-                            "17":            "解冻账户批准",
-
-
-                            "18":            "强制转移",
-                            "19":            "强制转移批准"
+                            "0": "重置所有keys",
+                            "1": "重置所有keys批准",
+                            "2": "设置子管理合约key",
+                            "3": "设置子管理合约key批准",
+                            "4": "设置合约参数",
+                            "5": "设置合约参数批准",
+                            "6": "重置用户",
+                            "7": "重置用户批准",
+                            "8": "实名认证",
+                            "9": "实名认证批准",
+                            "10": "设置CA",
+                            "11": "设置CA批准",
+                            "12": "撤销CA",
+                            "13": "撤销CA批准",
+                            "14": "冻结账户",
+                            "15": "冻结账户批准",
+                            "16": "解冻账户",
+                            "17": "解冻账户批准",
+                            "18": "强制转移",
+                            "19": "强制转移批准"
                         }
                     }
                 },
@@ -3538,36 +3517,26 @@ var abis1=
                         "label": "角色",
                         "type": "uint256",
                         "select": {
-                            "0":		    "重置所有keys",
-                            "1":		    "重置所有keys批准",
-
-                            "2": 	        "设置子管理合约key",
-                            "3":	        "设置子管理合约key批准",
-
-                            "4":	        "设置合约参数",
-                            "5":	        "设置合约参数批准",
-
-                            "6":            "重置用户",
-                            "7":            "重置用户批准",
-
-                            "8":            "实名认证",
-                            "9":            "实名认证批准",
-
-                            "10":            "设置CA",
-                            "11":            "设置CA批准",
-
-                            "12":            "撤销CA",
-                            "13":            "撤销CA批准",
-
-                            "14":            "冻结账户",
-                            "15":            "冻结账户批准",
-
-                            "16":            "解冻账户",
-                            "17":            "解冻账户批准",
-
-
-                            "18":            "强制转移",
-                            "19":            "强制转移批准"
+                            "0": "重置所有keys",
+                            "1": "重置所有keys批准",
+                            "2": "设置子管理合约key",
+                            "3": "设置子管理合约key批准",
+                            "4": "设置合约参数",
+                            "5": "设置合约参数批准",
+                            "6": "重置用户",
+                            "7": "重置用户批准",
+                            "8": "实名认证",
+                            "9": "实名认证批准",
+                            "10": "设置CA",
+                            "11": "设置CA批准",
+                            "12": "撤销CA",
+                            "13": "撤销CA批准",
+                            "14": "冻结账户",
+                            "15": "冻结账户批准",
+                            "16": "解冻账户",
+                            "17": "解冻账户批准",
+                            "18": "强制转移",
+                            "19": "强制转移批准"
                         }
                     },
                     "_keyAddress": {
@@ -3599,36 +3568,26 @@ var abis1=
                         "label": "角色",
                         "type": "uint256",
                         "select": {
-                            "0":		    "重置所有keys",
-                            "1":		    "重置所有keys批准",
-
-                            "2": 	        "设置子管理合约key",
-                            "3":	        "设置子管理合约key批准",
-
-                            "4":	        "设置合约参数",
-                            "5":	        "设置合约参数批准",
-
-                            "6":            "重置用户",
-                            "7":            "重置用户批准",
-
-                            "8":            "实名认证",
-                            "9":            "实名认证批准",
-
-                            "10":            "设置CA",
-                            "11":            "设置CA批准",
-
-                            "12":            "撤销CA",
-                            "13":            "撤销CA批准",
-
-                            "14":            "冻结账户",
-                            "15":            "冻结账户批准",
-
-                            "16":            "解冻账户",
-                            "17":            "解冻账户批准",
-
-
-                            "18":            "强制转移",
-                            "19":            "强制转移批准"
+                            "0": "重置所有keys",
+                            "1": "重置所有keys批准",
+                            "2": "设置子管理合约key",
+                            "3": "设置子管理合约key批准",
+                            "4": "设置合约参数",
+                            "5": "设置合约参数批准",
+                            "6": "重置用户",
+                            "7": "重置用户批准",
+                            "8": "实名认证",
+                            "9": "实名认证批准",
+                            "10": "设置CA",
+                            "11": "设置CA批准",
+                            "12": "撤销CA",
+                            "13": "撤销CA批准",
+                            "14": "冻结账户",
+                            "15": "冻结账户批准",
+                            "16": "解冻账户",
+                            "17": "解冻账户批准",
+                            "18": "强制转移",
+                            "19": "强制转移批准"
                         }
                     },
                     "_keyAddress": {
@@ -3847,8 +3806,8 @@ var abis1=
                     }
                 },
                 "outputs": {
-                    "": {
-                        "label": "",
+                    "_nos": {
+                        "label": "_nos",
                         "type": "uint256[]",
                         "select": {}
                     }
@@ -3857,7 +3816,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "undefined": {},
             "ResetAccountOwner": {
                 "label": "ResetAccountOwner",
                 "inputs": {

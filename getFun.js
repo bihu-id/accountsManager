@@ -2,7 +2,7 @@ var fs=require('fs');
 var path = require('path');
 var solc = require('solc');
 var oldAllFuns=require('./test/funs.js');
-var oldabis1=require('./wallet/config/abis_.js');
+var oldabis1=require('./wallet/config/abls.js');
 
 
 var contracts_directory=path.join(process.cwd(),"./contracts");
@@ -29,8 +29,7 @@ var funContract=
         'TokenManager',
         'TxManager',
         'Xindi',
-        'Account',
-        'LogicProxy'
+        'Account'
     ]
 
 fs.readdir("./contracts",function(err,files){
@@ -160,6 +159,9 @@ fs.readdir("./contracts",function(err,files){
                     }
 
                     abiFun["constant"]=t_abi[i]["constant"]
+                    sub=[contractKey, "fun",funName, "constant"]
+                    if (getSub(oldabis1, sub) != undefined)
+                        abiFun["constant"] = getSub(oldabis1, sub)
                     abiFun["type"]=t_abi[i]["type"]
                     abiFun["showLevel"]=0
                     var sub=[contractKey,"fun",funName,"showLevel"]
@@ -192,7 +194,7 @@ fs.readdir("./contracts",function(err,files){
     var str1="var abis1=\n"+raw1+"\nmodule.exports=abis1;";
 
 
-    fs.writeFile("./wallet/config/abis_.js",str1,function (err) {
+    fs.writeFile("./wallet/config/abls.js",str1,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;
@@ -201,5 +203,6 @@ fs.readdir("./contracts",function(err,files){
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;
+
 })
 
