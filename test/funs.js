@@ -283,12 +283,6 @@ var funs=
             resSize: 32,
             register: false
         },
-        normal: {
-            name: 'normal()',
-            sig: 0xfd255aef,
-            resSize: 32,
-            register: false
-        },
         resetCore: {
             name: 'resetCore(uint256)',
             sig: 0xe3f18df3,

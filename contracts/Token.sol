@@ -142,7 +142,7 @@ contract Token is TokenInterface {
 
     function ifFreeze()internal {if(m_freezeLists[msg.sender]==1)        {Err(60040002);throw;}  }
 
-    function normal(){if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
+    function normal()internal {if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
     //force transfer by core
 
     function init(

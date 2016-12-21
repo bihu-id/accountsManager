@@ -40,6 +40,7 @@ contract BaseOption is BaseLogic{
 
     }
 
+    //请求批准参数测试
     function requestConfirm(){
 
         onlyKey(0);

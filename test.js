@@ -1,5 +1,5 @@
 a={
-    "a":1,
+    "1":1,
     "b":{
         "b1":11
     }
@@ -16,6 +16,5 @@ function getSub(obj,keys){
             return
     return subObj
 }
-b["a"]=100
-b["b"]["a"]=110
+console.log(a.b)
 

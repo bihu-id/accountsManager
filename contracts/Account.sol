@@ -50,7 +50,7 @@ contract AccountInterface is BaseLogic{
     /// @param _no _owner no                                    owner的编号
     /// @return _owner owner address                            owner的地址
     /// @return _weight weight of this owner                    owner的权重
-    function getOwner(uint _no)returns(address _owner,uint _weight);
+    function getOwner(uint _no)constant returns(address _owner,uint _weight);
 
     /// @notice return summary of account contract
     /// @return _core
@@ -405,7 +405,7 @@ contract Account is AccountInterface{
 
     }
 
-    function getOwner(uint _no)returns(address _owner,uint _weight){
+    function getOwner(uint _no)constant returns(address _owner,uint _weight){
 
         address tmp=m_data.m_ownerFind[_no];
         return(tmp, m_data.m_owners[tmp]);

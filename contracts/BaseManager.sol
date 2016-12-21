@@ -99,7 +99,7 @@ contract BaseManagerInterface is BaseLogic {
     /// @param _start ;                                                 从_start开始
     /// @param _limit ;                                                 总计获得多少个
     /// @param _type ;                                                  1:账户操作,2:合约本身重置KEY操作
-    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint []);
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [] _nos);
 
     /// @notice get resetKey operation details ;                         获得重置Key操作的详情
     /// @param _no No of resetKey operation                              操作的编号
@@ -327,7 +327,7 @@ contract BaseManager is BaseManagerInterface{
 
     function setSubKeyC(address _subContract ,uint[] _data)internal{}
 
-    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint []){
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [] _nos){
 
         // get max 100 per request
         uint t_end;
