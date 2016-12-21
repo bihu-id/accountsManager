@@ -93,18 +93,18 @@ contract AccountInterface is BaseLogic{
     /// @notice set pass a Tx
     /// @param _hash hash of Tx
     /// @return Whether this set was successful or not
-    function setPass(uint _hash,uint _other) returns (bool);
+    function setPass(uint _hash,uint _other) returns (bool success);
 
     /// @notice set account realname level
     /// @param _level realname level
     /// @return Whether this set was successful or not
-    function setIdLevel(uint _level)returns(bool);
+    function setIdLevel(uint _level)returns(bool success);
 
     /// @notice freeze an account
     /// @return Whether freeze was successful or not
-    function freeze()returns(bool);
+    function freeze()returns(bool success);
     //only can been called by Core (xindi)
-    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight);
+    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success);
 
 }
 contract Account is AccountInterface{
@@ -192,7 +192,7 @@ contract Account is AccountInterface{
     uint _Tx_threshold,
     uint _Re_threshold,
     address _core,
-    address _coreTx)returns (bool)
+    address _coreTx)returns (bool success)
     {
         beforeInit();
         if(_weight<_Tx_threshold)                           {Err(60021001);  throw;}
@@ -278,7 +278,7 @@ contract Account is AccountInterface{
     }
 
     // check owner weight amount make sure tx can been permit
-    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool){
+    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
         if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
         uint t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
@@ -289,7 +289,7 @@ contract Account is AccountInterface{
             return true;
     }
 
-    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) {
+    function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success){
 
         ifCore();
         if (!checkOwner(_Tx_threshold,_owners,_weight))     {Err(60021001);  throw;}
@@ -302,10 +302,11 @@ contract Account is AccountInterface{
         m_data.m_ownerFind=_owners;
         m_data.m_weightAmount=uint(t_totalWeight);
         ReSetAccountOwner(_Tx_threshold,_owners,_weight);
+        return true;
 
     }
 
-    function getApprove(address[] _owners)internal returns(bool){
+    function getApprove(address[] _owners)internal returns(bool success){
 
         uint  t_total=0;
         for(uint i=0;i<_owners.length;i++)
@@ -314,7 +315,7 @@ contract Account is AccountInterface{
 
     }
 
-    function checkOwners(address _owner)internal returns(bool){
+    function checkOwners(address _owner)internal returns(bool success){
 
         address[] memory _owners=new address[](1);
         _owners[0]=msg.sender;
@@ -322,7 +323,7 @@ contract Account is AccountInterface{
 
     }
 
-    function setPass(uint _hash,uint _other) returns (bool){
+    function setPass(uint _hash,uint _other) returns (bool success){
 
         iffreeze();
         ifCoreTx();
@@ -333,7 +334,7 @@ contract Account is AccountInterface{
 
     }
 
-    function setIdLevel(uint _level)  returns(bool){
+    function setIdLevel(uint _level)  returns(bool success){
 
         ifCore();
         m_data.m_level=_level;
@@ -341,7 +342,7 @@ contract Account is AccountInterface{
 
     }
 
-    function setCA(address _CA)returns(bool){
+    function setCA(address _CA)returns(bool success){
 
         ifCore();
         if (m_data.m_level<100)
@@ -351,7 +352,7 @@ contract Account is AccountInterface{
 
     }
 
-    function revokeCA() returns(bool){
+    function revokeCA() returns(bool success){
 
         ifCore();
         if (m_data.m_level<100)                 {Err(60021003);  throw;}
@@ -361,14 +362,14 @@ contract Account is AccountInterface{
 
     }
 
-    function freeze() returns(bool){
+    function freeze() returns(bool success){
 
         ifCore();
         m_data.m_status=status.freeze;
 
     }
 
-    function unfreeze() returns(bool){
+    function unfreeze() returns(bool success){
 
         ifCore();
         m_data.m_status=status.normal;

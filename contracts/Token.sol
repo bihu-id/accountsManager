@@ -55,11 +55,11 @@ contract TokenInterface is BaseLogic,Erc20 {
 
     /// @notice 增发更多的资产,由资产的issuer 调用
     /// @param _amounts 增发数量
-    function issueMore(uint _amounts);
+    function issueMore(uint _amounts)returns (bool success);
 
     /// @notice 销毁由issuer 持有的资产 只能由issuer调用
     /// @param _amounts 销毁数量
-    function destroy(uint _amounts);
+    function destroy(uint _amounts)returns (bool success);
 
     /// @notice Override send `_amount` tokens to `_to` from `_from`
     /// @param _from The address of the sender
@@ -70,17 +70,17 @@ contract TokenInterface is BaseLogic,Erc20 {
 
     /// @notice 冻结账户 _account 只有 tokenManager 能调用
     /// @param _account ..
-    function freeze(address _account);
+    function freeze(address _account)returns (bool success);
 
     /// @notice 解冻账户 _account 只有 tokenManager 能调用
     /// @param _account ..
-    function unfreeze(address _account);
+    function unfreeze(address _account)returns (bool success);
 
     /// @notice 冻结整个资产 只有 tokenManager 能调用
-    function freezeToken();
+    function freezeToken()returns (bool success);
 
     /// @notice 解冻整个资产 只有 tokenManager 能调用
-    function unfreezeToken();
+    function unfreezeToken()returns (bool success);
 
     /// @return the summary of this token
     function summary()constant returns(
@@ -156,7 +156,7 @@ contract Token is TokenInterface {
         string _description,
         uint _hash,
         address _coreContract
-        )returns (bool)
+        )returns (bool success)
         {
             beforeInit();
             //if(now<_closingTime) throw;
@@ -217,7 +217,7 @@ contract Token is TokenInterface {
 
     }
 
-    function issueMore(uint _amounts){
+    function issueMore(uint _amounts)returns (bool success){
 
         ifIssuer();
         //check overflow
@@ -225,16 +225,18 @@ contract Token is TokenInterface {
         m_option.m_currentSupply=m_option.m_currentSupply+_amounts;
         m_balances[msg.sender]=m_balances[msg.sender]+_amounts;
         IssueMore(m_option.m_issuer,m_option.m_id,_amounts);
+        return true;
 
     }
 
-    function destroy(uint _amounts){
+    function destroy(uint _amounts)returns (bool success){
 
         ifIssuer();
         if(m_balances[msg.sender]<_amounts)                         {Err(60041002);throw;}
         m_option.m_currentSupply-=_amounts;
         m_balances[msg.sender]=m_balances[msg.sender]-_amounts;
         Destroy(m_option.m_issuer,m_option.m_id,_amounts);
+        return true;
 
     }
 
@@ -282,31 +284,35 @@ contract Token is TokenInterface {
 
     }
 
-    function freeze(address _account){
+    function freeze(address _account)returns (bool success){
 
         ifCoreL();
         m_freezeLists[_account]=1;//Status.freeze=1
+        return true;
 
     }
 
-    function unfreeze(address _account){
+    function unfreeze(address _account)returns (bool success){
 
         ifCoreL();
         m_freezeLists[_account]=0;//Status.normal=0
+        return true;
 
     }
 
-    function freezeToken(){
+    function freezeToken()returns (bool success){
 
         ifCoreL();
         m_option.m_status=Status.freeze;
+        return true;
 
     }
 
-    function unfreezeToken(){
+    function unfreezeToken()returns (bool success){
 
         ifCoreL();
         m_option.m_status=Status.normal;
+        return true;
 
     }
 

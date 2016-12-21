@@ -5,40 +5,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_weight",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_Tx_threshold",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_core",
-                    "type": "address"
-                },
-                {
-                    "name": "_coreTx",
-                    "type": "address"
-                }
-            ],
-            "name": "init",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_symbol",
                     "type": "bytes32"
                 },
@@ -211,6 +177,10 @@ var abis=
                     "type": "uint256"
                 },
                 {
+                    "name": "_Re_threshold",
+                    "type": "uint256"
+                },
+                {
                     "name": "_CA",
                     "type": "address"
                 },
@@ -300,7 +270,45 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "tokenContract",
+                    "name": "_owner",
+                    "type": "address"
+                },
+                {
+                    "name": "_weight",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_Tx_threshold",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_Re_threshold",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_core",
+                    "type": "address"
+                },
+                {
+                    "name": "_coreTx",
+                    "type": "address"
+                }
+            ],
+            "name": "init",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_tokenContract",
                     "type": "address"
                 },
                 {
@@ -354,6 +362,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
+                    "name": "_Tx_threshold",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
                     "name": "_owners",
                     "type": "address[]"
                 },
@@ -361,11 +374,6 @@ var abis=
                     "indexed": false,
                     "name": "_weight",
                     "type": "uint256[]"
-                },
-                {
-                    "indexed": false,
-                    "name": "_Tx_threshold",
-                    "type": "uint256"
                 }
             ],
             "name": "ReSetAccountOwner",
@@ -2600,6 +2608,31 @@ var abis=
             "constant": false,
             "inputs": [],
             "name": "confirm",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_core",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_resetKey",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_resetKeyC",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_owner",
+                    "type": "uint256"
+                }
+            ],
+            "name": "init",
             "outputs": [],
             "payable": false,
             "type": "function"

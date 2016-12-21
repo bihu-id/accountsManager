@@ -112,7 +112,7 @@ contract SubManager is BaseOption{
         m_keys[_role]=_key;
     }
 
-    function getKeys()constant returns(address[]){
+    function getKeys()constant returns(address[] _keys){
 
         uint t_size=m_options[m_leg][0];
         address[] memory res=new address[](t_size);

@@ -10,7 +10,7 @@ var Address=
         "AccountManagerData": "0xc8b53a9470a267cc9e9b0c77d9d67ee2f8cd33c6",
         "TxManagerProxy": "0x7b1f41282696916c81f207a5bc416d9c60397e60",
         "TxManagerData": "0x15d87c1fbdb83af015971669dc04a6d35d86684c",
-        "AccountLogic": "0xef8e66cedcab8bcbd23024adddea94db22552656",
+        "AccountLogic": "0xdd362c086c7305f311a72c784ffb35a56e44278a",
         "AccountProxy": "0x395ba2356e96363ddb71f2dca2daca8782966b3a",
         "TokenLogic": "0xa9b85a866f9078f643c8319887fb19c312de3ac9",
         "TokenProxy": "0x7718cb62bef4b0ddebd0dafeb08f63deaebf3fe2",

@@ -109,7 +109,7 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)returns(bool);
+        uint  _hash)returns (bool success) ;
 /*
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、
@@ -126,7 +126,7 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
     /// @notice 获得TOKEN的地址
     /// @param _id token Id
     /// @return TOKEN的地址
-    function getTokenAddress(uint _id)constant returns(address);
+    function getTokenAddress(uint _id)constant returns(address _tokenAddress);
 
      /// @notice                获得TOKEN的概况
      /// @param _id             token Id
@@ -139,24 +139,24 @@ contract TokenManagerInterface is BaseManager,RoleDefine_Token {
      /// @param _start          开始的资产顺序
      /// @param _limit          遍历多少个资产
      /// @return bytes32[]      返回遍历资产的symbol
-    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]);
+    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[] _symbols);
 
     /// @notice         冻结某个账户持有的资产
     /// @param _token   资产合约的地址
     /// @param _account 哪个账户持有的,如果_account =0x0 :冻结整个资产
-    function freeze(address _token,address _account);
+    function freeze(address _token,address _account)returns (bool success) ;
 
     /// @notice         解冻某个账户持有的资产
     /// @param _token   资产合约的地址
     /// @param _account 哪个账户持有的,如果_account =0x0 :解冻整个资产
-    function unfreeze(address _token,address _account);
+    function unfreeze(address _token,address _account)returns (bool success) ;
 
     /// @notice         强制转移_value从_from持有的_tokenId资产到_to
     /// @param _token   资产的合约
     /// @param _from    账户合约地址
     /// @param _to      账户合约地址
     /// @param _value   转移数量,包含精度
-    function forceTransfer(address _token,address _from,address _to,uint _value);
+    function forceTransfer(address _token,address _from,address _to,uint _value)returns (bool success) ;
 
     //event SetTokenAble(address _account,uint _tokenAmounts);
 
@@ -199,7 +199,7 @@ contract TokenManager is TokenManagerInterface{
 
     function TokenManager()BaseData(uint(msg.sender)){}
 
-    function init(uint _core,uint _coreC,uint _xindi,uint _accountManager,uint _tokenPorxy){
+    function init(uint _core,uint _coreC,uint _xindi,uint _accountManager,uint _tokenPorxy)returns (bool success){
 
         beforeInit();
 
@@ -222,7 +222,7 @@ contract TokenManager is TokenManagerInterface{
         t_res[2]=uint(_tokenPorxy);
 
         afterInit(t_res);
-
+        return true;
     }
 
     function createToken(
@@ -233,7 +233,7 @@ contract TokenManager is TokenManagerInterface{
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)returns(bool){
+        uint  _hash)returns (bool success) {
 
         // just check the sender if the account manager by accountManager ,other check is done by server
         AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
@@ -300,7 +300,7 @@ contract TokenManager is TokenManagerInterface{
     }
     */
 
-    function getTokenAddress(uint _id)constant returns(address){
+    function getTokenAddress(uint _id)constant returns(address _tokenAddress){
 
         return m_tokenSummarys[_id].m_address;
 
@@ -312,7 +312,7 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]){
+    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[] _symbols){
 
         uint t_limit=_limit;
         uint t_end;
@@ -343,13 +343,13 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function getTokenAmounts()constant returns(uint){
+    function getTokenAmounts()constant returns(uint _amount){
 
         return m_amounts;
 
     }
 
-    function freeze(address _token,address _account){
+    function freeze(address _token,address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](2);
@@ -358,10 +358,11 @@ contract TokenManager is TokenManagerInterface{
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.freezeRoleC),t_data);
         Freeze(_token,_account);
+        return true;
 
     }
 
-    function unfreeze(address _token,address _account){
+    function unfreeze(address _token,address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](2);
@@ -369,10 +370,11 @@ contract TokenManager is TokenManagerInterface{
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_token,_account);
+        return true;
 
     }
 
-    function forceTransfer(address _token,address _from,address _to,uint _value){
+    function forceTransfer(address _token,address _from,address _to,uint _value)returns (bool success) {
 
         checKey(m_keys[uint(role.forceTransferRole)]);
         uint[] memory t_data=new uint[](4);
@@ -382,6 +384,7 @@ contract TokenManager is TokenManagerInterface{
         t_data[2]=uint(_to);
         t_data[3]=uint(_value);
         addOperation(_token,uint(OperationType.forceTransferType),uint(role.forceTransferRoleC),t_data);
+        return true;
 
     }
 

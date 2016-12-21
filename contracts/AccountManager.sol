@@ -16,8 +16,8 @@ contract AccountManager is SubManager {
 
     uint m_accountAmounts;
 
-    event CreateAccountData(address);
-    event AccountRecode(uint,address);
+    event CreateAccountData(address _accountAddress);
+    event AccountRecode(uint _no,address _account);
 
     function AccountManager()BaseData(uint(msg.sender)){}
 
@@ -47,7 +47,7 @@ contract AccountManager is SubManager {
     }
 
 
-    function createAccount(address _owner,uint32 _weight,uint32 _threshold) {
+    function createAccount(address _owner,uint32 _weight,uint32 _threshold)returns (bool success) {
 
         onlyKey(3);
         Data t_accountData=new Data(getOption(3));
@@ -60,10 +60,11 @@ contract AccountManager is SubManager {
         m_accounts[++m_accountAmounts]=t_accountData;
         m_addresses[t_accountData]=m_accountAmounts;
         AccountRecode(m_accountAmounts,m_accounts[m_accountAmounts]);
+        return true;
 
     }
 
-    function getAccountAddress(uint _no)constant returns(address){
+    function getAccountAddress(uint _no)constant returns(address _account){
 
         return  m_accounts[_no];
 
@@ -75,7 +76,7 @@ contract AccountManager is SubManager {
 
     }
 
-    function accountAmount()constant returns(uint){
+    function accountAmount()constant returns(uint _amount){
 
         return m_accountAmounts;
 

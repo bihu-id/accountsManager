@@ -77,18 +77,18 @@ contract BaseManagerInterface is BaseLogic {
     /// @notice reset all address by core of this contract; 重置合约的KEY
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _role what roller to been reset;             重置哪个KEY
-    function resetKey(uint _role,address _keyAddress);
+    function resetKey(uint _role,address _keyAddress)returns (bool success) ;
 
     /// @notice confirm resetKey operation                  批准一个重置Keys操作
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _role what roller to been reset;             重置哪个KEY
     /// @param _no operation _no;                           重置操作的NO. 和_keyAddress和_role 同时输入起到双重验证作用。
-    function resetKeyC(uint _no,uint _role,address _keyAddress);
+    function resetKeyC(uint _no,uint _role,address _keyAddress)returns (bool success) ;
 
     /// @notice reject resetKey operation                   拒绝一个重置Keys操作
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _no operation _no;                           重置操作的NO. 和_key同时输入起到双重验证作用。
-    function resetKeyReject(uint _no,uint _role,address _keyAddress);
+    function resetKeyReject(uint _no,uint _role,address _keyAddress)returns (bool success) ;
 
     /// @notice get resetKey operation amounts                                       获得重置Key 总的操作数量,包含拒绝,批准和等待批准
     /// @return _totalAmounts total amounts include rejected Confirmed and waiting  总的数量
@@ -112,12 +112,12 @@ contract BaseManagerInterface is BaseLogic {
     /// @notice confirm operation;                                      批准一个操作
     /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
     /// @param _no operation _no;                                       操作编号
-    function confirm(uint _no,address _destination) returns (bool);
+    function confirm(uint _no,address _destination) returns (bool success) ;
 
     /// @notice reject operation;                                       拒绝一个操作
     /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
     /// @param _no  operation no;                                       操作编号
-    function reject(uint _no,address _destination) returns (bool);
+    function reject(uint _no,address _destination) returns (bool success) ;
 
     /// @notice get opertaion amount include total and wait;                            获得等待批准的操作总数
     /// @return _totalAmounts total operation amounts include wait,confirm and reject;  所有操作总数
@@ -126,12 +126,12 @@ contract BaseManagerInterface is BaseLogic {
     /// @notice 设置一个选项
     /// @param _no 选项的编号:派生合约的enum Option{}
     /// @param _value 选项的值
-    function setOption(uint _no,uint _value );
+    function setOption(uint _no,uint _value )returns (bool success) ;
 
     /// @notice 设置一个函数的Sig
     /// @param _no 选项的编号:派生合约的enum Fun{}
     /// @param _sig 函数的Sig
-    function setFun(uint _no,uint _sig);
+    function setFun(uint _no,uint _sig)returns (bool success) ;
 
     function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts);
 
@@ -230,7 +230,7 @@ contract BaseManager is BaseManagerInterface{
     // all wait Confirms resetKey operations No.
     mapping(uint=>uint) m_waitConfirms_resetKey;
 
-    function resetKey(uint _role,address _keyAddress){
+    function resetKey(uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[0]);
         //if(uint(_role)>=uint(role.end))                                     {Err(11000001);throw;}
@@ -243,10 +243,11 @@ contract BaseManager is BaseManagerInterface{
         m_waitConfirmAmounts_resetKey++;
         m_waitConfirms_resetKey[m_waitConfirmAmounts_resetKey]=m_operationAmounts_resetKey;
         ResetKey(m_waitConfirms_resetKey[m_waitConfirmAmounts_resetKey],_keyAddress,uint(_role));
+        return true;
 
     }
 
-    function resetKeyC(uint _no,uint _role,address _keyAddress){
+    function resetKeyC(uint _no,uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[1]);
         if(m_operations_resetKey[_no].m_role!=uint(_role))                   {Err(11000002);throw;}
@@ -256,10 +257,10 @@ contract BaseManager is BaseManagerInterface{
         m_operations_resetKey[_no].m_status=OperationStatus.confirm;
         del2(_no);
         ResetKeyC(_no,_keyAddress,uint(_role));
-
+        return true;
     }
 
-    function resetKeyReject(uint _no,uint _role,address _keyAddress){
+    function resetKeyReject(uint _no,uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[1]);
         if(m_operations_resetKey[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
@@ -267,6 +268,7 @@ contract BaseManager is BaseManagerInterface{
         m_operations_resetKey[_no].m_status=OperationStatus.reject;
         del2(_no);
         ResetKeyReject(_no,_keyAddress,m_operations_resetKey[_no].m_role);
+        return true;
 
     }
 
@@ -276,7 +278,7 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function setOption(uint _keyNo,uint _value){
+    function setOption(uint _keyNo,uint _value)returns (bool success) {
 
         checKey(m_keys[uint(BaseRole.resetOptionRole)]);
         uint[] memory t_data=new uint[](2);
@@ -285,6 +287,8 @@ contract BaseManager is BaseManagerInterface{
 
         addOperation(0x0,uint(BaseOperationType.setOptionType),uint(BaseRole.resetOptionRoleC),t_data);
         setOption(_keyNo,_value);
+        return true;
+
     }
 
     function setOptionC(uint[] _data)internal{
@@ -294,7 +298,7 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function setFun(uint _fun,uint _sig){
+    function setFun(uint _fun,uint _sig)returns (bool success) {
 
         checKey(m_keys[uint(BaseRole.resetOptionRole)]);
         uint[] memory t_data=new uint[](2);
@@ -302,6 +306,7 @@ contract BaseManager is BaseManagerInterface{
         t_data[1]=_sig;
         addOperation(0x0,uint(BaseOperationType.setFunType),uint(BaseRole.resetOptionRoleC),t_data);
         setFun(_fun,_sig);
+        return true;
 
     }
 
@@ -318,7 +323,7 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function setSubKey(address _subContract,uint _role,address _key){}
+    function setSubKey(address _subContract,uint _role,address _key)returns (bool success) {}
 
     function setSubKeyC(address _subContract ,uint[] _data)internal{}
 
@@ -388,7 +393,7 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function confirm(uint _no,address _destination) returns (bool){
+    function confirm(uint _no,address _destination) returns (bool success) {
 
         checKey(m_keys[m_operations[_no].m_confirmKeyNo]);
         //temp(m_operations[_no].m_destinationAddress,uint(_destination));
@@ -454,13 +459,14 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function reject(uint _no,address _destination) returns (bool){
+    function reject(uint _no,address _destination) returns (bool success) {
 
         if(uint(msg.sender)!=m_keys[uint(m_operations[_no].m_type)])                {Err(10000001);throw;}
         if(m_operations[_no].m_destinationAddress!=uint(_destination))              {Err(11000006);throw;}
         if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {Err(11000005);throw;}
         m_operations[_no].m_status=uint(OperationStatus.reject);
         del(_no);
+        return true;
 
     }
 

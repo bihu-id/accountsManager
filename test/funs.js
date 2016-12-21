@@ -5,15 +5,13 @@ var funs=
             name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256,uint256)',
             sig: 0x13512d89,
             resSize: 32,
-            register: true,
-            label:"创建资产"
+            register: false
         },
         destroyToken: {
             name: 'destroyToken(address,uint256)',
             sig: 0x9b1ad792,
             resSize: 32,
-            register: true,
-            label:"销毁资产"
+            register: false
         },
         freeze: {
             name: 'freeze()',
@@ -24,22 +22,20 @@ var funs=
         getOwner: {
             name: 'getOwner(uint256)',
             sig: 0xc41a360a,
-            resSize: 64,
-            register: true,
-            label:"查询拥有者"
+            resSize: 32,
+            register: false
         },
         init: {
-            name: 'init(address,uint256,uint256,address,address)',
-            sig: 0x01c580e4,
+            name: 'init(address,uint256,uint256,uint256,address,address)',
+            sig: 0xefeec059,
             resSize: 32,
-            register: true
+            register: false
         },
         issuerMoreToken: {
             name: 'issuerMoreToken(address,uint256)',
             sig: 0xfb9f28b5,
             resSize: 32,
-            register: true,
-            label:"增发资产"
+            register: false
         },
         resetAccountOwner: {
             name: 'resetAccountOwner(uint256,address[],uint256[])',
@@ -80,14 +76,14 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 672,
-            register: true
+            resSize: 32,
+            register: false
         },
         transferToken: {
             name: 'transferToken(address,address,uint256)',
             sig: 0xf5537ede,
             resSize: 32,
-            register: true
+            register: false
         },
         unfreeze: {
             name: 'unfreeze()',
@@ -101,70 +97,61 @@ var funs=
             name: 'accountAmount()',
             sig: 0x41748782,
             resSize: 32,
-            register: true,
-            label:"查询账户总数"
+            register: false
         },
         confirm: {
             name: 'confirm()',
             sig: 0x7022b58e,
             resSize: 32,
-            register: false,
-            label:"批准"
+            register: false
         },
         createAccount: {
             name: 'createAccount(address,uint32,uint32)',
             sig: 0xe27d0cd8,
             resSize: 32,
-            register: true,
-            label:"创建账户"
+            register: false
         },
         getAccountAddress: {
             name: 'getAccountAddress(uint256)',
             sig: 0xdb4cf8e6,
             resSize: 32,
-            register: true,
-            label:"查询账户地址"
+            register: false
         },
         getAccountNo: {
             name: 'getAccountNo(address)',
             sig: 0x16f7f1b4,
             resSize: 32,
-            register: false,
-            label:"查询账户编号"
+            register: false
         },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 320,
-            register: true,
-            label:"查询所有的Key"
+            resSize: 32,
+            register: false
         },
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 320,
-            register: true,
-            label:"查询参数"
+            resSize: 32,
+            register: false
         },
         getOptionsWait: {
             name: 'getOptionsWait()',
             sig: 0x40bdce3c,
-            resSize: 320,
-            register: false,
-            label:"查询待批准参数"
+            resSize: 32,
+            register: false
         },
         init: {
             name: 'init(uint256,uint256,uint256,uint256,uint256,uint256)',
             sig: 0x9db1e461,
             resSize: 32,
-            register: true
+            register: false
         },
         requestConfirm: {
             name: 'requestConfirm()',
             sig: 0x0ef5f461,
             resSize: 32,
-            register: false,
-            label:"请求批准"
+            register: false
         },
         resetCore: {
             name: 'resetCore(uint256)',
@@ -182,8 +169,7 @@ var funs=
             name: 'resetOption(uint256,uint256)',
             sig: 0xa230f178,
             resSize: 32,
-            register: false,
-            label:"重置参数"
+            register: false
         }
     },
     LogicProxy: {
@@ -197,25 +183,25 @@ var funs=
             name: 'get(uint256)',
             sig: 0x9507d39a,
             resSize: 32,
-            register: true
+            register: false
         },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
             resSize: 32,
-            register: true
+            register: false
         },
         getWait: {
             name: 'getWait(uint256)',
             sig: 0xe8a96387,
             resSize: 32,
-            register: true
+            register: false
         },
         getWaitKeys: {
             name: 'getWaitKeys()',
             sig: 0x74f818b2,
             resSize: 32,
-            register: true
+            register: false
         },
         requestConfirm: {
             name: 'requestConfirm(uint256)',
@@ -227,13 +213,13 @@ var funs=
             name: 'resetKey(uint256,uint256)',
             sig: 0x1c1c0fbc,
             resSize: 32,
-            register: true
+            register: false
         },
         setfun: {
             name: 'setfun(uint256,uint256,uint256)',
             sig: 0x5b63f551,
             resSize: 32,
-            register: true
+            register: false
         }
     },
     Token: {
@@ -241,29 +227,25 @@ var funs=
             name: 'accountStatus(address)',
             sig: 0x61242bdd,
             resSize: 32,
-            register: true,
-            label:"账户状态"
+            register: false
         },
         allowance: {
             name: 'allowance(address,address)',
             sig: 0xdd62ed3e,
             resSize: 32,
-            register: true,
-            label:"allowance"
+            register: false
         },
         approve: {
             name: 'approve(address,uint256)',
             sig: 0x095ea7b3,
             resSize: 32,
-            register: true,
-            label:"许可/approve"            
+            register: false
         },
         balanceOf: {
             name: 'balanceOf(address)',
             sig: 0x70a08231,
             resSize: 32,
-            register: true,
-            label:"余额/balanceOf"            
+            register: false
         },
         destroy: {
             name: 'destroy(uint256)',
@@ -316,30 +298,26 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 640,
-            register: false,
-            label:"详情"
+            resSize: 32,
+            register: false
         },
         totalSupply: {
             name: 'totalSupply()',
             sig: 0x18160ddd,
             resSize: 32,
-            register: false,
-            label:"总供应量/totalSupply"
+            register: false
         },
         transfer: {
             name: 'transfer(address,uint256)',
             sig: 0xa9059cbb,
             resSize: 32,
-            register: false,
-            label:"发送/transfer"
+            register: false
         },
         transferFrom: {
             name: 'transferFrom(address,address,uint256)',
             sig: 0x23b872dd,
             resSize: 32,
-            register: false,
-            label:"从发送/transferFrom"
+            register: false
         },
         unfreeze: {
             name: 'unfreeze(address)',
@@ -359,29 +337,25 @@ var funs=
             name: 'confirm(uint256,address)',
             sig: 0xbe5fb5d8,
             resSize: 32,
-            register: false,
-            label:"批准更改"
+            register: false
         },
         createToken: {
             name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256)',
             sig: 0x4e0732c8,
             resSize: 32,
-            register: true,
-            label:"创建资产"
+            register: false
         },
         forceTransfer: {
             name: 'forceTransfer(address,address,address,uint256)',
             sig: 0x98b73188,
             resSize: 32,
-            register: true,
-            label:"强制转移"
+            register: false
         },
         freeze: {
             name: 'freeze(address,address)',
             sig: 0x15748250,
             resSize: 32,
-            register: true,
-            label:"冻结"
+            register: false
         },
         getFun: {
             name: 'getFun(uint256)',
@@ -392,20 +366,20 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 256,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperation: {
             name: 'getOperation(uint256)',
             sig: 0x202e3924,
-            resSize: 256,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperationAmounts: {
             name: 'getOperationAmounts()',
             sig: 0xedc3ed39,
-            resSize: 64,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperationAmounts_resetKey: {
             name: 'getOperationAmounts_resetKey()',
@@ -422,52 +396,50 @@ var funs=
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 320,
+            resSize: 32,
             register: false
         },
         getTokenAddress: {
             name: 'getTokenAddress(uint256)',
             sig: 0x67ccdf38,
             resSize: 32,
-            register: true
+            register: false
         },
         getTokenAmounts: {
             name: 'getTokenAmounts()',
             sig: 0xd73cc4df,
             resSize: 32,
-            register: true
+            register: false
         },
         getTokenSummary: {
             name: 'getTokenSummary(uint256)',
             sig: 0xbcafaf1f,
-            resSize: 96,
-            register: true,
-            label:"查询资产简介"
+            resSize: 32,
+            register: false
         },
         getTokensSymbol: {
             name: 'getTokensSymbol(uint256,uint256)',
             sig: 0x5b769783,
-            resSize: 960,
-            register: true,
-            label:"查询资产代码"
+            resSize: 32,
+            register: false
         },
         getWaitOperationNos: {
             name: 'getWaitOperationNos(uint256,uint256,uint256)',
             sig: 0xee20c380,
-            resSize: 960,
-            register: true
+            resSize: 32,
+            register: false
         },
         init: {
             name: 'init(uint256,uint256,uint256,uint256,uint256)',
             sig: 0x9dabc978,
             resSize: 32,
-            register: true
+            register: false
         },
         reject: {
             name: 'reject(uint256,address)',
             sig: 0x03ab52fd,
             resSize: 32,
-            register: true
+            register: false
         },
         resetCore: {
             name: 'resetCore(uint256)',
@@ -503,7 +475,7 @@ var funs=
             name: 'setOption(uint256,uint256)',
             sig: 0x5754e959,
             resSize: 32,
-            register: true
+            register: false
         },
         setSubKey: {
             name: 'setSubKey(address,uint256,address)',
@@ -521,7 +493,7 @@ var funs=
             name: 'unfreeze(address,address)',
             sig: 0x5adb6ddb,
             resSize: 32,
-            register: true
+            register: false
         }
     },
     TxManager: {
@@ -550,16 +522,16 @@ var funs=
             register: false
         },
         init: {
-            name: 'init()',
-            sig: 0xe1c7392a,
+            name: 'init(uint256,uint256,uint256,uint256)',
+            sig: 0x7662850d,
             resSize: 32,
-            register: true
+            register: false
         },
         pass: {
             name: 'pass(uint256,uint256,uint256)',
             sig: 0x20309fcf,
             resSize: 32,
-            register: true
+            register: false
         },
         requestConfirm: {
             name: 'requestConfirm()',
@@ -571,7 +543,7 @@ var funs=
             name: 'resetCore(uint256)',
             sig: 0xe3f18df3,
             resSize: 32,
-            register: true
+            register: false
         },
         resetKey: {
             name: 'resetKey(uint256,uint256)',
@@ -603,31 +575,31 @@ var funs=
             name: 'freeze(address)',
             sig: 0x8d1fdf2f,
             resSize: 32,
-            register: true
+            register: false
         },
         getFun: {
             name: 'getFun(uint256)',
             sig: 0x70c86863,
-            resSize: 64,
-            register: true
+            resSize: 32,
+            register: false
         },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 704,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperation: {
             name: 'getOperation(uint256)',
             sig: 0x202e3924,
-            resSize: 512,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperationAmounts: {
             name: 'getOperationAmounts()',
             sig: 0xedc3ed39,
-            resSize: 64,
-            register: true
+            resSize: 32,
+            register: false
         },
         getOperationAmounts_resetKey: {
             name: 'getOperationAmounts_resetKey()',
@@ -638,32 +610,32 @@ var funs=
         getOperation_resetKey: {
             name: 'getOperation_resetKey(uint256)',
             sig: 0x0eeb3969,
-            resSize: 128,
+            resSize: 32,
             register: false
         },
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 128,
-            register: true
+            resSize: 32,
+            register: false
         },
         getWaitOperationNos: {
             name: 'getWaitOperationNos(uint256,uint256,uint256)',
             sig: 0xee20c380,
-            resSize: 960,
-            register: true
+            resSize: 32,
+            register: false
         },
         init: {
             name: 'init()',
             sig: 0xe1c7392a,
             resSize: 32,
-            register: true
+            register: false
         },
         reject: {
             name: 'reject(uint256,address)',
             sig: 0x03ab52fd,
             resSize: 32,
-            register: true
+            register: false
         },
         resetAccountOwner: {
             name: 'resetAccountOwner(address,uint256,address[],uint256[])',
@@ -675,7 +647,7 @@ var funs=
             name: 'resetCore(uint256)',
             sig: 0xe3f18df3,
             resSize: 32,
-            register: true
+            register: false
         },
         resetKey: {
             name: 'resetKey(uint256,address)',
@@ -699,43 +671,43 @@ var funs=
             name: 'revokeCA(address)',
             sig: 0x6be2f0e6,
             resSize: 32,
-            register: true
+            register: false
         },
         setCA: {
             name: 'setCA(address,address)',
             sig: 0x9f394af0,
             resSize: 32,
-            register: true
+            register: false
         },
         setFun: {
             name: 'setFun(uint256,uint256)',
             sig: 0xeccdaf45,
             resSize: 32,
-            register: true
+            register: false
         },
         setIdLevel: {
             name: 'setIdLevel(address,uint256)',
             sig: 0x0f6621fd,
             resSize: 32,
-            register: true
+            register: false
         },
         setOption: {
             name: 'setOption(uint256,uint256)',
             sig: 0x5754e959,
             resSize: 32,
-            register: true
+            register: false
         },
         setSubKey: {
             name: 'setSubKey(address,uint256,address)',
             sig: 0xc26a668d,
             resSize: 32,
-            register: true
+            register: false
         },
         unfreeze: {
             name: 'unfreeze(address)',
             sig: 0x45c8b1a6,
             resSize: 32,
-            register: true
+            register: false
         }
     }
 }

@@ -33,19 +33,21 @@ contract LogicProxy is Error{
 
     event SetFun(uint _fun,uint _resSize);
 
-    function requestConfirm(uint _type){
+    function requestConfirm(uint _type)returns (bool success){
 
         onlyKey(_type*2);
         m_haveWait[_type]=true;
+        return true;
 
     }
 
-    function confirm(uint _type){
+    function confirm(uint _type)returns (bool success){
 
         onlyKey(_type*2+1);
         if(!m_haveWait[_type])              { Err(60000002);    throw; }
         m_leg[_type]=(m_leg[_type]+1)%2;
         m_haveWait[_type]=false;
+        return true;
 
     }
 
@@ -74,7 +76,7 @@ contract LogicProxy is Error{
 
     function changeLeg(uint _leg) internal returns(uint){return (_leg+1)%2;}
 
-    function resetKey(uint _no,uint _newKey){
+    function resetKey(uint _no,uint _newKey)returns (bool success){
 
         onlyKey(2);
         uint t_leg=m_leg[1];
@@ -85,14 +87,16 @@ contract LogicProxy is Error{
         m_key[t_legc][2]=m_key[t_leg][2];
         m_key[t_legc][3]=m_key[t_leg][3];
         m_key[t_legc][_no]=_newKey;
+        return true;
 
     }
 
-    function setfun(uint _logic,uint _fun,uint _resSize ){
+    function setfun(uint _logic,uint _fun,uint _resSize )returns (bool success){
 
         onlyKey(0);
         m_funs[changeLeg(m_leg[0])][_fun]=FunDetail(_logic,_resSize);
         SetFun(_fun,_resSize);
+        return true;
 
     }
 
@@ -103,13 +107,13 @@ contract LogicProxy is Error{
 
     }
 
-    function get(uint _fun)constant returns(uint,uint){
+    function get(uint _fun)constant returns(uint _address,uint _returnSize){
 
         return get_(m_leg[0],_fun);
 
     }
 
-    function getWait(uint _fun)constant returns(uint,uint){
+    function getWait(uint _fun)constant returns(uint _address,uint _returnSize){
 
         return get_(changeLeg(m_leg[0]),_fun);
 
