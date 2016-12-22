@@ -13,6 +13,7 @@
     "bignumber": "^1.1.0",
     "bootstrap": "^3.3.7",
     "css-loader": "^0.26.1",
+    "eth-lightwallet": "^2.5.3",
     "ethereumjs-tx": "^1.2.2",
     "ethereumjs-util": "^5.0.1",
     "eval": "^0.1.1",

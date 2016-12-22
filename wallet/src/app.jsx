@@ -10,6 +10,10 @@ var abls=require("./../config/abls")
 var abis=require("./../config/abis")
 var address=require("./../../test/address.js")
 
+var Tx = require('ethereumjs-tx');
+var ethUtil = require('ethereumjs-util');
+var ethlightjs         = require('eth-lightwallet');
+
 const history = {};
 
 require("./../css/app.css");
@@ -27,7 +31,7 @@ class Function extends React.Component{
         let keys=Object.keys(inputs)
         keys.forEach(function(key){
             r_inputs.push(
-                <FunInput label={inputs[key].label} />
+                <FunInput id={key} label={inputs[key].label} />
             )
         })
         return (
@@ -47,14 +51,31 @@ class Contract extends React.Component{
         //console.log(this.props.address)
 
         this.state = {
-            fun:"",
+            fun:Object.keys(this.props.abl.fun)[0],
             privateKey:"",
             contractAddress:this.props.address,
+            args:{},
             txHash:"",
-            Receipt:""
+            Receipt:"",
+            result:""
             //this.props.address
         };
 
+    }
+
+    cancelType(no,type,e){
+        if (e.target.value==type) {
+            var newArgs = this.state.args
+            newArgs[no] =""
+            this.setState({args: newArgs});
+        }
+
+    }
+
+    onInputChange(no,e){
+        var newArgs=this.state.args
+        newArgs[no]= e.target.value
+        this.setState({args:newArgs});
     }
 
     onFunChange(e) {
@@ -77,6 +98,25 @@ class Contract extends React.Component{
         if(nextProps.address!=this.props.address)
             this.setState({contractAddress:nextProps.address})
 
+        if(nextState.fun!=this.state.fun){
+            this.initType(nextState)
+        }
+    }
+
+    initType(nextState){
+        let abl=this.props.abl;
+        let funs=abl.fun
+        //console.log(fun)
+        let keys=Object.keys(funs);
+        let fun=nextState.fun==""?funs[keys[0]]:funs[nextState.fun]
+        let inputs=fun.inputs
+        var inputKeys=Object.keys(inputs)
+        var args={}
+        for(var i=0;i<inputKeys.length;i++)
+        {
+            args[i]=inputs[inputKeys[i]].type
+        }
+        this.setState({args:args})
     }
     shouldComponentUpdate(newProps, newState) {
         if(this.state==newState)
@@ -86,7 +126,12 @@ class Contract extends React.Component{
     componentWillReceiveProps(){
         this.setState({fun:""})
     }
-    onSubmit(){
+
+    componentDidMount() {
+        this.initType(this.state)
+    }
+    onSubmit(constant){
+
         var abi=this.props.abi
         var web3=this.props.web3
         var priKey=this.state.privateKey
@@ -95,21 +140,48 @@ class Contract extends React.Component{
         var value=0
         var gas=5000000
         var nonce =0
+        var args=[]
+
+        var self=this
+        var keys=Object.keys(self.state.args)
+        for(var i=0;i<keys.length;i++)
+            args.push(this.state.args[keys[i]])
+
         this.setState({
             txHash:"",
             receipt:""
         })
-        this.raw(web3,abi,priKey,fun,to,value,gas,nonce,null)
+        console.log(args)
+        if(constant)
+        {
+
+            this.call(web3,abi,to,fun,args)
+        }
+        else
+            this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
     }
 
-    raw(web3,abi,privateKey,fun,args,to,value,gas,nonce,raw){
-        function abis(abi,fun,args){
-            var types = ethlightjs.txutils._getTypesFromAbi(abi, fun);
-            return ethlightjs.txutils._encodeFunctionTxData(fun, types,args);
+    dataFromAbis(abi,fun,args){
+        var types = ethlightjs.txutils._getTypesFromAbi(abi, fun);
+        return ethlightjs.txutils._encodeFunctionTxData(fun, types,args);
+    }
+    call(web3,abi,to,fun,args){
+
+        var data='0x'+this.dataFromAbis(abi, fun, args)
+        var obj={
+            "to":to,
+            "data":data
         }
+        var res=web3.eth.call(obj)
+        this.setState({result:res})
+        console.log("result:",res)
+
+    }
+    raw(web3,abi,privateKey,fun,args,to,value,gas,nonce,raw){
+
         var serializedTx;
         if(raw==null) {
-            var data = abi ? '0x' + abis(abi, fun, args) : '0x0'
+            var data = abi ? '0x' + this.dataFromAbis(abi, fun, args) : '0x0'
             //var gas="4000000"
             var int_nonce
             if (nonce == 0)
@@ -154,7 +226,7 @@ class Contract extends React.Component{
     }
     render() {
 
-        //console.log(this.props.web3)
+        console.log(this.state.args)
         //let contract=this.props.contract
         let abl=this.props.abl;
         let funs=abl.fun
@@ -167,6 +239,30 @@ class Contract extends React.Component{
             <label className="label"> 交易哈希</label>
             <input type="text" className="text" value={this.state.txHash} />
         </div>:""
+
+        let r_inputs=[];
+        var inputKeys=Object.keys(inputs)
+        //var self=this
+        for(let i=0;i<inputKeys.length;i++)
+        {
+            let key=inputKeys[i]
+            let type=inputs[key]["type"]
+            let value
+            if(this.state.args[i]!=undefined)
+                value=this.state.args[i]
+
+            r_inputs.push
+            (<div >
+                <div>
+                    <label className="label"> {inputs[key]["label"]}</label>
+                </div>
+                <div>
+                    <input type="text" id={i} className="input " value={value} onChange={this.onInputChange.bind(this,i)} onClick={this.cancelType.bind(this,i,type)}/>
+                </div>
+
+            </div>)
+            
+        }
 
         keys.forEach(function(key){
             if(parseInt(funs[key]["showLevel"],10)>0)
@@ -203,7 +299,7 @@ class Contract extends React.Component{
                     <label className="label">{fun.label}</label>
                 </div>
                 <div>
-                    <Function inputs={inputs}/>
+                    {r_inputs}
                 </div>
                 {privateKey}
                 {r_txHash}
@@ -211,7 +307,7 @@ class Contract extends React.Component{
                     <input
                         type="submit"
                         className="button"
-                        onClick={this.onSubmit.bind(this)}
+                        onClick={this.onSubmit.bind(this,fun.constant)}
                         value="确定"
                     />
                 </div>
@@ -227,7 +323,7 @@ class App extends React.Component{
         super(props);
         this.state = {
             contract:"",
-            rpc:"http://127.0.0.1:8545"
+            rpc:"http://139.199.7.43:8545"
         };
     }
 

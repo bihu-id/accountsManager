@@ -16,5 +16,5 @@ function getSub(obj,keys){
             return
     return subObj
 }
-console.log(a.b)
+console.log(a)
 
