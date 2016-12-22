@@ -21,7 +21,7 @@ module.exports = function(options){
         },
         //入口文件输出配置
         output: {
-            path: path.resolve(root_dir, './dist'),
+            path: path.resolve(root_dir, './assets'),
             filename: 'app.js',
             pathinfo: !options.prod,
             sourceMapFilename: "[name].js.map",

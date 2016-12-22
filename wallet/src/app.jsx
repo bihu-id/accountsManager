@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Router, Route, hashHistory } from 'react-router';
 import Web3 from 'web3';
 
-import FunInput from "./components/FunInput.jsx";
+import Outputs from "./components/Outputs";
 
 var abls=require("./../config/abls")
 
@@ -14,6 +14,10 @@ var Tx = require('ethereumjs-tx');
 var ethUtil = require('ethereumjs-util');
 var ethlightjs         = require('eth-lightwallet');
 
+var accountsKey=require("./../accountsKeys")
+var ethUtil = require('ethereumjs-util');
+
+var BigNumber=require("BigNumber")
 const history = {};
 
 require("./../css/app.css");
@@ -51,13 +55,18 @@ class Contract extends React.Component{
         //console.log(this.props.address)
 
         this.state = {
-            fun:Object.keys(this.props.abl.fun)[0],
+            fun:Object.keys(this.props.abl.funs)[0],
+            //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0]),
             privateKey:"",
             contractAddress:this.props.address,
             args:{},
+            sign:"",
             txHash:"",
             Receipt:"",
-            result:""
+            result:"",
+            init:this.props.init,
+            temp:"剪贴框"
+
             //this.props.address
         };
 
@@ -74,14 +83,28 @@ class Contract extends React.Component{
 
     onInputChange(no,e){
         var newArgs=this.state.args
-        newArgs[no]= e.target.value
+        newArgs[no]= e.target.value.replace(/" "/g, "")
         this.setState({args:newArgs});
     }
 
     onFunChange(e) {
 
-        this.setState({fun:e.target.value})
+        this.setState({
+            fun:e.target.value,
+            result:"",
+            sign:""
+            //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0])
+        })
+
         console.log("this.state.fun:",e.target.value,this.state.fun)
+    }
+    init(){
+        this.setState({
+            result:"",
+            sign:""
+        })
+        this.state.init=false
+
     }
     onPrivateKeyChange(e) {
 
@@ -93,6 +116,22 @@ class Contract extends React.Component{
         this.setState({contractAddress:e.target.value})
 
     }
+    tempChange(e){
+        this.setState({temp:e.target.value})
+    }
+    onSignAddressChange(e){
+
+        Object.keys(accountsKey).forEach(function(k){
+            if(accountsKey[k]["address"]==e.target.value)
+                this.setState({privateKey:accountsKey[k]["privateKey"]})
+        })
+
+    }
+    onSelectPrivateKey(e) {
+
+        this.setState({privateKey:e.target.value})
+
+    }
     componentWillUpdate(nextProps, nextState) {
         console.log(nextProps.address,this.props.address);
         if(nextProps.address!=this.props.address)
@@ -101,11 +140,14 @@ class Contract extends React.Component{
         if(nextState.fun!=this.state.fun){
             this.initType(nextState)
         }
+        if(this.state.init)
+            this.init()
+
     }
 
     initType(nextState){
         let abl=this.props.abl;
-        let funs=abl.fun
+        let funs=abl.funs
         //console.log(fun)
         let keys=Object.keys(funs);
         let fun=nextState.fun==""?funs[keys[0]]:funs[nextState.fun]
@@ -130,11 +172,11 @@ class Contract extends React.Component{
     componentDidMount() {
         this.initType(this.state)
     }
-    onSubmit(constant){
+    onSubmit(sumbitType){
 
         var abi=this.props.abi
         var web3=this.props.web3
-        var priKey=this.state.privateKey
+        var priKey=new Buffer(this.state.privateKey.substring(2),'hex')
         var fun=this.state.fun
         var to=this.state.contractAddress
         var value=0
@@ -152,13 +194,27 @@ class Contract extends React.Component{
             receipt:""
         })
         console.log(args)
-        if(constant)
-        {
 
+        if(sumbitType==0)
             this.call(web3,abi,to,fun,args)
+
+        if(sumbitType==1)
+            this.setState({sign:this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)})
+        if(sumbitType==2) {
+            this.broadCast(web3,this.state.sign,function(err,hash){
+                if (!err) {
+                    console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+                    self.setState({
+                        txHash:hash
+                    })
+                }
+                setTimeout(function(){
+                    self.setState({
+                        receipt:web3.eth.getTransactionReceipt(hash)
+                    })
+                }, 5000)
+            })
         }
-        else
-            this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
     }
 
     dataFromAbis(abi,fun,args){
@@ -191,14 +247,14 @@ class Contract extends React.Component{
             var _nonce = "0x" + (int_nonce).toString(16);
             var gasprice = "0x" + web3.eth.gasPrice.toString(16);
             var gasLimit = "0x" + parseInt(gas, 10).toString(16)
-            var _value = new BigNumber(web3.toWei(value, 'ether'));
+            var _value  //new BigNumber(web3.toWei(value, 'ether'));
 
             var rawTx = {
                 nonce: _nonce,
                 gasPrice: gasprice,
                 gasLimit: gasLimit,
                 to: to,
-                value: '0x' + _value.toString(16),
+                value: '0x0',// + _value.toString(16),
                 data: data
             }
             console.log(rawTx);
@@ -209,31 +265,38 @@ class Contract extends React.Component{
         else
             serializedTx=raw;
 
+        return serializedTx
+    }
+
+    broadCast(web3,serializedTx,callback){
         web3.eth.sendRawTransaction(serializedTx, function(err, hash) {
-            //console.log(err)
-            if (!err) {
-                console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
-                this.setState({
-                    txHash:hash
-                })
-            }
-            setTimeout(function(){
-                this.setState({
-                    receipt:web3.eth.getTransactionReceipt(hash)
-                })
-            }, 5000)
+            callback(err, hash)
+
         });
+    }
+
+    getType(json,key){
+
+        var res
+        res=Object.keys(json).map(function(k){
+            return json[k][key]
+        })
+        return res
     }
     render() {
 
         console.log(this.state.args)
         //let contract=this.props.contract
         let abl=this.props.abl;
-        let funs=abl.fun
+        let funs=abl.funs
+
         //console.log(fun)
         let keys=Object.keys(funs);
         let fun=this.state.fun==""?funs[keys[0]]:funs[this.state.fun]
         let inputs=fun.inputs
+        let outputs=fun.outputs
+        let outputTypes= this.getType(outputs,"type")
+        console.log("ouput types:",outputTypes)
         let raw_funs=[]
         let r_txHash=this.state.txHash!=""?<div>
             <label className="label"> 交易哈希</label>
@@ -274,23 +337,72 @@ class Contract extends React.Component{
                 {raw_funs}
             </select>
 
+        let raw_keyOption=Object.keys(accountsKey).map(function(k){
+
+            return <option value={accountsKey[k].privateKey} >{k}</option>
+        })
         let privateKey=fun.constant?"" :<div>
+            <label className="h2">选择私钥</label>
+            <select onChange={this.onSelectPrivateKey.bind(this)}>
+                {raw_keyOption}
+            </select>
             <div>
-                <label className="h2">签名私钥</label>
+                <input
+                    type="text"
+                    className="input"
+                    value={this.state.privateKey}
+                    onClick={this.onPrivateKeyChange.bind(this)}
+                />
+            </div>
+            <div>
+                <label className="h2">公钥:</label>
+
             </div>
             <div>
                 <input
                     type="text"
                     className="input"
-                    onClick={this.onPrivateKeyChange.bind(this)}
+                    value={this.state.privateKey?"0x"+ethUtil.privateToAddress(this.state.privateKey).toString('hex'):""}
+                    onClick={this.onSignAddressChange.bind(this)}
                 />
             </div>
         </div>
+        
+        let r_result
+        if(this.state.result!=""&&this.props.abl["funs"][this.state.fun]!=undefined)
+            r_result=this.state.result==""?"":<Outputs ablOutputs={this.props.abl["funs"][this.state.fun].outputs} types={outputTypes} bytes={this.state.result} />
+
+        let sign=this.state.sign
+        let r_sign=sign!=""?
+            <textarea
+                rows={sign.length/100} cols="100"
+                value={sign}
+            />:""
+
+
+        let sumbitType;
+        let sumbitTypeLabel;
+        if(fun.constant)
+        {
+            sumbitType=0;
+            sumbitTypeLabel="查询"
+
+        }
+        else {
+            if(sign==0){
+                sumbitType=1;
+                sumbitTypeLabel="签名"
+            }
+            else {
+                sumbitType=2;
+                sumbitTypeLabel="广播"
+            }
+        }
         return (
             <div>
                 <div>
                     <label className="h2">合约地址:</label>
-                    <input type="text" className="input " value={this.state.contractAddress} onChange={this.onAddressChange.bind(this)}/>
+                    <input type="text" className="input" value={this.state.contractAddress} onChange={this.onAddressChange.bind(this)}/>
                 </div>
                 <div>
                     <label className="h2">功能:</label>{r_funs}
@@ -302,13 +414,22 @@ class Contract extends React.Component{
                     {r_inputs}
                 </div>
                 {privateKey}
+                {r_sign}
                 {r_txHash}
+                {r_result}
                 <div>
                     <input
                         type="submit"
                         className="button"
-                        onClick={this.onSubmit.bind(this,fun.constant)}
-                        value="确定"
+                        onClick={this.onSubmit.bind(this,sumbitType)}
+                        value={sumbitTypeLabel}
+                    />
+                </div>
+                <div>
+                    <textarea
+                        rows="5" cols="100"
+                        value={this.state.temp}
+                        onChange={this.tempChange.bind(this)}
                     />
                 </div>
             </div>
@@ -323,7 +444,8 @@ class App extends React.Component{
         super(props);
         this.state = {
             contract:"",
-            rpc:"http://139.199.7.43:8545"
+            rpc:"http://139.199.7.43:8545",
+            chainId:314
         };
     }
 
@@ -335,10 +457,20 @@ class App extends React.Component{
         this.setState({rpc:e.target.value})
     }
 
+    onChianIdChange(e){
+        this.setState({chainId:e.target.value})
+    }
+
     getRpcStr(rpc){
         let start=rpc.indexOf("//")
         return "rpc"+rpc.substring(start+2,rpc.indexOf(":",start)).replace(/[\","."]/g, "")
     }
+
+    getChainIdStr(){
+
+        return "id"+this.state.chainId
+    }
+
     render() {
 
         var web3 = new Web3(new Web3.providers.HttpProvider(this.state.rpc))
@@ -355,8 +487,8 @@ class App extends React.Component{
 
         console.log(contractName+"Data")
         var contractAddress="0x1"
-        if(address[this.getRpcStr(this.state.rpc)][contractName+"Data"]!=undefined)
-            contractAddress=address[this.getRpcStr(this.state.rpc)][contractName+"Data"]
+        if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
+            contractAddress=address[this.getChainIdStr()][contractName+"Data"]
 
         console.log(contractAddress)
 
@@ -373,7 +505,8 @@ class App extends React.Component{
         return (
             <div>
                 <div>
-                    <label className="h2">RPC:</label> <input type="text" className="input " value={this.state.rpc} onChange={this.onRpcChange.bind(this)}/>
+                    <label className="h2">RPC:</label> <input type="text" width="600px" className="inputLen" value={this.state.rpc} onChange={this.onRpcChange.bind(this)}/>
+                    <label className="h2">链ID:</label> <input type="text" width="200px" className="inputLen"  value={this.state.chainId} onChange={this.onChianIdChange.bind(this)}/>
                 </div>
                 <div>
                     <label className="h2">合约:</label>

@@ -3,7 +3,7 @@ var abis1=
     "Account": {
         "label": "账户合约",
         "address": "",
-        "fun": {
+        "funs": {
             "createToken": {
                 "label": "创建资产",
                 "inputs": {
@@ -545,7 +545,7 @@ var abis1=
     "AccountManager": {
         "label": "账户管理合约",
         "address": "",
-        "fun": {
+        "funs": {
             "requestConfirm": {
                 "label": "请求批准参数设置",
                 "inputs": {},
@@ -600,7 +600,12 @@ var abis1=
                     "_keys": {
                         "label": "Keys",
                         "type": "address[]",
-                        "select": {}
+                        "select": {
+                            "0":"合约升级",
+                            "1":"合约升级批准",
+                            "2":"重置Keys",
+                            "3":"重置Keys批准"
+                        }
                     }
                 },
                 "constant": true,
@@ -900,7 +905,7 @@ var abis1=
     "Token": {
         "label": "资产合约",
         "address": "",
-        "fun": {
+        "funs": {
             "approve": {
                 "label": "批准/approve",
                 "inputs": {
@@ -1599,7 +1604,7 @@ var abis1=
     "TokenManager": {
         "label": "资产管理合约",
         "address": "",
-        "fun": {
+        "funs": {
             "reject": {
                 "label": "拒绝操作",
                 "inputs": {
@@ -2652,7 +2657,7 @@ var abis1=
     "TxManager": {
         "label": "交易管理合约",
         "address": "",
-        "fun": {
+        "funs": {
             "requestConfirm": {
                 "label": "requestConfirm",
                 "inputs": {},
@@ -2906,7 +2911,7 @@ var abis1=
     "Xindi": {
         "label": "Xindi",
         "address": "",
-        "fun": {
+        "funs": {
             "reject": {
                 "label": "拒绝操作",
                 "inputs": {

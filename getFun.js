@@ -109,7 +109,7 @@ fs.readdir("./contracts",function(err,files){
                 var funName=t_abi[i].name
                 if(funName!=undefined) {
                     abiFun["label"]=funName
-                    var sub = [contractKey, "fun",funName, "label"]
+                    var sub = [contractKey, "funs",funName, "label"]
                     if (getSub(oldabis1, sub) != undefined)
                         abiFun["label"] = getSub(oldabis1, sub)
 
@@ -125,11 +125,11 @@ fs.readdir("./contracts",function(err,files){
                                 "select":{}
                             }
                             funInputs[paraName] = input
-                            var sub = [contractKey, "fun",funName, "inputs", paraName, "label"]
+                            var sub = [contractKey, "funs",funName, "inputs", paraName, "label"]
                             if (getSub(oldabis1, sub) != undefined)
                                 funInputs[paraName]["label"] = getSub(oldabis1, sub)
                             
-                            sub=[contractKey, "fun",funName, "inputs", paraName, "select"]
+                            sub=[contractKey, "funs",funName, "inputs", paraName, "select"]
                             if (getSub(oldabis1, sub) != undefined)
                                 funInputs[paraName]["select"] = getSub(oldabis1, sub)
                         }
@@ -147,11 +147,11 @@ fs.readdir("./contracts",function(err,files){
                                 "select":{}
                             }
                             funOutputs[paraName] = output
-                            var sub = [contractKey, "fun",funName, "outputs", paraName, "label"]
+                            var sub = [contractKey, "funs",funName, "outputs", paraName, "label"]
                             if (getSub(oldabis1, sub) != undefined)
                                 funOutputs[paraName]["label"] = getSub(oldabis1, sub)
 
-                            sub=[contractKey, "fun",funName, "outputs", paraName, "select"]
+                            sub=[contractKey, "funs",funName, "outputs", paraName, "select"]
                             if (getSub(oldabis1, sub) != undefined)
                                 funOutputs[paraName]["select"] = getSub(oldabis1, sub)
                         }
@@ -159,12 +159,12 @@ fs.readdir("./contracts",function(err,files){
                     }
 
                     abiFun["constant"]=t_abi[i]["constant"]
-                    sub=[contractKey, "fun",funName, "constant"]
+                    sub=[contractKey, "funs",funName, "constant"]
                     if (getSub(oldabis1, sub) != undefined)
                         abiFun["constant"] = getSub(oldabis1, sub)
                     abiFun["type"]=t_abi[i]["type"]
                     abiFun["showLevel"]=0
-                    var sub=[contractKey,"fun",funName,"showLevel"]
+                    var sub=[contractKey,"funs",funName,"showLevel"]
                     if(getSub(oldabis1,sub)!=undefined)
                         abiFun["showLevel"]=getSub(oldabis1,sub)
 
@@ -173,7 +173,7 @@ fs.readdir("./contracts",function(err,files){
 
             }
 
-            abisContract["fun"]=abiFuns
+            abisContract["funs"]=abiFuns
             abis[contractKey]=JSON.parse(contracts[contractKey].interface)
             abis1[contractKey]=abisContract
 

@@ -5,13 +5,18 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
-label {
+.label {
+    width: 140px;
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 8px;
 }
 
-input {
+.input {
     width: 500px;
+    padding: 5px;
+    font-size: 16px;
+}
+.inputLen{
     padding: 5px;
     font-size: 16px;
 }
