@@ -17,5 +17,6 @@ module.exports = {
     
     port: 8545
   },
-  strict:true
+  strict:true,
+  chainId:314
 };
