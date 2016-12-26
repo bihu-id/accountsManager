@@ -58,6 +58,7 @@ class Contract extends React.Component{
             fun:Object.keys(this.props.abl.funs)[0],
             //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0]),
             privateKey:"",
+            signAddress:"",
             contractAddress:this.props.address,
             args:{},
             sign:"",
@@ -121,6 +122,7 @@ class Contract extends React.Component{
     }
     onSignAddressChange(e){
 
+        this.setState({signAddress:e.target.value})
         Object.keys(accountsKey).forEach(function(k){
             if(accountsKey[k]["address"]==e.target.value)
                 this.setState({privateKey:accountsKey[k]["privateKey"]})
@@ -129,7 +131,10 @@ class Contract extends React.Component{
     }
     onSelectPrivateKey(e) {
 
-        this.setState({privateKey:e.target.value})
+        this.setState({
+            privateKey:e.target.value,
+            address:"0x"+ethUtil.privateToAddress(e.target.value).toString('hex')
+        })
 
     }
     componentWillUpdate(nextProps, nextState) {
@@ -300,7 +305,7 @@ class Contract extends React.Component{
         let raw_funs=[]
         let r_txHash=this.state.txHash!=""?<div>
             <label className="label"> 交易哈希</label>
-            <input type="text" className="text" value={this.state.txHash} />
+            <input type="text" className="input" value={this.state.txHash} />
         </div>:""
 
         let r_inputs=[];
@@ -362,7 +367,7 @@ class Contract extends React.Component{
                 <input
                     type="text"
                     className="input"
-                    value={this.state.privateKey?"0x"+ethUtil.privateToAddress(this.state.privateKey).toString('hex'):""}
+                    value={this.state.signAddress?this.state.signAddress:""}
                     onClick={this.onSignAddressChange.bind(this)}
                 />
             </div>

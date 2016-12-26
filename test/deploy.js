@@ -102,7 +102,7 @@ contract('deploy xindi data', function(accounts) {
     })
 
     it ("save ",function(){
-        setTimeout(function(){getRpcStr.save(rpcAddress)},20000)
+        setTimeout(function(){getRpcStr.save(rpcAddress)},30000)
     })
 
 })

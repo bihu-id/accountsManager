@@ -17,7 +17,7 @@ contract('transfer', function(accounts) {
     it("transfer ", function(){
         var tokenManager=TokenManager.at(tokenmanager);
             console.log(tokenmanager)
-            tokenManager.getTokenSummary(2).then(function(res1){
+            tokenManager.getTokenSummary(1).then(function(res1){
                 console.log("getTokenSummary:",res1)
                 var token=Token.at(res1[2]);
                 token.summary().then(function(res2){
@@ -40,8 +40,7 @@ contract('transfer', function(accounts) {
                     });
                 })
             })
-
-
+        
     });
     /*
      it("create token by account ", function(tx){
