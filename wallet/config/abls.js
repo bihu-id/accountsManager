@@ -238,31 +238,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "setPass": {
-                "label": "setPass",
-                "inputs": {
-                    "_hash": {
-                        "label": "_hash",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_other": {
-                        "label": "_other",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {
-                    "success": {
-                        "label": "success",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
             "getOwner": {
                 "label": "查询拥有者",
                 "inputs": {
@@ -390,6 +365,26 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 2
+            },
+            "setPass": {
+                "label": "setPass",
+                "inputs": {
+                    "_hash": {
+                        "label": "_hash",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
             },
             "issuerMoreToken": {
                 "label": "增发资产",
@@ -2658,6 +2653,25 @@ var abis1=
         "label": "交易管理合约",
         "address": "",
         "funs": {
+            "pass": {
+                "label": "放行交易",
+                "inputs": {
+                    "_account": {
+                        "label": "交易账户",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_hash": {
+                        "label": "数据哈希",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 2
+            },
             "requestConfirm": {
                 "label": "requestConfirm",
                 "inputs": {},
@@ -2684,30 +2698,6 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
-            },
-            "pass": {
-                "label": "放行交易",
-                "inputs": {
-                    "_account": {
-                        "label": "交易账户",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_hash": {
-                        "label": "数据哈希",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_other": {
-                        "label": "其他",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 2
             },
             "getKeys": {
                 "label": "getKeys",

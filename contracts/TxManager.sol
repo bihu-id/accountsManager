@@ -36,11 +36,11 @@ contract TxManager is SubManager {
 
     }
 
-    function pass(uint _account,uint _hash,uint _other){
+    function pass(uint _account,uint _hash){
 
         onlyKey(uint(Role.ownerRole));
         Account t_account=Account(address(_account));
-        t_account.setPass(_hash,_other);
+        t_account.setPass(_hash);
 
     }
 

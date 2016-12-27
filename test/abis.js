@@ -202,28 +202,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_hash",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_other",
-                    "type": "uint256"
-                }
-            ],
-            "name": "setPass",
-            "outputs": [
-                {
-                    "name": "success",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "constant": true,
             "inputs": [
                 {
@@ -326,6 +304,24 @@ var abis=
                 }
             ],
             "name": "transferToken",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_hash",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setPass",
             "outputs": [
                 {
                     "name": "success",
@@ -2422,6 +2418,23 @@ var abis=
     "TxManager": [
         {
             "constant": false,
+            "inputs": [
+                {
+                    "name": "_account",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_hash",
+                    "type": "uint256"
+                }
+            ],
+            "name": "pass",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
             "inputs": [],
             "name": "requestConfirm",
             "outputs": [],
@@ -2441,27 +2454,6 @@ var abis=
                 }
             ],
             "name": "resetKey",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_account",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_hash",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_other",
-                    "type": "uint256"
-                }
-            ],
-            "name": "pass",
             "outputs": [],
             "payable": false,
             "type": "function"

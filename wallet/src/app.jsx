@@ -48,8 +48,6 @@ class Function extends React.Component{
 
 class Contract extends React.Component{
 
-
-
     constructor(props) {
         super(props);
         //console.log(this.props.address)
@@ -66,6 +64,7 @@ class Contract extends React.Component{
             Receipt:"",
             result:"",
             init:this.props.init,
+            dataHash:"",
             temp:"剪贴框"
 
             //this.props.address
@@ -137,6 +136,32 @@ class Contract extends React.Component{
         })
 
     }
+    onSubmitConfirmTx(e){
+
+        var web3=this.props.web3
+        var abi=abis["TxManager"]
+        var fun="pass"
+        var args=[this.state.contractAddress,this.state.datahash,""]
+        var chainIdStr="id"+this.props.chainId
+        var to=address[chainIdStr]["TxManager"+"Data"]
+        var value=0
+        var gas=5000000
+
+        this.broadCast(web3,raw(web3,abi,privateKey,fun,args,to,value,gas,0,null).serializedTx,function(err,hash){
+            if (!err) {
+                console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+                self.setState({
+                    txHash:hash
+                })
+            }
+            setTimeout(function(){
+                self.setState({
+                    receipt:web3.eth.getTransactionReceipt(hash)
+                })
+            }, 5000)
+        })
+
+    }
     componentWillUpdate(nextProps, nextState) {
         console.log(nextProps.address,this.props.address);
         if(nextProps.address!=this.props.address)
@@ -203,8 +228,15 @@ class Contract extends React.Component{
         if(sumbitType==0)
             this.call(web3,abi,to,fun,args)
 
-        if(sumbitType==1)
-            this.setState({sign:this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)})
+        if(sumbitType==1){
+
+            res=this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
+            this.setState({
+                sign:res.serializedTx,
+                dataHash:ethUtil.sha3(res.data,null)
+            })
+
+        }
         if(sumbitType==2) {
             this.broadCast(web3,this.state.sign,function(err,hash){
                 if (!err) {
@@ -270,7 +302,7 @@ class Contract extends React.Component{
         else
             serializedTx=raw;
 
-        return serializedTx
+        return {"serializedTx":serializedTx,"data":data}
     }
 
     broadCast(web3,serializedTx,callback){
@@ -403,6 +435,21 @@ class Contract extends React.Component{
                 sumbitTypeLabel="广播"
             }
         }
+        let r_dataHash=sumbitType==1?<div>
+            <div>
+                <label className="h2">数据HASH:</label>
+            </div>
+            <div>
+                <input type="text" className="input" value={this.state.dataHash} />
+            </div>
+            <input
+                type="submit"
+                className="button"
+                onClick={this.onSubmitConfirmTx.bind(this)}
+                value="发送给Tx管理合约"
+            />
+        </div>:""
+
         return (
             <div>
                 <div>
@@ -422,6 +469,7 @@ class Contract extends React.Component{
                 {r_sign}
                 {r_txHash}
                 {r_result}
+                {r_dataHash}
                 <div>
                     <input
                         type="submit"
@@ -492,8 +540,9 @@ class App extends React.Component{
 
         console.log(contractName+"Data")
         var contractAddress="0x1"
-        if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
-            contractAddress=address[this.getChainIdStr()][contractName+"Data"]
+        if(address[this.getChainIdStr()]!=undefined)
+            if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
+                ifcontractAddress=address[this.getChainIdStr()][contractName+"Data"]
 
         console.log(contractAddress)
 
@@ -518,7 +567,7 @@ class App extends React.Component{
                     {r_contracts}
                 </div>
                 <div>
-                    <Contract abl={contract} web3={web3} address={contractAddress} abi={abi}/>
+                    <Contract abl={contract} web3={web3} address={contractAddress} abi={abi} chainId={this.state.chainId}/>
                 </div>
             </div>
         );

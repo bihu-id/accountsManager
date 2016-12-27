@@ -28,7 +28,7 @@ contract('create token', function(accounts) {
                  console.log(tx);
                  console.log(web3.eth.getTransactionReceipt(tx));
                  //console.log(getTransactionReceipt(tx));
-                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
+                 console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
              });
              });
          });

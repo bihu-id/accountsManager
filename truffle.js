@@ -20,6 +20,6 @@ module.exports = {
   },
   strict:true,
   //chainId:1314
-  chainId:314
-  //chainId:316
+  //chainId:314
+  chainId:316
 };

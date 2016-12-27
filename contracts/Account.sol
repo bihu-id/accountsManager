@@ -93,7 +93,7 @@ contract AccountInterface is BaseLogic{
     /// @notice set pass a Tx
     /// @param _hash hash of Tx
     /// @return Whether this set was successful or not
-    function setPass(uint _hash,uint _other) returns (bool success);
+    function setPass(uint _hash) returns (bool success);
 
     /// @notice set account realname level
     /// @param _level realname level
@@ -218,7 +218,7 @@ contract Account is AccountInterface{
         uint  _hash,
         uint _tokenManager)
     {
-            //checkPass(sha3(msg.data));
+            checkPass(sha3(msg.data));
             //uint t_address =m_other;
 
             if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
@@ -237,7 +237,7 @@ contract Account is AccountInterface{
         iffreeze();
         if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
-        //checkPass(sha3(msg.data));
+        checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         //if(getApprove(t_owner)){
@@ -252,7 +252,7 @@ contract Account is AccountInterface{
         iffreeze();
         if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
-        //checkPass(sha3(msg.data));
+        checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -267,7 +267,7 @@ contract Account is AccountInterface{
         iffreeze();
         if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
         // it is a bad way now ,
-        //checkPass(sha3(msg.data));
+        checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -323,13 +323,12 @@ contract Account is AccountInterface{
 
     }
 
-    function setPass(uint _hash,uint _other) returns (bool success){
+    function setPass(uint _hash) returns (bool success){
 
         iffreeze();
         ifCoreTx();
         if(msg.sender!=m_data.m_coreTx) throw;
             m_waitPassTx=bytes32(_hash);
-            m_other=_other;
         return true;
 
     }

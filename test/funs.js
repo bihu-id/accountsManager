@@ -68,15 +68,15 @@ var funs=
             register: false
         },
         setPass: {
-            name: 'setPass(uint256,uint256)',
-            sig: 0xb487b66c,
+            name: 'setPass(uint256)',
+            sig: 0xf86cd7ad,
             resSize: 32,
             register: false
         },
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 704+32,
+            resSize: 736,
             register: true
         },
         transferToken: {
@@ -472,8 +472,8 @@ var funs=
             register: true
         },
         pass: {
-            name: 'pass(uint256,uint256,uint256)',
-            sig: 0x20309fcf,
+            name: 'pass(uint256,uint256)',
+            sig: 0x0573ea94,
             resSize: 32,
             register: true
         },
