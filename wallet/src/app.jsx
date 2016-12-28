@@ -122,10 +122,14 @@ class Contract extends React.Component{
     onSignAddressChange(e){
 
         this.setState({signAddress:e.target.value})
-        Object.keys(accountsKey).forEach(function(k){
-            if(accountsKey[k]["address"]==e.target.value)
-                this.setState({privateKey:accountsKey[k]["privateKey"]})
-        })
+        var keys=Object.keys(accountsKey)
+        for(var i=0;i<keys.length;i++)
+            if(accountsKey[keys[i]]["address"]==address)
+            {
+                this.setState({privateKey:accountsKey[keys[i]]["privateKey"]})
+                break;
+
+            }
 
     }
     onSelectPrivateKey(e) {
@@ -140,6 +144,7 @@ class Contract extends React.Component{
 
         var web3=this.props.web3
         var abi=abis["TxManager"]
+        var privateKey= new Buffer(this.state.privateKey.substring(2), 'hex');
         var fun="pass"
         var args=[this.state.contractAddress,this.state.datahash,""]
         var chainIdStr="id"+this.props.chainId
@@ -147,7 +152,8 @@ class Contract extends React.Component{
         var value=0
         var gas=5000000
 
-        this.broadCast(web3,raw(web3,abi,privateKey,fun,args,to,value,gas,0,null).serializedTx,function(err,hash){
+        var self=this
+        this.broadCast(web3,this.raw(web3,abi,privateKey,fun,args,to,value,gas,0,null).serializedTx,function(err,hash){
             if (!err) {
                 console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
                 self.setState({
@@ -155,8 +161,10 @@ class Contract extends React.Component{
                 })
             }
             setTimeout(function(){
+                var receipt=web3.eth.getTransactionReceipt(hash)
+                console.log(receipt)
                 self.setState({
-                    receipt:web3.eth.getTransactionReceipt(hash)
+                    receipt:receipt
                 })
             }, 5000)
         })
@@ -230,10 +238,11 @@ class Contract extends React.Component{
 
         if(sumbitType==1){
 
-            res=this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
+            var res=this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
+
             this.setState({
                 sign:res.serializedTx,
-                dataHash:ethUtil.sha3(res.data,null)
+                dataHash:ethUtil.sha3(res.data,null).toString('hex')
             })
 
         }
@@ -246,8 +255,11 @@ class Contract extends React.Component{
                     })
                 }
                 setTimeout(function(){
+
+                    var receipt=web3.eth.getTransactionReceipt(hash)
+                    console.log(receipt)
                     self.setState({
-                        receipt:web3.eth.getTransactionReceipt(hash)
+                        receipt:receipt
                     })
                 }, 5000)
             })
@@ -388,11 +400,11 @@ class Contract extends React.Component{
                     type="text"
                     className="input"
                     value={this.state.privateKey}
-                    onClick={this.onPrivateKeyChange.bind(this)}
+                    onChange={this.onPrivateKeyChange.bind(this)}
                 />
             </div>
             <div>
-                <label className="h2">公钥:</label>
+                <label className="h2">地址:</label>
 
             </div>
             <div>
@@ -400,7 +412,7 @@ class Contract extends React.Component{
                     type="text"
                     className="input"
                     value={this.state.signAddress?this.state.signAddress:""}
-                    onClick={this.onSignAddressChange.bind(this)}
+                    onChange={this.onSignAddressChange.bind(this)}
                 />
             </div>
         </div>
@@ -435,7 +447,7 @@ class Contract extends React.Component{
                 sumbitTypeLabel="广播"
             }
         }
-        let r_dataHash=sumbitType==1?<div>
+        let r_dataHash=sumbitType==2?<div>
             <div>
                 <label className="h2">数据HASH:</label>
             </div>
@@ -497,8 +509,9 @@ class App extends React.Component{
         super(props);
         this.state = {
             contract:"",
-            rpc:"http://139.199.7.43:8545",
-            chainId:314
+            //rpc:"http://139.199.7.43:8545",
+            rpc:"http://127.0.0.1:8545",
+            chainId:316
         };
     }
 
@@ -542,7 +555,7 @@ class App extends React.Component{
         var contractAddress="0x1"
         if(address[this.getChainIdStr()]!=undefined)
             if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
-                ifcontractAddress=address[this.getChainIdStr()][contractName+"Data"]
+                contractAddress=address[this.getChainIdStr()][contractName+"Data"]
 
         console.log(contractAddress)
 

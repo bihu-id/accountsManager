@@ -14,6 +14,7 @@ var resb=bs.map(function(a){
     return a.b
 
 })
+
 function getType(json,key){
     var res
     res=Object.keys(json).map(function(k){

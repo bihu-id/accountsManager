@@ -134,15 +134,15 @@ contract Token is TokenInterface {
     function Token()BaseData(uint(msg.sender)){}
 
     //check token if end
-    function ifEnd() internal {if(now < m_option.m_closingTime)          {Err(60040001);throw;}  }
+    function ifEnd() internal {if(now < m_option.m_closingTime)          {throwErr(60040001);  }
     //check if the operation is called from core
-    function ifCoreL() internal {if(msg.sender != m_option.m_core)       {Err(10000000);throw;}  }
+    function ifCoreL() internal {if(msg.sender != m_option.m_core)       {throwErr(10000000);  }
 
-    function ifIssuer()internal {if(msg.sender != m_option.m_issuer)     {Err(60040004);throw;}  }
+    function ifIssuer()internal {if(msg.sender != m_option.m_issuer)     {throwErr(60040004);  }
 
-    function ifFreeze()internal {if(m_freezeLists[msg.sender]==1)        {Err(60040002);throw;}  }
+    function ifFreeze()internal {if(m_freezeLists[msg.sender]==1)        {throwErr(60040002);  }
 
-    function normal()internal {if(m_option.m_status!=Status.normal)      {Err(60040003);throw;}  }
+    function normal()internal {if(m_option.m_status!=Status.normal)      {throwErr(60040003);  }
     //force transfer by core
 
     function init(
@@ -221,7 +221,7 @@ contract Token is TokenInterface {
 
         ifIssuer();
         //check overflow
-        if(m_option.m_maxSupply-m_option.m_currentSupply<_amounts)           {Err(60041001);throw;}
+        if(m_option.m_maxSupply-m_option.m_currentSupply<_amounts)           {throwErr(60041001);
         m_option.m_currentSupply=m_option.m_currentSupply+_amounts;
         m_balances[msg.sender]=m_balances[msg.sender]+_amounts;
         IssueMore(m_option.m_issuer,m_option.m_id,_amounts);
@@ -232,7 +232,7 @@ contract Token is TokenInterface {
     function destroy(uint _amounts)returns (bool success){
 
         ifIssuer();
-        if(m_balances[msg.sender]<_amounts)                         {Err(60041002);throw;}
+        if(m_balances[msg.sender]<_amounts)                         {throwErr(60041002);
         m_option.m_currentSupply-=_amounts;
         m_balances[msg.sender]=m_balances[msg.sender]-_amounts;
         Destroy(m_option.m_issuer,m_option.m_id,_amounts);

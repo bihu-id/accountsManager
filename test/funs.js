@@ -450,7 +450,7 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 32,
+            resSize: 32*6,
             register: false
         },
         getOptions: {

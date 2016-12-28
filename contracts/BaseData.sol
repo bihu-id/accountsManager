@@ -26,13 +26,13 @@ contract BaseLogic is BaseData{
     event Success(bool _ok);
 
     function checKey(uint _key)internal{
-        if(uint(msg.sender)!=_key)                                      {Err(10000000);throw; }
+        if(uint(msg.sender)!=_key)                                      { throwErr(10000000);  }
     }
 
     function beforeInit()internal{
 
-        if(inited==1)                               {Err(10000004);throw;}
-        if(uint(msg.sender)!=m_initor)              {Err(10000005);throw;}
+        if(inited==1)                               { throwErr(10000004); }
+        if(uint(msg.sender)!=m_initor)              { throwErr(10000005); }
 
     }
 

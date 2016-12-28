@@ -28,10 +28,11 @@ contract TxManager is SubManager {
         m_keys[3]=_owner;
 
         initOption(0,4);// keys amounts
-        initOption(1,5);// options amounts
+        initOption(1,3);// options amounts
         initOption(2,0);// fun amoutns
 
         uint[] memory t_res=new uint[](1);
+        t_res[0]=4;
         afterInit(t_res);
 
     }

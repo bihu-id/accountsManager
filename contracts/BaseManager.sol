@@ -233,7 +233,7 @@ contract BaseManager is BaseManagerInterface{
     function resetKey(uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[0]);
-        //if(uint(_role)>=uint(role.end))                                     {Err(11000001);throw;}
+        //if(uint(_role)>=uint(role.end))                                     {throwErr(11000001);}
 
         //map  m_operations_resetKey start from 1
         m_operationAmounts_resetKey++;
@@ -250,9 +250,9 @@ contract BaseManager is BaseManagerInterface{
     function resetKeyC(uint _no,uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[1]);
-        if(m_operations_resetKey[_no].m_role!=uint(_role))                   {Err(11000002);throw;}
-        if(m_operations_resetKey[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
-        if(m_operations_resetKey[_no].m_status!=OperationStatus.waitConfirm) {Err(11000004);throw;}
+        if(m_operations_resetKey[_no].m_role!=uint(_role))                   {throwErr(11000002);}
+        if(m_operations_resetKey[_no].m_key!=_keyAddress)                    {throwErr(11000003);}
+        if(m_operations_resetKey[_no].m_status!=OperationStatus.waitConfirm) {throwErr(11000004);}
         m_keys[_role]=uint(m_operations_resetKey[_no].m_key);
         m_operations_resetKey[_no].m_status=OperationStatus.confirm;
         del2(_no);
@@ -263,8 +263,8 @@ contract BaseManager is BaseManagerInterface{
     function resetKeyReject(uint _no,uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[1]);
-        if(m_operations_resetKey[_no].m_key!=_keyAddress)                    {Err(11000003);throw;}
-        if(m_operations_resetKey[_no].m_status!=OperationStatus.waitConfirm) {Err(11000004);throw;}
+        if(m_operations_resetKey[_no].m_key!=_keyAddress)                    {throwErr(11000003);}
+        if(m_operations_resetKey[_no].m_status!=OperationStatus.waitConfirm) {throwErr(11000004);}
         m_operations_resetKey[_no].m_status=OperationStatus.reject;
         del2(_no);
         ResetKeyReject(_no,_keyAddress,m_operations_resetKey[_no].m_role);
@@ -397,8 +397,8 @@ contract BaseManager is BaseManagerInterface{
 
         checKey(m_keys[m_operations[_no].m_confirmKeyNo]);
         //temp(m_operations[_no].m_destinationAddress,uint(_destination));
-        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {Err(11000006);throw; }
-        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {Err(11000004);throw; }
+        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {throwErr(11000006);}
+        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {throwErr(11000004);}
 
         uint ifLocal;
         uint r;
@@ -444,7 +444,7 @@ contract BaseManager is BaseManagerInterface{
 
             }
             if(r!=1)
-                {Err(12000001); throw;}
+                {throwErr(12000001); throw;}
         }
         del(_no);
 
@@ -461,9 +461,9 @@ contract BaseManager is BaseManagerInterface{
 
     function reject(uint _no,address _destination) returns (bool success) {
 
-        if(uint(msg.sender)!=m_keys[uint(m_operations[_no].m_type)])                {Err(10000001);throw;}
-        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {Err(11000006);throw;}
-        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {Err(11000005);throw;}
+        if(uint(msg.sender)!=m_keys[uint(m_operations[_no].m_type)])                {throwErr(10000001);}
+        if(m_operations[_no].m_destinationAddress!=uint(_destination))              {throwErr(11000006);}
+        if(m_operations[_no].m_status!=uint(OperationStatus.waitConfirm))           {throwErr(11000005);}
         m_operations[_no].m_status=uint(OperationStatus.reject);
         del(_no);
         return true;

@@ -2700,18 +2700,23 @@ var abis1=
                 "showLevel": 0
             },
             "getKeys": {
-                "label": "getKeys",
+                "label": "查询Key",
                 "inputs": {},
                 "outputs": {
                     "_keys": {
-                        "label": "_keys",
+                        "label": "Keys",
                         "type": "address[]",
-                        "select": {}
+                        "select": {
+                            "0": "合约升级",
+                            "1": "合约升级批准",
+                            "2": "重置Keys",
+                            "3": "重置Keys批准"
+                        }
                     }
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "getOptionsWait": {
                 "label": "getOptionsWait",

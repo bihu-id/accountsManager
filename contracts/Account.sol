@@ -180,11 +180,11 @@ contract Account is AccountInterface{
     */
 
     function Account()BaseData(uint(msg.sender)){}
-    function ifCore()internal{if (msg.sender != m_data.m_core)      {Err(60020000);  throw;} }
+    function ifCore()internal{if (msg.sender != m_data.m_core)      {throwErr(60020000); } }
 
-    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
+    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {throwErr(60020000); } }
 
-    function iffreeze()internal{if(m_data.m_status==status.freeze)  {Err(60020001);  throw;} }
+    function iffreeze()internal{if(m_data.m_status==status.freeze)  {throwErr(60020001); } }
 
     function init(
     address _owner,
@@ -195,7 +195,7 @@ contract Account is AccountInterface{
     address _coreTx)returns (bool success)
     {
         beforeInit();
-        if(_weight<_Tx_threshold)                           {Err(60021001);  throw;}
+        if(_weight<_Tx_threshold)                           {throwErr(60021001); }
         m_data.m_core=_core;
         m_data.m_coreTx=_coreTx;
         m_data.m_Tx_threshold=_Tx_threshold;
@@ -221,7 +221,7 @@ contract Account is AccountInterface{
             checkPass(sha3(msg.data));
             //uint t_address =m_other;
 
-            if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
+            if(!checkOwners(msg.sender))                                {throwErr(60021003); }
             assembly{
                 mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
                 calldatacopy(0x180,0x04,sub(calldatasize,0x04))
@@ -235,7 +235,7 @@ contract Account is AccountInterface{
         uint256 _amount)returns (bool success)
     {
         iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
+        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
         // it is a bad way now ,
         checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -250,7 +250,7 @@ contract Account is AccountInterface{
     function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
+        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
         // it is a bad way now ,
         checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -265,7 +265,7 @@ contract Account is AccountInterface{
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
+        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
         // it is a bad way now ,
         checkPass(sha3(msg.data));
         address []memory t_owner=new address[](1);
@@ -279,7 +279,7 @@ contract Account is AccountInterface{
 
     // check owner weight amount make sure tx can been permit
     function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
-        if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
+        if (_owners.length!=_weight.length)                 {throwErr(60021002); }
         uint t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
             t_Tx_threshold+=_weight[i];
@@ -292,7 +292,7 @@ contract Account is AccountInterface{
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success){
 
         ifCore();
-        if (!checkOwner(_Tx_threshold,_owners,_weight))     {Err(60021001);  throw;}
+        if (!checkOwner(_Tx_threshold,_owners,_weight))     {throwErr(60021001); }
         uint t_totalWeight=0;
         for(uint i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
@@ -354,7 +354,7 @@ contract Account is AccountInterface{
     function revokeCA() returns(bool success){
 
         ifCore();
-        if (m_data.m_level<100)                 {Err(60021003);  throw;}
+        if (m_data.m_level<100)                 {throwErr(60021003); }
         m_data.m_level-=100;
         m_data.m_CA=address(0);
         return true;
@@ -413,7 +413,7 @@ contract Account is AccountInterface{
 
     function checkPass(bytes32 _hash)internal {
 
-        if (m_waitPassTx!=_hash)                    {Err(60020002);  throw;}
+        if (m_waitPassTx!=_hash)                    {throwErr(60020002); }
 
     }
 }

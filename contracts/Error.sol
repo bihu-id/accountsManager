@@ -1,6 +1,12 @@
-contract Error{
+contract BaseEvent{
 
-    event Err(uint _no);
+    event Alert(uint _no);
+    function throwErr(uint _no){
+
+        Err(uint _no);
+        //AnduiChain would keep event when throw ,and also reback state same as ethereum
+        throw;
+    }
     //0:权限错误
     //1:输入格式错误
     //2:调用其他合约返回失败
@@ -74,5 +80,9 @@ contract Error{
     //60050001:  caller不是 创建账户 地址
     //60050002:  caller不是Xindi账户
 
+    //66666666:  成功
+    function success(){
+        Alert(66666666)
+    }
 
 }
