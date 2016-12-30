@@ -51,7 +51,7 @@ contract BaseOption is BaseLogic{
     function confirm(){
 
         onlyKey(1);
-        if(!m_haveWait)                                 {throwErr(60000002);    }
+        if(!m_haveWait)                                 {throwErrEvent(60000002);    }
         m_leg=changeLeg(m_leg);
         m_haveWait=false;
 
@@ -59,7 +59,7 @@ contract BaseOption is BaseLogic{
 
     function onlyKey(uint _no)internal {
 
-        if (uint(msg.sender) != m_keys[_no])            {throwErr(10000002);    }
+        if (uint(msg.sender) != m_keys[_no])            {throwErrEvent(10000002);    }
 
     }
 

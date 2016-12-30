@@ -40,7 +40,9 @@ contract('create token', function(accounts) {
                      else{
                          console.log("hash:",hash)
                          console.log("hash:",web3.eth.getTransaction(hash))
-                         console.log(web3.eth.getTransactionReceipt(hash));
+                         web3.eth.getTransactionReceipt(hash).then(function(res){
+                             console.log(res)
+                         })
                          //console.log(parseInt(web3.eth.getTransactionReceipt(hash).logs[0].data,16));
                          return transaction.broadCast(web3,resCreateToken.serializedTx,function(err,hash){
                              if(err)

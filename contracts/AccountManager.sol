@@ -56,7 +56,7 @@ contract AccountManager is SubManager {
         Account t_account=Account(t_accountData);
         // check the gas need.
         if(!t_account.init.gas(msg.gas)(_owner,_weight,_threshold,_threshold,address(m_keys[0]),address(getOption(4))))
-            {Err(60022001);throw;}
+            {throwErrEvent(60022001);}
         m_accounts[++m_accountAmounts]=t_accountData;
         m_addresses[t_accountData]=m_accountAmounts;
         AccountRecode(m_accountAmounts,m_accounts[m_accountAmounts]);

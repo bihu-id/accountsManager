@@ -1,9 +1,9 @@
 contract BaseEvent{
 
     event Alert(uint _no);
-    function throwErr(uint _no){
+    function throwErrEvent(uint _no)internal{
 
-        Err(uint _no);
+        Alert(_no);
         //AnduiChain would keep event when throw ,and also reback state same as ethereum
         throw;
     }
@@ -41,10 +41,13 @@ contract BaseEvent{
     //60020000:  合约修改权限不足
     //60020001:  账户冻结状态
     //60020002:  交易还没被TxManager批准
+    //60020003:  caller不是txManager账户
+
     //60021001:  账户权重输入错误，权重小于阀值
     //60021002:  账户拥有者数和权重数不符
     //60021003:  尝试取消一个非CA用户的CA权限
     //60022001:  初始化账户返回错误
+
 
     //资产管理合约错误,合约编号:003
     //60030001:  caller 不是accountManager管理的账户
@@ -80,9 +83,10 @@ contract BaseEvent{
     //60050001:  caller不是 创建账户 地址
     //60050002:  caller不是Xindi账户
 
+
     //66666666:  成功
-    function success(){
-        Alert(66666666)
+    function successEvent() internal {
+        Alert(66666666);
     }
 
 }

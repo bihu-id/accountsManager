@@ -1,6 +1,6 @@
-import "Error.sol";
+import "BaseEvent.sol";
 
-contract LogicProxy is Error{
+contract LogicProxy is BaseEvent{
 
     struct FunDetail{
         uint m_logic;
@@ -44,7 +44,7 @@ contract LogicProxy is Error{
     function confirm(uint _type)returns (bool success){
 
         onlyKey(_type*2+1);
-        if(!m_haveWait[_type])              {throwErr(60000002);    }
+        if(!m_haveWait[_type])              {throwErrEvent(60000002);    }
         m_leg[_type]=(m_leg[_type]+1)%2;
         m_haveWait[_type]=false;
         return true;
@@ -64,7 +64,7 @@ contract LogicProxy is Error{
 
     function checKey(uint _key)internal{
 
-        if (uint(msg.sender) != _key)       {throwErr(10000002);    }
+        if (uint(msg.sender) != _key)       {throwErrEvent(10000002);    }
 
     }
 

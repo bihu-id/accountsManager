@@ -170,7 +170,7 @@ contract Account is AccountInterface{
     mapping(uint=>bool) m_signsPass;
 
     // this is a temporary methods , only support one wait pass tx;
-    bytes32   m_waitPassTx;
+    uint   m_waitPassTx;
 
     uint      m_other;
     /*
@@ -180,11 +180,11 @@ contract Account is AccountInterface{
     */
 
     function Account()BaseData(uint(msg.sender)){}
-    function ifCore()internal{if (msg.sender != m_data.m_core)      {throwErr(60020000); } }
+    function ifCore()internal{if (msg.sender != m_data.m_core)      {throwErrEvent(60020000); } }
 
-    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {throwErr(60020000); } }
+    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {throwErrEvent(60020000); } }
 
-    function iffreeze()internal{if(m_data.m_status==status.freeze)  {throwErr(60020001); } }
+    function iffreeze()internal{if(m_data.m_status==status.freeze)  {throwErrEvent(60020001); } }
 
     function init(
     address _owner,
@@ -195,7 +195,7 @@ contract Account is AccountInterface{
     address _coreTx)returns (bool success)
     {
         beforeInit();
-        if(_weight<_Tx_threshold)                           {throwErr(60021001); }
+        if(_weight<_Tx_threshold)                           {throwErrEvent(60021001); }
         m_data.m_core=_core;
         m_data.m_coreTx=_coreTx;
         m_data.m_Tx_threshold=_Tx_threshold;
@@ -218,15 +218,16 @@ contract Account is AccountInterface{
         uint  _hash,
         uint _tokenManager)
     {
-            checkPass(sha3(msg.data));
-            //uint t_address =m_other;
+        checkPass();
+        //uint t_address =m_other;
 
-            if(!checkOwners(msg.sender))                                {throwErr(60021003); }
-            assembly{
-                mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
-                calldatacopy(0x180,0x04,sub(calldatasize,0x04))
-                jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
-            }
+        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
+        assembly{
+            mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
+            calldatacopy(0x180,0x04,sub(calldatasize,0x04))
+            jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
+        }
+        successEvent();
     }
 
     function transferToken(
@@ -235,9 +236,9 @@ contract Account is AccountInterface{
         uint256 _amount)returns (bool success)
     {
         iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
+        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        checkPass();
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         //if(getApprove(t_owner)){
@@ -250,9 +251,9 @@ contract Account is AccountInterface{
     function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
+        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        checkPass();
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -265,9 +266,9 @@ contract Account is AccountInterface{
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
         iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErr(60021003); }
+        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
         // it is a bad way now ,
-        checkPass(sha3(msg.data));
+        checkPass();
         address []memory t_owner=new address[](1);
         t_owner[0]=msg.sender;
         if(getApprove(t_owner)){
@@ -279,7 +280,7 @@ contract Account is AccountInterface{
 
     // check owner weight amount make sure tx can been permit
     function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
-        if (_owners.length!=_weight.length)                 {throwErr(60021002); }
+        if (_owners.length!=_weight.length)                 {throwErrEvent(60021002); }
         uint t_Tx_threshold=0;
         for(uint i=0;i<_owners.length;i++)
             t_Tx_threshold+=_weight[i];
@@ -292,7 +293,7 @@ contract Account is AccountInterface{
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success){
 
         ifCore();
-        if (!checkOwner(_Tx_threshold,_owners,_weight))     {throwErr(60021001); }
+        if (!checkOwner(_Tx_threshold,_owners,_weight))     {throwErrEvent(60021001); }
         uint t_totalWeight=0;
         for(uint i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
@@ -327,8 +328,10 @@ contract Account is AccountInterface{
 
         iffreeze();
         ifCoreTx();
-        if(msg.sender!=m_data.m_coreTx) throw;
-            m_waitPassTx=bytes32(_hash);
+        if(msg.sender!=m_data.m_coreTx) {throwErrEvent(60021003); }
+            m_waitPassTx=_hash;
+
+        successEvent();
         return true;
 
     }
@@ -354,7 +357,7 @@ contract Account is AccountInterface{
     function revokeCA() returns(bool success){
 
         ifCore();
-        if (m_data.m_level<100)                 {throwErr(60021003); }
+        if (m_data.m_level<100)                 {throwErrEvent(60021003); }
         m_data.m_level-=100;
         m_data.m_CA=address(0);
         return true;
@@ -411,9 +414,17 @@ contract Account is AccountInterface{
 
     }
 
-    function checkPass(bytes32 _hash)internal {
+    event Pass(uint ,uint);
+    function checkPass()internal {
 
-        if (m_waitPassTx!=_hash)                    {throwErr(60020002); }
+        uint t_hash=uint(sha3(msg.data));
+        if (m_waitPassTx!=t_hash)
+        {
+
+            Pass(m_waitPassTx,t_hash);
+            throwErrEvent(60020002);
+
+        }
 
     }
 }

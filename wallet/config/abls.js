@@ -511,20 +511,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -596,10 +584,10 @@ var abis1=
                         "label": "Keys",
                         "type": "address[]",
                         "select": {
-                            "0": "合约升级",
-                            "1": "合约升级批准",
-                            "2": "重置Keys",
-                            "3": "重置Keys批准"
+                            "0": "核心合约地址",
+                            "1": "重置参数Key",
+                            "2": "重置参数Key批准",
+                            "3": "拥有者"
                         }
                     }
                 },
@@ -871,20 +859,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -1570,20 +1546,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -2623,20 +2587,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -2707,10 +2659,10 @@ var abis1=
                         "label": "Keys",
                         "type": "address[]",
                         "select": {
-                            "0": "合约升级",
-                            "1": "合约升级批准",
-                            "2": "重置Keys",
-                            "3": "重置Keys批准"
+                            "0": "核心合约地址",
+                            "1": "重置参数Key",
+                            "2": "重置参数Key批准",
+                            "3": "拥有者"
                         }
                     }
                 },
@@ -2877,20 +2829,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -3840,20 +3780,8 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
-            "Success": {
-                "label": "Success",
-                "inputs": {
-                    "_ok": {
-                        "label": "_ok",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Err": {
-                "label": "Err",
+            "Alert": {
+                "label": "Alert",
                 "inputs": {
                     "_no": {
                         "label": "_no",

@@ -463,23 +463,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -796,23 +784,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -1434,23 +1410,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -2395,23 +2359,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -2658,23 +2610,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -3465,23 +3405,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ]

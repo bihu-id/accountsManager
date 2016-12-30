@@ -20,6 +20,7 @@ module.exports = {
   },
   strict:true,
   //chainId:1314
-  //chainId:314
-  chainId:316
+  //chainId:314 //test chain
+  //chainId:316 //local test chain on branch temp
+  chainId:317 //local test chain on branch watch
 };

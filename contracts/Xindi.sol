@@ -163,7 +163,7 @@ contract Xindi is XindiInterface{
     function resetAccountOwner (address _account,uint _Threshold,address[] _owners,uint[] _weight)returns (bool success) {
 
         checKey(m_keys[uint(role.resetAccountOwnerRole)]);
-        if (_owners.length!=_weight.length)                                 {throwErr(60011001);
+        if (_owners.length!=_weight.length)                                 {throwErrEvent(60011001);}
         // the follow code basely equil using code  btyes m_data=msg.data
             uint[] memory t_data=new uint[](2+2*_owners.length);
             t_data[0]=m_funs[uint(OperationType.resetAccountOwnerType)];
@@ -198,7 +198,7 @@ contract Xindi is XindiInterface{
     function setIdLevel (address _account,uint _level)returns (bool success) {
 
         checKey(m_keys[uint(role.realNameRole)]);
-        if (_level>=100)                                                    {throwErr(60011002);
+        if (_level>=100)                                                    {throwErrEvent(60011002);}
         uint[] memory t_data=new uint[](2);
         t_data[0]=m_funs[uint(OperationType.setIdLevelType)];
         t_data[1]=_level;

@@ -6,12 +6,13 @@ var accountsKey=require("./../accountsKeys")
 var ethUtil = require('ethereumjs-util');
 
 var BigNumber=require("BigNumber")
+
+var coder = require('web3/lib/solidity/coder');
 module.exports = {
 
-    transactionRaw:function(web3,contract,fun,args,key,gas){
+    transactionRaw:function(web3,abi,to,fun,args,key,gas){
 
-        var abi=contract.abi
-        var to=contract.address
+        var abi=abi
         var value=0
         var nonce=0
         var data=null
@@ -24,7 +25,12 @@ module.exports = {
         return this.raw(web3, abi, Buffer(privateKey.substring(2),'hex'), fun, args, to, value, gas, nonce, data)
 
     },
+    transaction:function(web3,abi,to,fun,args,key,gas,callback){
 
+        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas)
+        this.broadCast(web3,res.serializedTx,callback)
+
+    },
     create:function(web3,contract,fun,args,priKey,gas,callback){
 
         /*var abi=contract.abi
@@ -45,7 +51,7 @@ module.exports = {
         if(data==null)
             data = abi ? '0x' + this.dataFromAbis(abi, fun, args) : '0x0'
         //var gas="4000000"
-        console.log(data)
+        //console.log(data)
         var int_nonce
         if (nonce == 0)
             var int_nonce = web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
@@ -82,6 +88,7 @@ module.exports = {
 
         })
     },
+
     getPrivateKey:function(address,accountsKey){
 
         var keys=Object.keys(accountsKey)
@@ -93,12 +100,61 @@ module.exports = {
             }
 
     },
+
     sha3:function(data){
         return ethUtil.sha3(data,null).toString('hex')
     },
+
     dataFromAbis:function (abi,fun,args){
         var types = ethlightjs.txutils._getTypesFromAbi(abi, fun);
         return ethlightjs.txutils._encodeFunctionTxData(fun, types,args);
+    },
+
+    call:function(web3,abi,to,fun,args){
+
+        var data='0x'+this.dataFromAbis(abi, fun, args)
+        var obj={
+            "to":to,
+            "data":data
+        }
+        var bytes=web3.eth.call(obj)
+
+        var types=this.getOutputTypes(abi,fun)
+        bytes = bytes.length >= 2 ? bytes.slice(2) : bytes;
+
+        //console.log(types,bytes)
+        return coder.decodeParams(types,bytes)
+
+    },
+
+    getInputTypes:function(abi,fun){
+
+        var inputs=getFun(abi,fun).inputs
+
+        var res=inputs.map(function(i){
+            return i.type
+        })
+        return res
+
+    },
+
+    getOutputTypes:function(abi,fun){
+
+        var outputs=this.getFun(abi,fun).outputs
+
+        //console.log(outputs)
+        var res =outputs.map(function(i){
+            return i.type
+        })
+        return res
+
+    },
+
+    getFun:function(abi,fun){
+        for(var i=0;i<abi.length;i++)
+            if(abi[i].name==fun)
+                return abi[i]
     }
+
     
 }

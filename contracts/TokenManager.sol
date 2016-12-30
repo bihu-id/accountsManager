@@ -237,29 +237,29 @@ contract TokenManager is TokenManagerInterface{
 
         // just check the sender if the account manager by accountManager ,other check is done by server
         AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
-        if(am.getAccountNo(msg.sender)==0)                      {throwErr(60030001);     }
-        //if(tokenAble()==0)                                    {throwErr(60030001);     }
+        if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
+        //if(tokenAble()==0)                                    {throwErrEvent(60030001);     }
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
-                                                                {throwErr(60031001);     }
+                                                                {throwErrEvent(60031001);     }
         // id used
-        //if(m_tokenSummarys[_id].m_id!=0)                      {throwErr(60031002);     }
+        //if(m_tokenSummarys[_id].m_id!=0)                      {throwErrEvent(60031002);     }
         // symbol is used
-        if( m_symbols[_symbol]>0)                               {throwErr(60031003);     }
+        if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
-        if(_precision>8)                                        {throwErr(60031004);     }
+        if(_precision>8)                                        {throwErrEvent(60031004);     }
         // consider use 64 b VM for efficiency reason
-        if(_maxSupply*(10**_precision)>=uint64(-1))             {throwErr(60031005);     }
-        if(_currentSupply>_maxSupply)                           {throwErr(60031006);     }
+        if(_maxSupply*(10**_precision)>=uint64(-1))             {throwErrEvent(60031005);     }
+        if(_currentSupply>_maxSupply)                           {throwErrEvent(60031006);     }
 
         uint t_id=m_amounts+1;
         m_amounts=t_id;
         Data d = new Data(m_options[uint(Option.tokenProxy)]);
-        if(d==address(0x0))                                     {throwErr(60032001);     }
+        if(d==address(0x0))                                     {throwErrEvent(60032001);     }
         CreateTokenData(d);
         Token t=Token(d);
         if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
-                                                                {throwErr(60032002);     }
+                                                                {throwErrEvent(60032002);     }
         m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
 
         m_symbols[_symbol]=t_id;
@@ -285,7 +285,7 @@ contract TokenManager is TokenManagerInterface{
 
     function setTokenAble(address _account,uint _tokenAmounts){
 
-        if(msg.sender!=m_xindi)                                 {throwErr(60030002);  }
+        if(msg.sender!=m_xindi)                                 {throwErrEvent(60030002);  }
         // 0~31 : the account have created how many tokens
         //32~63 :how many tokens this account can create
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
