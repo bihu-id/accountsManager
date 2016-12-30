@@ -1,6 +1,6 @@
 import "BaseData.sol";
 
-contract BaseManagerInterface is BaseLogic {
+contract SimpleManagerInterface is BaseLogic {
 
     enum OperationStatus{
 
@@ -73,7 +73,6 @@ contract BaseManagerInterface is BaseLogic {
         OperationStatus     m_status;                   //操作的状态 OperationStatus
 
     }
-
     /// @notice reset all address by core of this contract; 重置合约的KEY
     /// @param _keyAddress the new address of roler;        新的地址
     /// @param _role what roller to been reset;             重置哪个KEY
@@ -109,49 +108,13 @@ contract BaseManagerInterface is BaseLogic {
     /// @return _status status of this operation                        操作的状态 0:等待批准,1:已经批准,2:已经拒绝
     function getOperation_resetKey(uint _no)constant returns(uint r_no,uint _role,address _key,OperationStatus _status);
 
-    /// @notice confirm operation;                                      批准一个操作
-    /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
-    /// @param _no operation _no;                                       操作编号
-    function confirm(uint _no,address _destination) returns (bool success) ;
-
-    /// @notice reject operation;                                       拒绝一个操作
-    /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
-    /// @param _no  operation no;                                       操作编号
-    function reject(uint _no,address _destination) returns (bool success) ;
-
     /// @notice get opertaion amount include total and wait;                            获得等待批准的操作总数
     /// @return _totalAmounts total operation amounts include wait,confirm and reject;  所有操作总数
     /// @return _waitAmounts wait confirm operation amount                              等待批准的操作的总数
 
-    /// @notice 设置一个选项
-    /// @param _no 选项的编号:派生合约的enum Option{}
-    /// @param _value 选项的值
-    function setOption(uint _no,uint _value )returns (bool success) ;
-
-    /// @notice 设置一个函数的Sig
-    /// @param _no 选项的编号:派生合约的enum Fun{}
-    /// @param _sig 函数的Sig
-    function setFun(uint _no,uint _sig)returns (bool success) ;
-
-    function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts);
-
-    /// @notice get operation detail;                                   获得操作的详情
-    /// @param _no operation no;                                        操作编号
-    /// @return r_no:编号
-    /// @return _account:操作地址
-    /// @return _type:类型
-    /// @return _confirmKey 批准key 地址
-    /// @return _status:状态
-    /// @return _data:数据
-    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,address _confirmKey,OperationStatus _status,uint[] _data);
-
     /// @notice 获得本合约的所有Key
     /// @return _keys 所有Key的数组
     function getKeys()constant returns(address[] _keys);
-
-    /// @notice 获得本合约的所有Option
-    /// @return _options 所有option值的数组
-    function getOptions()constant returns(uint[] _options);
 
     /// @notice 重置本合约的Key
     /// @param _no 重置操作的编号
@@ -171,27 +134,9 @@ contract BaseManagerInterface is BaseLogic {
     /// @param _role 重置哪个角色
     event ResetKeyReject(uint _no,address _keyAddress,uint _role);
 
-    /// @notice 批准一个操作
-    /// @param _no 批准操作的编号
-    event ConfirmOperation(uint _no);
-
-    /// @notice 拒绝一个操作
-    /// @param _no 拒绝操作的编号
-    event Reject(uint _no);
-
-    /// @notice 设置一个选项
-    /// @param _no 选项的编号:派生合约的enum Option{}
-    /// @param _value 选项的值
-    event SetOption(uint _no,uint _value );
-
-    /// @notice 设置一个函数的Sig
-    /// @param _no 选项的编号:派生合约的enum Fun{}
-    /// @param _sig 函数的Sig
-    event SetFun(uint _no,uint _sig);
-
 }
 
-contract BaseManager is BaseManagerInterface{
+contract SimpleManager is SimpleManagerInterface{
 
     //0:core
     //1:coreC
@@ -233,7 +178,7 @@ contract BaseManager is BaseManagerInterface{
     function resetKey(uint _role,address _keyAddress)returns (bool success) {
 
         checKey(m_keys[0]);
-        //if(uint(_role)>=uint(role.end))                                     {throwErrEvent(11000001);}
+        //if(uint(_role)>=uint(role.end))                                     {throwErr(11000001);}
 
         //map  m_operations_resetKey start from 1
         m_operationAmounts_resetKey++;
@@ -277,6 +222,153 @@ contract BaseManager is BaseManagerInterface{
         return  (m_operationAmounts_resetKey,m_waitConfirmAmounts_resetKey);
 
     }
+
+    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [] _nos){
+
+        // get max 100 per request
+        uint t_end;
+        uint t_max;
+
+        uint t_limit=_limit;
+        if(_limit>20)
+            t_limit=20;
+        if (_type==1)
+            t_max=m_waitConfirmAmounts;
+        if(_type==2)
+            t_max=m_waitConfirmAmounts_resetKey;
+
+        if((_start+t_limit-1)<=t_max)
+            t_end=_start+t_limit-1;
+        else
+            t_end=t_max;
+
+        uint[] memory res=new uint[](t_end-_start+1);
+
+        // notice operation no start from 1 ,becasue  0 is default return when null
+        for(uint i=_start;i<=t_end;i++){
+            if (_type==1)
+                res[i-_start]=m_waitConfirms[i];
+
+            if (_type==2)
+                res[i-_start]=m_waitConfirms_resetKey[i];
+        }
+
+        return res;
+
+    }
+
+    function getOperation_resetKey(uint _no)constant returns(uint r_no,uint _role,address _key,OperationStatus _status){
+
+        r_no=_no;
+        _role=m_operations_resetKey[_no].m_role;
+        _key=m_operations_resetKey[_no].m_key;
+        _status=m_operations_resetKey[_no].m_status;
+        return;
+
+    }
+
+    function del2(uint _no)internal{
+
+        bool t_start=false;
+        for (uint i=1;i<=m_waitConfirmAmounts_resetKey;i++){
+            if(m_waitConfirms_resetKey[i]==_no){
+                t_start=true;
+                i++;
+            }
+            if(t_start)
+                m_waitConfirms_resetKey[i-1]=m_waitConfirms_resetKey[i];
+        }
+        if(t_start)
+            m_waitConfirmAmounts_resetKey--;
+
+    }
+
+
+    function getKeys()constant returns(address[] _keys){
+
+        uint t_size=m_options[0];
+        address[] memory res= new address[](t_size);
+
+        for(uint i=0;i<t_size;i++)
+            res[i]=address(m_keys[i]);
+
+        return (res);
+
+    }
+
+    function getOptions()constant returns(uint[] _options){
+
+        uint t_size=m_options[1];
+        uint[] memory res= new uint[](t_size);
+
+        for(uint i=0;i<t_size;i++)
+            res[i]=uint(m_options[i]);
+
+        return (res);
+
+    }
+
+}
+
+contract BaseManagerInterface is SimpleManager {
+
+    /// @notice confirm operation;                                      批准一个操作
+    /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
+    /// @param _no operation _no;                                       操作编号
+    function confirm(uint _no,address _destination) returns (bool success) ;
+
+    /// @notice reject operation;                                       拒绝一个操作
+    /// @param _destination contract address operation carry on;        操作的用户合约账号地址和_no是一个双重验证作用
+    /// @param _no  operation no;                                       操作编号
+    function reject(uint _no,address _destination) returns (bool success) ;
+
+    /// @notice get opertaion amount include total and wait;                            获得等待批准的操作总数
+    /// @return _totalAmounts total operation amounts include wait,confirm and reject;  所有操作总数
+    /// @return _waitAmounts wait confirm operation amount                              等待批准的操作的总数
+
+    /// @notice 设置一个选项
+    /// @param _keyNo 选项的编号:派生合约的enum Option{}
+    /// @param _value 选项的值
+    function setOption(uint _keyNo,uint _value)returns (bool success) ;
+
+    /// @notice 设置一个函数的Sig
+    /// @param _no 选项的编号:派生合约的enum Fun{}
+    /// @param _sig 函数的Sig
+    function setFun(uint _no,uint _sig)returns (bool success) ;
+
+    function getOperationAmounts()constant returns(uint _totalAmounts,uint _waitAmounts);
+
+    /// @notice get operation detail;                                   获得操作的详情
+    /// @param _no operation no;                                        操作编号
+    /// @return r_no:编号
+    /// @return _account:操作地址
+    /// @return _type:类型
+    /// @return _confirmKey 批准key 地址
+    /// @return _status:状态
+    /// @return _data:数据
+    function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,address _confirmKey,OperationStatus _status,uint[] _data);
+
+    /// @notice 批准一个操作
+    /// @param _no 批准操作的编号
+    event ConfirmOperation(uint _no);
+
+    /// @notice 拒绝一个操作
+    /// @param _no 拒绝操作的编号
+    event Reject(uint _no);
+
+    /// @notice 设置一个选项
+    /// @param _no 选项的编号:派生合约的enum Option{}
+    /// @param _value 选项的值
+    event SetOption(uint _no,uint _value );
+
+    /// @notice 设置一个函数的Sig
+    /// @param _no 选项的编号:派生合约的enum Fun{}
+    /// @param _sig 函数的Sig
+    event SetFun(uint _no,uint _sig);
+
+}
+
+contract BaseManager is BaseManagerInterface{
 
     function setOption(uint _keyNo,uint _value)returns (bool success) {
 
@@ -326,40 +418,6 @@ contract BaseManager is BaseManagerInterface{
     function setSubKey(address _subContract,uint _role,address _key)returns (bool success) {}
 
     function setSubKeyC(address _subContract ,uint[] _data)internal{}
-
-    function getWaitOperationNos(uint _start,uint _limit,uint _type)constant returns(uint [] _nos){
-
-        // get max 100 per request
-        uint t_end;
-        uint t_max;
-
-        uint t_limit=_limit;
-        if(_limit>20)
-            t_limit=20;
-        if (_type==1)
-            t_max=m_waitConfirmAmounts;
-        if(_type==2)
-            t_max=m_waitConfirmAmounts_resetKey;
-
-        if((_start+t_limit-1)<=t_max)
-            t_end=_start+t_limit-1;
-        else
-            t_end=t_max;
-
-        uint[] memory res=new uint[](t_end-_start+1);
-
-        // notice operation no start from 1 ,becasue  0 is default return when null
-        for(uint i=_start;i<=t_end;i++){
-            if (_type==1)
-                res[i-_start]=m_waitConfirms[i];
-
-            if (_type==2)
-                res[i-_start]=m_waitConfirms_resetKey[i];
-        }
-
-        return res;
-
-    }
 
     function getOperation(uint _no)constant returns(uint r_no,address _account,uint _type,address _confirmKey,OperationStatus _status,uint[] _data){
 
@@ -492,21 +550,6 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function del2(uint _no)internal{
-
-        bool t_start=false;
-        for (uint i=1;i<=m_waitConfirmAmounts_resetKey;i++){
-            if(m_waitConfirms_resetKey[i]==_no){
-                t_start=true;
-                i++;
-            }
-            if(t_start)
-                m_waitConfirms_resetKey[i-1]=m_waitConfirms_resetKey[i];
-        }
-        if(t_start)
-            m_waitConfirmAmounts_resetKey--;
-
-    }
 
     function addOperation(address _destinationAddress,uint _type,uint _confirmKeyNo,uint[] _data)internal{
 
@@ -516,17 +559,6 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
-    function getKeys()constant returns(address[] _keys){
-
-        uint t_size=m_options[0];
-        address[] memory res= new address[](t_size);
-
-        for(uint i=0;i<t_size;i++)
-            res[i]=address(m_keys[i]);
-
-        return (res);
-
-    }
 
     function getOptions()constant returns(uint[] _options){
 
@@ -539,7 +571,5 @@ contract BaseManager is BaseManagerInterface{
         return (res);
 
     }
-
-    function resetCore(uint _newCore){}
 
 }
