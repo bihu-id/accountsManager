@@ -13,16 +13,16 @@ contract LogicProxy is BaseEvent{
         m_A,   //contract update key                0
         m_AC,  //contract update confirm key        1
         m_T,   //reset keys key                     2
-        m_TC  //reset keys confirm key              3
+        m_TC   //reset keys confirm key             3
 
     }
 
     //Type  0:Fun,1:key
 
-    //Type=>(Keys=>address)
+    //Leg=>(Keys=>address)
     mapping(uint=>mapping(uint=>uint))    m_key;
 
-    //Type=>(funSig=>FunDetail)
+    //Leg=>(funSig=>FunDetail)
     mapping (uint=>mapping(uint =>FunDetail))  m_funs;
 
     //Type=>bool
@@ -35,7 +35,7 @@ contract LogicProxy is BaseEvent{
 
     function requestConfirm(uint _type)returns (bool success){
 
-        onlyKey(_type*2);
+        onlyKey(_type*2);//fun:m_A,key:m_T
         m_haveWait[_type]=true;
         return true;
 
@@ -43,7 +43,7 @@ contract LogicProxy is BaseEvent{
 
     function confirm(uint _type)returns (bool success){
 
-        onlyKey(_type*2+1);
+        onlyKey(_type*2+1);//fun:m_AC,key:m_TC
         if(!m_haveWait[_type])              {throwErrEvent(60000002);    }
         m_leg[_type]=(m_leg[_type]+1)%2;
         m_haveWait[_type]=false;
@@ -53,12 +53,13 @@ contract LogicProxy is BaseEvent{
 
     function LogicProxy(){
 
-        m_key[0][0]=uint(msg.sender);    //
+        //init leg is left
+        m_key[0][0]=uint(msg.sender);    //m_key[leg][m_A]=uint(msg.sender)
         m_key[0][1]=uint(msg.sender);
         m_key[0][2]=uint(msg.sender);
         m_key[0][3]=uint(msg.sender);
-        m_leg[0]=0;
-        m_leg[1]=0;
+        m_leg[0]=0;     //m_leg[fun]=left
+        m_leg[1]=0;     //m_leg[key]=left
 
     }
 
@@ -68,6 +69,7 @@ contract LogicProxy is BaseEvent{
 
     }
 
+    //internal interface to check key
     function onlyKey(uint _no)internal {
 
         checKey(m_key[m_leg[1]][_no]);
@@ -78,35 +80,38 @@ contract LogicProxy is BaseEvent{
 
     function resetKey(uint _no,uint _newKey)returns (bool success){
 
-        onlyKey(2);
+        onlyKey(2);//m_T
         uint t_leg=m_leg[1];
         uint t_legc=changeLeg(t_leg);
 
+        //copy keys of  current leg key to next leg
         m_key[t_legc][0]=m_key[t_leg][0];
         m_key[t_legc][1]=m_key[t_leg][1];
         m_key[t_legc][2]=m_key[t_leg][2];
         m_key[t_legc][3]=m_key[t_leg][3];
+        //set key
         m_key[t_legc][_no]=_newKey;
         return true;
 
     }
 
+    // do not copy funs of current leg to next leg, so all functions should update even update one function.
     function setfun(uint _logic,uint _fun,uint _resSize )returns (bool success){
 
-        onlyKey(0);
+        onlyKey(0);//m_A
         m_funs[changeLeg(m_leg[0])][_fun]=FunDetail(_logic,_resSize);
         SetFun(_fun,_resSize);
         return true;
 
     }
 
-    // do not change the function name and parameter ,because the sig of this function was hard wirte in Data contract,
     function get_(uint _leg,uint _fun)internal returns(uint,uint){
 
         return (m_funs[_leg][_fun].m_logic,m_funs[_leg][_fun].m_resSize);
 
     }
 
+    // do not change the function name and parameter ,because the sig of this function was hard wirte in Data contract,
     function get(uint _fun)constant returns(uint _address,uint _returnSize){
 
         return get_(m_leg[0],_fun);
@@ -119,7 +124,7 @@ contract LogicProxy is BaseEvent{
 
     }
 
-    function getkey(uint _leg)internal returns (address A,address AC,address T,address TC){
+    function getkeys_(uint _leg)internal returns (address A,address AC,address T,address TC){
 
         //int t_leg=t_leg;
         return(
@@ -131,13 +136,13 @@ contract LogicProxy is BaseEvent{
     }
     function getKeys()constant returns(address A,address AC,address T,address TC){
 
-        return getkey(m_leg[1]);
+        return getkeys_(m_leg[1]);
 
     }
 
     function getWaitKeys()constant returns(address A,address AC,address T,address TC){
 
-        return getkey(changeLeg(m_leg[1]));
+        return getkeys_(changeLeg(m_leg[1]));
 
     }
 }
