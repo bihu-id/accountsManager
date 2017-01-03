@@ -73,6 +73,31 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
+            "issueMoreToken": {
+                "label": "issueMoreToken",
+                "inputs": {
+                    "tokenContract": {
+                        "label": "tokenContract",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_amount": {
+                        "label": "_amount",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
             "freeze": {
                 "label": "freeze",
                 "inputs": {},
@@ -263,20 +288,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
             "revokeCA": {
                 "label": "revokeCA",
                 "inputs": {},
@@ -389,8 +400,8 @@ var abis1=
             "issuerMoreToken": {
                 "label": "增发资产",
                 "inputs": {
-                    "tokenContract": {
-                        "label": "资产地址",
+                    "_tokenContract": {
+                        "label": "_tokenContract",
                         "type": "address",
                         "select": {}
                     },
@@ -410,6 +421,18 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 2
+            },
+            "Pass": {
+                "label": "Pass",
+                "inputs": {
+                    "": {
+                        "label": "",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
             },
             "ReSetAccountOwner": {
                 "label": "ReSetAccountOwner",
@@ -525,7 +548,7 @@ var abis1=
             }
         }
     },
-    "AccountManager": {
+    "AccountCreator": {
         "label": "账户管理合约",
         "address": "",
         "funs": {
@@ -752,20 +775,6 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 2
-            },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
             },
             "CreateAccountData": {
                 "label": "CreateAccountData",
@@ -1311,20 +1320,6 @@ var abis1=
                     }
                 },
                 "constant": true,
-                "type": "function",
-                "showLevel": 0
-            },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
                 "type": "function",
                 "showLevel": 0
             },
@@ -2204,20 +2199,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
             "setFun": {
                 "label": "setFun",
                 "inputs": {
@@ -2417,6 +2398,64 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
+            "ConfirmOperation": {
+                "label": "ConfirmOperation",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "Reject": {
+                "label": "Reject",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "SetOption": {
+                "label": "SetOption",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_value": {
+                        "label": "_value",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "SetFun": {
+                "label": "SetFun",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_sig": {
+                        "label": "_sig",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
             "ResetKey": {
                 "label": "ResetKey",
                 "inputs": {
@@ -2476,64 +2515,6 @@ var abis1=
                     },
                     "_role": {
                         "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ConfirmOperation": {
-                "label": "ConfirmOperation",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Reject": {
-                "label": "Reject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetOption": {
-                "label": "SetOption",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_value": {
-                        "label": "_value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetFun": {
-                "label": "SetFun",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_sig": {
-                        "label": "_sig",
                         "type": "uint256",
                         "select": {}
                     }
@@ -2624,17 +2605,21 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "requestConfirm": {
-                "label": "requestConfirm",
-                "inputs": {},
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
-            "resetKey": {
-                "label": "resetKey",
+            "getOperation_resetKey": {
+                "label": "getOperation_resetKey",
                 "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "r_no": {
+                        "label": "r_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
                     "_role": {
                         "label": "_role",
                         "type": "uint256",
@@ -2642,12 +2627,16 @@ var abis1=
                     },
                     "_key": {
                         "label": "_key",
-                        "type": "uint256",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_status": {
+                        "label": "_status",
+                        "type": "uint8",
                         "select": {}
                     }
                 },
-                "outputs": {},
-                "constant": false,
+                "constant": true,
                 "type": "function",
                 "showLevel": 0
             },
@@ -2670,51 +2659,116 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "getOptionsWait": {
-                "label": "getOptionsWait",
-                "inputs": {},
-                "outputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
+            "resetKeyC": {
+                "label": "resetKeyC",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_role": {
+                        "label": "_role",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
                         "select": {}
                     }
                 },
-                "constant": true,
-                "type": "function",
-                "showLevel": 0
-            },
-            "confirm": {
-                "label": "confirm",
-                "inputs": {},
-                "outputs": {},
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
             },
             "init": {
                 "label": "init",
-                "inputs": {},
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
-            "resetOption": {
-                "label": "resetOption",
                 "inputs": {
-                    "_key": {
-                        "label": "_key",
+                    "_core": {
+                        "label": "_core",
                         "type": "uint256",
                         "select": {}
                     },
-                    "_value": {
-                        "label": "_value",
+                    "_resetKey": {
+                        "label": "_resetKey",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_resetKeyC": {
+                        "label": "_resetKeyC",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_owner": {
+                        "label": "_owner",
                         "type": "uint256",
                         "select": {}
                     }
                 },
                 "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "resetKey": {
+                "label": "resetKey",
+                "inputs": {
+                    "_role": {
+                        "label": "_role",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "resetKeyReject": {
+                "label": "resetKeyReject",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_role": {
+                        "label": "_role",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
@@ -2742,8 +2796,8 @@ var abis1=
                 "label": "getOptions",
                 "inputs": {},
                 "outputs": {
-                    "_res": {
-                        "label": "_res",
+                    "_options": {
+                        "label": "_options",
                         "type": "uint256[]",
                         "select": {}
                     }
@@ -2752,30 +2806,114 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
+            "getOperationAmounts_resetKey": {
+                "label": "getOperationAmounts_resetKey",
+                "inputs": {},
+                "outputs": {
+                    "_totalAmounts": {
+                        "label": "_totalAmounts",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_waitAmounts": {
+                        "label": "_waitAmounts",
                         "type": "uint256",
                         "select": {}
                     }
                 },
-                "outputs": {},
-                "constant": false,
+                "constant": true,
                 "type": "function",
                 "showLevel": 0
             },
-            "ResetOption": {
-                "label": "ResetOption",
+            "getWaitOperationNos": {
+                "label": "getWaitOperationNos",
                 "inputs": {
-                    "_key": {
-                        "label": "_key",
+                    "_start": {
+                        "label": "_start",
                         "type": "uint256",
                         "select": {}
                     },
-                    "_value": {
-                        "label": "_value",
+                    "_limit": {
+                        "label": "_limit",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_type": {
+                        "label": "_type",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_nos": {
+                        "label": "_nos",
+                        "type": "uint256[]",
+                        "select": {}
+                    }
+                },
+                "constant": true,
+                "type": "function",
+                "showLevel": 0
+            },
+            "ResetKey": {
+                "label": "ResetKey",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_role": {
+                        "label": "_role",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "ResetKeyC": {
+                "label": "ResetKeyC",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_role": {
+                        "label": "_role",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "ResetKeyReject": {
+                "label": "ResetKeyReject",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_keyAddress": {
+                        "label": "_keyAddress",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_role": {
+                        "label": "_role",
                         "type": "uint256",
                         "select": {}
                     }
@@ -3425,20 +3563,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "resetCore": {
-                "label": "resetCore",
-                "inputs": {
-                    "_newCore": {
-                        "label": "_newCore",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {},
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
             "setFun": {
                 "label": "setFun",
                 "inputs": {
@@ -3610,6 +3734,64 @@ var abis1=
                 "type": "event",
                 "showLevel": 0
             },
+            "ConfirmOperation": {
+                "label": "ConfirmOperation",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "Reject": {
+                "label": "Reject",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "SetOption": {
+                "label": "SetOption",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_value": {
+                        "label": "_value",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
+            "SetFun": {
+                "label": "SetFun",
+                "inputs": {
+                    "_no": {
+                        "label": "_no",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_sig": {
+                        "label": "_sig",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "type": "event",
+                "showLevel": 0
+            },
             "ResetKey": {
                 "label": "ResetKey",
                 "inputs": {
@@ -3669,64 +3851,6 @@ var abis1=
                     },
                     "_role": {
                         "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ConfirmOperation": {
-                "label": "ConfirmOperation",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Reject": {
-                "label": "Reject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetOption": {
-                "label": "SetOption",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_value": {
-                        "label": "_value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetFun": {
-                "label": "SetFun",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_sig": {
-                        "label": "_sig",
                         "type": "uint256",
                         "select": {}
                     }

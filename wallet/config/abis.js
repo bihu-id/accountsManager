@@ -487,7 +487,7 @@ var abis=
             "type": "event"
         }
     ],
-    "AccountManager": [
+    "AccountCreator": [
         {
             "constant": false,
             "inputs": [],

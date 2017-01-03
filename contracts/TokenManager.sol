@@ -1,5 +1,5 @@
 import "Token.sol";
-import "AccountManager.sol";
+import "AccountCreator.sol";
 import "BaseManager.sol";
 
 contract RoleDefine_Token{
@@ -236,7 +236,7 @@ contract TokenManager is TokenManagerInterface{
         uint  _hash)returns (bool success) {
 
         // just check the sender if the account manager by accountManager ,other check is done by server
-        AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
+        AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
         if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
         //if(tokenAble()==0)                                    {throwErrEvent(60030001);     }
         // 0: no expired term

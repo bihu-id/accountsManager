@@ -4,7 +4,7 @@ contract('deploy Token logic', function(accounts) {
 
     it("deploy Token logic", function(){
 
-        return _deploy.deploy("Token",null,AccountManager)
+        return _deploy.deploy("Token",null,AccountCreator)
 
     });
 

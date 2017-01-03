@@ -24,7 +24,7 @@ function getSub(obj,keys) {
 }
 
 var funContract=
-    ['AccountManager',
+    ['AccountCreator',
         'Token',
         'TokenManager',
         'TxManager',

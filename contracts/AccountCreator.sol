@@ -3,7 +3,7 @@ import "SubManager.sol";
 
 //m_core : xindi
 //m_owner : account creator
-contract AccountManager is SubManager {
+contract AccountCreator is SubManager {
 
     address m_TxCore;
     address m_accountProxy;
@@ -19,7 +19,7 @@ contract AccountManager is SubManager {
     event CreateAccountData(address _accountAddress);
     event AccountRecode(uint _no,address _account);
 
-    function AccountManager()BaseData(uint(msg.sender)){}
+    function AccountCreator()BaseData(uint(msg.sender)){}
 
     function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner,uint _TxCore,uint _accountProxy){
 

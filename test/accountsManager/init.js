@@ -9,9 +9,9 @@ contract('init accountManager', function(accounts) {
     var XindiData=address.XindiData
     var TxManagerData=address.TxManagerData
 
-    it("init AccountManager data", function () {
+    it("init AccountCreator data", function () {
 
-        var instance=AccountManager.at(AccountManagerData);
+        var instance=AccountCreator.at(AccountManagerData);
         console.log("init")
         console.log("owner:",accounts[20]);
         console.log("account owner:",XindiData);
@@ -25,7 +25,7 @@ contract('init accountManager', function(accounts) {
 
     it("get option", function () {
 
-        var instance=AccountManager.at(AccountManagerData);
+        var instance=AccountCreator.at(AccountManagerData);
         return instance.getOptions.call().then(function(res){
             
             console.log("core:",res[0]);

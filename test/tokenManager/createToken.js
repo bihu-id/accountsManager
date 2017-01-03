@@ -14,7 +14,7 @@ contract('create token', function(accounts) {
 
     it("create token ", function(){
          console.log("tokenManager:",tokenmanager)
-         var accountmanager=AccountManager.at(accountManager);
+         var accountmanager=AccountCreator.at(accountManager);
          return accountmanager.getAccountAddress(1).then(function (res1) {
              console.log("account:",res1.toString(16))
              var account = Account.at(res1);

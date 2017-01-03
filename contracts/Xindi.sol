@@ -1,6 +1,6 @@
 import "Account.sol";
 import "BaseManager.sol";
-import "AccountManager.sol";
+import "AccountCreator.sol";
 
 contract RoleDefine_Xindi{
 
@@ -268,7 +268,7 @@ contract Xindi is XindiInterface{
 
     function setSubKeyC(address _subContract ,uint[] _data)internal{
 
-        AccountManager am=AccountManager(_subContract);
+        AccountCreator am=AccountCreator(_subContract);
         am.resetKey.gas(msg.gas)(_data[0],_data[1]);
 
     }

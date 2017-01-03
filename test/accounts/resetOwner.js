@@ -8,7 +8,7 @@ contract('reset owner of account', function(accounts) {
 
 
     it("reset owner of account ", function(){
-        var accountmanager=AccountManager.at(accountManager)
+        var accountmanager=AccountCreator.at(accountManager)
             //console.log("accountManager.accountAmount()",res.toString());
             //console.log("                  account               ","                  core                  ","                 TxCore                      ","status","level","ownerAmount","tx_threshold","                       CA               ","               _owner                   ","weight");
             //0xc06df393ebc0e6c5ba5c4624ecfe242911d7f156 0xc06df393ebc0e6c5ba5c4624ecfe242911d7f156,0x0000000000000000000000000000000000010000,    0      ,0         ,1           ,100      ,0x0000000000000000000000000000000000000000,0xae119076b7273968cc2da5c164a692fa95b98d9c,100 :

@@ -1,10 +1,10 @@
 var _deploy=require("./../../deploy.js")
 
-contract('deploy AccountManager logic', function(accounts) {
+contract('deploy AccountCreator logic', function(accounts) {
 
-    it("deploy AccountManager logic", function(){
+    it("deploy AccountCreator logic", function(){
 
-        return _deploy.deploy("AccountManager",null,AccountManager)
+        return _deploy.deploy("AccountCreator",null,AccountCreator)
 
     });
 })

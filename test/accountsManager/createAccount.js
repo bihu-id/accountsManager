@@ -9,8 +9,8 @@ contract('create account', function(accounts) {
     var accountA;
 
     it("create account  ", function(){
-        //var accountManager=AccountManager.at(account_manager);
-        var accountmanager=AccountManager.at(accountManager);
+        //var accountManager=AccountCreator.at(account_manager);
+        var accountmanager=AccountCreator.at(accountManager);
 
         return accountmanager.createAccount(accounts[25],100,100,{from:accounts[22],gas:10000000}).then(function(tx){
             console.log("create account use owner :",accounts[22]);
@@ -20,7 +20,7 @@ contract('create account', function(accounts) {
     });
 
     it("get account amounts ", function(){
-        var accountmanager=AccountManager.at(accountManager);
+        var accountmanager=AccountCreator.at(accountManager);
         return accountmanager.accountAmount().then(function(res){
             console.log("accountManager.accountAmount()",res.toString());
 
@@ -40,7 +40,7 @@ contract('create account', function(accounts) {
      });
      })*/
     it("get account summary ", function(){
-        var accountmanager=AccountManager.at(accountManager)
+        var accountmanager=AccountCreator.at(accountManager)
         accountmanager.accountAmount().then(function(res){
             console.log("accountManager.accountAmount()",res.toString());
             console.log("                  account               ","                  core                  ","                 TxCore                      ","status","level","ownerAmount","tx_threshold","  re_threshold","                     CA               ","               _owner                   ","weight");

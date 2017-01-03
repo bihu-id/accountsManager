@@ -4,7 +4,7 @@ contract BaseEvent{
     function throwErrEvent(uint _no)internal{
 
         Alert(_no);
-        //AnduiChain would keep event when throw ,and also reback state same as ethereum
+        //AnduiChain would keep event when throw ,and also revert state same as ethereum
         throw;
     }
     //0:权限错误

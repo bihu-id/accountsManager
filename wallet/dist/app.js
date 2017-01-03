@@ -46399,7 +46399,7 @@ webpackJsonp([0,1],[
 	            }
 	        }
 	    },
-	    "AccountManager": {
+	    "AccountCreator": {
 	        "label": "账户管理合约",
 	        "address": "",
 	        "funs": {
@@ -50102,7 +50102,7 @@ webpackJsonp([0,1],[
 	        "name": "Err",
 	        "type": "event"
 	    }],
-	    "AccountManager": [{
+	    "AccountCreator": [{
 	        "constant": false,
 	        "inputs": [],
 	        "name": "requestConfirm",

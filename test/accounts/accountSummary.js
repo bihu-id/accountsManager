@@ -6,7 +6,7 @@ contract("account summary ",function(accounts){
     var accountManager = address.AccountManagerData
 
     it("get account summary ", function(){
-        var accountmanager=AccountManager.at(accountManager)
+        var accountmanager=AccountCreator.at(accountManager)
         accountmanager.accountAmount().then(function(res){
             console.log("accountManager.accountAmount()",res.toString());
             console.log("                  account               ","                  core                  ","                 TxCore                      ","status","level","ownerAmount","tx_threshold","                       CA               ","               _owner                   ","weight");

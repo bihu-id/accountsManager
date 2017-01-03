@@ -31,6 +31,12 @@ var funs=
             resSize: 32,
             register: true
         },
+        issueMoreToken: {
+            name: 'issueMoreToken(address,uint256)',
+            sig: 0x4a851484,
+            resSize: 32,
+            register: false
+        },
         issuerMoreToken: {
             name: 'issuerMoreToken(address,uint256)',
             sig: 0xfb9f28b5,
@@ -40,12 +46,6 @@ var funs=
         resetAccountOwner: {
             name: 'resetAccountOwner(uint256,address[],uint256[])',
             sig: 0xa9704520,
-            resSize: 32,
-            register: false
-        },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
             resSize: 32,
             register: false
         },
@@ -92,7 +92,7 @@ var funs=
             register: false
         }
     },
-    AccountManager: {
+    AccountCreator: {
         accountAmount: {
             name: 'accountAmount()',
             sig: 0x41748782,
@@ -150,12 +150,6 @@ var funs=
         requestConfirm: {
             name: 'requestConfirm()',
             sig: 0x0ef5f461,
-            resSize: 32,
-            register: false
-        },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
             resSize: 32,
             register: false
         },
@@ -230,12 +224,6 @@ var funs=
         issueMore: {
             name: 'issueMore(uint256)',
             sig: 0xb7cd32c2,
-            resSize: 32,
-            register: false
-        },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
             resSize: 32,
             register: false
         },
@@ -385,12 +373,6 @@ var funs=
             resSize: 32,
             register: true
         },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
-            resSize: 32,
-            register: false
-        },
         resetKey: {
             name: 'resetKey(uint256,address)',
             sig: 0x91e176e8,
@@ -441,16 +423,22 @@ var funs=
         }
     },
     TxManager: {
-        confirm: {
-            name: 'confirm()',
-            sig: 0x7022b58e,
-            resSize: 32,
-            register: false
-        },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
             resSize: 192,
+            register: false
+        },
+        getOperationAmounts_resetKey: {
+            name: 'getOperationAmounts_resetKey()',
+            sig: 0xd9c34a33,
+            resSize: 32,
+            register: false
+        },
+        getOperation_resetKey: {
+            name: 'getOperation_resetKey(uint256)',
+            sig: 0x0eeb3969,
+            resSize: 32,
             register: false
         },
         getOptions: {
@@ -459,9 +447,9 @@ var funs=
             resSize: 32,
             register: false
         },
-        getOptionsWait: {
-            name: 'getOptionsWait()',
-            sig: 0x40bdce3c,
+        getWaitOperationNos: {
+            name: 'getWaitOperationNos(uint256,uint256,uint256)',
+            sig: 0xee20c380,
             resSize: 32,
             register: false
         },
@@ -477,27 +465,21 @@ var funs=
             resSize: 32,
             register: true
         },
-        requestConfirm: {
-            name: 'requestConfirm()',
-            sig: 0x0ef5f461,
-            resSize: 32,
-            register: false
-        },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
-            resSize: 32,
-            register: true
-        },
         resetKey: {
-            name: 'resetKey(uint256,uint256)',
-            sig: 0x1c1c0fbc,
+            name: 'resetKey(uint256,address)',
+            sig: 0x91e176e8,
             resSize: 32,
             register: false
         },
-        resetOption: {
-            name: 'resetOption(uint256,uint256)',
-            sig: 0xa230f178,
+        resetKeyC: {
+            name: 'resetKeyC(uint256,uint256,address)',
+            sig: 0x68d99c0e,
+            resSize: 32,
+            register: false
+        },
+        resetKeyReject: {
+            name: 'resetKeyReject(uint256,uint256,address)',
+            sig: 0x994ccee0,
             resSize: 32,
             register: false
         },
@@ -586,12 +568,6 @@ var funs=
             sig: 0x09df09c5,
             resSize: 32,
             register: false
-        },
-        resetCore: {
-            name: 'resetCore(uint256)',
-            sig: 0xe3f18df3,
-            resSize: 32,
-            register: true
         },
         resetKey: {
             name: 'resetKey(uint256,address)',
