@@ -114,7 +114,12 @@ contract LogicProxy is BaseEvent{
     // do not change the function name and parameter ,because the sig of this function was hard wirte in Data contract,
     function get(uint _fun)constant returns(uint _address,uint _returnSize){
 
-        return get_(m_leg[0],_fun);
+        uint t_address;
+        uint t_returnSize;
+        (t_address,t_returnSize)=get_(m_leg[0],_fun);
+        if(t_address==0x0)
+            throwErrEvent(12000002);
+        return (t_address,t_returnSize);
 
     }
 

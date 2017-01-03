@@ -41,8 +41,15 @@ contract TokenInterface is BaseLogic,Erc20 {
         //hash of contract
         uint m_hash;
 
-
         Status m_status;
+
+        // sign of token code contract
+        uint sign_r;
+
+        uint sign_s;
+
+        uint sign_v;
+        //notice cannot add only variable above!!!
 
     }
 
@@ -212,6 +219,7 @@ contract Token is TokenInterface {
             Transfer(msg.sender, _to, _amount);
             return true;
         } else {
+           throwErrEvent(60040005);
            return false;
         }
 

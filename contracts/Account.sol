@@ -37,7 +37,7 @@ contract AccountInterface is BaseLogic{
     /// @notice issue more token by token owner account         增发资产,由资产拥有者账户调用
     /// @param _tokenContract token contract address            资产合约地址
     /// @param _amount issue amount (amount*precision)          增发的数量(数量*精度)
-    function issuerMoreToken(address _tokenContract,uint256 _amount)returns (bool success);
+    function issueMoreToken(address _tokenContract,uint256 _amount)returns (bool success);
 
     /// @notice destroyToken token by token owner account       销毁资产,由资产拥有者账户调用,需要持有相应数量的资产
     /// @param _tokenContract token contract address            资产合约地址
@@ -116,6 +116,21 @@ contract Account is AccountInterface{
 
     }
 
+    enum TxStatus{
+
+        waitMoreApprove,
+        Approved,
+        Rejected
+
+    }
+
+    struct ApproveTx{
+
+        uint[] m_owners;
+        TxStatus m_TxStatus;
+
+    }
+
     struct AccountData{
 
         //交易阀值
@@ -154,13 +169,9 @@ contract Account is AccountInterface{
 
         status m_status;
 
-        // sign of token code contract
-        uint sign_r;
-
-        uint sign_s;
-
-        uint sign_v;
-        //notice cannot add only variable above!!!
+        //0:Base account, have to check pass set by tx manager,and the default value is 0
+        //1:DAO account,can have many owners account do not check pass that set by tx manager
+        uint m_type;
 
     }
 
@@ -203,6 +214,7 @@ contract Account is AccountInterface{
         m_data.m_owners[_owner]=_weight;
         m_data.m_weightAmount=_weight;
         m_data.m_ownerFind.push(_owner);
+        //m_data.m_type＝0;
         CreateAccount(m_data.m_ownerFind[0],m_data.m_owners[_owner],_Tx_threshold,_core,_coreTx);
         return true;
 
@@ -218,15 +230,14 @@ contract Account is AccountInterface{
         uint  _hash,
         uint _tokenManager)
     {
-        checkPass();
-        //uint t_address =m_other;
-
-        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
+        transactionCheck();
+        // to void include conflict
         assembly{
             mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
             calldatacopy(0x180,0x04,sub(calldatasize,0x04))
             jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
         }
+
         successEvent();
     }
 
@@ -235,59 +246,27 @@ contract Account is AccountInterface{
         address _to,
         uint256 _amount)returns (bool success)
     {
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
-        // it is a bad way now ,
-        checkPass();
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        //if(getApprove(t_owner)){
-            Token t=Token(_tokenContract);
-            t.transfer.gas(msg.gas)(_to,_amount);
-        //}
+        transactionCheck();
+
+        Token t=Token(_tokenContract);
+        t.transfer.gas(msg.gas)(_to,_amount);
 
     }
 
     function issueMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
-        // it is a bad way now ,
-        checkPass();
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        if(getApprove(t_owner)){
-            Token t=Token(tokenContract);
-            t.issueMore.gas(msg.gas)(_amount);
-        }
+        transactionCheck();
+        Token t=Token(tokenContract);
+        t.issueMore.gas(msg.gas)(_amount);
 
     }
 
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {throwErrEvent(60021003); }
-        // it is a bad way now ,
-        checkPass();
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        if(getApprove(t_owner)){
-            Token t=Token(tokenContract);
-            t.destroy.gas(msg.gas)(_amount);
-        }
+        transactionCheck();
+        Token t=Token(tokenContract);
+        t.destroy.gas(msg.gas)(_amount);
 
-    }
-
-    // check owner weight amount make sure tx can been permit
-    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
-        if (_owners.length!=_weight.length)                 {throwErrEvent(60021002); }
-        uint t_Tx_threshold=0;
-        for(uint i=0;i<_owners.length;i++)
-            t_Tx_threshold+=_weight[i];
-        if (t_Tx_threshold<_Tx_threshold)
-            return false;
-        else
-            return true;
     }
 
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success){
@@ -304,23 +283,6 @@ contract Account is AccountInterface{
         m_data.m_weightAmount=uint(t_totalWeight);
         ReSetAccountOwner(_Tx_threshold,_owners,_weight);
         return true;
-
-    }
-
-    function getApprove(address[] _owners)internal returns(bool success){
-
-        uint  t_total=0;
-        for(uint i=0;i<_owners.length;i++)
-            t_total+=m_data.m_owners[_owners[i]];
-        return t_total>=m_data.m_Tx_threshold;
-
-    }
-
-    function checkOwners(address _owner)internal returns(bool success){
-
-        address[] memory _owners=new address[](1);
-        _owners[0]=msg.sender;
-        return getApprove(_owners);
 
     }
 
@@ -427,4 +389,44 @@ contract Account is AccountInterface{
         }
 
     }
+    function transactionCheck()internal {
+
+        //check freeze
+        iffreeze();
+        //check if set pass by tx manager
+        checkPass();
+        //check owner
+        if(!checkApprove(msg.sender))                                {throwErrEvent(60021003); }
+
+    }
+
+    // check owner weight amount make sure sum weight of owner >_Tx_threshold
+    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
+        if (_owners.length!=_weight.length)                 {throwErrEvent(60021002); }
+        uint t_Tx_threshold=0;
+        for(uint i=0;i<_owners.length;i++)
+            t_Tx_threshold+=_weight[i];
+        if (t_Tx_threshold<_Tx_threshold)
+            return false;
+        else
+            return true;
+    }
+
+    function checkApprove(address _owner)internal returns(bool success){
+
+        address[] memory _owners=new address[](1);
+        _owners[0]=msg.sender;
+        return getApproves(_owners);
+
+    }
+
+    function getApproves(address[] _owners)internal returns(bool success){
+
+        uint  t_total=0;
+        for(uint i=0;i<_owners.length;i++)
+            t_total+=m_data.m_owners[_owners[i]];
+        return t_total>=m_data.m_Tx_threshold;
+
+    }
+
 }
