@@ -3,7 +3,7 @@ var getRpcStr=require("./../../getRpcServe.js")
 contract('create account', function(accounts) {
 
     var address=getRpcStr.get()
-    var accountManager = address.AccountManagerData
+    var accountManager = address.AccountCreatorData
 
 
     var accountA;
@@ -12,7 +12,7 @@ contract('create account', function(accounts) {
         //var accountManager=AccountCreator.at(account_manager);
         var accountmanager=AccountCreator.at(accountManager);
 
-        return accountmanager.createAccount(accounts[25],100,100,{from:accounts[22],gas:10000000}).then(function(tx){
+        return accountmanager.createAccount(accounts[25],100,100,{from:accounts[22],gas:2000000}).then(function(tx){
             console.log("create account use owner :",accounts[22]);
             console.log(web3.eth.getTransactionReceipt(tx));
         });

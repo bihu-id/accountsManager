@@ -5,7 +5,7 @@ var transaction=require("./../../wallet/utils/transation.js")
 var web3=require("./../../getWeb3Instance.js")
 var address=getRpcStr.get()
 var tokenmanager=address.TokenManagerData
-var accountManager=address.AccountManagerData
+var accountManager=address.AccountCreatorData
 var txManager=address.TxManagerData
 
 
@@ -33,13 +33,13 @@ var accountOwner=res[8].toString(16)
 console.log("use %s to create token ",accountOwner)
 
 
-var resCreateToken=transaction.transactionRaw(web3,abi,accountAddress,"createToken",["GGP",10000000,2,500000,0,"测试BBB1",0x10000bbb,tokenmanager],accountOwner,5000000)
+var resCreateToken=transaction.transactionRaw(web3,abi,accountAddress,"createToken",["GGP",10000000,2,500000,0,"测试BBB1",0x10000bbb,tokenmanager],accountOwner,1000000)
 
 //console.log(resCreateToken)
 console.log("data:",resCreateToken.data.substring(2))
 var hash='0x'+transaction.sha3(resCreateToken.data)
 console.log("hash:",hash)
-var resTxConfirm=transaction.transactionRaw(web3,abis["TxManager"],txManager,"pass",[res1,hash],accounts[0],5000000)
+var resTxConfirm=transaction.transactionRaw(web3,abis["TxManager"],txManager,"pass",[res1,hash],accounts[0],1000000)
 
 //console.log(resTxConfirm)
 transaction.broadCast(web3,resTxConfirm.serializedTx,function(err,hash){

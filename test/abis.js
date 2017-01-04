@@ -341,28 +341,6 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_tokenContract",
-                    "type": "address"
-                },
-                {
-                    "name": "_amount",
-                    "type": "uint256"
-                }
-            ],
-            "name": "issuerMoreToken",
-            "outputs": [
-                {
-                    "name": "success",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "inputs": [],
             "payable": false,
             "type": "constructor"

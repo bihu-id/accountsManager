@@ -5,7 +5,7 @@ contract('init accountManager', function(accounts) {
     var address=getRpcStr.get()
 
     var AccountProxy=address.AccountProxy
-    var AccountManagerData=address.AccountManagerData
+    var AccountManagerData=address.AccountCreatorData
     var XindiData=address.XindiData
     var TxManagerData=address.TxManagerData
 

@@ -3,7 +3,7 @@ var getRpcStr=require("./../../getRpcServe.js")
 contract("account summary ",function(accounts){
     var address=getRpcStr.get()
 
-    var accountManager = address.AccountManagerData
+    var accountManager = address.AccountCreatorData
 
     it("get account summary ", function(){
         var accountmanager=AccountCreator.at(accountManager)
@@ -18,7 +18,7 @@ contract("account summary ",function(accounts){
                     var account = Account.at(res1);
                     account.summary().then(function (res) {
 
-                        console.log( res1.toString(16),res[0].toString(16),res[1].toString(16),"   "+res[2].toString(10),"      "+res[3].toString(10),"        "+res[4].toString(10),"           "+res[5].toString(10),res[6].toString(16),res[7].toString(16),res[8].toString(10));
+                        console.log( res1.toString(16),res[0].toString(16),res[1].toString(16),"   "+res[2].toString(10),"      "+res[3].toString(10),"        "+res[4].toString(10),"           "+res[5].toString(10),res[6].toString(10),res[7].toString(16),res[8].toString(16),res[9].toString(10));
 
                     });
 

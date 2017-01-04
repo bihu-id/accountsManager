@@ -37,12 +37,6 @@ var funs=
             resSize: 32,
             register: false
         },
-        issuerMoreToken: {
-            name: 'issuerMoreToken(address,uint256)',
-            sig: 0xfb9f28b5,
-            resSize: 32,
-            register: true
-        },
         resetAccountOwner: {
             name: 'resetAccountOwner(uint256,address[],uint256[])',
             sig: 0xa9704520,
@@ -316,7 +310,7 @@ var funs=
         getOperationAmounts_resetKey: {
             name: 'getOperationAmounts_resetKey()',
             sig: 0xd9c34a33,
-            resSize: 32,
+            resSize: 64,
             register: false
         },
         getOperation_resetKey: {

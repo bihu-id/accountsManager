@@ -7,8 +7,8 @@ contract('init xindi', function(accounts) {
     it("xinde init", function(){
         //console.log("xindi:",xindedata)
         var instance=Xindi.at(xindedata);
-        console.log(instance.abi)
-        return instance.init(AccountManagerData,{from:accounts[0],gas:50000000}).then(function(tx){
+        //console.log(instance.abi)
+        return instance.init(AccountManagerData,{from:accounts[0],gas:3000000}).then(function(tx){
             console.log(web3.eth.getTransactionReceipt(tx));
         })
     });

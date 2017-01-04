@@ -397,31 +397,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 0
             },
-            "issuerMoreToken": {
-                "label": "增发资产",
-                "inputs": {
-                    "_tokenContract": {
-                        "label": "_tokenContract",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_amount": {
-                        "label": "数量",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {
-                    "success": {
-                        "label": "success",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "constant": false,
-                "type": "function",
-                "showLevel": 2
-            },
             "Pass": {
                 "label": "Pass",
                 "inputs": {

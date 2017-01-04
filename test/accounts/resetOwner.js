@@ -4,7 +4,7 @@ contract('reset owner of account', function(accounts) {
     var address=getRpcStr.get()
 
     var xindidata = address.XindiData
-    var accountManager = address.AccountManagerData
+    var accountManager = address.AccountCreatorData
 
 
     it("reset owner of account ", function(){

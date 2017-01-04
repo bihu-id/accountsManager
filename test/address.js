@@ -36,24 +36,6 @@ var Address=
         "AccountLogic": "0xe6873aed33250ee7650b87b45b827527c802c8f0",
         "AccountProxy": "0xf994f25f54ea7915127259a2392e0fbc0af553ff"
     },
-    "id314": {
-        "XindiLogic": "0xbf853374dcba676ff0192d29ea3876d224949597",
-        "TxManagerLogic": "0xdf528b779018fe07c49127239336fe8d2a0af967",
-        "TokenManagerLogic": "0x0af2b1be4efecebd601496d375d72d59a4d41caa",
-        "AccountManagerLogic": "0x92eae66366ce21aaea455d4cc37d5516e3f30374",
-        "TokenManagerProxy": "0x57e528fb5f919dd5123b1e6fc83ea5a221f5a09a",
-        "TokenManagerData": "0x66951d99a71a6140e164cf6c55807a6b34cfb62d",
-        "TxManagerProxy": "0xe4b2393dc99d8743b81f84051a4b16109d8383cb",
-        "TxManagerData": "0x541bea06900a5ac5ee1f30962f2e27eaa31b9fc9",
-        "XindiProxy": "0xb2c6cbd80a60e855f79ea2576c9526564ed52b66",
-        "XindiData": "0x0ec7f53b2acde65d3ff1347223f082b19291fd48",
-        "TokenLogic": "0x5d481fdea25599761f328dd09edce058c81dcb7a",
-        "TokenProxy": "0x7d023692b5d4b6003d494cf4bb350b45800a2847",
-        "AccountLogic": "0xb95105893f7ab63469e53f335eacc9327c2a750e",
-        "AccountProxy": "0x79d97545a1de9bdb201b43b64c2401b6dce58b01",
-        "AccountManagerProxy": "0x86bc38a115c0de598edc5f0f006f231e7ea8771d",
-        "AccountManagerData": "0x1d137178847dcb8cb080b21b1d78d5afee71b948"
-    },
     "id1314": {
         "TokenManagerLogic": "0x8c8b63a1eda503005f92c85cb000f4045edd195f",
         "AccountManagerLogic": "0xa8747e32df32c1e5ec8122081c57bcc4b7e7a19c",
@@ -107,6 +89,24 @@ var Address=
         "TokenProxy": "0x4c1ceaa1a24eb4cb352cd0ade1336425e5aed845",
         "AccountLogic": "0x38a61a326098f1ae170f2c3dc634b42a3253c97d",
         "AccountProxy": "0x34d740891bd86794a3aaefcbd7228d74e3b07262"
+    },
+    "id314": {
+        "XindiProxy": "0xe53d3f2e308947527c4fd17dbe0ef7ef213b6864",
+        "XindiData": "0x0a64ca282be065935f298bd452ce3eb2e528e60d",
+        "XindiLogic": "0xbf853374dcba676ff0192d29ea3876d224949597",
+        "AccountLogic": "0x92eae66366ce21aaea455d4cc37d5516e3f30374",
+        "AccountProxy": "0x0af2b1be4efecebd601496d375d72d59a4d41caa",
+        "AccountCreatorProxy": "0x541bea06900a5ac5ee1f30962f2e27eaa31b9fc9",
+        "AccountCreatorData": "0x0ec7f53b2acde65d3ff1347223f082b19291fd48",
+        "AccountCreatorLogic": "0x7d023692b5d4b6003d494cf4bb350b45800a2847",
+        "TokenLogic": "0x5e054cac844f261d4db1a0b856b44ecc08990b03",
+        "TokenProxy": "0xdfed39febd9cc92aafbaade82feb560263c85997",
+        "TokenManagerProxy": "0x2338bcdc5c14ae218cd7904048103cde18e907d4",
+        "TokenManagerData": "0x1a08d173043b5395a2437d0b44f06ad8e850117f",
+        "TokenManagerLogic": "0xbd22d5eeb201ecfbe2450a24281e1b13d738488c",
+        "TxManagerProxy": "0x640534bc440df56b71ef9ebdad50ed3956f7b988",
+        "TxManagerData": "0xc04fae1657523535d56cb726b12ec6a02c4f8150",
+        "TxManagerLogic": "0xc31716cc4188b46763d9b0ae897f229c4b801c80"
     }
 }
 module.exports=Address;
