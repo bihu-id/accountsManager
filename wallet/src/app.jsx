@@ -17,11 +17,57 @@ var ethlightjs         = require('eth-lightwallet');
 var accountsKey=require("./../accountsKeys")
 var ethUtil = require('ethereumjs-util');
 
+var SolidityEvent = require("web3/lib/web3/event.js");
+
 var BigNumber=require("BigNumber")
 const history = {};
 
 require("./../css/app.css");
 
+
+class Events extends React.Component {
+
+    constructor(props) {
+        super(props);
+        //logs
+        //eventsAbl
+        // address
+    }
+
+    render() {
+
+        let logs = this.props.logs;
+        var self=this
+        var eventsOut
+        var label
+        var r=logs.map(function (log) {
+            let eventsAbl = self.props.eventsAbl
+            var logsAbl = eventsAbl[log.topics[0]]
+            label=log["label"]
+            if(logsAbl!=undefined ){
+                var decoder = new SolidityEvent(null, logsAbl, self.props.address);
+                eventsOut=JSON.stringify(decoder.decode(log),null,2);
+                console.log("eventsOut",eventsOut)
+                return (<div>
+                    <div>
+                        <span>{label}</span>
+                    </div>
+                    <div>
+                       <textarea
+                           rows={eventsOut.length/100+1} cols="100"
+                           value={eventsOut}
+                       />
+                    </div>
+                </div>);
+            }
+
+        })
+        return (<div>
+            {r}
+        </div>)
+
+    }
+}
 class Function extends React.Component{
 
     constructor(props) {
@@ -61,7 +107,7 @@ class Contract extends React.Component{
             args:{},
             sign:"",
             txHash:"",
-            Receipt:"",
+            receipt:"",
             result:"",
             init:this.props.init,
             dataHash:"",
@@ -84,9 +130,23 @@ class Contract extends React.Component{
     onInputChange(no,e){
         var newArgs=this.state.args
         newArgs[no]= e.target.value.replace(/" "/g, "")
-        this.setState({args:newArgs});
+        this.setState({
+            args:newArgs,
+            sign:"",
+            result:"",
+            txHash:"",
+            receipt:""
+        });
     }
 
+    clearSign(){
+        this.setState({
+            sign:"",
+            result:"",
+            txHash:"",
+            receipt:""
+        });
+    }
     onFunChange(e) {
 
         this.setState({
@@ -95,8 +155,8 @@ class Contract extends React.Component{
             sign:""
             //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0])
         })
-
-        console.log("this.state.fun:",e.target.value,this.state.fun)
+        this.clearSign()
+        //console.log("this.state.fun:",e.target.value,this.state.fun)
     }
     init(){
         this.setState({
@@ -109,11 +169,13 @@ class Contract extends React.Component{
     onPrivateKeyChange(e) {
 
         this.setState({privateKey:e.target.value})
+        this.clearSign()
 
     }
     onAddressChange(e) {
 
         this.setState({contractAddress:e.target.value})
+        this.clearSign()
 
     }
     tempChange(e){
@@ -131,7 +193,7 @@ class Contract extends React.Component{
                 break;
 
             }
-
+        this.clearSign()
     }
     onSelectPrivateKey(e) {
 
@@ -139,7 +201,7 @@ class Contract extends React.Component{
             privateKey:e.target.value,
             address:"0x"+ethUtil.privateToAddress(e.target.value).toString('hex')
         })
-
+        this.clearSign()
     }
     onSubmitConfirmTx(e){
 
@@ -219,7 +281,7 @@ class Contract extends React.Component{
         var fun=this.state.fun
         var to=this.state.contractAddress
         var value=0
-        var gas=5000000
+        var gas=3000000
         var nonce =0
         var args=[]
 
@@ -462,7 +524,15 @@ class Contract extends React.Component{
                 value="发送给Tx管理合约"
             />
         </div>:""
-
+        //logs
+        //eventsAbl
+        // address
+        var receipt=this.state.receipt
+        let r_receipt=receipt?
+            <div>
+                <Events logs= {receipt.logs} eventsAbl={abl.events} address={receipt.contractAddress} />
+            </div>:
+            ""
         return (
             <div>
                 <div>
@@ -482,7 +552,8 @@ class Contract extends React.Component{
                 {r_sign}
                 {r_txHash}
                 {r_result}
-                {r_dataHash}
+
+                {r_receipt}
                 <div>
                     <input
                         type="submit"

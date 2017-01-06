@@ -4,6 +4,26 @@ var abis1=
         "label": "账户合约",
         "address": "",
         "events": {
+            "0x12044b8a5393cb69b5ab881382412834a346eb26c8e7e06f0145fe64eb861c72": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "",
+                        "type": "uint256",
+                        "lable": ""
+                    },
+                    {
+                        "indexed": false,
+                        "name": "",
+                        "type": "uint256",
+                        "lable": ""
+                    }
+                ],
+                "name": "Pass",
+                "type": "event",
+                "label": ""
+            },
             "0x7cd5190a74e34511da6836647848ec841d0389e70f1c77ee2b8190a0ffd3c656": {
                 "anonymous": false,
                 "inputs": [
@@ -122,34 +142,6 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
-            "0x3b0a8ddef325df2bfdfa6b430ae4c8421841cd135bfa8fb5e432f200787520bb": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_ok",
-                        "type": "bool",
-                        "lable": "_ok"
-                    }
-                ],
-                "name": "Success",
-                "type": "event",
-                "label": ""
-            },
-            "0x39eabce61287198fda55b2dd4ffd836301fe4f68152857110cb8ec2b7f60c2c6": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Err",
-                "type": "event",
-                "label": ""
-            },
             "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
                 "anonymous": false,
                 "inputs": [
@@ -161,26 +153,6 @@ var abis1=
                     }
                 ],
                 "name": "Alert",
-                "type": "event",
-                "label": ""
-            },
-            "0x12044b8a5393cb69b5ab881382412834a346eb26c8e7e06f0145fe64eb861c72": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "",
-                        "type": "uint256",
-                        "lable": ""
-                    },
-                    {
-                        "indexed": false,
-                        "name": "",
-                        "type": "uint256",
-                        "lable": ""
-                    }
-                ],
-                "name": "Pass",
                 "type": "event",
                 "label": ""
             }
@@ -354,7 +326,7 @@ var abis1=
                 "showLevel": 2
             },
             "resetAccountOwner": {
-                "label": "resetAccountOwner",
+                "label": "重置账户私钥",
                 "inputs": {
                     "_Tx_threshold": {
                         "label": "_Tx_threshold",
@@ -935,6 +907,251 @@ var abis1=
             }
         }
     },
+    "LogicProxy": {
+        "label": "逻辑代理合约",
+        "address": "",
+        "events": {
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_fun",
+                        "type": "uint256",
+                        "lable": "_fun"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_resSize",
+                        "type": "uint256",
+                        "lable": "_resSize"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": "SetFun"
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": "Alert"
+            }
+        },
+        "funs": {
+            "resetKey": {
+                "label": "重置Key",
+                "inputs": {
+                    "_no": {
+                        "label": "角色",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_newKey": {
+                        "label": "新Key",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 1
+            },
+            "getKeys": {
+                "label": "查询Key",
+                "inputs": {},
+                "outputs": {
+                    "A": {
+                        "label": "逻辑升级Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "AC": {
+                        "label": "逻辑升级批准Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "T": {
+                        "label": "重置Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "TC": {
+                        "label": "重置批准Key",
+                        "type": "address",
+                        "select": {}
+                    }
+                },
+                "constant": true,
+                "type": "function",
+                "showLevel": 2
+            },
+            "setfun": {
+                "label": "setfun",
+                "inputs": {
+                    "_logic": {
+                        "label": "_logic",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_resSize": {
+                        "label": "_resSize",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "getWaitKeys": {
+                "label": "查询待批准keys",
+                "inputs": {},
+                "outputs": {
+                    "A": {
+                        "label": "逻辑升级Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "AC": {
+                        "label": "逻辑升级批准Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "T": {
+                        "label": "重置Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "TC": {
+                        "label": "重置批准Key",
+                        "type": "address",
+                        "select": {}
+                    }
+                },
+                "constant": true,
+                "type": "function",
+                "showLevel": 2
+            },
+            "get": {
+                "label": "查询函数",
+                "inputs": {
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_address": {
+                        "label": "_address",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_returnSize": {
+                        "label": "_returnSize",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "constant": true,
+                "type": "function",
+                "showLevel": 0
+            },
+            "requestConfirm": {
+                "label": "请求批准",
+                "inputs": {
+                    "_type": {
+                        "label": "类型 0:key 1:fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 2
+            },
+            "confirm": {
+                "label": "批准",
+                "inputs": {
+                    "_type": {
+                        "label": "类型 0:key 1:fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 2
+            },
+            "getWait": {
+                "label": "查询待批准的逻辑",
+                "inputs": {
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_address": {
+                        "label": "地址",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_returnSize": {
+                        "label": "返回数",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "constant": true,
+                "type": "function",
+                "showLevel": 0
+            }
+        }
+    },
     "Token": {
         "label": "资产合约",
         "address": "",
@@ -1194,34 +1411,6 @@ var abis1=
                     }
                 ],
                 "name": "ResetOwner",
-                "type": "event",
-                "label": ""
-            },
-            "0x3b0a8ddef325df2bfdfa6b430ae4c8421841cd135bfa8fb5e432f200787520bb": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_ok",
-                        "type": "bool",
-                        "lable": "_ok"
-                    }
-                ],
-                "name": "Success",
-                "type": "event",
-                "label": ""
-            },
-            "0x39eabce61287198fda55b2dd4ffd836301fe4f68152857110cb8ec2b7f60c2c6": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Err",
                 "type": "event",
                 "label": ""
             },
@@ -1832,6 +2021,74 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
+            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "ConfirmOperation",
+                "type": "event",
+                "label": ""
+            },
+            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Reject",
+                "type": "event",
+                "label": ""
+            },
+            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "SetOption",
+                "type": "event",
+                "label": ""
+            },
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_sig",
+                        "type": "uint256",
+                        "lable": "_sig"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": ""
+            },
             "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
                 "anonymous": false,
                 "inputs": [
@@ -1910,74 +2167,6 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
-            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "ConfirmOperation",
-                "type": "event",
-                "label": ""
-            },
-            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Reject",
-                "type": "event",
-                "label": ""
-            },
-            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_value",
-                        "type": "uint256",
-                        "lable": "_value"
-                    }
-                ],
-                "name": "SetOption",
-                "type": "event",
-                "label": ""
-            },
-            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_sig",
-                        "type": "uint256",
-                        "lable": "_sig"
-                    }
-                ],
-                "name": "SetFun",
-                "type": "event",
-                "label": ""
-            },
             "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
                 "anonymous": false,
                 "inputs": [
@@ -2029,34 +2218,6 @@ var abis1=
                     }
                 ],
                 "name": "ResetOwner",
-                "type": "event",
-                "label": ""
-            },
-            "0x3b0a8ddef325df2bfdfa6b430ae4c8421841cd135bfa8fb5e432f200787520bb": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_ok",
-                        "type": "bool",
-                        "lable": "_ok"
-                    }
-                ],
-                "name": "Success",
-                "type": "event",
-                "label": ""
-            },
-            "0x39eabce61287198fda55b2dd4ffd836301fe4f68152857110cb8ec2b7f60c2c6": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Err",
                 "type": "event",
                 "label": ""
             },
@@ -2796,108 +2957,6 @@ var abis1=
         "label": "交易管理合约",
         "address": "",
         "events": {
-            "0xdc2532ba16f1e858286fa0d0e6b0ebb1e0a48b7ecf0d64fb0dd3b635d03aa97c": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_key",
-                        "type": "uint256",
-                        "lable": "_key"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_value",
-                        "type": "uint256",
-                        "lable": "_value"
-                    }
-                ],
-                "name": "ResetOption",
-                "type": "event",
-                "label": ""
-            },
-            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_res",
-                        "type": "uint256[]",
-                        "lable": "_res"
-                    }
-                ],
-                "name": "Init",
-                "type": "event",
-                "label": ""
-            },
-            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_old",
-                        "type": "uint256",
-                        "lable": "_old"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_new",
-                        "type": "uint256",
-                        "lable": "_new"
-                    }
-                ],
-                "name": "ResetCore",
-                "type": "event",
-                "label": ""
-            },
-            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_old",
-                        "type": "uint256",
-                        "lable": "_old"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_new",
-                        "type": "uint256",
-                        "lable": "_new"
-                    }
-                ],
-                "name": "ResetOwner",
-                "type": "event",
-                "label": ""
-            },
-            "0x3b0a8ddef325df2bfdfa6b430ae4c8421841cd135bfa8fb5e432f200787520bb": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_ok",
-                        "type": "bool",
-                        "lable": "_ok"
-                    }
-                ],
-                "name": "Success",
-                "type": "event",
-                "label": ""
-            },
-            "0x39eabce61287198fda55b2dd4ffd836301fe4f68152857110cb8ec2b7f60c2c6": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Err",
-                "type": "event",
-                "label": ""
-            },
             "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
                 "anonymous": false,
                 "inputs": [
@@ -2973,6 +3032,60 @@ var abis1=
                     }
                 ],
                 "name": "ResetKeyReject",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
                 "type": "event",
                 "label": ""
             },
@@ -3381,6 +3494,74 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
+            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "ConfirmOperation",
+                "type": "event",
+                "label": ""
+            },
+            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Reject",
+                "type": "event",
+                "label": ""
+            },
+            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "SetOption",
+                "type": "event",
+                "label": ""
+            },
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_sig",
+                        "type": "uint256",
+                        "lable": "_sig"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": ""
+            },
             "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
                 "anonymous": false,
                 "inputs": [
@@ -3459,74 +3640,6 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
-            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "ConfirmOperation",
-                "type": "event",
-                "label": ""
-            },
-            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Reject",
-                "type": "event",
-                "label": ""
-            },
-            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_value",
-                        "type": "uint256",
-                        "lable": "_value"
-                    }
-                ],
-                "name": "SetOption",
-                "type": "event",
-                "label": ""
-            },
-            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_sig",
-                        "type": "uint256",
-                        "lable": "_sig"
-                    }
-                ],
-                "name": "SetFun",
-                "type": "event",
-                "label": ""
-            },
             "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
                 "anonymous": false,
                 "inputs": [
@@ -3581,34 +3694,6 @@ var abis1=
                 "type": "event",
                 "label": ""
             },
-            "0x3b0a8ddef325df2bfdfa6b430ae4c8421841cd135bfa8fb5e432f200787520bb": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_ok",
-                        "type": "bool",
-                        "lable": "_ok"
-                    }
-                ],
-                "name": "Success",
-                "type": "event",
-                "label": ""
-            },
-            "0x39eabce61287198fda55b2dd4ffd836301fe4f68152857110cb8ec2b7f60c2c6": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_no",
-                        "type": "uint256",
-                        "lable": "_no"
-                    }
-                ],
-                "name": "Err",
-                "type": "event",
-                "label": ""
-            },
             "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
                 "anonymous": false,
                 "inputs": [
@@ -3651,7 +3736,7 @@ var abis1=
                 "showLevel": 2
             },
             "resetAccountOwner": {
-                "label": "重置账户",
+                "label": "重置账户私钥",
                 "inputs": {
                     "_account": {
                         "label": "账户地址",
@@ -3734,7 +3819,11 @@ var abis1=
                     "_status": {
                         "label": "状态",
                         "type": "uint8",
-                        "select": {}
+                        "select": {
+                            "0": "等待批准",
+                            "1": "已经批准",
+                            "2": "已经拒绝"
+                        }
                     }
                 },
                 "constant": true,

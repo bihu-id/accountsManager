@@ -210,8 +210,8 @@ contract TokenManager is TokenManagerInterface{
         m_options[uint(Option.optionsAmount)]=8;
         m_options[uint(Option.funAmount)]=3;
 
-        m_options[uint(Option.xindi)]=_accountManager;
-        m_options[uint(Option.accountManager)]=_xindi;
+        m_options[uint(Option.xindi)]=_xindi;
+        m_options[uint(Option.accountManager)]=_accountManager;
         m_options[uint(Option.tokenProxy)]=_tokenPorxy;
         m_options[uint(Option.MinTerm)]=24*3600;
         m_options[uint(Option.limit)]=100;

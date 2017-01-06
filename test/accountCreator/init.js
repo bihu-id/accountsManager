@@ -5,13 +5,13 @@ contract('init accountManager', function(accounts) {
     var address=getRpcStr.get()
 
     var AccountProxy=address.AccountProxy
-    var AccountManagerData=address.AccountCreatorData
+    var AccountCreatorData=address.AccountCreatorData
     var XindiData=address.XindiData
     var TxManagerData=address.TxManagerData
 
     it("init AccountCreator data", function () {
 
-        var instance=AccountCreator.at(AccountManagerData);
+        var instance=AccountCreator.at(AccountCreatorData);
         console.log("init")
         console.log("owner:",accounts[20]);
         console.log("account owner:",XindiData);
@@ -25,7 +25,7 @@ contract('init accountManager', function(accounts) {
 
     it("get option", function () {
 
-        var instance=AccountCreator.at(AccountManagerData);
+        var instance=AccountCreator.at(AccountCreatorData);
         return instance.getOptions.call().then(function(res){
             
             console.log("core:",res[0]);

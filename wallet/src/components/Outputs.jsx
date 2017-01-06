@@ -56,7 +56,7 @@ class Output extends React.Component{
         }
         else if(abl["select"]!=undefined )
                 if(Object.keys(abl["select"]).length!=0){
-                    r_output= <span>{abl["select"][value.toString()]}</span>
+                    r_output= <span>{abl["select"][value.toString()] +"/"+value.toString()}</span>
         }
         else
             r_output=<span>{value.toString()}</span>
