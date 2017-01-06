@@ -177,19 +177,19 @@ fs.readdir("./contracts",function(err,files){
             //events
 
             var pathPre="./build/contracts/"
-            var soljs=require(pathPre+contractKey+".js")
+            var soljs=require(pathPre+contractKey+".sol.js")
             var events=soljs["events"]
 
             Object.keys(events).forEach(function(k){
-                events[k]["label"]=""
+                events[k]["label"]=events[k]["name"]
                 sub=[contractKey,"events",k,"label"]
                 if(getSub(oldabis1,sub)!=undefined)
                     events[k]["label"]= getSub(oldabis1,sub);
-                for(var ei=0;i<events[k]["inputs"].length;i++){
-                    events[k]["inputs"][i]["lable"]=""
-                    sub=[contractKey,"events",k,"inputs",i,"label"]
+                for(var ei=0;ei<events[k]["inputs"].length;ei++){
+                    events[k]["inputs"][ei]["lable"]=events[k]["inputs"][ei]["name"]
+                    sub=[contractKey,"events",k,"inputs",ei,"label"]
                     if(getSub(oldabis1,sub)!=undefined)
-                        events[k]["inputs"][i]["lable"]= getSub(oldabis1,sub);
+                        events[k]["inputs"][ei]["lable"]= getSub(oldabis1,sub);
                 }
             })
             abisContract["events"]=events
