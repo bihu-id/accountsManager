@@ -394,7 +394,7 @@ contract Account is AccountInterface{
         //check freeze
         iffreeze();
         //check if set pass by tx manager
-        checkPass();
+        //checkPass();
         //check owner
         if(!checkApprove(msg.sender))                                {throwErrEvent(60021003); }
 

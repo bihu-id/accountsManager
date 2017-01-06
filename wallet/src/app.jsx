@@ -121,10 +121,11 @@ class Contract extends React.Component{
     }
     onSignAddressChange(e){
 
-        this.setState({signAddress:e.target.value})
+        var signAddress=e.target.value
+        this.setState({signAddress:signAddress})
         var keys=Object.keys(accountsKey)
         for(var i=0;i<keys.length;i++)
-            if(accountsKey[keys[i]]["address"]==address)
+            if(accountsKey[keys[i]]["address"]==signAddress)
             {
                 this.setState({privateKey:accountsKey[keys[i]]["privateKey"]})
                 break;
@@ -509,9 +510,9 @@ class App extends React.Component{
         super(props);
         this.state = {
             contract:"",
-            //rpc:"http://139.199.7.43:8545",
-            rpc:"http://127.0.0.1:8545",
-            chainId:316
+            rpc:"http://139.196.234.239:8545",
+            //rpc:"http://127.0.0.1:8545",
+            chainId:314
         };
     }
 

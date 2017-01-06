@@ -524,7 +524,7 @@ var abis1=
         }
     },
     "AccountCreator": {
-        "label": "账户管理合约",
+        "label": "账户创建者",
         "address": "",
         "funs": {
             "requestConfirm": {
