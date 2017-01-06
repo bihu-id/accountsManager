@@ -6,7 +6,7 @@ contract AccountInterface is BaseLogic{
     //function call other contract                              调用其他合约的函数
 
     /// @notice create token ,contract check the account was created by AccountCreator ,but not check the account have access to create token
-    /// 创建资产,合约检查创建者是不是由AccountManager管理的账户,但是并检查是否有权力创建资产
+    /// 创建资产,合约检查创建者是不是由AccountCreator管理的账户,但是并检查是否有权力创建资产
     /// @param _symbol symbol of token ,Max size 32 bytes32 ,ASCII of symbol,contract do not check the length .. 资产的代号,不可重复,最大32字节,是字母的ASCII,合约只检查是否重复,但不检查长度,大小写,和其他规则
     /// @param _maxSupply max supply of the token               资产最大供应量,如果当前供应量=资产最大供应量,那么资产不能增发
     /// @param _precision precision of token                    资产的精度
@@ -394,7 +394,7 @@ contract Account is AccountInterface{
         //check freeze
         iffreeze();
         //check if set pass by tx manager
-        checkPass();
+        //checkPass();
         //check owner
         if(!checkApprove(msg.sender))                                {throwErrEvent(60021003); }
 

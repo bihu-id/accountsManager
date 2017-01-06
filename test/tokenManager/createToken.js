@@ -5,7 +5,7 @@ contract('create token', function(accounts) {
 
     var address=getRpcStr.get()
     var tokenmanager=address.TokenManagerData
-    var accountManager=address.AccountManagerData
+    var accountManager=address.AccountCreatorData
     var txManager=address.TxManagerData
 
     //console.log(address)

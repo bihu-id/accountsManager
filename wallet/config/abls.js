@@ -3,6 +3,160 @@ var abis1=
     "Account": {
         "label": "账户合约",
         "address": "",
+        "events": {
+            "0x12044b8a5393cb69b5ab881382412834a346eb26c8e7e06f0145fe64eb861c72": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "",
+                        "type": "uint256",
+                        "lable": ""
+                    },
+                    {
+                        "indexed": false,
+                        "name": "",
+                        "type": "uint256",
+                        "lable": ""
+                    }
+                ],
+                "name": "Pass",
+                "type": "event",
+                "label": ""
+            },
+            "0x7cd5190a74e34511da6836647848ec841d0389e70f1c77ee2b8190a0ffd3c656": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_Tx_threshold",
+                        "type": "uint256",
+                        "lable": "_Tx_threshold"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_owners",
+                        "type": "address[]",
+                        "lable": "_owners"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_weight",
+                        "type": "uint256[]",
+                        "lable": "_weight"
+                    }
+                ],
+                "name": "ReSetAccountOwner",
+                "type": "event",
+                "label": "替换账户私钥"
+            },
+            "0x1277d52ae6f0181323e5f873531b1a84bf1528e8cea2a8fe82e154dced9d275a": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_owner",
+                        "type": "address",
+                        "lable": "_owner"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_weight",
+                        "type": "uint256",
+                        "lable": "_weight"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_Tx_threshold",
+                        "type": "uint256",
+                        "lable": "_Tx_threshold"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_core",
+                        "type": "address",
+                        "lable": "_core"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_coreTx",
+                        "type": "address",
+                        "lable": "_coreTx"
+                    }
+                ],
+                "name": "CreateAccount",
+                "type": "event",
+                "label": "创建账户"
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": "初始化"
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "createToken": {
                 "label": "创建资产",
@@ -172,7 +326,7 @@ var abis1=
                 "showLevel": 2
             },
             "resetAccountOwner": {
-                "label": "resetAccountOwner",
+                "label": "重置账户私钥",
                 "inputs": {
                     "_Tx_threshold": {
                         "label": "_Tx_threshold",
@@ -396,136 +550,136 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
-            },
-            "Pass": {
-                "label": "Pass",
-                "inputs": {
-                    "": {
-                        "label": "",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ReSetAccountOwner": {
-                "label": "ReSetAccountOwner",
-                "inputs": {
-                    "_Tx_threshold": {
-                        "label": "_Tx_threshold",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_owners": {
-                        "label": "_owners",
-                        "type": "address[]",
-                        "select": {}
-                    },
-                    "_weight": {
-                        "label": "_weight",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "CreateAccount": {
-                "label": "CreateAccount",
-                "inputs": {
-                    "_owner": {
-                        "label": "_owner",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_weight": {
-                        "label": "_weight",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_Tx_threshold": {
-                        "label": "_Tx_threshold",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_core": {
-                        "label": "_core",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_coreTx": {
-                        "label": "_coreTx",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Init": {
-                "label": "Init",
-                "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetCore": {
-                "label": "ResetCore",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
             }
         }
     },
     "AccountCreator": {
-        "label": "账户管理合约",
+        "label": "账户创建者",
         "address": "",
+        "events": {
+            "0xcbacf70fb7ddabb7c2de8b7dff0f79495cc5a791cc87d9c6c87444dd486ec57d": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_accountAddress",
+                        "type": "address",
+                        "lable": "_accountAddress"
+                    }
+                ],
+                "name": "CreateAccountData",
+                "type": "event",
+                "label": ""
+            },
+            "0xe74ed25be83dd0db3945acd12f6b932b2f030358493cc20f2632abf93e87c476": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "AccountRecode",
+                "type": "event",
+                "label": ""
+            },
+            "0xdc2532ba16f1e858286fa0d0e6b0ebb1e0a48b7ecf0d64fb0dd3b635d03aa97c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_key",
+                        "type": "uint256",
+                        "lable": "_key"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "ResetOption",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "requestConfirm": {
                 "label": "请求批准参数设置",
@@ -750,109 +904,250 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 2
+            }
+        }
+    },
+    "LogicProxy": {
+        "label": "逻辑代理合约",
+        "address": "",
+        "events": {
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_fun",
+                        "type": "uint256",
+                        "lable": "_fun"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_resSize",
+                        "type": "uint256",
+                        "lable": "_resSize"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": "SetFun"
             },
-            "CreateAccountData": {
-                "label": "CreateAccountData",
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": "Alert"
+            }
+        },
+        "funs": {
+            "resetKey": {
+                "label": "重置Key",
                 "inputs": {
-                    "_accountAddress": {
-                        "label": "_accountAddress",
+                    "_no": {
+                        "label": "角色",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_newKey": {
+                        "label": "新Key",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 1
+            },
+            "getKeys": {
+                "label": "查询Key",
+                "inputs": {},
+                "outputs": {
+                    "A": {
+                        "label": "逻辑升级Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "AC": {
+                        "label": "逻辑升级批准Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "T": {
+                        "label": "重置Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "TC": {
+                        "label": "重置批准Key",
                         "type": "address",
                         "select": {}
                     }
                 },
-                "type": "event",
-                "showLevel": 0
+                "constant": true,
+                "type": "function",
+                "showLevel": 2
             },
-            "AccountRecode": {
-                "label": "AccountRecode",
+            "setfun": {
+                "label": "setfun",
                 "inputs": {
-                    "_no": {
-                        "label": "_no",
+                    "_logic": {
+                        "label": "_logic",
                         "type": "uint256",
                         "select": {}
                     },
-                    "_account": {
-                        "label": "_account",
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_resSize": {
+                        "label": "_resSize",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "getWaitKeys": {
+                "label": "查询待批准keys",
+                "inputs": {},
+                "outputs": {
+                    "A": {
+                        "label": "逻辑升级Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "AC": {
+                        "label": "逻辑升级批准Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "T": {
+                        "label": "重置Key",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "TC": {
+                        "label": "重置批准Key",
                         "type": "address",
                         "select": {}
                     }
                 },
-                "type": "event",
-                "showLevel": 0
+                "constant": true,
+                "type": "function",
+                "showLevel": 2
             },
-            "ResetOption": {
-                "label": "ResetOption",
+            "get": {
+                "label": "查询函数",
                 "inputs": {
-                    "_key": {
-                        "label": "_key",
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_address": {
+                        "label": "_address",
                         "type": "uint256",
                         "select": {}
                     },
-                    "_value": {
-                        "label": "_value",
+                    "_returnSize": {
+                        "label": "_returnSize",
                         "type": "uint256",
                         "select": {}
                     }
                 },
-                "type": "event",
+                "constant": true,
+                "type": "function",
                 "showLevel": 0
             },
-            "Init": {
-                "label": "Init",
+            "requestConfirm": {
+                "label": "请求批准",
                 "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
+                    "_type": {
+                        "label": "类型 0:key 1:fun",
+                        "type": "uint256",
                         "select": {}
                     }
                 },
-                "type": "event",
-                "showLevel": 0
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 2
             },
-            "ResetCore": {
-                "label": "ResetCore",
+            "confirm": {
+                "label": "批准",
                 "inputs": {
-                    "_old": {
-                        "label": "_old",
+                    "_type": {
+                        "label": "类型 0:key 1:fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 2
+            },
+            "getWait": {
+                "label": "查询待批准的逻辑",
+                "inputs": {
+                    "_fun": {
+                        "label": "_fun",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_address": {
+                        "label": "地址",
                         "type": "uint256",
                         "select": {}
                     },
-                    "_new": {
-                        "label": "_new",
+                    "_returnSize": {
+                        "label": "返回数",
                         "type": "uint256",
                         "select": {}
                     }
                 },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
+                "constant": true,
+                "type": "function",
                 "showLevel": 0
             }
         }
@@ -860,6 +1155,280 @@ var abis1=
     "Token": {
         "label": "资产合约",
         "address": "",
+        "events": {
+            "0x149fce93b932e682403cc96bec03e279d541180833f679b91e445acb94279ba2": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_issuer",
+                        "type": "address",
+                        "lable": "_issuer"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_symbol",
+                        "type": "bytes32",
+                        "lable": "_symbol"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_id",
+                        "type": "uint256",
+                        "lable": "_id"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_maxSupply",
+                        "type": "uint256",
+                        "lable": "_maxSupply"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_precision",
+                        "type": "uint256",
+                        "lable": "_precision"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_currentSupply",
+                        "type": "uint256",
+                        "lable": "_currentSupply"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_closingTime",
+                        "type": "uint256",
+                        "lable": "_closingTime"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_description",
+                        "type": "string",
+                        "lable": "_description"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_hash",
+                        "type": "uint256",
+                        "lable": "_hash"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_coreContract",
+                        "type": "address",
+                        "lable": "_coreContract"
+                    }
+                ],
+                "name": "TokenCreate",
+                "type": "event",
+                "label": ""
+            },
+            "0xe8d65283ce7aee10608c3cc5a792b8c6d12d6a384324815c848ba173314f0eba": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_id",
+                        "type": "uint256",
+                        "lable": "_id"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_from",
+                        "type": "address",
+                        "lable": "_from"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_to",
+                        "type": "address",
+                        "lable": "_to"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_amount",
+                        "type": "uint256",
+                        "lable": "_amount"
+                    }
+                ],
+                "name": "ForceTransfer",
+                "type": "event",
+                "label": ""
+            },
+            "0xafce7628c7fdce8d63a6cb5444725ac1423d157e31893de784bdbd111ac9435a": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_issuer",
+                        "type": "address",
+                        "lable": "_issuer"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_id",
+                        "type": "uint256",
+                        "lable": "_id"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_amounts",
+                        "type": "uint256",
+                        "lable": "_amounts"
+                    }
+                ],
+                "name": "IssueMore",
+                "type": "event",
+                "label": ""
+            },
+            "0x16b35c733876ade87e5062332519f2666918ff4b5a284a7f4625c231cda6ff28": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_issuer",
+                        "type": "address",
+                        "lable": "_issuer"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_id",
+                        "type": "uint256",
+                        "lable": "_id"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_amounts",
+                        "type": "uint256",
+                        "lable": "_amounts"
+                    }
+                ],
+                "name": "Destroy",
+                "type": "event",
+                "label": ""
+            },
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "from",
+                        "type": "address",
+                        "lable": "from"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "to",
+                        "type": "address",
+                        "lable": "to"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256",
+                        "lable": "value"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event",
+                "label": ""
+            },
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "owner",
+                        "type": "address",
+                        "lable": "owner"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "spender",
+                        "type": "address",
+                        "lable": "spender"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256",
+                        "lable": "value"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "approve": {
                 "label": "批准/approve",
@@ -1297,242 +1866,376 @@ var abis1=
                 "constant": true,
                 "type": "function",
                 "showLevel": 0
-            },
-            "TokenCreate": {
-                "label": "TokenCreate",
-                "inputs": {
-                    "_issuer": {
-                        "label": "_issuer",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_symbol": {
-                        "label": "_symbol",
-                        "type": "bytes32",
-                        "select": {}
-                    },
-                    "_id": {
-                        "label": "_id",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_maxSupply": {
-                        "label": "_maxSupply",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_precision": {
-                        "label": "_precision",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_currentSupply": {
-                        "label": "_currentSupply",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_closingTime": {
-                        "label": "_closingTime",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_description": {
-                        "label": "_description",
-                        "type": "string",
-                        "select": {}
-                    },
-                    "_hash": {
-                        "label": "_hash",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_coreContract": {
-                        "label": "_coreContract",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ForceTransfer": {
-                "label": "ForceTransfer",
-                "inputs": {
-                    "_id": {
-                        "label": "_id",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_from": {
-                        "label": "_from",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_to": {
-                        "label": "_to",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_amount": {
-                        "label": "_amount",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "IssueMore": {
-                "label": "IssueMore",
-                "inputs": {
-                    "_issuer": {
-                        "label": "_issuer",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_id": {
-                        "label": "_id",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_amounts": {
-                        "label": "_amounts",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Destroy": {
-                "label": "Destroy",
-                "inputs": {
-                    "_issuer": {
-                        "label": "_issuer",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_id": {
-                        "label": "_id",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_amounts": {
-                        "label": "_amounts",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Transfer": {
-                "label": "Transfer",
-                "inputs": {
-                    "from": {
-                        "label": "from",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "to": {
-                        "label": "to",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "value": {
-                        "label": "value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Approval": {
-                "label": "Approval",
-                "inputs": {
-                    "owner": {
-                        "label": "owner",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "spender": {
-                        "label": "spender",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "value": {
-                        "label": "value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Init": {
-                "label": "Init",
-                "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetCore": {
-                "label": "ResetCore",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
             }
         }
     },
     "TokenManager": {
         "label": "资产管理合约",
         "address": "",
+        "events": {
+            "0x21ff001241a191befcf24d8099f96a6d4363809c1e76951486f68163fecdf473": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_token",
+                        "type": "address",
+                        "lable": "_token"
+                    }
+                ],
+                "name": "CreateTokenData",
+                "type": "event",
+                "label": ""
+            },
+            "0xf514230c7d36cf36036dadb7ca53541d8d0dd60001bb1a5bad36fca18b5488fe": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_issuer",
+                        "type": "address",
+                        "lable": "_issuer"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_symbol",
+                        "type": "bytes32",
+                        "lable": "_symbol"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_id",
+                        "type": "uint256",
+                        "lable": "_id"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_maxSupply",
+                        "type": "uint256",
+                        "lable": "_maxSupply"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_precision",
+                        "type": "uint256",
+                        "lable": "_precision"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_currentSupply",
+                        "type": "uint256",
+                        "lable": "_currentSupply"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_closingTime",
+                        "type": "uint256",
+                        "lable": "_closingTime"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_description",
+                        "type": "string",
+                        "lable": "_description"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_hash",
+                        "type": "uint256",
+                        "lable": "_hash"
+                    }
+                ],
+                "name": "CreateToken",
+                "type": "event",
+                "label": ""
+            },
+            "0x51d18786e9cb144f87d46e7b796309ea84c7c687d91e09c97f051eacf59bc528": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_Token",
+                        "type": "address",
+                        "lable": "_Token"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "Freeze",
+                "type": "event",
+                "label": ""
+            },
+            "0x4f3ab9ff0cc4f039268532098e01239544b0420171876e36889d01c62c784c79": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_Token",
+                        "type": "address",
+                        "lable": "_Token"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "Unfreeze",
+                "type": "event",
+                "label": ""
+            },
+            "0x365f7b5efa16563feeb2644fe56f482ae46159056ada889a3a55f70a5a339b65": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_token",
+                        "type": "address",
+                        "lable": "_token"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_from",
+                        "type": "address",
+                        "lable": "_from"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_to",
+                        "type": "address",
+                        "lable": "_to"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "ForceTransfer",
+                "type": "event",
+                "label": ""
+            },
+            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "ConfirmOperation",
+                "type": "event",
+                "label": ""
+            },
+            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Reject",
+                "type": "event",
+                "label": ""
+            },
+            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "SetOption",
+                "type": "event",
+                "label": ""
+            },
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_sig",
+                        "type": "uint256",
+                        "lable": "_sig"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": ""
+            },
+            "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKey",
+                "type": "event",
+                "label": ""
+            },
+            "0xb076d823efc927de7501ab45d276be1d60b2a18e7ecbba35939ffbf1487cd081": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyC",
+                "type": "event",
+                "label": ""
+            },
+            "0xc2d0e37ff8c13b77446d3da778c4c2cff3d6a2e008fe2328d68a3f745d20a3e4": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyReject",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "reject": {
                 "label": "拒绝操作",
@@ -2247,319 +2950,160 @@ var abis1=
                 "constant": true,
                 "type": "function",
                 "showLevel": 0
-            },
-            "CreateTokenData": {
-                "label": "CreateTokenData",
-                "inputs": {
-                    "_token": {
-                        "label": "_token",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "CreateToken": {
-                "label": "CreateToken",
-                "inputs": {
-                    "_issuer": {
-                        "label": "_issuer",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_symbol": {
-                        "label": "_symbol",
-                        "type": "bytes32",
-                        "select": {}
-                    },
-                    "_id": {
-                        "label": "_id",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_maxSupply": {
-                        "label": "_maxSupply",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_precision": {
-                        "label": "_precision",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_currentSupply": {
-                        "label": "_currentSupply",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_closingTime": {
-                        "label": "_closingTime",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_description": {
-                        "label": "_description",
-                        "type": "string",
-                        "select": {}
-                    },
-                    "_hash": {
-                        "label": "_hash",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Freeze": {
-                "label": "Freeze",
-                "inputs": {
-                    "_Token": {
-                        "label": "_Token",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Unfreeze": {
-                "label": "Unfreeze",
-                "inputs": {
-                    "_Token": {
-                        "label": "_Token",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ForceTransfer": {
-                "label": "ForceTransfer",
-                "inputs": {
-                    "_token": {
-                        "label": "_token",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_from": {
-                        "label": "_from",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_to": {
-                        "label": "_to",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_value": {
-                        "label": "_value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ConfirmOperation": {
-                "label": "ConfirmOperation",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Reject": {
-                "label": "Reject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetOption": {
-                "label": "SetOption",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_value": {
-                        "label": "_value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetFun": {
-                "label": "SetFun",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_sig": {
-                        "label": "_sig",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKey": {
-                "label": "ResetKey",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyC": {
-                "label": "ResetKeyC",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyReject": {
-                "label": "ResetKeyReject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Init": {
-                "label": "Init",
-                "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetCore": {
-                "label": "ResetCore",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
             }
         }
     },
     "TxManager": {
         "label": "交易管理合约",
         "address": "",
+        "events": {
+            "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKey",
+                "type": "event",
+                "label": ""
+            },
+            "0xb076d823efc927de7501ab45d276be1d60b2a18e7ecbba35939ffbf1487cd081": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyC",
+                "type": "event",
+                "label": ""
+            },
+            "0xc2d0e37ff8c13b77446d3da778c4c2cff3d6a2e008fe2328d68a3f745d20a3e4": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyReject",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "pass": {
                 "label": "放行交易",
@@ -2829,136 +3373,342 @@ var abis1=
                 "constant": true,
                 "type": "function",
                 "showLevel": 0
-            },
-            "ResetKey": {
-                "label": "ResetKey",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyC": {
-                "label": "ResetKeyC",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyReject": {
-                "label": "ResetKeyReject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Init": {
-                "label": "Init",
-                "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetCore": {
-                "label": "ResetCore",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
             }
         }
     },
     "Xindi": {
         "label": "Xindi",
         "address": "",
+        "events": {
+            "0x53f4b433c0b3e915babe23e2fa3c44ba256504a0db9bb4994e96ad28a0608117": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_Threshold",
+                        "type": "uint256",
+                        "lable": "_Threshold"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_owners",
+                        "type": "address[]",
+                        "lable": "_owners"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_weight",
+                        "type": "uint256[]",
+                        "lable": "_weight"
+                    }
+                ],
+                "name": "ResetAccountOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x7df933ee8e3ea4af7740ee95f6b9b20ea765884b76410cf620f063bda24497d9": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "level",
+                        "type": "uint256",
+                        "lable": "level"
+                    }
+                ],
+                "name": "SetIdLevel",
+                "type": "event",
+                "label": ""
+            },
+            "0x9e54089bcb2730f28b5feee7c91bcaa7b07a83d52801b695a025ffe424438dc2": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_CA",
+                        "type": "address",
+                        "lable": "_CA"
+                    }
+                ],
+                "name": "SetCA",
+                "type": "event",
+                "label": ""
+            },
+            "0x2846657884f8ca62dc7d0f51a59627e506890d5a59ee1b35b515435da34b1295": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "RevokeCA",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf85b60d26151edd11443b704d424da6c43d0468f2235ebae3d1904dbc323049": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "Freeze",
+                "type": "event",
+                "label": ""
+            },
+            "0xca5069937e68fd197927055037f59d7c90bf75ac104e6e375539ef480c3ad6ee": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_account",
+                        "type": "address",
+                        "lable": "_account"
+                    }
+                ],
+                "name": "Unfreeze",
+                "type": "event",
+                "label": ""
+            },
+            "0xddd97b77ae4e9d3a639003e34204e767d2421086d68c203411d8f7fe26dc2f5b": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "ConfirmOperation",
+                "type": "event",
+                "label": ""
+            },
+            "0x230a38fb21a3287e57c3ebd56f136d3ad90c112593989004d4c1c05676c19def": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Reject",
+                "type": "event",
+                "label": ""
+            },
+            "0x35fd0d161073a41e57ca9615d97a0295550a837764449839309d59bc2195141d": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_value",
+                        "type": "uint256",
+                        "lable": "_value"
+                    }
+                ],
+                "name": "SetOption",
+                "type": "event",
+                "label": ""
+            },
+            "0x029c68b8827890cdeb3a3e183173c1b8127a6b905bd9df3f2206cf46af173a61": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_sig",
+                        "type": "uint256",
+                        "lable": "_sig"
+                    }
+                ],
+                "name": "SetFun",
+                "type": "event",
+                "label": ""
+            },
+            "0xfe95e527167a46386505b92a877ce5cb14eb349b2cbad907963e360f218628c9": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKey",
+                "type": "event",
+                "label": ""
+            },
+            "0xb076d823efc927de7501ab45d276be1d60b2a18e7ecbba35939ffbf1487cd081": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyC",
+                "type": "event",
+                "label": ""
+            },
+            "0xc2d0e37ff8c13b77446d3da778c4c2cff3d6a2e008fe2328d68a3f745d20a3e4": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_keyAddress",
+                        "type": "address",
+                        "lable": "_keyAddress"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_role",
+                        "type": "uint256",
+                        "lable": "_role"
+                    }
+                ],
+                "name": "ResetKeyReject",
+                "type": "event",
+                "label": ""
+            },
+            "0xb1e01ba6fb808bfa2dbb48923c5594fbab3dddabdef1bd70e5c3ac580cf8ae0e": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_res",
+                        "type": "uint256[]",
+                        "lable": "_res"
+                    }
+                ],
+                "name": "Init",
+                "type": "event",
+                "label": ""
+            },
+            "0x3ac9b587e27a1067ec6749df4d47ffae1b4f0a16cc1f7084f75958f8decf59d0": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetCore",
+                "type": "event",
+                "label": ""
+            },
+            "0xaf9e16246f41f72d8678fe46c8dca4ee61a7ec2c1aaa66099e13f2ec95c65a22": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_old",
+                        "type": "uint256",
+                        "lable": "_old"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "_new",
+                        "type": "uint256",
+                        "lable": "_new"
+                    }
+                ],
+                "name": "ResetOwner",
+                "type": "event",
+                "label": ""
+            },
+            "0x468ec5066d1b4739c21f88aeade8bcf919780aba332693c4a02d50da9bb2a25c": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_no",
+                        "type": "uint256",
+                        "lable": "_no"
+                    }
+                ],
+                "name": "Alert",
+                "type": "event",
+                "label": ""
+            }
+        },
         "funs": {
             "reject": {
                 "label": "拒绝操作",
@@ -2986,7 +3736,7 @@ var abis1=
                 "showLevel": 2
             },
             "resetAccountOwner": {
-                "label": "重置账户",
+                "label": "重置账户私钥",
                 "inputs": {
                     "_account": {
                         "label": "账户地址",
@@ -3069,7 +3819,11 @@ var abis1=
                     "_status": {
                         "label": "状态",
                         "type": "uint8",
-                        "select": {}
+                        "select": {
+                            "0": "等待批准",
+                            "1": "已经批准",
+                            "2": "已经拒绝"
+                        }
                     }
                 },
                 "constant": true,
@@ -3611,285 +4365,6 @@ var abis1=
                 "constant": true,
                 "type": "function",
                 "showLevel": 2
-            },
-            "ResetAccountOwner": {
-                "label": "ResetAccountOwner",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_Threshold": {
-                        "label": "_Threshold",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_owners": {
-                        "label": "_owners",
-                        "type": "address[]",
-                        "select": {}
-                    },
-                    "_weight": {
-                        "label": "_weight",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetIdLevel": {
-                "label": "SetIdLevel",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "level": {
-                        "label": "level",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetCA": {
-                "label": "SetCA",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_CA": {
-                        "label": "_CA",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "RevokeCA": {
-                "label": "RevokeCA",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Freeze": {
-                "label": "Freeze",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Unfreeze": {
-                "label": "Unfreeze",
-                "inputs": {
-                    "_account": {
-                        "label": "_account",
-                        "type": "address",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ConfirmOperation": {
-                "label": "ConfirmOperation",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Reject": {
-                "label": "Reject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetOption": {
-                "label": "SetOption",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_value": {
-                        "label": "_value",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "SetFun": {
-                "label": "SetFun",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_sig": {
-                        "label": "_sig",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKey": {
-                "label": "ResetKey",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyC": {
-                "label": "ResetKeyC",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetKeyReject": {
-                "label": "ResetKeyReject",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_keyAddress": {
-                        "label": "_keyAddress",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_role": {
-                        "label": "_role",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Init": {
-                "label": "Init",
-                "inputs": {
-                    "_res": {
-                        "label": "_res",
-                        "type": "uint256[]",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetCore": {
-                "label": "ResetCore",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "ResetOwner": {
-                "label": "ResetOwner",
-                "inputs": {
-                    "_old": {
-                        "label": "_old",
-                        "type": "uint256",
-                        "select": {}
-                    },
-                    "_new": {
-                        "label": "_new",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
-            },
-            "Alert": {
-                "label": "Alert",
-                "inputs": {
-                    "_no": {
-                        "label": "_no",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "type": "event",
-                "showLevel": 0
             }
         }
     }
