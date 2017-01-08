@@ -7,19 +7,19 @@ import Outputs from "./components/Outputs";
 
 var abls=require("./../config/abls")
 
-var abis=require("./../config/abis")
-var address=require("./../../test/address.js")
+var  abis=require("./../config/abis")
+var  address=require("./../../test/address.js")
 
-var Tx = require('ethereumjs-tx');
-var ethUtil = require('ethereumjs-util');
-var ethlightjs         = require('eth-lightwallet');
+var  Tx = require('ethereumjs-tx');
+var  ethUtil = require('ethereumjs-util');
+var  ethlightjs         = require('eth-lightwallet');
 
-var accountsKey=require("./../accountsKeys")
-var ethUtil = require('ethereumjs-util');
+var  accountsKey=require("./../accountsKeys")
+var  ethUtil = require('ethereumjs-util');
 
-var SolidityEvent = require("web3/lib/web3/event.js");
+var  SolidityEvent = require("web3/lib/web3/event.js");
 
-var BigNumber=require("BigNumber")
+var  BigNumber=require("BigNumber")
 const history = {};
 
 require("./../css/app.css");
@@ -30,22 +30,33 @@ class Events extends React.Component {
     constructor(props) {
         super(props);
         //logs
-        //eventsAbl
+        //eventsAbls
+        //contract
         // address
     }
 
     render() {
 
         let logs = this.props.logs;
-        var self=this
-        var eventsOut
-        var label
-        var r=logs.map(function (log) {
-            let eventsAbl = self.props.eventsAbl
-            var logsAbl = eventsAbl[log.topics[0]]
+        let self=this
+        let eventsOut
+        let label
+        let eventsAbls=this.props.eventsAbls
+        let eventsAbl = eventsAbls[this.props.contract]
+        let contractKeys=Object.keys(eventsAbls)
+        let r=logs.map(function (log) {
+            let logsAbl = eventsAbl[log.topics[0]]
+            if(logsAbl==undefined)
+                for(let i=0;i<contractKeys.length;i++){
+                    let otherAbl=eventsAbls[contractKeys[i]]
+                    if(otherAbl[log.topics[0]]!=undefined) {
+                        logsAbl = eventsAbl[log.topics[0]]
+                        break
+                    }
+                }
             label=log["label"]
             if(logsAbl!=undefined ){
-                var decoder = new SolidityEvent(null, logsAbl, self.props.address);
+                let decoder = new SolidityEvent(null, logsAbl, self.props.address);
                 eventsOut=JSON.stringify(decoder.decode(log),null,2);
                 console.log("eventsOut",eventsOut)
                 return (<div>
@@ -99,6 +110,7 @@ class Contract extends React.Component{
         //console.log(this.props.address)
 
         this.state = {
+            name:this.props.name,
             fun:Object.keys(this.props.abl.funs)[0],
             //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0]),
             privateKey:"",
@@ -111,8 +123,8 @@ class Contract extends React.Component{
             result:"",
             init:this.props.init,
             dataHash:"",
-            temp:"剪贴框"
-
+            temp:"剪贴框",
+            eventsAbls:this.geteventsAbls()
             //this.props.address
         };
 
@@ -120,15 +132,24 @@ class Contract extends React.Component{
 
     cancelType(no,type,e){
         if (e.target.value==type) {
-            var newArgs = this.state.args
+            let newArgs = this.state.args
             newArgs[no] =""
             this.setState({args: newArgs});
         }
 
     }
 
+    geteventsAbls(){
+        let eventsAbls={}
+        let t_abls=abls
+        for(let i=0;i<Object.keys(t_abls).length;i++){
+            let k=Object.keys(t_abls)[i]
+            eventsAbls[k]=t_abls[k]["events"]
+        }
+        return eventsAbls
+    }
     onInputChange(no,e){
-        var newArgs=this.state.args
+        let newArgs=this.state.args
         newArgs[no]= e.target.value.replace(/" "/g, "")
         this.setState({
             args:newArgs,
@@ -183,10 +204,10 @@ class Contract extends React.Component{
     }
     onSignAddressChange(e){
 
-        var signAddress=e.target.value
+        let signAddress=e.target.value
         this.setState({signAddress:signAddress})
-        var keys=Object.keys(accountsKey)
-        for(var i=0;i<keys.length;i++)
+        let keys=Object.keys(accountsKey)
+        for(let i=0;i<keys.length;i++)
             if(accountsKey[keys[i]]["address"]==signAddress)
             {
                 this.setState({privateKey:accountsKey[keys[i]]["privateKey"]})
@@ -205,17 +226,17 @@ class Contract extends React.Component{
     }
     onSubmitConfirmTx(e){
 
-        var web3=this.props.web3
-        var abi=abis["TxManager"]
-        var privateKey= new Buffer(this.state.privateKey.substring(2), 'hex');
-        var fun="pass"
-        var args=[this.state.contractAddress,this.state.datahash,""]
-        var chainIdStr="id"+this.props.chainId
-        var to=address[chainIdStr]["TxManager"+"Data"]
-        var value=0
-        var gas=5000000
+        let web3=this.props.web3
+        let abi=abis["TxManager"]
+        let privateKey= new Buffer(this.state.privateKey.substring(2), 'hex');
+        let fun="pass"
+        let args=[this.state.contractAddress,this.state.datahash,""]
+        let chainIdStr="id"+this.props.chainId
+        let to=address[chainIdStr]["TxManager"+"Data"]
+        let value=0
+        let gas=5000000
 
-        var self=this
+        let self=this
         this.broadCast(web3,this.raw(web3,abi,privateKey,fun,args,to,value,gas,0,null).serializedTx,function(err,hash){
             if (!err) {
                 console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
@@ -224,7 +245,7 @@ class Contract extends React.Component{
                 })
             }
             setTimeout(function(){
-                var receipt=web3.eth.getTransactionReceipt(hash)
+                let receipt=web3.eth.getTransactionReceipt(hash)
                 console.log(receipt)
                 self.setState({
                     receipt:receipt
@@ -253,9 +274,9 @@ class Contract extends React.Component{
         let keys=Object.keys(funs);
         let fun=nextState.fun==""?funs[keys[0]]:funs[nextState.fun]
         let inputs=fun.inputs
-        var inputKeys=Object.keys(inputs)
-        var args={}
-        for(var i=0;i<inputKeys.length;i++)
+        let inputKeys=Object.keys(inputs)
+        let args={}
+        for(let i=0;i<inputKeys.length;i++)
         {
             args[i]=inputs[inputKeys[i]].type
         }
@@ -275,19 +296,19 @@ class Contract extends React.Component{
     }
     onSubmit(sumbitType){
 
-        var abi=this.props.abi
-        var web3=this.props.web3
-        var priKey=new Buffer(this.state.privateKey.substring(2),'hex')
-        var fun=this.state.fun
-        var to=this.state.contractAddress
-        var value=0
-        var gas=3000000
-        var nonce =0
-        var args=[]
+        let abi=this.props.abi
+        let web3=this.props.web3
+        let priKey=new Buffer(this.state.privateKey.substring(2),'hex')
+        let fun=this.state.fun
+        let to=this.state.contractAddress
+        let value=0
+        let gas=3000000
+        let nonce =0
+        let args=[]
 
-        var self=this
-        var keys=Object.keys(self.state.args)
-        for(var i=0;i<keys.length;i++)
+        let self=this
+        let keys=Object.keys(self.state.args)
+        for(let i=0;i<keys.length;i++)
             args.push(this.state.args[keys[i]])
 
         this.setState({
@@ -301,7 +322,7 @@ class Contract extends React.Component{
 
         if(sumbitType==1){
 
-            var res=this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
+            let res=this.raw(web3,abi,priKey,fun,args,to,value,gas,nonce,null)
 
             this.setState({
                 sign:res.serializedTx,
@@ -319,7 +340,7 @@ class Contract extends React.Component{
                 }
                 setTimeout(function(){
 
-                    var receipt=web3.eth.getTransactionReceipt(hash)
+                    let receipt=web3.eth.getTransactionReceipt(hash)
                     console.log(receipt)
                     self.setState({
                         receipt:receipt
@@ -330,38 +351,39 @@ class Contract extends React.Component{
     }
 
     dataFromAbis(abi,fun,args){
-        var types = ethlightjs.txutils._getTypesFromAbi(abi, fun);
+        let types = ethlightjs.txutils._getTypesFromAbi(abi, fun);
         return ethlightjs.txutils._encodeFunctionTxData(fun, types,args);
     }
     call(web3,abi,to,fun,args){
 
-        var data='0x'+this.dataFromAbis(abi, fun, args)
-        var obj={
+        let data='0x'+this.dataFromAbis(abi, fun, args)
+        let obj={
             "to":to,
             "data":data
         }
-        var res=web3.eth.call(obj)
+        let res=web3.eth.call(obj)
         this.setState({result:res})
         console.log("result:",res)
 
     }
     raw(web3,abi,privateKey,fun,args,to,value,gas,nonce,raw){
 
-        var serializedTx;
+        let serializedTx;
+        let data
         if(raw==null) {
-            var data = abi ? '0x' + this.dataFromAbis(abi, fun, args) : '0x0'
-            //var gas="4000000"
-            var int_nonce
+            data = abi ? '0x' + this.dataFromAbis(abi, fun, args) : '0x0'
+            //let gas="4000000"
+            let int_nonce
             if (nonce == 0)
                 var int_nonce = web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
             else
                 int_nonce = nonce;
-            var _nonce = "0x" + (int_nonce).toString(16);
-            var gasprice = "0x" + web3.eth.gasPrice.toString(16);
-            var gasLimit = "0x" + parseInt(gas, 10).toString(16)
-            var _value  //new BigNumber(web3.toWei(value, 'ether'));
+            let _nonce = "0x" + (int_nonce).toString(16);
+            let gasprice = "0x" + web3.eth.gasPrice.toString(16);
+            let gasLimit = "0x" + parseInt(gas, 10).toString(16)
+            let _value  //new BigNumber(web3.toWei(value, 'ether'));
 
-            var rawTx = {
+            let rawTx = {
                 nonce: _nonce,
                 gasPrice: gasprice,
                 gasLimit: gasLimit,
@@ -370,7 +392,7 @@ class Contract extends React.Component{
                 data: data
             }
             console.log(rawTx);
-            var tx = new Tx(rawTx);
+            let tx = new Tx(rawTx);
             tx.sign(privateKey);
             serializedTx= tx.serialize().toString('hex');
         }
@@ -389,7 +411,7 @@ class Contract extends React.Component{
 
     getType(json,key){
 
-        var res
+        let res
         res=Object.keys(json).map(function(k){
             return json[k][key]
         })
@@ -416,8 +438,8 @@ class Contract extends React.Component{
         </div>:""
 
         let r_inputs=[];
-        var inputKeys=Object.keys(inputs)
-        //var self=this
+        let inputKeys=Object.keys(inputs)
+        //let self=this
         for(let i=0;i<inputKeys.length;i++)
         {
             let key=inputKeys[i]
@@ -527,10 +549,10 @@ class Contract extends React.Component{
         //logs
         //eventsAbl
         // address
-        var receipt=this.state.receipt
+        let receipt=this.state.receipt
         let r_receipt=receipt?
             <div>
-                <Events logs= {receipt.logs} eventsAbl={abl.events} address={receipt.contractAddress} />
+                <Events logs= {receipt.logs} eventsAbls={this.state.eventsAbls} contract={this.state.name} address={receipt.contractAddress} />
             </div>:
             ""
         return (
@@ -611,27 +633,27 @@ class App extends React.Component{
 
     render() {
 
-        var web3 = new Web3(new Web3.providers.HttpProvider(this.state.rpc))
+        let web3 = new Web3(new Web3.providers.HttpProvider(this.state.rpc))
 
         let keys=Object.keys(abls);
 
         console.log(keys)
         //console.log(keys[0])
-        var raw_contracts=[]
+        let raw_contracts=[]
 
-        var contractName=this.state.contract==""?keys[0]:this.state.contract
+        let contractName=this.state.contract==""?keys[0]:this.state.contract
 
-        var contract=abls[contractName]
+        let contract=abls[contractName]
 
         console.log(contractName+"Data")
-        var contractAddress="0x1"
+        let contractAddress="0x1"
         if(address[this.getChainIdStr()]!=undefined)
             if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
                 contractAddress=address[this.getChainIdStr()][contractName+"Data"]
 
         console.log(contractAddress)
 
-        var abi=abis[contractName]
+        let abi=abis[contractName]
 
         keys.forEach(function(key){
             //console.log(fun.name)
@@ -652,7 +674,7 @@ class App extends React.Component{
                     {r_contracts}
                 </div>
                 <div>
-                    <Contract abl={contract} web3={web3} address={contractAddress} abi={abi} chainId={this.state.chainId}/>
+                    <Contract abl={contract} web3={web3} address={contractAddress} abi={abi} chainId={this.state.chainId} name={contractName}/>
                 </div>
             </div>
         );
