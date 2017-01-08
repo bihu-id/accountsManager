@@ -2365,7 +2365,7 @@ var abis1=
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 1
+                "showLevel": 2
             },
             "getKeys": {
                 "label": "getKeys",
@@ -2374,12 +2374,25 @@ var abis1=
                     "_keys": {
                         "label": "_keys",
                         "type": "address[]",
-                        "select": {}
+                        "select": {
+                            "0": "重置所有keys",
+                            "1": "重置所有keys批准",
+                            "2": "设置子管理合约key",
+                            "3": "设置子管理合约key批准",
+                            "4": "设置合约参数",
+                            "5": "设置合约参数批准",
+                            "6": "冻结账户",
+                            "7": "冻结账户批准",
+                            "8": "解冻账户",
+                            "9": "解冻账户批准",
+                            "10": "资产转移",
+                            "11": "资产转移批准"
+                        }
                     }
                 },
                 "constant": true,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "createToken": {
                 "label": "创建资产",
@@ -2429,7 +2442,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 2
+                "showLevel": 0
             },
             "setOption": {
                 "label": "setOption",
@@ -2554,7 +2567,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "getFun": {
                 "label": "getFun",
@@ -2599,7 +2612,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "forceTransfer": {
                 "label": "强制转移",
@@ -2776,7 +2789,7 @@ var abis1=
                 "showLevel": 2
             },
             "confirm": {
-                "label": "confirm",
+                "label": "批准",
                 "inputs": {
                     "_no": {
                         "label": "_no",
@@ -2798,7 +2811,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "setSubKey": {
                 "label": "setSubKey",

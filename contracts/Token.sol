@@ -133,7 +133,7 @@ contract Token is TokenInterface {
 
     /*
     modifier notEnd() {if(now < m_option.m_closingTime) throw; _;}
-    modifier ifCoreL() {if(msg.sender != m_option.m_core)throw; _;}
+    modifier ifCoreL() {if(msg.sender != m_option.m_coreContract)throw; _;}
     modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
     modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
     */
@@ -143,7 +143,7 @@ contract Token is TokenInterface {
     //check token if end
     function ifEnd() internal {if(now < m_option.m_closingTime)          {throwErrEvent(60040001);  }}
     //check if the operation is called from core
-    function ifCoreL() internal {if(msg.sender != m_option.m_core)       {throwErrEvent(10000000);  }}
+    function ifCoreL() internal {if(msg.sender != m_option.m_coreContract)       {throwErrEvent(10000000);  }}
 
     function ifIssuer()internal {if(msg.sender != m_option.m_issuer)     {throwErrEvent(60040004);  }}
 

@@ -354,7 +354,9 @@ contract TokenManager is TokenManagerInterface{
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](2);
 
-        t_data[0]=m_funs[uint(Fun.freeze)];
+        t_data[0]=0x8d1fdf2f;
+
+        //t_data[0]=m_funs[uint(Fun.freeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.freezeRoleC),t_data);
         Freeze(_token,_account);
@@ -366,7 +368,9 @@ contract TokenManager is TokenManagerInterface{
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](2);
-        t_data[0]=m_funs[uint(Fun.unfreeze)];
+
+        t_data[0]=0x45c8b1a6;
+        //t_data[0]=m_funs[uint(Fun.unfreeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_token,_account);
@@ -379,11 +383,13 @@ contract TokenManager is TokenManagerInterface{
         checKey(m_keys[uint(role.forceTransferRole)]);
         uint[] memory t_data=new uint[](4);
 
-        t_data[0]=m_funs[uint(Fun.forceTransfer)];
+        t_data[0]=0x33bebb77;
+        //t_data[0]=m_funs[uint(Fun.forceTransfer)];
         t_data[1]=uint(_from);
         t_data[2]=uint(_to);
         t_data[3]=uint(_value);
         addOperation(_token,uint(OperationType.forceTransferType),uint(role.forceTransferRoleC),t_data);
+        forceTransfer(_token,_from,_to,_value);
         return true;
 
     }

@@ -37,6 +37,7 @@ class Events extends React.Component {
 
     render() {
 
+        console.log("contract name in events : "+this.props.contract)
         let logs = this.props.logs;
         let self=this
         let eventsOut
@@ -110,7 +111,6 @@ class Contract extends React.Component{
         //console.log(this.props.address)
 
         this.state = {
-            name:this.props.name,
             fun:Object.keys(this.props.abl.funs)[0],
             //types:ethlightjs.txutils._getTypesFromAbi(this.props.abi, Object.keys(this.props.abl.funs)[0]),
             privateKey:"",
@@ -250,7 +250,7 @@ class Contract extends React.Component{
                 self.setState({
                     receipt:receipt
                 })
-            }, 5000)
+            }, 3000)
         })
 
     }
@@ -419,7 +419,7 @@ class Contract extends React.Component{
     }
     render() {
 
-        console.log(this.state.args)
+        console.log("contract name in contract : "+this.props.name)
         //let contract=this.props.contract
         let abl=this.props.abl;
         let funs=abl.funs
@@ -552,7 +552,7 @@ class Contract extends React.Component{
         let receipt=this.state.receipt
         let r_receipt=receipt?
             <div>
-                <Events logs= {receipt.logs} eventsAbls={this.state.eventsAbls} contract={this.state.name} address={receipt.contractAddress} />
+                <Events logs= {receipt.logs} eventsAbls={this.state.eventsAbls} contract={this.props.name} address={receipt.contractAddress} />
             </div>:
             ""
         return (
@@ -645,7 +645,7 @@ class App extends React.Component{
 
         let contract=abls[contractName]
 
-        console.log(contractName+"Data")
+        console.log("contractName in app: "+contractName)
         let contractAddress="0x1"
         if(address[this.getChainIdStr()]!=undefined)
             if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)

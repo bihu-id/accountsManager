@@ -342,7 +342,7 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 256,
+            resSize: 32*14,
             register: true
         },
         getOperation: {
@@ -366,7 +366,7 @@ var funs=
         getOperation_resetKey: {
             name: 'getOperation_resetKey(uint256)',
             sig: 0x0eeb3969,
-            resSize: 32,
+            resSize: 128,
             register: false
         },
         getOptions: {
@@ -482,7 +482,7 @@ var funs=
         getOperation_resetKey: {
             name: 'getOperation_resetKey(uint256)',
             sig: 0x0eeb3969,
-            resSize: 32,
+            resSize: 128,
             register: false
         },
         getOptions: {
