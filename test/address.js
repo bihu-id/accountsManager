@@ -93,7 +93,7 @@ var Address=
     "id314": {
         "XindiProxy": "0xe53d3f2e308947527c4fd17dbe0ef7ef213b6864",
         "XindiData": "0x0a64ca282be065935f298bd452ce3eb2e528e60d",
-        "XindiLogic": "0xbf853374dcba676ff0192d29ea3876d224949597",
+        "XindiLogic": "0xf570dad9c551bb7a52bfda43325f8d9eb4d38754",
         "AccountLogic": "0x007cf0f1e71a650a6a4a979d3f0c2b1610f98594",
         "AccountProxy": "0x0af2b1be4efecebd601496d375d72d59a4d41caa",
         "AccountCreatorProxy": "0x541bea06900a5ac5ee1f30962f2e27eaa31b9fc9",

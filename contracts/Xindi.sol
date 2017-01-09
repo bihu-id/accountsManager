@@ -246,7 +246,7 @@ contract Xindi is XindiInterface{
     function unfreeze(address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.unfreezeRole)]);
-        uint[] memory t_data=new uint[](0);
+        uint[] memory t_data=new uint[](1);
         t_data[0]=m_funs[uint(OperationType.unfreezeType)];
         addOperation(_account,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_account);
