@@ -319,7 +319,7 @@ contract Account is AccountInterface{
     function revokeCA() returns(bool success){
 
         ifCore();
-        if (m_data.m_level<100)                 {throwErrEvent(60021003); }
+        if (m_data.m_level<100)                 {throwErrEvent(60021004); }
         m_data.m_level-=100;
         m_data.m_CA=address(0);
         return true;
@@ -412,6 +412,7 @@ contract Account is AccountInterface{
             return true;
     }
 
+    //check approve of owner
     function checkApprove(address _owner)internal returns(bool success){
 
         address[] memory _owners=new address[](1);

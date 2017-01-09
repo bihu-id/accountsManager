@@ -235,6 +235,8 @@ contract TokenManager is TokenManagerInterface{
         string _description,
         uint  _hash)returns (bool success) {
 
+        //check token symbol length ,length must >=3
+        if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
         // just check the sender if the account manager by accountManager ,other check is done by server
         AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
         if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }

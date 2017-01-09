@@ -14,7 +14,7 @@ contract TokenInterface is BaseLogic,Erc20 {
 
         // operaton of this token must called by coreContract
         address m_coreContract;
-        // core can override transfer value from any address to any address
+        // not use now
         address m_core;
         //symbol of taken;
         bytes32 m_symbol;
@@ -133,7 +133,7 @@ contract Token is TokenInterface {
 
     /*
     modifier notEnd() {if(now < m_option.m_closingTime) throw; _;}
-    modifier ifCoreL() {if(msg.sender != m_option.m_coreContract)throw; _;}
+    modifier ifCore() {if(msg.sender != m_option.m_coreContract)throw; _;}
     modifier notFreeze(){if(m_freezeLists[msg.sender])throw; _;}
     modifier normal(){if(m_option.m_status!=Status.normal)throw; _;}
     */
@@ -143,7 +143,7 @@ contract Token is TokenInterface {
     //check token if end
     function ifEnd() internal {if(now < m_option.m_closingTime)          {throwErrEvent(60040001);  }}
     //check if the operation is called from core
-    function ifCoreL() internal {if(msg.sender != m_option.m_coreContract)       {throwErrEvent(10000000);  }}
+    function ifCore() internal {if(msg.sender != m_option.m_coreContract)       {throwErrEvent(10000000);  }}
 
     function ifIssuer()internal {if(msg.sender != m_option.m_issuer)     {throwErrEvent(60040004);  }}
 
@@ -250,7 +250,7 @@ contract Token is TokenInterface {
 
     function forceTransfer(address _from,address _to,uint _amount)returns (bool success){
 
-        ifCoreL();
+        ifCore();
         ifEnd();
         normal();
         if (m_balances[_from] >= _amount && _amount > 0) {
@@ -294,7 +294,7 @@ contract Token is TokenInterface {
 
     function freeze(address _account)returns (bool success){
 
-        ifCoreL();
+        ifCore();
         m_freezeLists[_account]=1;//Status.freeze=1
         return true;
 
@@ -302,7 +302,7 @@ contract Token is TokenInterface {
 
     function unfreeze(address _account)returns (bool success){
 
-        ifCoreL();
+        ifCore();
         m_freezeLists[_account]=0;//Status.normal=0
         return true;
 
@@ -310,7 +310,7 @@ contract Token is TokenInterface {
 
     function freezeToken()returns (bool success){
 
-        ifCoreL();
+        ifCore();
         m_option.m_status=Status.freeze;
         return true;
 
@@ -318,7 +318,7 @@ contract Token is TokenInterface {
 
     function unfreezeToken()returns (bool success){
 
-        ifCoreL();
+        ifCore();
         m_option.m_status=Status.normal;
         return true;
 

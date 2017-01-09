@@ -44,6 +44,7 @@ contract TxManager is SimpleManager {
 
     }
 
+    //TODO tx and Tx no one-to-one correspondence
     function pass(uint _account,uint _hash){
 
         checKey(m_keys[uint(Role.ownerRole)]);
