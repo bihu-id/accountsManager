@@ -4,7 +4,7 @@ contract('create token', function(accounts) {
     
     var address=getRpcStr.get()
     var tokenmanager=address.TokenManagerData
-    var accountManager=address.AccountManagerData
+    var accountManager=address.AccountCreatorData
     
 
     function toChar(asciiStr){
@@ -25,7 +25,7 @@ contract('create token', function(accounts) {
 
      /*   it("create token by account ", function(){
         console.log("tokenManager:",tokenmanager)
-        var accountmanager=AccountManager.at(accountManager);
+        var accountmanager=AccountCreator.at(accountManager);
         return accountmanager.getAccountAddress(1).then(function (res1) {
             console.log("account:",res1.toString(16))
             var account = Account.at(res1);

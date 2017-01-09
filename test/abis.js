@@ -53,7 +53,29 @@ var abis=
             "name": "setCA",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "tokenContract",
+                    "type": "address"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "issueMoreToken",
+            "outputs": [
+                {
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -66,7 +88,7 @@ var abis=
             "name": "freeze",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -79,7 +101,7 @@ var abis=
             "name": "unfreeze",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -97,7 +119,7 @@ var abis=
             "name": "setIdLevel",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -143,7 +165,12 @@ var abis=
                 }
             ],
             "name": "resetAccountOwner",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -197,29 +224,7 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_hash",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_other",
-                    "type": "uint256"
-                }
-            ],
-            "name": "setPass",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
+            "constant": true,
             "inputs": [
                 {
                     "name": "_no",
@@ -242,24 +247,11 @@ var abis=
         },
         {
             "constant": false,
-            "inputs": [
-                {
-                    "name": "_newCore",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetCore",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
             "inputs": [],
             "name": "revokeCA",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -297,7 +289,7 @@ var abis=
             "name": "init",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -334,15 +326,11 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "tokenContract",
-                    "type": "address"
-                },
-                {
-                    "name": "_amount",
+                    "name": "_hash",
                     "type": "uint256"
                 }
             ],
-            "name": "issuerMoreToken",
+            "name": "setPass",
             "outputs": [
                 {
                     "name": "success",
@@ -356,6 +344,23 @@ var abis=
             "inputs": [],
             "payable": false,
             "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Pass",
+            "type": "event"
         },
         {
             "anonymous": false,
@@ -462,27 +467,15 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
-    "AccountManager": [
+    "AccountCreator": [
         {
             "constant": false,
             "inputs": [],
@@ -532,7 +525,7 @@ var abis=
             "name": "getKeys",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_keys",
                     "type": "address[]"
                 }
             ],
@@ -558,7 +551,7 @@ var abis=
             "name": "accountAmount",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_amount",
                     "type": "uint256"
                 }
             ],
@@ -647,7 +640,7 @@ var abis=
             "name": "getAccountAddress",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_account",
                     "type": "address"
                 }
             ],
@@ -671,20 +664,12 @@ var abis=
                 }
             ],
             "name": "createAccount",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
+            "outputs": [
                 {
-                    "name": "_newCore",
-                    "type": "uint256"
+                    "name": "success",
+                    "type": "bool"
                 }
             ],
-            "name": "resetCore",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -698,7 +683,7 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "",
+                    "name": "_accountAddress",
                     "type": "address"
                 }
             ],
@@ -710,12 +695,12 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "",
+                    "name": "_no",
                     "type": "uint256"
                 },
                 {
                     "indexed": false,
-                    "name": "",
+                    "name": "_account",
                     "type": "address"
                 }
             ],
@@ -790,23 +775,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -824,7 +797,12 @@ var abis=
                 }
             ],
             "name": "resetKey",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -870,7 +848,12 @@ var abis=
                 }
             ],
             "name": "setfun",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -910,11 +893,11 @@ var abis=
             "name": "get",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_address",
                     "type": "uint256"
                 },
                 {
-                    "name": "",
+                    "name": "_returnSize",
                     "type": "uint256"
                 }
             ],
@@ -930,7 +913,12 @@ var abis=
                 }
             ],
             "name": "requestConfirm",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -943,7 +931,12 @@ var abis=
                 }
             ],
             "name": "confirm",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -958,11 +951,11 @@ var abis=
             "name": "getWait",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_address",
                     "type": "uint256"
                 },
                 {
-                    "name": "",
+                    "name": "_returnSize",
                     "type": "uint256"
                 }
             ],
@@ -1000,7 +993,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -1101,7 +1094,12 @@ var abis=
                 }
             ],
             "name": "unfreeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1127,7 +1125,12 @@ var abis=
             "constant": false,
             "inputs": [],
             "name": "unfreezeToken",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1153,7 +1156,12 @@ var abis=
             "constant": false,
             "inputs": [],
             "name": "freezeToken",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1166,7 +1174,12 @@ var abis=
                 }
             ],
             "name": "freeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1179,7 +1192,12 @@ var abis=
                 }
             ],
             "name": "destroy",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1252,7 +1270,7 @@ var abis=
             "name": "init",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -1325,7 +1343,12 @@ var abis=
                 }
             ],
             "name": "issueMore",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1348,27 +1371,6 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_newCore",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetCore",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "normal",
-            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1600,23 +1602,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -1636,7 +1626,7 @@ var abis=
             "name": "reject",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -1686,7 +1676,12 @@ var abis=
                 }
             ],
             "name": "freeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1776,7 +1771,7 @@ var abis=
             "name": "createToken",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -1796,7 +1791,12 @@ var abis=
                 }
             ],
             "name": "setOption",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1813,7 +1813,12 @@ var abis=
                 }
             ],
             "name": "unfreeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1832,7 +1837,7 @@ var abis=
             "name": "getTokensSymbol",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_symbols",
                     "type": "bytes32[]"
                 }
             ],
@@ -1850,7 +1855,7 @@ var abis=
             "name": "getTokenAddress",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_tokenAddress",
                     "type": "address"
                 }
             ],
@@ -1874,7 +1879,12 @@ var abis=
                 }
             ],
             "name": "resetKeyC",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1909,7 +1919,12 @@ var abis=
                 }
             ],
             "name": "resetKey",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1934,7 +1949,12 @@ var abis=
                 }
             ],
             "name": "forceTransfer",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1955,7 +1975,12 @@ var abis=
                 }
             ],
             "name": "resetKeyReject",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -1984,7 +2009,12 @@ var abis=
                 }
             ],
             "name": "init",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2062,7 +2092,7 @@ var abis=
             "name": "confirm",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -2086,7 +2116,12 @@ var abis=
                 }
             ],
             "name": "setSubKey",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2109,7 +2144,7 @@ var abis=
             "name": "getTokenAmounts",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_amount",
                     "type": "uint256"
                 }
             ],
@@ -2137,19 +2172,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newCore",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetCore",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_fun",
                     "type": "uint256"
                 },
@@ -2159,7 +2181,12 @@ var abis=
                 }
             ],
             "name": "setFun",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2199,7 +2226,7 @@ var abis=
             "name": "getWaitOperationNos",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_nos",
                     "type": "uint256[]"
                 }
             ],
@@ -2343,6 +2370,64 @@ var abis=
                     "indexed": false,
                     "name": "_no",
                     "type": "uint256"
+                }
+            ],
+            "name": "ConfirmOperation",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Reject",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetOption",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_sig",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetFun",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
                 },
                 {
                     "indexed": false,
@@ -2407,64 +2492,6 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "ConfirmOperation",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "Reject",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_value",
-                    "type": "uint256"
-                }
-            ],
-            "name": "SetOption",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_sig",
-                    "type": "uint256"
-                }
-            ],
-            "name": "SetFun",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_res",
                     "type": "uint256[]"
                 }
@@ -2511,52 +2538,15 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
     "TxManager": [
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "requestConfirm",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_role",
-                    "type": "uint256"
-                },
-                {
-                    "name": "_key",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetKey",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
         {
             "constant": false,
             "inputs": [
@@ -2567,10 +2557,6 @@ var abis=
                 {
                     "name": "_hash",
                     "type": "uint256"
-                },
-                {
-                    "name": "_other",
-                    "type": "uint256"
                 }
             ],
             "name": "pass",
@@ -2580,12 +2566,29 @@ var abis=
         },
         {
             "constant": true,
-            "inputs": [],
-            "name": "getKeys",
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOperation_resetKey",
             "outputs": [
                 {
-                    "name": "",
-                    "type": "address[]"
+                    "name": "r_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_key",
+                    "type": "address"
+                },
+                {
+                    "name": "_status",
+                    "type": "uint8"
                 }
             ],
             "payable": false,
@@ -2594,11 +2597,11 @@ var abis=
         {
             "constant": true,
             "inputs": [],
-            "name": "getOptionsWait",
+            "name": "getKeys",
             "outputs": [
                 {
-                    "name": "_res",
-                    "type": "uint256[]"
+                    "name": "_keys",
+                    "type": "address[]"
                 }
             ],
             "payable": false,
@@ -2606,9 +2609,27 @@ var abis=
         },
         {
             "constant": false,
-            "inputs": [],
-            "name": "confirm",
-            "outputs": [],
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKeyC",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2641,16 +2662,47 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_key",
+                    "name": "_role",
                     "type": "uint256"
                 },
                 {
-                    "name": "_value",
-                    "type": "uint256"
+                    "name": "_keyAddress",
+                    "type": "address"
                 }
             ],
-            "name": "resetOption",
-            "outputs": [],
+            "name": "resetKey",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_role",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_keyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "resetKeyReject",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2677,7 +2729,7 @@ var abis=
             "name": "getOptions",
             "outputs": [
                 {
-                    "name": "_res",
+                    "name": "_options",
                     "type": "uint256[]"
                 }
             ],
@@ -2685,23 +2737,45 @@ var abis=
             "type": "function"
         },
         {
-            "constant": false,
+            "constant": true,
             "inputs": [],
-            "name": "init",
-            "outputs": [],
+            "name": "getOperationAmounts_resetKey",
+            "outputs": [
+                {
+                    "name": "_totalAmounts",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_waitAmounts",
+                    "type": "uint256"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
         {
-            "constant": false,
+            "constant": true,
             "inputs": [
                 {
-                    "name": "_newCore",
+                    "name": "_start",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_limit",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_type",
                     "type": "uint256"
                 }
             ],
-            "name": "resetCore",
-            "outputs": [],
+            "name": "getWaitOperationNos",
+            "outputs": [
+                {
+                    "name": "_nos",
+                    "type": "uint256[]"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2715,16 +2789,65 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_key",
+                    "name": "_no",
                     "type": "uint256"
                 },
                 {
                     "indexed": false,
-                    "name": "_value",
+                    "name": "_keyAddress",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_role",
                     "type": "uint256"
                 }
             ],
-            "name": "ResetOption",
+            "name": "ResetKey",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_keyAddress",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_role",
+                    "type": "uint256"
+                }
+            ],
+            "name": "ResetKeyC",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_keyAddress",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_role",
+                    "type": "uint256"
+                }
+            ],
+            "name": "ResetKeyReject",
             "type": "event"
         },
         {
@@ -2778,23 +2901,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ],
@@ -2814,7 +2925,7 @@ var abis=
             "name": "reject",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -2842,7 +2953,12 @@ var abis=
                 }
             ],
             "name": "resetAccountOwner",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2889,7 +3005,12 @@ var abis=
                 }
             ],
             "name": "setIdLevel",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2953,7 +3074,12 @@ var abis=
                 }
             ],
             "name": "unfreeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2970,7 +3096,12 @@ var abis=
                 }
             ],
             "name": "setOption",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -2991,7 +3122,12 @@ var abis=
                 }
             ],
             "name": "resetKeyC",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3004,7 +3140,12 @@ var abis=
                 }
             ],
             "name": "revokeCA",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3035,7 +3176,12 @@ var abis=
                 }
             ],
             "name": "freeze",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3052,7 +3198,12 @@ var abis=
                 }
             ],
             "name": "resetKey",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3073,7 +3224,12 @@ var abis=
                 }
             ],
             "name": "resetKeyReject",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3090,7 +3246,12 @@ var abis=
                 }
             ],
             "name": "setCA",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3109,7 +3270,7 @@ var abis=
             "name": "confirm",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -3133,7 +3294,12 @@ var abis=
                 }
             ],
             "name": "setSubKey",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3179,19 +3345,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newCore",
-                    "type": "uint256"
-                }
-            ],
-            "name": "resetCore",
-            "outputs": [],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_fun",
                     "type": "uint256"
                 },
@@ -3201,7 +3354,12 @@ var abis=
                 }
             ],
             "name": "setFun",
-            "outputs": [],
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
             "payable": false,
             "type": "function"
         },
@@ -3241,7 +3399,7 @@ var abis=
             "name": "getWaitOperationNos",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "_nos",
                     "type": "uint256[]"
                 }
             ],
@@ -3357,6 +3515,64 @@ var abis=
                     "indexed": false,
                     "name": "_no",
                     "type": "uint256"
+                }
+            ],
+            "name": "ConfirmOperation",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Reject",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetOption",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_sig",
+                    "type": "uint256"
+                }
+            ],
+            "name": "SetFun",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
                 },
                 {
                     "indexed": false,
@@ -3421,64 +3637,6 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "ConfirmOperation",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                }
-            ],
-            "name": "Reject",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_value",
-                    "type": "uint256"
-                }
-            ],
-            "name": "SetOption",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "_no",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "_sig",
-                    "type": "uint256"
-                }
-            ],
-            "name": "SetFun",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_res",
                     "type": "uint256[]"
                 }
@@ -3525,23 +3683,11 @@ var abis=
             "inputs": [
                 {
                     "indexed": false,
-                    "name": "_ok",
-                    "type": "bool"
-                }
-            ],
-            "name": "Success",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
                     "name": "_no",
                     "type": "uint256"
                 }
             ],
-            "name": "Err",
+            "name": "Alert",
             "type": "event"
         }
     ]

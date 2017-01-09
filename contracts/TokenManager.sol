@@ -1,5 +1,5 @@
 import "Token.sol";
-import "AccountManager.sol";
+import "AccountCreator.sol";
 import "BaseManager.sol";
 
 contract RoleDefine_Token{
@@ -210,8 +210,8 @@ contract TokenManager is TokenManagerInterface{
         m_options[uint(Option.optionsAmount)]=8;
         m_options[uint(Option.funAmount)]=3;
 
-        m_options[uint(Option.xindi)]=_accountManager;
-        m_options[uint(Option.accountManager)]=_xindi;
+        m_options[uint(Option.xindi)]=_xindi;
+        m_options[uint(Option.accountManager)]=_accountManager;
         m_options[uint(Option.tokenProxy)]=_tokenPorxy;
         m_options[uint(Option.MinTerm)]=24*3600;
         m_options[uint(Option.limit)]=100;
@@ -235,31 +235,33 @@ contract TokenManager is TokenManagerInterface{
         string _description,
         uint  _hash)returns (bool success) {
 
+        //check token symbol length ,length must >=3
+        if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
         // just check the sender if the account manager by accountManager ,other check is done by server
-        AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
-        if(am.getAccountNo(msg.sender)==0)                      {Err(60030001);     throw;}
-        //if(tokenAble()==0)                                    {Err(60030001);     throw;}
+        AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
+        if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
+        //if(tokenAble()==0)                                    {throwErrEvent(60030001);     }
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
-                                                                {Err(60031001);     throw;}
+                                                                {throwErrEvent(60031001);     }
         // id used
-        //if(m_tokenSummarys[_id].m_id!=0)                      {Err(60031002);     throw;}
+        //if(m_tokenSummarys[_id].m_id!=0)                      {throwErrEvent(60031002);     }
         // symbol is used
-        if( m_symbols[_symbol]>0)                               {Err(60031003);     throw;}
+        if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
-        if(_precision>8)                                        {Err(60031004);     throw;}
+        if(_precision>8)                                        {throwErrEvent(60031004);     }
         // consider use 64 b VM for efficiency reason
-        if(_maxSupply*(10**_precision)>=uint64(-1))             {Err(60031005);     throw;}
-        if(_currentSupply>_maxSupply)                           {Err(60031006);     throw;}
+        if(_maxSupply*(10**_precision)>=uint64(-1))             {throwErrEvent(60031005);     }
+        if(_currentSupply>_maxSupply)                           {throwErrEvent(60031006);     }
 
         uint t_id=m_amounts+1;
         m_amounts=t_id;
         Data d = new Data(m_options[uint(Option.tokenProxy)]);
-        if(d==address(0x0))                                     {Err(60032001);     throw;}
+        if(d==address(0x0))                                     {throwErrEvent(60032001);     }
         CreateTokenData(d);
         Token t=Token(d);
         if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
-                                                                {Err(60032002);     throw;}
+                                                                {throwErrEvent(60032002);     }
         m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
 
         m_symbols[_symbol]=t_id;
@@ -285,7 +287,7 @@ contract TokenManager is TokenManagerInterface{
 
     function setTokenAble(address _account,uint _tokenAmounts){
 
-        if(msg.sender!=m_xindi)                                 {Err(60030002);  throw;}
+        if(msg.sender!=m_xindi)                                 {throwErrEvent(60030002);  }
         // 0~31 : the account have created how many tokens
         //32~63 :how many tokens this account can create
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
@@ -354,7 +356,9 @@ contract TokenManager is TokenManagerInterface{
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](2);
 
-        t_data[0]=m_funs[uint(Fun.freeze)];
+        t_data[0]=0x8d1fdf2f;
+
+        //t_data[0]=m_funs[uint(Fun.freeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.freezeRoleC),t_data);
         Freeze(_token,_account);
@@ -366,7 +370,9 @@ contract TokenManager is TokenManagerInterface{
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](2);
-        t_data[0]=m_funs[uint(Fun.unfreeze)];
+
+        t_data[0]=0x45c8b1a6;
+        //t_data[0]=m_funs[uint(Fun.unfreeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_token,_account);
@@ -379,11 +385,13 @@ contract TokenManager is TokenManagerInterface{
         checKey(m_keys[uint(role.forceTransferRole)]);
         uint[] memory t_data=new uint[](4);
 
-        t_data[0]=m_funs[uint(Fun.forceTransfer)];
+        t_data[0]=0x33bebb77;
+        //t_data[0]=m_funs[uint(Fun.forceTransfer)];
         t_data[1]=uint(_from);
         t_data[2]=uint(_to);
         t_data[3]=uint(_value);
         addOperation(_token,uint(OperationType.forceTransferType),uint(role.forceTransferRoleC),t_data);
+        forceTransfer(_token,_from,_to,_value);
         return true;
 
     }

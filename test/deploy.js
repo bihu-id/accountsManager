@@ -73,7 +73,7 @@ contract('deploy xindi data', function(accounts) {
 
     it("set accountManager porxy and data", function(){
 
-        return _deploy.deployDataWS("AccountManager",LogicProxy,Data,function(rpcA){
+        return _deploy.deployDataWS("AccountCreator",LogicProxy,Data,function(rpcA){
             Object.keys(rpcA).forEach(function(k){
                 rpcAddress[k]=rpcA[k]
             })
@@ -81,9 +81,9 @@ contract('deploy xindi data', function(accounts) {
 
     })
 
-    it("deploy AccountManager logic", function(){
+    it("deploy AccountCreator logic", function(){
 
-        return _deploy.deployWS("AccountManager",null,AccountManager,function(rpcA){
+        return _deploy.deployWS("AccountCreator",null,AccountCreator,function(rpcA){
             Object.keys(rpcA).forEach(function(k){
                 rpcAddress[k]=rpcA[k]
             })
@@ -102,7 +102,7 @@ contract('deploy xindi data', function(accounts) {
     })
 
     it ("save ",function(){
-        setTimeout(function(){getRpcStr.save(rpcAddress)},20000)
+        setTimeout(function(){getRpcStr.save(rpcAddress)},30000)
     })
 
 })

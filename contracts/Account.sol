@@ -5,8 +5,8 @@ contract AccountInterface is BaseLogic{
 
     //function call other contract                              调用其他合约的函数
 
-    /// @notice create token ,contract check the account was created by AccountManager ,but not check the account have access to create token
-    /// 创建资产,合约检查创建者是不是由AccountManager管理的账户,但是并检查是否有权力创建资产
+    /// @notice create token ,contract check the account was created by AccountCreator ,but not check the account have access to create token
+    /// 创建资产,合约检查创建者是不是由AccountCreator管理的账户,但是并检查是否有权力创建资产
     /// @param _symbol symbol of token ,Max size 32 bytes32 ,ASCII of symbol,contract do not check the length .. 资产的代号,不可重复,最大32字节,是字母的ASCII,合约只检查是否重复,但不检查长度,大小写,和其他规则
     /// @param _maxSupply max supply of the token               资产最大供应量,如果当前供应量=资产最大供应量,那么资产不能增发
     /// @param _precision precision of token                    资产的精度
@@ -37,7 +37,7 @@ contract AccountInterface is BaseLogic{
     /// @notice issue more token by token owner account         增发资产,由资产拥有者账户调用
     /// @param _tokenContract token contract address            资产合约地址
     /// @param _amount issue amount (amount*precision)          增发的数量(数量*精度)
-    function issuerMoreToken(address _tokenContract,uint256 _amount)returns (bool success);
+    function issueMoreToken(address _tokenContract,uint256 _amount)returns (bool success);
 
     /// @notice destroyToken token by token owner account       销毁资产,由资产拥有者账户调用,需要持有相应数量的资产
     /// @param _tokenContract token contract address            资产合约地址
@@ -50,7 +50,7 @@ contract AccountInterface is BaseLogic{
     /// @param _no _owner no                                    owner的编号
     /// @return _owner owner address                            owner的地址
     /// @return _weight weight of this owner                    owner的权重
-    function getOwner(uint _no)returns(address _owner,uint _weight);
+    function getOwner(uint _no)constant returns(address _owner,uint _weight);
 
     /// @notice return summary of account contract
     /// @return _core
@@ -93,7 +93,7 @@ contract AccountInterface is BaseLogic{
     /// @notice set pass a Tx
     /// @param _hash hash of Tx
     /// @return Whether this set was successful or not
-    function setPass(uint _hash,uint _other) returns (bool success);
+    function setPass(uint _hash) returns (bool success);
 
     /// @notice set account realname level
     /// @param _level realname level
@@ -113,6 +113,21 @@ contract Account is AccountInterface{
 
         normal,
         freeze
+
+    }
+
+    enum TxStatus{
+
+        waitMoreApprove,
+        Approved,
+        Rejected
+
+    }
+
+    struct ApproveTx{
+
+        uint[] m_owners;
+        TxStatus m_TxStatus;
 
     }
 
@@ -154,13 +169,9 @@ contract Account is AccountInterface{
 
         status m_status;
 
-        // sign of token code contract
-        uint sign_r;
-
-        uint sign_s;
-
-        uint sign_v;
-        //notice cannot add only variable above!!!
+        //0:Base account, have to check pass set by tx manager,and the default value is 0
+        //1:DAO account,can have many owners account do not check pass that set by tx manager
+        uint m_type;
 
     }
 
@@ -170,7 +181,7 @@ contract Account is AccountInterface{
     mapping(uint=>bool) m_signsPass;
 
     // this is a temporary methods , only support one wait pass tx;
-    bytes32   m_waitPassTx;
+    uint   m_waitPassTx;
 
     uint      m_other;
     /*
@@ -180,11 +191,11 @@ contract Account is AccountInterface{
     */
 
     function Account()BaseData(uint(msg.sender)){}
-    function ifCore()internal{if (msg.sender != m_data.m_core)      {Err(60020000);  throw;} }
+    function ifCore()internal{if (msg.sender != m_data.m_core)      {throwErrEvent(60020000); } }
 
-    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {Err(60020000);  throw;} }
+    function ifCoreTx()internal{if(msg.sender != m_data.m_coreTx)   {throwErrEvent(60020000); } }
 
-    function iffreeze()internal{if(m_data.m_status==status.freeze)  {Err(60020001);  throw;} }
+    function iffreeze()internal{if(m_data.m_status==status.freeze)  {throwErrEvent(60020001); } }
 
     function init(
     address _owner,
@@ -195,7 +206,7 @@ contract Account is AccountInterface{
     address _coreTx)returns (bool success)
     {
         beforeInit();
-        if(_weight<_Tx_threshold)                           {Err(60021001);  throw;}
+        if(_weight<_Tx_threshold)                           {throwErrEvent(60021001); }
         m_data.m_core=_core;
         m_data.m_coreTx=_coreTx;
         m_data.m_Tx_threshold=_Tx_threshold;
@@ -203,6 +214,7 @@ contract Account is AccountInterface{
         m_data.m_owners[_owner]=_weight;
         m_data.m_weightAmount=_weight;
         m_data.m_ownerFind.push(_owner);
+        //m_data.m_type＝0;
         CreateAccount(m_data.m_ownerFind[0],m_data.m_owners[_owner],_Tx_threshold,_core,_coreTx);
         return true;
 
@@ -218,15 +230,15 @@ contract Account is AccountInterface{
         uint  _hash,
         uint _tokenManager)
     {
-            //checkPass(sha3(msg.data));
-            //uint t_address =m_other;
+        transactionCheck();
+        // to void include conflict
+        assembly{
+            mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
+            calldatacopy(0x180,0x04,sub(calldatasize,0x04))
+            jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
+        }
 
-            if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
-            assembly{
-                mstore(0x160,0x4e0732c8)// tokenManager createToken() sig
-                calldatacopy(0x180,0x04,sub(calldatasize,0x04))
-                jumpi(0x02,iszero(call(gas,_tokenManager,callvalue,0x17c, add(calldatasize,0x04), 0x80, 0x20)))
-            }
+        successEvent();
     }
 
     function transferToken(
@@ -234,65 +246,33 @@ contract Account is AccountInterface{
         address _to,
         uint256 _amount)returns (bool success)
     {
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
-        // it is a bad way now ,
-        //checkPass(sha3(msg.data));
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        //if(getApprove(t_owner)){
-            Token t=Token(_tokenContract);
-            t.transfer.gas(msg.gas)(_to,_amount);
-        //}
+        transactionCheck();
+
+        Token t=Token(_tokenContract);
+        t.transfer.gas(msg.gas)(_to,_amount);
 
     }
 
-    function issuerMoreToken(address tokenContract,uint256 _amount)returns (bool success){
+    function issueMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
-        // it is a bad way now ,
-        //checkPass(sha3(msg.data));
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        if(getApprove(t_owner)){
-            Token t=Token(tokenContract);
-            t.issueMore.gas(msg.gas)(_amount);
-        }
+        transactionCheck();
+        Token t=Token(tokenContract);
+        t.issueMore.gas(msg.gas)(_amount);
 
     }
 
     function destroyToken(address tokenContract,uint256 _amount)returns (bool success){
 
-        iffreeze();
-        if(!checkOwners(msg.sender))                                {Err(60021003);  throw;}
-        // it is a bad way now ,
-        //checkPass(sha3(msg.data));
-        address []memory t_owner=new address[](1);
-        t_owner[0]=msg.sender;
-        if(getApprove(t_owner)){
-            Token t=Token(tokenContract);
-            t.destroy.gas(msg.gas)(_amount);
-        }
+        transactionCheck();
+        Token t=Token(tokenContract);
+        t.destroy.gas(msg.gas)(_amount);
 
-    }
-
-    // check owner weight amount make sure tx can been permit
-    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
-        if (_owners.length!=_weight.length)                 {Err(60021002);  throw;}
-        uint t_Tx_threshold=0;
-        for(uint i=0;i<_owners.length;i++)
-            t_Tx_threshold+=_weight[i];
-        if (t_Tx_threshold<_Tx_threshold)
-            return false;
-        else
-            return true;
     }
 
     function resetAccountOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) returns(bool success){
 
         ifCore();
-        if (!checkOwner(_Tx_threshold,_owners,_weight))     {Err(60021001);  throw;}
+        if (!checkOwner(_Tx_threshold,_owners,_weight))     {throwErrEvent(60021001); }
         uint t_totalWeight=0;
         for(uint i=0;i<_owners.length;i++){
             m_data.m_owners[_owners[i]]=_weight[i];
@@ -306,30 +286,14 @@ contract Account is AccountInterface{
 
     }
 
-    function getApprove(address[] _owners)internal returns(bool success){
-
-        uint  t_total=0;
-        for(uint i=0;i<_owners.length;i++)
-            t_total+=m_data.m_owners[_owners[i]];
-        return t_total>=m_data.m_Tx_threshold;
-
-    }
-
-    function checkOwners(address _owner)internal returns(bool success){
-
-        address[] memory _owners=new address[](1);
-        _owners[0]=msg.sender;
-        return getApprove(_owners);
-
-    }
-
-    function setPass(uint _hash,uint _other) returns (bool success){
+    function setPass(uint _hash) returns (bool success){
 
         iffreeze();
         ifCoreTx();
-        if(msg.sender!=m_data.m_coreTx) throw;
-            m_waitPassTx=bytes32(_hash);
-            m_other=_other;
+        if(msg.sender!=m_data.m_coreTx) {throwErrEvent(60021003); }
+            m_waitPassTx=_hash;
+
+        successEvent();
         return true;
 
     }
@@ -355,7 +319,7 @@ contract Account is AccountInterface{
     function revokeCA() returns(bool success){
 
         ifCore();
-        if (m_data.m_level<100)                 {Err(60021003);  throw;}
+        if (m_data.m_level<100)                 {throwErrEvent(60021004); }
         m_data.m_level-=100;
         m_data.m_CA=address(0);
         return true;
@@ -405,16 +369,65 @@ contract Account is AccountInterface{
 
     }
 
-    function getOwner(uint _no)returns(address _owner,uint _weight){
+    function getOwner(uint _no)constant returns(address _owner,uint _weight){
 
         address tmp=m_data.m_ownerFind[_no];
         return(tmp, m_data.m_owners[tmp]);
 
     }
 
-    function checkPass(bytes32 _hash)internal {
+    event Pass(uint ,uint);
+    function checkPass()internal {
 
-        if (m_waitPassTx!=_hash)                    {Err(60020002);  throw;}
+        uint t_hash=uint(sha3(msg.data));
+        if (m_waitPassTx!=t_hash)
+        {
+
+            Pass(m_waitPassTx,t_hash);
+            throwErrEvent(60020002);
+
+        }
 
     }
+    function transactionCheck()internal {
+
+        //check freeze
+        iffreeze();
+        //check if set pass by tx manager
+        //checkPass();
+        //check owner
+        if(!checkApprove(msg.sender))                                {throwErrEvent(60021003); }
+
+    }
+
+    // check owner weight amount make sure sum weight of owner >_Tx_threshold
+    function checkOwner(uint _Tx_threshold,address[] _owners,uint[] _weight) internal returns(bool success){
+        if (_owners.length!=_weight.length)                 {throwErrEvent(60021002); }
+        uint t_Tx_threshold=0;
+        for(uint i=0;i<_owners.length;i++)
+            t_Tx_threshold+=_weight[i];
+        if (t_Tx_threshold<_Tx_threshold)
+            return false;
+        else
+            return true;
+    }
+
+    //check approve of owner
+    function checkApprove(address _owner)internal returns(bool success){
+
+        address[] memory _owners=new address[](1);
+        _owners[0]=msg.sender;
+        return getApproves(_owners);
+
+    }
+
+    function getApproves(address[] _owners)internal returns(bool success){
+
+        uint  t_total=0;
+        for(uint i=0;i<_owners.length;i++)
+            t_total+=m_data.m_owners[_owners[i]];
+        return t_total>=m_data.m_Tx_threshold;
+
+    }
+
 }

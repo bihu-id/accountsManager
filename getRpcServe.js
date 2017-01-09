@@ -6,15 +6,15 @@ var address=require("./test/address.js")
 module.exports ={
 
     get:function(){
-        var rpc=this.getstr()
-        if(address[rpc]!=undefined)
-            return address[rpc]
+        var id=this.getstr()
+        if(address[id]!=undefined)
+            return address[id]
         else
             return {}
     },
     getstr:function(){
 
-        return "rpc"+config.rpc.host.replace(/[\","."]/g, "")
+        return "id"+config.chainId
 
     },
     hex:function(str){

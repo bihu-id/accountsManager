@@ -24,7 +24,8 @@ module.exports ={
             console.log("wait keys:")
             return instance.getWait.call(fun.sig).then(function(res) {
                 console.log("0x"+res[0].toString(16),res[1].toString(10)/32,fun.name)
-                if(("0x"+res[0].toString(16))!=logicAddress) {
+                //console.log(parseInt(res[1],16),fun.resSize)
+                if(("0x"+res[0].toString(16))!=logicAddress||parseInt(res[1],10)!=fun.resSize) {
                     return instance.setfun(logicAddress, fun.sig, fun.resSize, {from: keyT}).then(function (tx) {
                         //console.log(web3.eth.getTransactionReceipt(tx));
                         console.log(tx);

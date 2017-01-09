@@ -50,6 +50,7 @@ module.exports ={
         })
 
     },
+    
     deployDataWS:function(contract,proxy,data,callback){
 
         var rpcAddress={}

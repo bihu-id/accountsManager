@@ -40,6 +40,7 @@ contract BaseOption is BaseLogic{
 
     }
 
+    //请求批准参数测试
     function requestConfirm(){
 
         onlyKey(0);
@@ -50,7 +51,7 @@ contract BaseOption is BaseLogic{
     function confirm(){
 
         onlyKey(1);
-        if(!m_haveWait)                                 { Err(60000002);    throw; }
+        if(!m_haveWait)                                 {throwErrEvent(60000002);    }
         m_leg=changeLeg(m_leg);
         m_haveWait=false;
 
@@ -58,7 +59,7 @@ contract BaseOption is BaseLogic{
 
     function onlyKey(uint _no)internal {
 
-        if (uint(msg.sender) != m_keys[_no])            { Err(10000002);    throw; }
+        if (uint(msg.sender) != m_keys[_no])            {throwErrEvent(10000002);    }
 
     }
 
@@ -67,9 +68,9 @@ contract BaseOption is BaseLogic{
     function resetOption(uint _key,uint _value){
 
         onlyKey(1);
-        if(_key<=0)                                 {                   throw; }
+        if(_key<=0)                                 {                   }
         uint nextLeg=changeLeg(m_leg);
-        if(_key>m_options[nextLeg][1])              {                   throw; }
+        if(_key>m_options[nextLeg][1])              {                   }
         if(m_options[nextLeg][1]==_key)
             m_options[nextLeg][1]=_key+1;
         for(uint i=0;i<m_options[m_leg][1];i++)
