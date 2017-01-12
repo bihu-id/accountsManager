@@ -25,7 +25,7 @@ contract('reset xindi key', function(accounts) {
 
         for(var i=1;i<20;i++)
         if(parseInt(keys[i])==0)
-            xinde.resetKey(i,accounts[i], {from: accounts[0], gas: 2000000}).then(function (tx) {
+            xinde.resetKey(i,accounts[i], {from: accounts[0], gas: 300000}).then(function (tx) {
                 console.log("reset key %d:%s",i,accounts[i]);
                 //console.log(parseInt(web3.eth.getTransactionReceipt(tx).logs[0].data,16));
                 console.log(tx);

@@ -347,7 +347,7 @@ var abis=
                     "type": "uint256"
                 }
             ],
-            "name": "issuerMoreToken",
+            "name": "issueMoreToken",
             "outputs": [
                 {
                     "name": "success",

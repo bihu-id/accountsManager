@@ -468,6 +468,7 @@ contract BaseManager is BaseManagerInterface{
 
         bool t_called;
         bool t_success;
+        bool res=false;
 
         (t_called,t_success)=subConfirm(_destination,t_type,t_data);
 
@@ -506,8 +507,13 @@ contract BaseManager is BaseManagerInterface{
         }
         del(_no);
 
+        //comfirm status
+        m_operations[_no].m_status=uint(OperationStatus.confirm);
         ConfirmOperation(_no);
 
+        // Bug if run there out of gas ,event ConfirmOperation(_no) should store in our chain
+        // but fortunately,this operation is called by ourself ,so we would give enough gas to void this bug ,
+        // TODO delete the following return 
         if(ifLocal==100)
             assembly{
                 return(0x60,0x20)

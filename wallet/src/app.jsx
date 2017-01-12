@@ -24,7 +24,53 @@ const history = {};
 
 require("./../css/app.css");
 
+class SimpleCreateKey extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            privateKey:this.newKeys()
+        }
+    }
+
+    newKeys(){
+        var d=new Date();
+        var rand=Math.round(d.getTime())
+        var privateKey=ethUtil.sha3(rand,null)
+        return privateKey
+        this.setState({
+            privateKey:privateKey
+        })
+    }
+    onNewKeys(){
+        this.setState({
+            privateKey:this.newKeys()
+        })
+    }
+    getMousePos(event) {
+
+        var e = event || window.event;
+        return {'x':e.screenX,'y':screenY}
+
+    }
+
+    render() {
+
+        let privateKey=this.state.privateKey
+        return(<div>
+            <div>
+                <input type="button" value="新建私钥不保存不安全仅测试用" onClick={this.onNewKeys.bind(this)} />
+            </div>
+            <div>
+                <span>私钥: </span><span>{"0x"+privateKey.toString('hex')}</span>
+            </div>
+            <div>
+                <span>地址: </span><span>{"0x"+ethUtil.privateToAddress(privateKey).toString('hex')}</span>
+            </div>
+        </div>)
+
+    }
+}
 class Events extends React.Component {
 
     constructor(props) {
@@ -591,6 +637,7 @@ class Contract extends React.Component{
                         onChange={this.tempChange.bind(this)}
                     />
                 </div>
+                <SimpleCreateKey/>
             </div>
 
         )
@@ -603,9 +650,9 @@ class App extends React.Component{
         super(props);
         this.state = {
             contract:"",
-            rpc:"http://139.196.234.239:8545",
-            //rpc:"http://127.0.0.1:8545",
-            chainId:314
+            //rpc:"http://139.196.234.239:8545",
+            rpc:"http://127.0.0.1:8545",
+            chainId:317
         };
     }
 

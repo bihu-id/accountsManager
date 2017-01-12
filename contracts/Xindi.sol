@@ -269,7 +269,7 @@ contract Xindi is XindiInterface{
     function setSubKeyC(address _subContract ,uint[] _data)internal{
 
         AccountCreator am=AccountCreator(_subContract);
-        am.resetKey.gas(msg.gas)(_data[0],_data[1]);
+        am.resetKey.gas(msg.gas)(_data[1],_data[2]);
 
     }
 

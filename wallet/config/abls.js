@@ -228,15 +228,15 @@ var abis1=
                 "showLevel": 0
             },
             "issueMoreToken": {
-                "label": "issueMoreToken",
+                "label": "增发资产",
                 "inputs": {
                     "tokenContract": {
-                        "label": "tokenContract",
+                        "label": "资产地址",
                         "type": "address",
                         "select": {}
                     },
                     "_amount": {
-                        "label": "_amount",
+                        "label": "数量(包含精度)",
                         "type": "uint256",
                         "select": {}
                     }
@@ -250,7 +250,7 @@ var abis1=
                 },
                 "constant": false,
                 "type": "function",
-                "showLevel": 0
+                "showLevel": 2
             },
             "freeze": {
                 "label": "freeze",
@@ -739,7 +739,7 @@ var abis1=
                             "0": "核心合约地址",
                             "1": "重置参数Key",
                             "2": "重置参数Key批准",
-                            "3": "拥有者"
+                            "3": "创建账户Key"
                         }
                     }
                 },

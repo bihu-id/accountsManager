@@ -9,6 +9,7 @@ contract('init accountManager', function(accounts) {
     var XindiData=address.XindiData
     var TxManagerData=address.TxManagerData
 
+    //function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner,uint _TxCore,uint _accountProxy)
     it("init AccountCreator data", function () {
 
         var instance=AccountCreator.at(AccountCreatorData);
@@ -17,7 +18,7 @@ contract('init accountManager', function(accounts) {
         console.log("account owner:",XindiData);
         console.log("Tx core:",TxManagerData);
         console.log("account porxy:",AccountProxy);
-        return instance.init(XindiData,accounts[20],accounts[21],accounts[22],TxManagerData,AccountProxy,{from:accounts[0]}).then(function(tx){
+        return instance.init(XindiData,accounts[20],accounts[21],"0xa8308c1d843b87af9ace2980fcccc4a1349e5789",TxManagerData,AccountProxy,{from:accounts[0]}).then(function(tx){
             console.log(web3.eth.getTransactionReceipt(tx));
 
         })
