@@ -21,7 +21,7 @@ module.exports = {
             privateKey=this.getPrivateKey(key,accountsKey)
         else
             privateKey=key
-        console.log("sign use private key: %s",privateKey)
+        //console.log("sign use private key: %s",privateKey)
         return this.raw(web3, abi, Buffer(privateKey.substring(2),'hex'), fun, args, to, value, gas, nonce, data)
 
     },
@@ -62,7 +62,7 @@ module.exports = {
         var gasLimit = "0x" + parseInt(gas, 10).toString(16)
         var _value  //new BigNumber(web3.toWei(value, 'ether'));
 
-        console.log("start rawTx")
+        //console.log("start rawTx")
         var rawTx = {
             nonce: _nonce,
             gasPrice: gasprice,

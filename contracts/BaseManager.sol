@@ -447,6 +447,7 @@ contract BaseManager is BaseManagerInterface{
 
     function subConfirm(address _destination,uint _type,uint[] _data)internal returns(bool _called,bool _success){
 
+        //if call in sub contract ,
         return (false,true);
 
     }
@@ -468,12 +469,14 @@ contract BaseManager is BaseManagerInterface{
 
         bool t_called;
         bool t_success;
-        bool res=false;
 
+        //subConfirm in sub contract
         (t_called,t_success)=subConfirm(_destination,t_type,t_data);
 
         if(t_called &&t_success)
             return t_success;
+
+        // call in baseManager
         if(m_operations[_no].m_type<=uint(BaseOperationType.setFunType)){
 
             ifLocal=100;
@@ -495,6 +498,7 @@ contract BaseManager is BaseManagerInterface{
 
             }
         }
+        // call other
         else
         {
             assembly{
@@ -513,7 +517,7 @@ contract BaseManager is BaseManagerInterface{
 
         // Bug if run there out of gas ,event ConfirmOperation(_no) should store in our chain
         // but fortunately,this operation is called by ourself ,so we would give enough gas to void this bug ,
-        // TODO delete the following return 
+        // TODO delete the following return
         if(ifLocal==100)
             assembly{
                 return(0x60,0x20)

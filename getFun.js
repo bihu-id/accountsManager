@@ -24,13 +24,15 @@ function getSub(obj,keys) {
 }
 
 var funContract=
-    ['AccountCreator',
+    [
+        'AccountCreator',
         'Token',
         'TokenManager',
         'TxManager',
         'Xindi',
         'Account',
-        'LogicProxy'
+        'LogicProxy',
+        'KeepManager'
     ]
 
 fs.readdir("./contracts",function(err,files){
@@ -51,8 +53,8 @@ fs.readdir("./contracts",function(err,files){
     var outputs = solc.compile({sources: input}, 1);
     
 
-    Object.keys(outputs)
     var contracts=outputs.contracts;
+    console.log(outputs)
 
     var abis={}
     var abis1={}

@@ -160,6 +160,14 @@ var funs=
             register: false
         }
     },
+    KeepManager: {
+        set: {
+            name: 'set(uint256,uint256,uint256)',
+            sig: 0x43b0e8df,
+            resSize: 32,
+            register: false
+        }
+    },
     LogicProxy: {
         confirm: {
             name: 'confirm(uint256)',

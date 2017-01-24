@@ -783,6 +783,29 @@ var abis=
             "type": "event"
         }
     ],
+    "KeepManager": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_type",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_address",
+                    "type": "uint256"
+                },
+                {
+                    "name": "blockno",
+                    "type": "uint256"
+                }
+            ],
+            "name": "set",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        }
+    ],
     "LogicProxy": [
         {
             "constant": false,

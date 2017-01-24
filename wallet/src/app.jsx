@@ -651,8 +651,10 @@ class App extends React.Component{
         this.state = {
             contract:"",
             //rpc:"http://139.196.234.239:8545",
-            rpc:"http://127.0.0.1:8545",
-            chainId:317
+            //rpc:"http://127.0.0.1:8545",
+            rpc:"http://139.196.145.105:8545",
+            //rpc:"http://139.196.144.187:8545",
+            chainId:318 // temp public chain ID
         };
     }
 

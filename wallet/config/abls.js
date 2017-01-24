@@ -907,6 +907,37 @@ var abis1=
             }
         }
     },
+    "KeepManager": {
+        "label": "KeepManager",
+        "address": "",
+        "events": {},
+        "funs": {
+            "set": {
+                "label": "set",
+                "inputs": {
+                    "_type": {
+                        "label": "_type",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "_address": {
+                        "label": "_address",
+                        "type": "uint256",
+                        "select": {}
+                    },
+                    "blockno": {
+                        "label": "blockno",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            }
+        }
+    },
     "LogicProxy": {
         "label": "逻辑代理合约",
         "address": "",
