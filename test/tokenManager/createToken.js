@@ -37,7 +37,7 @@ for(var i=0;i<200;i++){
     sleep.go(function(){
         j++
         var accountPrivateKey=basePrivateKey+(1000+j).toString()
-        var owner='0x'+ethUtil.privateToAddress(accountPrivateKey).toString('hex')
+        var owner=accountOwner;
 
         //create account
         transaction.transaction(web3,accountCreatorAbi,accountCreator,"createAccount",[owner,20,20],accountCreatorPrivateKey,3000000,function(err,hash){
@@ -67,7 +67,7 @@ for(var i=0;i<200;i++){
                 },5000)
             }
         })
-        var effectNo=Math.random()*5+5
+        
         if(j%22==12){
             var resDelKeep=transaction.transactionRaw(web3,keepManagerAbi,keepContract,"set",[2,keep,effectNo],corePrivateKey,500000)
             transaction.broadCast(web3,resDelKeep.serializedTx,function(err,hash){

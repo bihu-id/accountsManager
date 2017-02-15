@@ -354,14 +354,21 @@ class Contract extends React.Component{
 
         let self=this
         let keys=Object.keys(self.state.args)
-        for(let i=0;i<keys.length;i++)
-            args.push(this.state.args[keys[i]])
+        if(this.props.abl.label=="Xindi"&& this.state.fun=="resetAccountOwner"){
+            args.push(this.state.args[keys[0]])
+            args.push(this.state.args[keys[1]])
+            args.push([this.state.args[keys[2]]])
+            args.push([this.state.args[keys[3]]])
+        }
+        else
+            for(let i=0;i<keys.length;i++)
+                args.push(this.state.args[keys[i]])
 
         this.setState({
             txHash:"",
             receipt:""
         })
-        console.log(args)
+        console.log("args:",args)
 
         if(sumbitType==0)
             this.call(web3,abi,to,fun,args)
@@ -649,12 +656,15 @@ class App extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            chainType:"public",
             contract:"",
             //rpc:"http://139.196.234.239:8545",
             //rpc:"http://127.0.0.1:8545",
             rpc:"http://139.196.145.105:8545",
+            //rpc:"http://120.92.138.162:8545", //test rpc
             //rpc:"http://139.196.144.187:8545",
             chainId:318 // temp public chain ID
+            //chainId:314 //test evn
         };
     }
 
@@ -669,7 +679,31 @@ class App extends React.Component{
     onChianIdChange(e){
         this.setState({chainId:e.target.value})
     }
+    onChianTypeChange(e){
 
+        let chainType
+        if(this.state.chainType=="test") {
+            console.log("test")
+            chainType="public"
+            this.setState({
+                rpc:"http://139.196.145.105:8545",
+                chainId:318
+            })
+        }
+        if(this.state.chainType=="public") {
+                console.log("public")
+                chainType = "test"
+                this.setState({
+                    rpc: "http://120.92.138.162:8545", //test rpc
+                    chainId: 314 //test evn
+                })
+        }
+
+        this.setState(
+            {chainType : chainType}
+        )
+
+    }
     getRpcStr(rpc){
         let start=rpc.indexOf("//")
         return "rpc"+rpc.substring(start+2,rpc.indexOf(":",start)).replace(/[\","."]/g, "")
@@ -712,11 +746,13 @@ class App extends React.Component{
             <select onChange={this.onContractChange.bind(this)}>
                 {raw_contracts}
             </select>
+        let chainType=this.state.chainType=="test"?"正式链":"测试链"
         return (
             <div>
                 <div>
                     <label className="h2">RPC:</label> <input type="text" width="600px" className="inputLen" value={this.state.rpc} onChange={this.onRpcChange.bind(this)}/>
                     <label className="h2">链ID:</label> <input type="text" width="200px" className="inputLen"  value={this.state.chainId} onChange={this.onChianIdChange.bind(this)}/>
+                    <input type="submit" width="200px"   value={chainType} onClick={this.onChianTypeChange.bind(this)}/>
                 </div>
                 <div>
                     <label className="h2">合约:</label>
