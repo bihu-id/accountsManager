@@ -46,6 +46,36 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_app",
+                    "type": "address"
+                },
+                {
+                    "name": "_tokenContract",
+                    "type": "address"
+                },
+                {
+                    "name": "_to",
+                    "type": "address"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "transferTokenReceipt",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_CA",
                     "type": "address"
                 }

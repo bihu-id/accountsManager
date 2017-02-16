@@ -76,7 +76,7 @@ var Address=
         "XindiProxy": "0x06ea7d558a08c4c6b9d7cff08185ffdb212d5b4d",
         "XindiData": "0xc7c791ff24f20cc5056824e4fe9bebac5bfc3893",
         "XindiLogic": "0xb97e4b35c559f04f62fbd8f8cdf33a0f49768303",
-        "AccountLogic": "0xef9bd9e4704c961175b1db8eda80b45ac5c84cc5",
+        "AccountLogic": "0xba60dbda4535cb0e68d71f6be9128b382c650803",
         "AccountProxy": "0xc92a375b6067c68aec818b58112403aeca888a60",
         "AccountCreatorProxy": "0x8780b9af0266fdb57d2c9ba0d6322d58f5073264",
         "AccountCreatorData": "0x6291e76e35a93bbc65f32c25b41284175a7eb84c",

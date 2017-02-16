@@ -79,6 +79,12 @@ var funs=
             resSize: 32,
             register: true
         },
+        transferTokenReceipt: {
+            name: 'transferTokenReceipt(address,address,address,uint256)',
+            sig: 0x276e4fb5,
+            resSize: 32,
+            register: false
+        },
         unfreeze: {
             name: 'unfreeze()',
             sig: 0x6a28f000,

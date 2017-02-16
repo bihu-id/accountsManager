@@ -156,5 +156,4 @@ module.exports = {
                 return abi[i]
     }
 
-    
 }

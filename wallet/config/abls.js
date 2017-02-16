@@ -207,6 +207,41 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
+            "transferTokenReceipt": {
+                "label": "transferTokenReceipt",
+                "inputs": {
+                    "_app": {
+                        "label": "_app",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_tokenContract": {
+                        "label": "_tokenContract",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_to": {
+                        "label": "_to",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_amount": {
+                        "label": "_amount",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
             "setCA": {
                 "label": "setCA",
                 "inputs": {

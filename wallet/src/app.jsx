@@ -658,13 +658,13 @@ class App extends React.Component{
         this.state = {
             chainType:"public",
             contract:"",
-            //rpc:"http://139.196.234.239:8545",
+            rpc:"http://139.196.234.239:8545",
             //rpc:"http://127.0.0.1:8545",
-            rpc:"http://139.196.145.105:8545",
+            //rpc:"http://139.196.145.105:8545",
             //rpc:"http://120.92.138.162:8545", //test rpc
             //rpc:"http://139.196.144.187:8545",
-            chainId:318 // temp public chain ID
-            //chainId:314 //test evn
+            //chainId:318 // temp public chain ID
+            chainId:314 //test evn
         };
     }
 

@@ -311,7 +311,7 @@ contract Account is AccountInterface{
         //check if set pass by tx manager
         //checkPass();
         //check owner
-        if(!checkApprove(msg.origin))                                {throwErrEvent(60021003); }
+        if(!checkApprove(tx.origin))                                {throwErrEvent(60021003); }
 
     }
 
