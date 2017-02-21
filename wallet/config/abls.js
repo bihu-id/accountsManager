@@ -207,41 +207,6 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
-            "transferTokenReceipt": {
-                "label": "transferTokenReceipt",
-                "inputs": {
-                    "_app": {
-                        "label": "_app",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_tokenContract": {
-                        "label": "_tokenContract",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_to": {
-                        "label": "_to",
-                        "type": "address",
-                        "select": {}
-                    },
-                    "_amount": {
-                        "label": "_amount",
-                        "type": "uint256",
-                        "select": {}
-                    }
-                },
-                "outputs": {
-                    "success": {
-                        "label": "success",
-                        "type": "bool",
-                        "select": {}
-                    }
-                },
-                "constant": false,
-                "type": "function",
-                "showLevel": 0
-            },
             "setCA": {
                 "label": "setCA",
                 "inputs": {
@@ -304,6 +269,36 @@ var abis1=
             "unfreeze": {
                 "label": "unfreeze",
                 "inputs": {},
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "transferTokenReceipt": {
+                "label": "transferTokenReceipt",
+                "inputs": {
+                    "_tokenContract": {
+                        "label": "_tokenContract",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_to": {
+                        "label": "_to",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_amount": {
+                        "label": "_amount",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
                 "outputs": {
                     "success": {
                         "label": "success",
@@ -1692,6 +1687,31 @@ var abis1=
                     "_account": {
                         "label": "_account",
                         "type": "address",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "success": {
+                        "label": "success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "transferOrigin": {
+                "label": "transferOrigin",
+                "inputs": {
+                    "_to": {
+                        "label": "_to",
+                        "type": "address",
+                        "select": {}
+                    },
+                    "_amount": {
+                        "label": "_amount",
+                        "type": "uint256",
                         "select": {}
                     }
                 },

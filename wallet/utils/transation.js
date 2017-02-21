@@ -31,8 +31,9 @@ module.exports = {
         this.broadCast(web3,res.serializedTx,callback)
 
     },
-    create:function(web3,contract,fun,args,priKey,gas,callback){
+    createContract:function(web3,contract,args,priKey,gas,callback){
 
+        
         /*var abi=contract.abi
         var to=contract.address
         var value=0

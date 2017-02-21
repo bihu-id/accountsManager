@@ -80,8 +80,8 @@ var funs=
             register: true
         },
         transferTokenReceipt: {
-            name: 'transferTokenReceipt(address,address,address,uint256)',
-            sig: 0x276e4fb5,
+            name: 'transferTokenReceipt(address,address,uint256)',
+            sig: 0x6df218b8,
             resSize: 32,
             register: false
         },
@@ -308,6 +308,12 @@ var funs=
             sig: 0x23b872dd,
             resSize: 32,
             register: false
+        },
+        transferOrigin: {
+            name: 'transferOrigin(address,uint256)',
+            sig: 0x9063e860,
+            resSize: 32,
+            register: true
         },
         unfreeze: {
             name: 'unfreeze(address)',

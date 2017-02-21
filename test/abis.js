@@ -46,36 +46,6 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_app",
-                    "type": "address"
-                },
-                {
-                    "name": "_tokenContract",
-                    "type": "address"
-                },
-                {
-                    "name": "_to",
-                    "type": "address"
-                },
-                {
-                    "name": "_amount",
-                    "type": "uint256"
-                }
-            ],
-            "name": "transferTokenReceipt",
-            "outputs": [
-                {
-                    "name": "success",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "_CA",
                     "type": "address"
                 }
@@ -129,6 +99,32 @@ var abis=
             "constant": false,
             "inputs": [],
             "name": "unfreeze",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_tokenContract",
+                    "type": "address"
+                },
+                {
+                    "name": "_to",
+                    "type": "address"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "transferTokenReceipt",
             "outputs": [
                 {
                     "name": "success",
@@ -1227,6 +1223,28 @@ var abis=
                 }
             ],
             "name": "freeze",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_to",
+                    "type": "address"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "transferOrigin",
             "outputs": [
                 {
                     "name": "success",

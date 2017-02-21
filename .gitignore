@@ -6,4 +6,5 @@ build
 app
 */node_modules/
 /node_modules/
-.node-xmlhttprequest*
+*.node-xmlhttprequest*
+copyToInterface.sh

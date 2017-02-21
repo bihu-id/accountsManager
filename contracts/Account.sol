@@ -146,7 +146,6 @@ contract Account is AccountInterface{
     }
 
     function transferTokenReceipt(
-        address _app,
         address _tokenContract,
         address _to,
         uint256 _amount) returns (bool success){

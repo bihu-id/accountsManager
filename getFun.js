@@ -54,10 +54,11 @@ fs.readdir("./contracts",function(err,files){
     
 
     var contracts=outputs.contracts;
-    console.log(outputs)
+    //console.log(outputs)
 
     var abis={}
     var abis1={}
+    var byteCodes={}
     //console.log(Object.keys(contracts))
     Object.keys(contracts).forEach(function(contractKey){
 
@@ -200,6 +201,9 @@ fs.readdir("./contracts",function(err,files){
             abis[contractKey]=JSON.parse(contracts[contractKey].interface)
             abis1[contractKey]=abisContract
 
+            //bytes code
+            if(contracts[contractKey].bytecode!=undefined&&contracts[contractKey].bytecode!="")
+                byteCodes[contractKey]=contracts[contractKey].bytecode
         }
 
 
@@ -225,6 +229,14 @@ fs.readdir("./contracts",function(err,files){
     }) ;
 
     fs.writeFile("./test/abis.js",str,function (err) {
+        if (err) throw err ;
+        console.log("File Saved !"); //文件被保存
+    }) ;
+
+    var raw=JSON.stringify(byteCodes,null,4)
+        //.replace(/\"/g, "")
+    var str="var byteCodes=\n"+raw+"\nmodule.exports=byteCodes;";
+    fs.writeFile("./test/byteCodes.js",str,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;

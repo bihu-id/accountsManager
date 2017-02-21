@@ -35,12 +35,10 @@ contract AccountInterface is BaseLogic{
         uint256 _amount) returns (bool success);
 
     /// @notice transfer token by account owner key sign,and give receipt to app contract
-    /// @param _app app contract address                        应用合约地址
     /// @param _tokenContract token contract address            资产合约地址
     /// @param _to token send to                                资产接收账户
     /// @param _amount send amount (amount*precision)           发送的数量(数量*精度)
     function transferTokenReceipt(
-        address _app,
         address _tokenContract,
         address _to,
         uint256 _amount) returns (bool success);
