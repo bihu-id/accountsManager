@@ -1,4 +1,6 @@
 import "AccountInterface.sol";
+import "BaseAppInterface.sol";
+
 contract Account is AccountInterface{
 
     enum status{
@@ -155,7 +157,14 @@ contract Account is AccountInterface{
         return t.transfer.gas(msg.gas)(_to,_amount);
 
     }
-    
+    function changeOwner(
+        address _contract,
+        address _to) returns (bool success){
+
+        BaseAppInterface app=BaseAppInterface(_contract);
+        return app.changeOwner.gas(msg.gas)(_to);
+    }
+
     function issueMoreToken(address tokenContract,uint256 _amount)returns (bool success){
 
         transactionCheck();

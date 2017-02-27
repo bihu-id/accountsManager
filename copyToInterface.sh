@@ -1,4 +1,4 @@
-files=(AccountInterface.sol BaseData.sol BaseEvent.sol Data.sol Erc20.sol TokenInterface.sol LogicProxy.sol)
+files=(AccountInterface.sol BaseData.sol BaseEvent.sol Data.sol Erc20.sol TokenInterface.sol LogicProxy.sol BaseAppInterface.sol)
 
 from=${PWD}/contracts/
 to=${PWD}/../accountsManager-interface/contracts/

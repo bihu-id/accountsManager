@@ -43,6 +43,13 @@ contract AccountInterface is BaseLogic{
         address _to,
         uint256 _amount) returns (bool success);
 
+    /// @notice change owner,
+    /// @param _contract contract address                       合约地址
+    /// @param _to token send to                                合约接收账户
+    function changeOwner(
+        address _contract,
+        address _to) returns (bool success);
+
     /// @notice issue more token by token owner account         增发资产,由资产拥有者账户调用
     /// @param _tokenContract token contract address            资产合约地址
     /// @param _amount issue amount (amount*precision)          增发的数量(数量*精度)
