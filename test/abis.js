@@ -326,6 +326,28 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_contract",
+                    "type": "address"
+                },
+                {
+                    "name": "_to",
+                    "type": "address"
+                }
+            ],
+            "name": "changeOwner",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_tokenContract",
                     "type": "address"
                 },
@@ -1043,6 +1065,220 @@ var abis=
                 }
             ],
             "name": "Alert",
+            "type": "event"
+        }
+    ],
+    "ParkingLock": [
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "user",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_tokenAddress",
+                    "type": "address"
+                },
+                {
+                    "name": "_user",
+                    "type": "address"
+                },
+                {
+                    "name": "_start",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "rent",
+            "outputs": [
+                {
+                    "name": "success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "check",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_price",
+                    "type": "uint256"
+                }
+            ],
+            "name": "setPrice",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "returnLock",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "returnTime",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "price",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "isRented",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "changeOwner",
+            "outputs": [
+                {
+                    "name": "_success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "summary",
+            "outputs": [
+                {
+                    "name": "_price",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_isRented",
+                    "type": "bool"
+                },
+                {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                {
+                    "name": "_user",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "rentTime",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_user",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "_rentTime",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_returnTime",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_isRented",
+                    "type": "bool"
+                }
+            ],
+            "name": "Rent",
             "type": "event"
         }
     ],

@@ -32,7 +32,8 @@ var funContract=
         'Xindi',
         'Account',
         'LogicProxy',
-        'KeepManager'
+        'KeepManager',
+        'ParkingLock'
     ]
 
 fs.readdir("./contracts",function(err,files){

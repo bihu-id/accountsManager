@@ -1,6 +1,12 @@
 var funs=
 {
     Account: {
+        changeOwner: {
+            name: 'changeOwner(address,address)',
+            sig: 0xf00d4b5d,
+            resSize: 32,
+            register: false
+        },
         createToken: {
             name: 'createToken(bytes32,uint256,uint256,uint256,uint256,string,uint256,uint256)',
             sig: 0x13512d89,
@@ -220,6 +226,80 @@ var funs=
         setfun: {
             name: 'setfun(uint256,uint256,uint256)',
             sig: 0x5b63f551,
+            resSize: 32,
+            register: false
+        }
+    },
+    ParkingLock: {
+        changeOwner: {
+            name: 'changeOwner(address)',
+            sig: 0xa6f9dae1,
+            resSize: 32,
+            register: false
+        },
+        check: {
+            name: 'check()',
+            sig: 0x919840ad,
+            resSize: 32,
+            register: false
+        },
+        isRented: {
+            name: 'isRented()',
+            sig: 0xa6304952,
+            resSize: 32,
+            register: false
+        },
+        owner: {
+            name: 'owner()',
+            sig: 0x8da5cb5b,
+            resSize: 32,
+            register: false
+        },
+        price: {
+            name: 'price()',
+            sig: 0xa035b1fe,
+            resSize: 32,
+            register: false
+        },
+        rent: {
+            name: 'rent(address,address,uint256,uint256)',
+            sig: 0x622275f0,
+            resSize: 32,
+            register: false
+        },
+        rentTime: {
+            name: 'rentTime()',
+            sig: 0xe3bbfd3f,
+            resSize: 32,
+            register: false
+        },
+        returnLock: {
+            name: 'returnLock()',
+            sig: 0x944e2ba9,
+            resSize: 32,
+            register: false
+        },
+        returnTime: {
+            name: 'returnTime()',
+            sig: 0x98568366,
+            resSize: 32,
+            register: false
+        },
+        setPrice: {
+            name: 'setPrice(uint256)',
+            sig: 0x91b7f5ed,
+            resSize: 32,
+            register: false
+        },
+        summary: {
+            name: 'summary()',
+            sig: 0xb16a867c,
+            resSize: 32,
+            register: false
+        },
+        user: {
+            name: 'user()',
+            sig: 0x4f8632ba,
             resSize: 32,
             register: false
         }

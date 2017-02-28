@@ -31,21 +31,20 @@ module.exports = {
         this.broadCast(web3,res.serializedTx,callback)
 
     },
-    createContract:function(web3,contract,args,priKey,gas,callback){
-
+    createContract:function(web3,code,priKey,gas,callback){
         
-        /*var abi=contract.abi
-        var to=contract.address
-        var value=0
-        var nonce=0
-        var data=null
-        var res =this.raw(web3, abi, priKey, fun, args, to, value, gas, nonce, data)
-        this.broadCast(web3 ,res.serializedTx,callback)*/
+        var res=this.raw(web3,null,priKey,null,null,"0x0",0,3000000,null,code)
+        this.broadCast(web3,res.serializedTx,callback)
 
     },
 
     raw :function (web3, abi, privateKey, fun, args, to, value, gas, nonce, data){
 
+        var a=ethUtil.privateToAddress(privateKey).toString('hex')
+        var balance=web3.eth.getBalance(a);
+        console.log(a,balance)
+        if(web3.eth.getBalance(a)<web3.toWei(1,'ether'))
+            throw("out of balance")
         var serializedTx;
 
         //console.log(abi,fun,args)
@@ -54,7 +53,7 @@ module.exports = {
         //var gas="4000000"
         //console.log(data)
         var int_nonce
-        if (nonce == 0)
+        if (nonce == null)
             var int_nonce = web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
         else
             int_nonce = nonce;
@@ -72,7 +71,7 @@ module.exports = {
             value: '0x0',// + _value.toString(16),
             data: data
         }
-        //console.log(rawTx);
+        console.log(rawTx);
         var tx = new Tx(rawTx);
         //console.log(privateKey)
         tx.sign(privateKey);
