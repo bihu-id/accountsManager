@@ -228,8 +228,17 @@ fs.readdir("./contracts",function(err,files){
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;
+    fs.writeFile("./wallet/config/abis.js",str,function (err) {
+        if (err) throw err ;
+        console.log("File Saved !"); //文件被保存
+    }) ;
 
     fs.writeFile("./test/abis.js",str,function (err) {
+        if (err) throw err ;
+        console.log("File Saved !"); //文件被保存
+    }) ;
+
+    fs.writeFile("/Users/Roy/github/abis/abis.js",str,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;

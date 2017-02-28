@@ -4,8 +4,9 @@ var Web3=require("../../getWeb3Instance.js")
 var getRpcStr=require("../../getRpcServe.js")
 
 var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
-var contract="Account"
-var addresskey="AccountLogic"
+
+var contract="ParkingLock"
+var addresskey="ParkingLock"
 transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function(err,hash){
     console.log(err)
     if (!err)
@@ -18,4 +19,5 @@ transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function
         rpcAddress[addresskey]='"'+receipt.contractAddress+'"';
         getRpcStr.save(rpcAddress)
     },5000)
+    
 })

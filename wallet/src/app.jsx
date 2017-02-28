@@ -735,6 +735,8 @@ class App extends React.Component{
             if(address[this.getChainIdStr()][contractName+"Data"]!=undefined)
                 contractAddress=address[this.getChainIdStr()][contractName+"Data"]
 
+        if(contractName=="ParkingLock")
+            contractAddress=address[this.getChainIdStr()][contractName]
         console.log(contractAddress)
 
         let abi=abis[contractName]

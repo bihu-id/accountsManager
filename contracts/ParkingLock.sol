@@ -59,13 +59,13 @@ contract ParkingLock is BaseAppInterface{
     function rent(address _tokenAddress,address _user,uint _start, uint256 _amount) require(!isRented) returns (bool success)
     {
 
-        /*AccountInterface A=AccountInterface(_user);
+        AccountInterface A=AccountInterface(_user);
         //this do not need
-        if(A.transferTokenReceipt.gas(msg.gas)(this,_tokenAddress,owner,_amount)) {
-        */
+        if(A.transferTokenReceipt.gas(msg.gas)(_tokenAddress,owner,_amount)) {
 
-        TokenInterface t=TokenInterface(_tokenAddress);
-        if(t.transferOrigin.gas(msg.gas)(owner,_amount)){
+
+        //TokenInterface t=TokenInterface(_tokenAddress);
+        //if(t.transferOrigin.gas(msg.gas)(owner,_amount)){
             user = _user;
             rentTime = _start;
             returnTime = _start + _amount/price   ;
@@ -116,3 +116,4 @@ contract ParkingLock is BaseAppInterface{
     	return true;
     }
 }
+

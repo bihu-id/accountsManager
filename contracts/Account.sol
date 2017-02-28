@@ -301,6 +301,7 @@ contract Account is AccountInterface{
         }
 
     }
+    //event CheckOwnerP(address _address);
     function transactionCheck()internal {
 
         //check freeze
@@ -308,6 +309,7 @@ contract Account is AccountInterface{
         //check if set pass by tx manager
         //checkPass();
         //check owner
+        //CheckOwnerP(msg.sender);
         if(!checkApprove(msg.sender))                                {throwErrEvent(60021003); }
 
     }
@@ -319,7 +321,8 @@ contract Account is AccountInterface{
         //check if set pass by tx manager
         //checkPass();
         //check owner
-        if(!checkApprove(tx.origin))                                {throwErrEvent(60021003); }
+        //CheckOwnerP(tx.origin);
+        if(!checkApprove(address(tx.origin)))                                {throwErrEvent(60021003); }
 
     }
 
@@ -339,7 +342,7 @@ contract Account is AccountInterface{
     function checkApprove(address _owner)internal returns(bool success){
 
         address[] memory _owners=new address[](1);
-        _owners[0]=msg.sender;
+        _owners[0]=_owner;
         return getApproves(_owners);
 
     }

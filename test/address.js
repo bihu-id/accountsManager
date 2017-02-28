@@ -76,7 +76,7 @@ var Address=
         "XindiProxy": "0x06ea7d558a08c4c6b9d7cff08185ffdb212d5b4d",
         "XindiData": "0xc7c791ff24f20cc5056824e4fe9bebac5bfc3893",
         "XindiLogic": "0xb97e4b35c559f04f62fbd8f8cdf33a0f49768303",
-        "AccountLogic": "0x3b0ea72cf11e35a79eb0ac24a9d29cbfe259b945",
+        "AccountLogic": "0x0752a083cf9a71d0498580cf28815307dbe438dc",
         "AccountProxy": "0xc92a375b6067c68aec818b58112403aeca888a60",
         "AccountCreatorProxy": "0x8780b9af0266fdb57d2c9ba0d6322d58f5073264",
         "AccountCreatorData": "0x6291e76e35a93bbc65f32c25b41284175a7eb84c",
@@ -88,7 +88,8 @@ var Address=
         "TokenManagerLogic": "0xce64a118deeec569a2ed6aa18a7dbf936888eb33",
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
         "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
-        "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4"
+        "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
+        "ParkingLock": "0xe045c78c8931e81f99ef14821c8e0f3252e9ac1e"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",

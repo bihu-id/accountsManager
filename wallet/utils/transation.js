@@ -17,12 +17,9 @@ module.exports = {
         var nonce=0
         var data=null
         var privateKey;
-        if(key.length==42)
-            privateKey=this.getPrivateKey(key,accountsKey)
-        else
-            privateKey=key
+
         //console.log("sign use private key: %s",privateKey)
-        return this.raw(web3, abi, Buffer(privateKey.substring(2),'hex'), fun, args, to, value, gas, nonce, data)
+        return this.raw(web3, abi, key, fun, args, to, value, gas, null, data)
 
     },
     transaction:function(web3,abi,to,fun,args,key,gas,callback){
@@ -41,10 +38,13 @@ module.exports = {
     raw :function (web3, abi, privateKey, fun, args, to, value, gas, nonce, data){
 
         var a=ethUtil.privateToAddress(privateKey).toString('hex')
-        var balance=web3.eth.getBalance(a);
-        console.log(a,balance)
-        if(web3.eth.getBalance(a)<web3.toWei(1,'ether'))
+        var balance=parseInt(web3.fromWei(web3.eth.getBalance(a),'ether').toString(),10);
+        console.log(balance )
+        if(balance<1){
+            console.log(a,balance,minBalance)
             throw("out of balance")
+        }
+
         var serializedTx;
 
         //console.log(abi,fun,args)
