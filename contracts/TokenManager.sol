@@ -276,6 +276,27 @@ contract TokenManager is TokenManagerInterface{
         return true;
     }
 
+    /*function registerToken(
+        bytes32 _symbol,
+        address _logicAddress){
+        //todo Access check
+        //check token symbol length ,length must >=3
+        if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
+        // symbol is used
+        if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
+
+        uint t_id=m_amounts+1;
+        LogicProxy logicProxy=new LogicProxy(0x772f209c60319661f241d69c12f3100a16288872); //temp
+        Data d = new Data(logicProxy);
+        CreateTokenData(d);
+        m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
+
+        m_symbols[_symbol]=t_id;
+        m_ids[t_id]=_symbol;
+
+        //m_ids[m_amounts]=_id;
+        //m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
+    }*/
     /*
     function tokenAble()internal returns(uint32){
 

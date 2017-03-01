@@ -231,9 +231,9 @@ var funs=
         }
     },
     ParkingLock: {
-        changeOwner: {
-            name: 'changeOwner(address)',
-            sig: 0xa6f9dae1,
+        balanceOf: {
+            name: 'balanceOf(address)',
+            sig: 0x70a08231,
             resSize: 32,
             register: false
         },
@@ -249,9 +249,21 @@ var funs=
             resSize: 32,
             register: false
         },
+        issuer: {
+            name: 'issuer()',
+            sig: 0x1d143848,
+            resSize: 32,
+            register: false
+        },
         owner: {
             name: 'owner()',
             sig: 0x8da5cb5b,
+            resSize: 32,
+            register: false
+        },
+        parkSummary: {
+            name: 'parkSummary()',
+            sig: 0xf1aa1755,
             resSize: 32,
             register: false
         },
@@ -294,6 +306,12 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
+            resSize: 32,
+            register: false
+        },
+        transfer: {
+            name: 'transfer(address,uint256)',
+            sig: 0xa9059cbb,
             resSize: 32,
             register: false
         },

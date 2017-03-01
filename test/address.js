@@ -89,7 +89,7 @@ var Address=
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
         "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
-        "ParkingLock": "0xe045c78c8931e81f99ef14821c8e0f3252e9ac1e"
+        "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",

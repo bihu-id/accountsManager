@@ -135,6 +135,12 @@ contract Account is AccountInterface{
         successEvent();
     }
 
+    /*function registerToken(
+        bytes32 _symbol,
+        address _logicAddress){
+
+
+        }*/
     function transferToken(
         address _tokenContract,
         address _to,

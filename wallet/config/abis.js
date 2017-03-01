@@ -1072,6 +1072,19 @@ var abis=
         {
             "constant": true,
             "inputs": [],
+            "name": "issuer",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
             "name": "user",
             "outputs": [
                 {
@@ -1107,6 +1120,24 @@ var abis=
                 {
                     "name": "success",
                     "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_owner",
+                    "type": "address"
+                }
+            ],
+            "name": "balanceOf",
+            "outputs": [
+                {
+                    "name": "balance",
+                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -1197,14 +1228,18 @@ var abis=
             "constant": false,
             "inputs": [
                 {
-                    "name": "_newOwner",
+                    "name": "_to",
                     "type": "address"
+                },
+                {
+                    "name": "_amount",
+                    "type": "uint256"
                 }
             ],
-            "name": "changeOwner",
+            "name": "transfer",
             "outputs": [
                 {
-                    "name": "_success",
+                    "name": "success",
                     "type": "bool"
                 }
             ],
@@ -1215,6 +1250,76 @@ var abis=
             "constant": true,
             "inputs": [],
             "name": "summary",
+            "outputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_issuer",
+                    "type": "address"
+                },
+                {
+                    "name": "_symbol",
+                    "type": "bytes32"
+                },
+                {
+                    "name": "_maxSupply",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_precision",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_currentSupply",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_description",
+                    "type": "string"
+                },
+                {
+                    "name": "_registerTime",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_closingTime",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_coreContract",
+                    "type": "address"
+                },
+                {
+                    "name": "_hash",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_status",
+                    "type": "uint8"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "rentTime",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "parkSummary",
             "outputs": [
                 {
                     "name": "_price",
@@ -1237,22 +1342,31 @@ var abis=
             "type": "function"
         },
         {
-            "constant": true,
-            "inputs": [],
-            "name": "rentTime",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "type": "function"
-        },
-        {
             "inputs": [],
             "payable": false,
             "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "from",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "to",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "name": "value",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Transfer",
+            "type": "event"
         },
         {
             "anonymous": false,
@@ -1279,6 +1393,18 @@ var abis=
                 }
             ],
             "name": "Rent",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "_no",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Alert",
             "type": "event"
         }
     ],

@@ -25,6 +25,10 @@ contract AccountInterface is BaseLogic{
         uint  _hash,
         uint _tokenManager);
 
+    /*function registerToken(
+        bytes32 _symbol,
+        address _logicAddress)
+    */
     /// @notice transfer token by account owner key sign
     /// @param _tokenContract token contract address            资产合约地址
     /// @param _to token send to                                资产接收账户
