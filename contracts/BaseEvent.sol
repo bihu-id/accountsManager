@@ -87,6 +87,14 @@ contract BaseEvent{
     //60050001:  caller不是 创建账户 地址
     //60050002:  caller不是Xindi账户
 
+    //分红合约错误 合约编号006
+    //60060001:  caller不是 分红执行者
+    //60061001:  执行的分红没有开始或者已经终止
+
+    //广告豆错误 合约编号007
+    //60070001:
+    //60071001:   transfers _tos 不等于_amounts
+    //60072001:   transfers 总发送余额不正确
 
     //66666666:  成功
     function successEvent() internal {

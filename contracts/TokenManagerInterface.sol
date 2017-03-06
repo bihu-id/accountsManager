@@ -52,6 +52,12 @@ contract TokenManagerInterface {
         uint  _closingTime,
         string _description,
         uint  _hash)returns (bool success) ;
+
+    /// @notice register a token with existed logic,operation would event token data address
+    /// @notice _logicProxyAddress Logic proxy address
+    /// @param _symbol symbol of token
+    /// @return _success *
+    function registerToken(bytes32 _symbol,address _logicProxyAddress)returns(bool _success);
 /*
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、

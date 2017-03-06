@@ -105,6 +105,12 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         return true;
     }
 
+    function isXindiManageAccount ()internal{
+        // just check the sender if the account manager by accountManager ,other check is done by server
+        AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
+        if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
+    }
+
     function createToken(
         bytes32 _symbol,
         /*uint _id,*/
@@ -117,9 +123,9 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
         //check token symbol length ,length must >=3
         if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
-        // just check the sender if the account manager by accountManager ,other check is done by server
-        AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
-        if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
+
+        isXindiManageAccount();
+
         //if(tokenAble()==0)                                    {throwErrEvent(60030001);     }
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
@@ -156,27 +162,23 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         return true;
     }
 
-    /*function registerToken(
-        bytes32 _symbol,
-        address _logicAddress){
-        //todo Access check
+    function registerToken(bytes32 _symbol,address _logicProxyAddress)returns(bool _success){
+
+        isXindiManageAccount();
         //check token symbol length ,length must >=3
         if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
         // symbol is used
         if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
-        uint t_id=m_amounts+1;
-        LogicProxy logicProxy=new LogicProxy(0x772f209c60319661f241d69c12f3100a16288872); //temp
-        Data d = new Data(logicProxy);
+        m_amounts++;
+        Data d = new Data(_logicProxyAddress);
         CreateTokenData(d);
-        m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
+        m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,d);
 
-        m_symbols[_symbol]=t_id;
-        m_ids[t_id]=_symbol;
-
-        //m_ids[m_amounts]=_id;
-        //m_tokenAble[msg.sender]=m_tokenAble[msg.sender]+1;
-    }*/
+        m_symbols[_symbol]=m_amounts;
+        m_ids[m_amounts]=_symbol;
+        return true;
+    }
     /*
     function tokenAble()internal returns(uint32){
 
