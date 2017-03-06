@@ -1,7 +1,9 @@
 import "AccountInterface.sol";
 import "BaseAppInterface.sol";
+import "Token.sol";
+import "BaseData.sol";
 
-contract Account is AccountInterface{
+contract Account is BaseLogic,AccountInterface{
 
     enum status{
 

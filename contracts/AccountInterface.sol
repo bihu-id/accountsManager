@@ -1,7 +1,4 @@
-import "Token.sol";
-import "BaseData.sol";
-
-contract AccountInterface is BaseLogic{
+contract AccountInterface {
 
     //function call other contract                              调用其他合约的函数
 
