@@ -30,6 +30,7 @@ DividendTokenInterface {
     function endDividend(uint _no);
     function clearDividend(address [] _holders);
 }
+
 DividendToken is Token ,DividendTokenInterface{
 
     //TODO check overflow

@@ -5,10 +5,10 @@ contract BaseData is BaseEvent{
 
     // use type uint256/uint to void compiler merge several variables destroy store structure ,it would make error when contract upgrade with addtional variable
     // use uint replace address type to make contract more simple
-    uint  porxy;
-    uint  inited;
-    uint  m_initor;
-    uint  m_core;//base core of data contract , can init contract ,can reset m_onwer;
+    uint  porxy;        //0x0
+    uint  inited;       //0x1
+    uint  m_initor;     //0x2
+    uint  m_core;       //0x3 base core of data contract , can init contract ,can reset m_onwer;
 
     function BaseData(uint _porxy){
 
