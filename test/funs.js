@@ -1,6 +1,12 @@
 var funs=
 {
     Account: {
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
+        },
         changeOwner: {
             name: 'changeOwner(address,address)',
             sig: 0xf00d4b5d,
@@ -104,6 +110,12 @@ var funs=
             sig: 0x41748782,
             resSize: 32,
             register: true
+        },
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
         },
         confirm: {
             name: 'confirm()',
@@ -347,6 +359,12 @@ var funs=
             resSize: 32,
             register: true
         },
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
+        },
         destroy: {
             name: 'destroy(uint256)',
             sig: 0x9d118770,
@@ -427,6 +445,12 @@ var funs=
         }
     },
     TokenManager: {
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
+        },
         confirm: {
             name: 'confirm(uint256,address)',
             sig: 0xbe5fb5d8,
@@ -529,6 +553,12 @@ var funs=
             resSize: 32,
             register: true
         },
+        registerToken: {
+            name: 'registerToken(bytes32,address)',
+            sig: 0x2ded0fb5,
+            resSize: 32,
+            register: false
+        },
         reject: {
             name: 'reject(uint256,address)',
             sig: 0x03ab52fd,
@@ -585,6 +615,12 @@ var funs=
         }
     },
     TxManager: {
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
+        },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
@@ -653,6 +689,12 @@ var funs=
         }
     },
     Xindi: {
+        changeLogicProxy: {
+            name: 'changeLogicProxy(uint256)',
+            sig: 0x524c982a,
+            resSize: 32,
+            register: false
+        },
         confirm: {
             name: 'confirm(uint256,address)',
             sig: 0xbe5fb5d8,

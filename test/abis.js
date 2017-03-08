@@ -84,6 +84,19 @@ var abis=
         },
         {
             "constant": false,
+            "inputs": [
+                {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
             "inputs": [],
             "name": "freeze",
             "outputs": [
@@ -603,6 +616,19 @@ var abis=
                     "type": "uint256"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -1515,6 +1541,19 @@ var abis=
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [
                 {
@@ -2177,6 +2216,28 @@ var abis=
                     "type": "bytes32"
                 },
                 {
+                    "name": "_logicProxyAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "registerToken",
+            "outputs": [
+                {
+                    "name": "_success",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_symbol",
+                    "type": "bytes32"
+                },
+                {
                     "name": "_maxSupply",
                     "type": "uint256"
                 },
@@ -2208,6 +2269,19 @@ var abis=
                     "type": "bool"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },
@@ -3044,6 +3118,19 @@ var abis=
             "constant": false,
             "inputs": [
                 {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_no",
                     "type": "uint256"
                 },
@@ -3513,6 +3600,19 @@ var abis=
                     "type": "bool"
                 }
             ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_newAddress",
+                    "type": "uint256"
+                }
+            ],
+            "name": "changeLogicProxy",
+            "outputs": [],
             "payable": false,
             "type": "function"
         },

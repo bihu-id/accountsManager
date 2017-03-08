@@ -252,6 +252,20 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
             "freeze": {
                 "label": "freeze",
                 "inputs": {},
@@ -830,6 +844,20 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
             "confirm": {
                 "label": "批准参数修改",
                 "inputs": {},
@@ -1242,6 +1270,32 @@ var abis1=
         "label": "停车权",
         "address": "",
         "events": {
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "from",
+                        "type": "address",
+                        "lable": "from"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "to",
+                        "type": "address",
+                        "lable": "to"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256",
+                        "lable": "value"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event",
+                "label": "Transfer"
+            },
             "0x66250d040e91ea84dcc0a1c4235c8304c660fa0aed8aa1bdf20c946c59c5e8ff": {
                 "anonymous": false,
                 "inputs": [
@@ -1287,58 +1341,6 @@ var abis1=
                 "name": "Alert",
                 "type": "event",
                 "label": "Alert"
-            },
-            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "from",
-                        "type": "address",
-                        "lable": "from"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "to",
-                        "type": "address",
-                        "lable": "to"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "value",
-                        "type": "uint256",
-                        "lable": "value"
-                    }
-                ],
-                "name": "Transfer",
-                "type": "event",
-                "label": "Transfer"
-            },
-            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "owner",
-                        "type": "address",
-                        "lable": "owner"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "spender",
-                        "type": "address",
-                        "lable": "spender"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "value",
-                        "type": "uint256",
-                        "lable": "value"
-                    }
-                ],
-                "name": "Approval",
-                "type": "event",
-                "label": "Approval"
             }
         },
         "funs": {
@@ -2043,6 +2045,20 @@ var abis1=
                         "select": {}
                     }
                 },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
@@ -2917,6 +2933,31 @@ var abis1=
                 "type": "function",
                 "showLevel": 2
             },
+            "registerToken": {
+                "label": "registerToken",
+                "inputs": {
+                    "_symbol": {
+                        "label": "_symbol",
+                        "type": "bytes32",
+                        "select": {}
+                    },
+                    "_logicProxyAddress": {
+                        "label": "_logicProxyAddress",
+                        "type": "address",
+                        "select": {}
+                    }
+                },
+                "outputs": {
+                    "_success": {
+                        "label": "_success",
+                        "type": "bool",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
             "createToken": {
                 "label": "创建资产",
                 "inputs": {
@@ -2963,6 +3004,20 @@ var abis1=
                         "select": {}
                     }
                 },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
                 "constant": false,
                 "type": "function",
                 "showLevel": 0
@@ -3713,6 +3768,20 @@ var abis1=
                 "constant": true,
                 "type": "function",
                 "showLevel": 2
+            },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
             },
             "resetKeyC": {
                 "label": "resetKeyC",
@@ -4494,6 +4563,20 @@ var abis1=
                 "constant": false,
                 "type": "function",
                 "showLevel": 2
+            },
+            "changeLogicProxy": {
+                "label": "changeLogicProxy",
+                "inputs": {
+                    "_newAddress": {
+                        "label": "_newAddress",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
             },
             "setOption": {
                 "label": "设置参数",
