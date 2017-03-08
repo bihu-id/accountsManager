@@ -1,4 +1,4 @@
-import "BaseData.sol";
+import "./BaseData.sol";
 
 contract Data is BaseData{
 

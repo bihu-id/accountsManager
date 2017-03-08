@@ -1,4 +1,4 @@
-import "BaseEvent.sol";
+import "./BaseEvent.sol";
 
 contract LogicProxy is BaseEvent{
 

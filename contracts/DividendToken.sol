@@ -1,50 +1,23 @@
-import "Token.sol";
-import "BeanInterface.sol";
+import "./Token.sol";
+import "./BeanInterface.sol";
+import "./DividendTokenInterface.sol";
 
-DividendTokenInterface {
-    struct Dividend{
-
-        uint m_no;
-
-        uint m_start;
-
-        uint days;
-
-        // eg. 1dou/token/day
-        uint m_dividendRate;
-
-        uint m_status;//1:set 2:start 3:end
-
-        address tokenAddress;
-
-        address m_executor;
-
-    }
-    struct AuxAddress{
-        uint32      m_time;
-        address     m_address;
-    }
-    function dividend(address _tokenAddress,uint _start ,uint _days,uint _dividendRate)returns(bool _success);
-    function startDividend(uint _no);
-    function executeDividend(address [] _holders);
-    function endDividend(uint _no);
-    function clearDividend(address [] _holders);
-}
-
-DividendToken is Token ,DividendTokenInterface{
+contract DividendToken is Token ,DividendTokenInterface{
 
     //TODO check overflow
-    mapping (AuxAddress => int128)     m_balancesAux;
+    //AuxAddress=>m_balance
+    mapping ( uint=> uint)      m_balancesAux;
 
-    address[]                          m_balancesAuxArray;
+    address[]                   m_balancesAuxArray;
 
-    //1:normal 2:dividend
-    uint                    m_dividendStatus;
+    //AuxStatus ,since solidity consider Enum as uint8,then merge variable that may cause data error when contract logic update
+    //so use uint replace Enum
+    uint                        m_dividendStatus;
 
-    uint                    m_dividendAmount;
+    uint                        public m_dividendAmount;
 
     //record dividend history No.=>dividend
-    mapping(uint=>Dividend) m_dividendHistory;
+    mapping(uint=>Dividend)     public m_dividendHistory;
 
     //the current dividend ,store in m_dividendHistory index by No.
     uint m_currentNo;
@@ -52,13 +25,13 @@ DividendToken is Token ,DividendTokenInterface{
     uint m_AuxTime;
 
     function onlyExecutor(uint _no)internal{
-        if(msg.sender()!=m_dividendHistory[_no].m_executor)  {throwErrEvent(60060001);     }
+        if(msg.sender!=m_dividendHistory[_no].m_executor)  {throwErrEvent(60060001);     }
     }
 
     function onlyAvailable(uint _no)internal{
         uint t_start=m_dividendHistory[_no].m_start;
-        uint t_end=m_dividendHistory[_no].m_end<now;
-        if(m_dividendHistory[_no].m_start>now &&m_dividendHistory[_no].m_end<now)
+        uint t_end=t_start+m_dividendHistory[_no].m_days*3600*24;
+        if(t_start>now &&t_end<now)
             m_dividendHistory[_no].m_status=2;
         else
             {throwErrEvent(60061001);     }
@@ -81,33 +54,45 @@ DividendToken is Token ,DividendTokenInterface{
     function executeDividend(uint _no,address [] _holders){
         onlyExecutor(_no);
         onlyAvailable(_no);
-        BeanInterface beam=BeanInterface(t_dividend.m_tokenAddress);
-
-        uint[]  t_amounts=new uint[_holders.length];
+        BeanInterface beam=BeanInterface(m_dividendHistory[_no].m_tokenAddress);
+        uint t_len=_holders.length;
+        uint[]  memory  t_amounts=new uint[](t_len);
         uint    t_totalAmounts=0;
         uint    t_AuxTime=m_AuxTime;
-        for(uint i=0;i<t+len;i++){
-            uint t_amount=_holders[i]]+m_balancesAux[_holders[i];
-            if(t_amount>=0)//just make t_amount length do not change {
-                t_amounts[i]=m_balance[_holders[i]]+m_balancesAux[AuxAddress(m_AuxTime,_holders[i])];
-                t_totalAmounts+=t_amount;
+        for(uint i=0;i<t_len;i++){
+            address t_holder=_holders[i];
+            uint t_holderAux=serializeAddressAux(t_holder,uint32(t_AuxTime));
+            uint complementAmount=m_balances[t_holder]+m_balancesAux[t_holderAux];
+            //never complementAmount>>255<0
+            if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
+                t_amounts[i]=complementAmount;
+                t_totalAmounts+=complementAmount;
+            }else
+            {
+                throwErrEvent(60069991);
             }
             // todo when t_amount<0
         }
         beam.transfers(_holders,t_amounts,t_totalAmounts);
     }
 
-    function endDividend(){
-        if(m_dividendHistory[_no].m_end<=now)
+    function endDividend(uint _no){
+        uint t_end=m_dividendHistory[_no].m_start+m_dividendHistory[_no].m_days*3600*24;
+        if(t_end<=now)
             m_dividendHistory[_no].m_status=3;
         m_dividendStatus=1;
     }
 
-    function getAuxAddress()constant returns(address [] _addresses){
-        return m_balancesAuxArray;
+    function serializeAddressAux(address _address,uint32 _time)internal returns(uint _addressAux){
+        return uint(_address)*0x100000000+_time;
     }
 
-    function clear(address [] _addresses);
+    function parseAddressAux(uint _addressAux)internal returns(address _address,uint32 _time){
+        uint32 t_time=uint32(_addressAux%0x100000000);
+        address t_address=address((_addressAux-t_time)/0x100000000);
+        return (t_address, t_time);
+    }
+
 
     function transfer(address _to, uint256 _amount)  returns (bool success) {
 
@@ -118,10 +103,9 @@ DividendToken is Token ,DividendTokenInterface{
             m_balances[msg.sender] -= _amount;
             m_balances[_to] += _amount;
             if(m_dividendStatus==2){
-                AuxAddress t_sender=AuxAddress(m_AuxTime,msg.sender);
-                AuxAddress t_to=AuxAddress(m_AuxTime,_to);
-                m_balancesAux[t_sender]+=_amount;
-                m_balancesAux[t_to]-=_amount;
+                uint complementAmount=~_amount+1;
+                m_balancesAux[serializeAddressAux(msg.sender,uint32(m_AuxTime))]+=_amount;
+                m_balancesAux[serializeAddressAux(_to,uint32(m_AuxTime))]+=complementAmount;
             }
             Transfer(msg.sender, _to, _amount);
             return true;
@@ -141,10 +125,9 @@ DividendToken is Token ,DividendTokenInterface{
             m_balances[tx.origin] -= _amount;
             m_balances[_to] += _amount;
             if(m_dividendStatus==2){
-                AuxAddress t_sender=AuxAddress(m_AuxTime,msg.sender);
-                AuxAddress t_to=AuxAddress(m_AuxTime,_to);
-                m_balancesAux[t_sender]+=_amount;
-                m_balancesAux[t_to]-=_amount;
+                uint complementAmount=~_amount+1;
+                m_balancesAux[serializeAddressAux(msg.sender,uint32(m_AuxTime))]+=_amount;
+                m_balancesAux[serializeAddressAux(_to,uint32(m_AuxTime))]+=complementAmount;
             }
             Transfer(tx.origin, _to, _amount);
             return true;
@@ -153,4 +136,5 @@ DividendToken is Token ,DividendTokenInterface{
            return false;
         }
     }
+
 }

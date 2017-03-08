@@ -1,4 +1,4 @@
-import "BaseEvent.sol";
+import "./BaseEvent.sol";
 
 //数据合约必须继承这个类,不能更改这个类,如果更改会导致合约读取数据错误,
 contract BaseData is BaseEvent{
@@ -15,6 +15,11 @@ contract BaseData is BaseEvent{
         porxy=_porxy;
         m_initor=uint(msg.sender);
 
+    }
+    function changeLogicProxy(uint _newAddress){
+        if(uint(msg.sender)==m_core){
+            porxy=_newAddress;
+        }
     }
 }
 //逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,

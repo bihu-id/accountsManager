@@ -8,3 +8,4 @@ app
 /node_modules/
 *.node-xmlhttprequest*
 copyToInterface.sh
+npm-debug.log
