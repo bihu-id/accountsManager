@@ -1,7 +1,7 @@
-import "Token.sol";
-import "AccountCreator.sol";
-import "BaseManager.sol";
-import "TokenManagerInterface.sol";
+import "./Token.sol";
+import "./AccountCreator.sol";
+import "./BaseManager.sol";
+import "./TokenManagerInterface.sol";
 
 contract RoleDefine_Token{
 
@@ -171,7 +171,7 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
         m_amounts++;
-        Data d = new Data(_logicProxyAddress);
+        Data d = new Data(uint(_logicProxyAddress));
         CreateTokenData(d);
         m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,d);
 

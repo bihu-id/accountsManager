@@ -1,5 +1,5 @@
-import "BaseData.sol";
-import "Data.sol";
+import "./BaseData.sol";
+import "./Data.sol";
 
 contract BaseOption is BaseLogic{
 
@@ -104,8 +104,6 @@ contract BaseOption is BaseLogic{
 
 }
 contract SubManager is BaseOption{
-
-    event ResetOption(uint _key,uint _value);
 
     function resetKey(uint _role,uint _key){
 
