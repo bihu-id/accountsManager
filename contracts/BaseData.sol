@@ -16,11 +16,6 @@ contract BaseData is BaseEvent{
         m_initor=uint(msg.sender);
 
     }
-    function changeLogicProxy(uint _newAddress){
-        if(uint(msg.sender)==m_core){
-            porxy=_newAddress;
-        }
-    }
 }
 //逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,
 contract BaseLogic is BaseData{

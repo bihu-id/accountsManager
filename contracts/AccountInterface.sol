@@ -2,6 +2,10 @@ contract AccountInterface {
 
     //function call other contract                              调用其他合约的函数
 
+    /// @notice call other contract with _data
+    function call(address _contractAddress /*uint32 _sig, bytes _data*/);
+    //function callOrigin(address _contractAddress,/*uint32 _sig, bytes _data*/);
+
     /// @notice create token ,contract check the account was created by AccountCreator ,but not check the account have access to create token
     /// 创建资产,合约检查创建者是不是由AccountCreator管理的账户,但是并检查是否有权力创建资产
     /// @param _symbol symbol of token ,Max size 32 bytes32 ,ASCII of symbol,contract do not check the length .. 资产的代号,不可重复,最大32字节,是字母的ASCII,合约只检查是否重复,但不检查长度,大小写,和其他规则

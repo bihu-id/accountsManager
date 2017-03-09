@@ -299,4 +299,11 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
     }
 
+    //seperate logic
+    function changeTokenProxy(address _tokenAddress,address _newProxy){
+        checKey(m_keys[uint(role.setSubKeyRole)]);
+        Token t=Token(_tokenAddress);
+        t.changeLogicProxy(uint(_newProxy));
+    }
+
 }

@@ -247,5 +247,17 @@ contract Token is BaseLogic,Erc20,TokenInterface {
         return Status(m_freezeLists[_account]);
 
     }
+    // seperate logic
+    function changeLogicProxy(uint _newAddress){
+        if(uint(msg.sender)!=m_initor)   {throwErrEvent(60040006);}
+        {
+            porxy=_newAddress;
+        }
+    }
+
+    function getProxy()constant returns(address _proxy){return address(porxy);}
+
+    function getInitor()constant returns(address _proxy){return address(m_initor);}
+
 }
 
