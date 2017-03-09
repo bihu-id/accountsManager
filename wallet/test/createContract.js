@@ -5,7 +5,7 @@ var byteCodes=require("../../test/byteCodes.js")
 var abis=require("../../test/abis.js")
 
 var abi=abis.Test
-var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
+var privateKey=new Buffer("57b4bef42f68ad2117a1487ad12f73d24ca51d7316ed738907a608c6d6b7bc91",'hex');
 Transaction.createContractWithArgs(web3,'0x'+byteCodes.Test,abi,[100],privateKey,300000,function(err,hash){
     if(err)
         console.log(err)
