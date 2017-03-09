@@ -334,6 +334,26 @@ var funs=
             register: false
         }
     },
+    Test: {
+        get: {
+            name: 'get()',
+            sig: 0x6d4ce63c,
+            resSize: 32,
+            register: false
+        },
+        set: {
+            name: 'set(uint256)',
+            sig: 0x60fe47b1,
+            resSize: 32,
+            register: false
+        },
+        test: {
+            name: 'test(uint256)',
+            sig: 0x29e99f07,
+            resSize: 32,
+            register: false
+        }
+    },
     Token: {
         accountStatus: {
             name: 'accountStatus(address)',

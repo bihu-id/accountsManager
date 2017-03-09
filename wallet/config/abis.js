@@ -1434,6 +1434,59 @@ var abis=
             "type": "event"
         }
     ],
+    "Test": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_x",
+                    "type": "uint256"
+                }
+            ],
+            "name": "test",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_x",
+                    "type": "uint256"
+                }
+            ],
+            "name": "set",
+            "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "get",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "x",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Set",
+            "type": "event"
+        }
+    ],
     "Token": [
         {
             "constant": false,

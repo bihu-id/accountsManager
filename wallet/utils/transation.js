@@ -35,6 +35,11 @@ module.exports = {
 
     },
 
+    createContractWithArgs:function(web3,code,abi,args,priKey,gas,callback){
+        var contract =new web3.eth.contract
+        var data=code+contract.encodeConstructorParams(abi,args);
+        this.createContract(web3,data,priKey,gas,callback);
+    },
     raw :function (web3, abi, privateKey, fun, args, to, value, gas, nonce, data){
 
         var a=ethUtil.privateToAddress(privateKey).toString('hex')

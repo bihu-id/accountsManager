@@ -1652,6 +1652,70 @@ var abis1=
             }
         }
     },
+    "Test": {
+        "label": "Test",
+        "address": "",
+        "events": {
+            "0xdf7a95aebff315db1b7716215d602ab537373cdb769232aae6055c06e798425b": {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "x",
+                        "type": "uint256",
+                        "lable": "x"
+                    }
+                ],
+                "name": "Set",
+                "type": "event",
+                "label": "Set"
+            }
+        },
+        "funs": {
+            "test": {
+                "label": "test",
+                "inputs": {
+                    "_x": {
+                        "label": "_x",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "set": {
+                "label": "set",
+                "inputs": {
+                    "_x": {
+                        "label": "_x",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "outputs": {},
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            },
+            "get": {
+                "label": "get",
+                "inputs": {},
+                "outputs": {
+                    "": {
+                        "label": "",
+                        "type": "uint256",
+                        "select": {}
+                    }
+                },
+                "constant": false,
+                "type": "function",
+                "showLevel": 0
+            }
+        }
+    },
     "Token": {
         "label": "资产合约",
         "address": "",
