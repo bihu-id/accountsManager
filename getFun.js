@@ -33,7 +33,8 @@ var funContract=
         'Account',
         'LogicProxy',
         'KeepManager',
-        'ParkingLock'
+        'ParkingLock',
+        'Test'
     ]
 
 fs.readdir("./contracts",function(err,files){

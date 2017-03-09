@@ -8,6 +8,19 @@ var ethUtil = require('ethereumjs-util');
 var BigNumber=require("BigNumber")
 
 var coder = require('web3/lib/solidity/coder');
+
+var encodeConstructorParams = function (abi, params) {
+    return abi.filter(function (json) {
+            return json.type === 'constructor' && json.inputs.length === params.length;
+        }).map(function (json) {
+            return json.inputs.map(function (input) {
+                return input.type;
+            });
+        }).map(function (types) {
+            return coder.encodeParams(types, params);
+        })[0] || '';
+};
+
 module.exports = {
 
     transactionRaw:function(web3,abi,to,fun,args,key,gas){
@@ -35,6 +48,13 @@ module.exports = {
 
     },
 
+    createContractWithArgs:function(web3,code,abi,args,priKey,gas,callback){
+        var contract =new web3.eth.contract
+        var paraData=encodeConstructorParams(abi,args);
+        console.log(paraData)
+        var data=code+paraData;
+        this.createContract(web3,data,priKey,gas,callback);
+    },
     raw :function (web3, abi, privateKey, fun, args, to, value, gas, nonce, data){
 
         var a=ethUtil.privateToAddress(privateKey).toString('hex')

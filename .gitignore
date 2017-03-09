@@ -9,3 +9,8 @@ app
 *.node-xmlhttprequest*
 copyToInterface.sh
 npm-debug.log
+test/byteCodes.js
+wallet/config/abis.js
+wallet/config/abls.js
+test/funs.js
+test/abis.js
