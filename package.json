@@ -16,7 +16,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eth-lightwallet": "^2.5.3",
     "keccakjs": "^0.2.1",
-    "solc": "^0.4.6"
+    "solc": "^0.4.6",
+    "web3": "^0.18.2"
   }
 }

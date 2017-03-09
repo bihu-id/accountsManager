@@ -5,7 +5,7 @@ var ethlightjs         = require('eth-lightwallet');
 var accountsKey=require("./../accountsKeys")
 var ethUtil = require('ethereumjs-util');
 
-var BigNumber=require("BigNumber")
+var BigNumber=require("BigNumber.js")
 
 var coder = require('web3/lib/solidity/coder');
 
@@ -23,10 +23,12 @@ var encodeConstructorParams = function (abi, params) {
 
 module.exports = {
 
-    transactionRaw:function(web3,abi,to,fun,args,key,gas){
+    transactionRaw:function(web3,abi,to,fun,args,key,gas,_value){
 
         var abi=abi
-        var value=0
+        var value=0;
+        if(_value!=undefined)
+            value=_value
         var nonce=0
         var data=null
         var privateKey;
@@ -35,9 +37,9 @@ module.exports = {
         return this.raw(web3, abi, key, fun, args, to, value, gas, null, data)
 
     },
-    transaction:function(web3,abi,to,fun,args,key,gas,callback){
+    transaction:function(web3,abi,to,fun,args,key,gas,callback,value){
 
-        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas)
+        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas,value)
         this.broadCast(web3,res.serializedTx,callback)
 
     },
@@ -80,7 +82,7 @@ module.exports = {
         var _nonce = "0x" + (int_nonce).toString(16);
         var gasprice = "0x" + web3.eth.gasPrice.toString(16);
         var gasLimit = "0x" + parseInt(gas, 10).toString(16)
-        var _value  //new BigNumber(web3.toWei(value, 'ether'));
+        var _value =new BigNumber(web3.toWei(value, 'ether'));
 
         //console.log("start rawTx")
         var rawTx = {
@@ -88,7 +90,7 @@ module.exports = {
             gasPrice: gasprice,
             gasLimit: gasLimit,
             to: to,
-            value: '0x0',// + _value.toString(16),
+            value: "0x"+ _value.toString(16),
             data: data
         }
         console.log(rawTx);
