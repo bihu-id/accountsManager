@@ -51,9 +51,7 @@ module.exports = {
     },
 
     createContractWithArgs:function(web3,code,abi,args,priKey,gas,callback){
-        var contract =new web3.eth.contract
         var paraData=encodeConstructorParams(abi,args);
-        console.log(paraData)
         var data=code+paraData;
         this.createContract(web3,data,priKey,gas,callback);
     },
@@ -93,7 +91,7 @@ module.exports = {
             value: "0x"+ _value.toString(16),
             data: data
         }
-        console.log(rawTx);
+        //console.log(rawTx);
         var tx = new Tx(rawTx);
         //console.log(privateKey)
         tx.sign(privateKey);

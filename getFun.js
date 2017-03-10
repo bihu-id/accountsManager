@@ -34,6 +34,8 @@ var funContract=
         'LogicProxy',
         'KeepManager',
         'ParkingLock',
+        'DividendToken',
+        'Bean',
         'Test'
     ]
 

@@ -2,22 +2,27 @@ var getRpcStr=require("./getRpcServe.js")
 
 module.exports ={
 
-    deployData:function(contract,proxy,data){
+    deployData:function(contract,proxy,data,privateKey){
 
         var rpcAddress=getRpcStr.get()
 
         var proxyAddress=contract+"Proxy";
         var dataAddress=contract+"Data";
-
-        proxy.new().then(function(instance){
-            console.log('deploy %s:%s',proxyAddress,instance.address)
-            rpcAddress[proxyAddress]='"'+instance.address+'"';
-            return data.new(instance.address).then(function(instance){
-                console.log('deploy %s:%s',dataAddress,instance.address)
-                rpcAddress[dataAddress]='"'+instance.address+'"';
-                getRpcStr.save(rpcAddress)
+        if(privateKey==undefined){
+            proxy.new().then(function(instance){
+                console.log('deploy %s:%s',proxyAddress,instance.address)
+                rpcAddress[proxyAddress]='"'+instance.address+'"';
+                return data.new(instance.address).then(function(instance){
+                    console.log('deploy %s:%s',dataAddress,instance.address)
+                    rpcAddress[dataAddress]='"'+instance.address+'"';
+                    getRpcStr.save(rpcAddress)
+                });
             });
-        });
+        }
+        else 
+        {
+            
+        }
     },
 
     deploy:function(contract,proxy,logic){

@@ -37,13 +37,16 @@ contract DividendToken is Token ,DividendTokenInterface{
             {throwErrEvent(60061001);     }
     }
     // TODO only token issuer/dividendor can dividend
-    function dividend(address _tokenAddress,uint _start ,uint _days,uint _dividendRate,address _executor)returns(bool _success){
+    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _dividendRate,address _executor)returns(bool _success){
         m_dividendAmount++;
         m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_dividendRate,1,_tokenAddress,_executor);
         //m_currentNo=m_dividendAmount;
         return true;
     }
 
+    function revokeDividend(uint _no)returns(bool _success){
+        return true;
+    }
     function startDividend(uint _no){
         onlyExecutor(_no);
         onlyAvailable(_no);

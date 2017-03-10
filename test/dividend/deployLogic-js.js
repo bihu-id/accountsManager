@@ -2,10 +2,12 @@ var transaction=require("../../wallet/utils/transation.js")
 var codes=require("../byteCodes.js")
 var Web3=require("../../getWeb3Instance.js")
 var getRpcStr=require("../../getRpcServe.js")
+var ethUtil = require('ethereumjs-util');
 
 var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
-var contract="LogicProxy"
-var addresskey="TokenProxy"
+console.log(ethUtil.privateToAddress(privateKey).toString('hex'))
+var contract="DividendToken"
+var addresskey=contract+"Logic"
 transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function(err,hash){
     console.log(err)
     if (!err)
@@ -17,5 +19,5 @@ transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function
         var rpcAddress=getRpcStr.get()
         rpcAddress[addresskey]='"'+receipt.contractAddress+'"';
         getRpcStr.save(rpcAddress)
-    },5000)
+    },6000)
 })

@@ -81,15 +81,17 @@ var Address=
         "AccountCreatorProxy": "0x8780b9af0266fdb57d2c9ba0d6322d58f5073264",
         "AccountCreatorData": "0x6291e76e35a93bbc65f32c25b41284175a7eb84c",
         "AccountCreatorLogic": "0x860bf1b2f7c4f40d55fdd772db515904990421a0",
-        "TokenLogic": "0x73d4f4557b5e197a453f4f1ac8d6727aa54a8f85",
+        "TokenLogic": "0xbf5fb362529524e63bd6b6e6137df2e4bc1a5dae",
         "TokenProxy": "0x3f27673e508125fddd9982aa81aa00cb94111e96",
         "TokenManagerProxy": "0x5a58b8d7be418566794d9d5dbebd6393fd04af3c",
         "TokenManagerData": "0x4dd20d75d57860e31419275c5ebcaf9b911af73b",
-        "TokenManagerLogic": "0x97fff9006e881e0ca63ab9a406846c5ab039dd40",
+        "TokenManagerLogic": "0x1c6543d59dcb5163e8f034a4bef71008781dda64",
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
         "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
-        "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354"
+        "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354",
+        "DividendTokenProxy": "0xcb8887c925d8243de066ae226e74dc0426281d83",
+        "DividendTokenLogic": "0x51b592dd76f7258964134d53281948b51492f715"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",
