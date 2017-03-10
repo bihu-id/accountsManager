@@ -24,17 +24,17 @@ module.exports ={
         else
             return "0x"+str.toString(16)
     },
-    save:function(rpcAddress){
+    save:function(rpcAddress,callback){
         address[this.getstr()]=rpcAddress
 
         //console.log(address)
-
-        var raw = JSON.stringify(address, null, 4).replace(/\\\"/g, "")
-        var str = "var Address=\n" + raw + "\nmodule.exports=Address;";
-        fs.writeFile("/Users/Roy/github/accountsManager/test/address.js", str, function (err) {
+        var callback=callback||function (err) {
             if (err) throw err;
             console.log("File Saved !"); //文件被保存
-        })
+        }
+        var raw = JSON.stringify(address, null, 4).replace(/\\\"/g, "")
+        var str = "var Address=\n" + raw + "\nmodule.exports=Address;";
+        fs.writeFile("/Users/Roy/github/accountsManager/test/address.js", str,callback)
 
     }
 };

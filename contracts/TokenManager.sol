@@ -162,7 +162,7 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         return true;
     }
 
-    function registerToken(bytes32 _symbol,address _logicProxyAddress)returns(bool _success){
+    function registerToken(bytes32 _symbol,address _token)returns(bool _success){
 
         isXindiManageAccount();
         //check token symbol length ,length must >=3
@@ -171,12 +171,12 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
         m_amounts++;
-        Data d = new Data(uint(_logicProxyAddress));
-        CreateTokenData(d);
-        m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,d);
+
+        m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,_token);
 
         m_symbols[_symbol]=m_amounts;
         m_ids[m_amounts]=_symbol;
+        RegisterToken(m_amounts,_symbol,_token);
         return true;
     }
     /*

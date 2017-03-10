@@ -7,13 +7,14 @@ contract BaseData is BaseEvent{
     // use uint replace address type to make contract more simple
     uint  porxy;        //0x0
     uint  inited;       //0x1
-    uint  m_initor;     //0x2
-    uint  m_core;       //0x3 base core of data contract , can init contract ,can reset m_onwer;
+    uint  m_initor;     //0x2       can init contract
+    uint  m_core;       //0x3       if 1 mean data if 0 mean logic default
 
     function BaseData(uint _porxy){
 
         porxy=_porxy;
         m_initor=uint(msg.sender);
+        m_core=1;
 
     }
 }

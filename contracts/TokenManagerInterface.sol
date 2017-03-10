@@ -57,7 +57,7 @@ contract TokenManagerInterface {
     /// @notice _logicProxyAddress Logic proxy address
     /// @param _symbol symbol of token
     /// @return _success *
-    function registerToken(bytes32 _symbol,address _logicProxyAddress)returns(bool _success);
+    function registerToken(bytes32 _symbol,address _token)returns(bool _success);
 /*
     /// @notice 设置可账户可以创建多少个资产 ;
     /// @param _account 账户、
@@ -121,4 +121,5 @@ contract TokenManagerInterface {
     event Freeze(address _Token,address _account);
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
+    event RegisterToken(uint _no,bytes32 _symbol,address _token);
 }
