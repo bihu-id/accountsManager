@@ -1,17 +1,18 @@
 var abis=require("./test/abis.js")
 var getRpcStr=require("./getRpcServe.js")
-var transaction=require("../../wallet/utils/transation.js")
-var codes=require("../byteCodes.js")
-var Web3=require("../../getWeb3Instance.js")
-var ethUtil = require('ethereumjs-util');
+var transaction=require("./wallet/utils/transation.js")
+var codes=require("./test/byteCodes.js")
+var Web3=require("./getWeb3Instance.js")
 var Promise = require('bluebird')
 
-contract=function(name,addressKey){
+contract=function(name,addressKey,delay){
     this.name=name
     this.abi=abis[name]
     this.address=getRpcStr.get()[addressKey]
     this.addressKey=addressKey
-
+    this.delay=4000
+    if(delay!=undefined)
+        this.delay=delay
 }
 contract.prototype.deploy=function(issuer,args){
 
@@ -32,6 +33,7 @@ contract.prototype.deploy=function(issuer,args){
 
     if (args!=undefined)
         data+=encodeConstructorParams(abi,args)
+    var self=this
     return new Promise(function(accept, reject) {
         transaction.createContract(web3,data,issuer,3000000,function(err,hash){
             console.log(err)
@@ -42,11 +44,11 @@ contract.prototype.deploy=function(issuer,args){
                 var receipt=web3.eth.getTransactionReceipt(hash)
                 var rpcAddress=getRpcStr.get()
                 var address=receipt.contractAddress
-                rpcAddress[this.addressKey]='"'+address+'"';
+                rpcAddress[self.addressKey]='"'+address+'"';
                 getRpcStr.save(rpcAddress)
                 this.address=address
                 accept(address)
-            },6000)
+            },self.delay)
         })
     });
 };
@@ -54,3 +56,5 @@ contract.prototype.deploy=function(issuer,args){
 contract.prototype.at=function(address){
     this.address=address
 }
+
+module.exports = contract
