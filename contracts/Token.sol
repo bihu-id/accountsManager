@@ -55,7 +55,7 @@ contract Token is BaseLogic,Erc20,TokenInterface {
             m_balances[_issuer]=_currentSupply;
 
             uint[] memory t_res=new uint[](1);
-            t_res[0]=1;
+            t_res[0]=uint(_issuer);
 
             afterInit(t_res);
             inited=1;

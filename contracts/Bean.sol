@@ -9,8 +9,7 @@ contract Bean is Token,BeanInterface{
         ifEnd();
         ifFreeze();
         normal();
-        if(_tos.length!=_amounts.length){}
-            throwErrEvent(60071001);
+        if(_tos.length!=_amounts.length){throwErrEvent(60071001);}
         if (m_balances[msg.sender] >= _totalAmount && _totalAmount > 0) {
             m_balances[msg.sender] -= _totalAmount;
             uint t_totalAmount=0;
@@ -22,6 +21,7 @@ contract Bean is Token,BeanInterface{
             }
             if(t_totalAmount!=_totalAmount)
                 {throwErrEvent(60072001);}
+            Transfers(msg.sender,t_totalAmount);
             return true;
         } else {
            throwErrEvent(60040005);

@@ -73,8 +73,12 @@ contract.prototype.at=function(addressKey){
     addressKey=addressKey||this.addressKey
     this.address=rpcAddress[addressKey]
 }
+contract.prototype.setAddress=function(address){
 
-contract.address=function(addressKey){
+    this.address=address
+}
+
+contract.getAddress=function(addressKey){
     return rpcAddress[addressKey]
 }
 contract.prototype.addFunctions=function(){
@@ -96,7 +100,8 @@ contract.prototype.addFunctions=function(){
                 gas=gas||self.callGas
                 if (privateKey!=undefined) {
                     return new Promise(function (accept, reject) {
-                        transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, self.callGas, function (err, hash) {
+                        console.log("tx to :",self.address)
+                        transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas, function (err, hash) {
                             console.log(err)
                             if (err)
                                 reject(err);
@@ -135,7 +140,7 @@ contract.prototype.addFunctions=function(){
                 else {
                     return new Promise(function (accept, reject) {
                         var res=transaction.call(web3,self.abi, self.address, fun.name, args)
-                        console.log(res)
+                        //console.log(res)
                         accept(res)
 
                     });
@@ -194,7 +199,7 @@ contract.prototype.updateLogic=function(privateKey){
                     }, 10000)
                 })
             }
-        },1000)
+        },4000)
 
     })
     sleep.go(function() {
@@ -251,4 +256,16 @@ contract.prototype.confirmUpdate=function(privateKey){
     },20000)
 }
 
+contract.prototype.getLogic=function(){
+    var fun=funs[this.name]
+    var addresses=getRpcStr.get()
+    var to=addresses[this.name+"Proxy"]
+    var keys=Object.keys(fun)
+    var abi=abis["LogicProxy"]
+    keys.forEach(function (k) {
+        var f = fun[k]
+        var res = transaction.call(web3, abi, to, "get", [f.sig])
+        console.log(res[0].toString(16),res[1].toString(),f.sig.toString(16),f.name)
+    })
+}
 module.exports = contract
