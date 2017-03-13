@@ -25,6 +25,7 @@ function getSub(obj,keys) {
 
 var funContract=
     [
+        'Data',
         'AccountCreator',
         'Token',
         'TokenManager',

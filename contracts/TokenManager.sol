@@ -2,6 +2,7 @@ import "./Token.sol";
 import "./AccountCreator.sol";
 import "./BaseManager.sol";
 import "./TokenManagerInterface.sol";
+import "./BaseSToken.sol";
 
 contract RoleDefine_Token{
 
@@ -59,7 +60,7 @@ contract RoleDefine_Token{
 
 contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
-    //total amounts of symbols
+    //total amounts of symbols also m_amounts++ as the id of new token
     uint m_amounts=0;
 
     //record the gas need of function call
@@ -163,8 +164,8 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
     }
 
     function registerToken(bytes32 _symbol,address _token)returns(bool _success){
-
-        isXindiManageAccount();
+        // todo temp commit
+        //isXindiManageAccount();
         //check token symbol length ,length must >=3
         if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
         // symbol is used
@@ -172,6 +173,8 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
         m_amounts++;
 
+        BaseSToken bst=BaseSToken(_token);
+        bst.setId(m_amounts);
         m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,_token);
 
         m_symbols[_symbol]=m_amounts;

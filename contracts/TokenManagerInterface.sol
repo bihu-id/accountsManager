@@ -51,7 +51,8 @@ contract TokenManagerInterface {
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)returns (bool success) ;
+        uint  _hash
+        )returns (bool success) ;
 
     /// @notice register a token with existed logic,operation would event token data address
     /// @notice _logicProxyAddress Logic proxy address

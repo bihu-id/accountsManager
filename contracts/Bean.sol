@@ -3,6 +3,7 @@ import "./BeanInterface.sol";
 
 contract Bean is Token,BeanInterface{
 
+    address m_tokenManager;
     function transfers(address[] _tos, uint256[] _amounts,uint _totalAmount)  returns (bool success) {
 
         ifEnd();
@@ -27,5 +28,11 @@ contract Bean is Token,BeanInterface{
            return false;
         }
 
+    }
+
+    function setId(uint _newId){
+        ifCore();
+        m_option.m_id=              _newId;
+        SetId(_newId);
     }
 }

@@ -6,12 +6,13 @@ var abis=require("../abis.js")
 var Funs=require("../funs.js")
 var Sleep=require("../../wallet/utils/sleep.js")
 
-var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca551726a4f81c98b",'hex');
+var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
 
-var contract="TokenManager"
+var contract="Bean"
 var proxy="LogicProxy"
 var to=getRpcStr.get()[contract+"Proxy"]
 var logicAddress=getRpcStr.get()[contract+"Logic"]
+console.log(logicAddress)
 var abi=abis[proxy]
 
 var fun=Funs[contract]

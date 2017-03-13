@@ -3,7 +3,13 @@ var getRpcStr=require("./getRpcServe.js")
 var transaction=require("./wallet/utils/transation.js")
 var codes=require("./test/byteCodes.js")
 var Web3=require("./getWeb3Instance.js")
+var coder = require('web3/lib/solidity/coder');
 var Promise = require('bluebird')
+var Sleep=require("./wallet/utils/sleep.js")
+var rpcAddress=getRpcStr.get()
+
+var abls=require("./wallet/config/abls")
+var funs=require("./test/funs.js")
 
 contract=function(name,addressKey,delay,createGas,callGas){
     this.name=name
@@ -35,7 +41,7 @@ contract.prototype.deploy=function(issuer,args,gas){
     };
 
     if (args!=undefined)
-        data+=encodeConstructorParams(abi,args)
+        data+=encodeConstructorParams(this.abi,args)
     var self=this
     gas=gas||self.callGas
     return new Promise(function(accept, reject) {
@@ -54,8 +60,8 @@ contract.prototype.deploy=function(issuer,args,gas){
                         throw err
                     else
                     {
-                        this.address=address
-                        accept(address)
+                        self.address=address
+                        accept(self)
                     }
                 })
             },self.delay)
@@ -63,10 +69,14 @@ contract.prototype.deploy=function(issuer,args,gas){
     });
 };
 
-contract.prototype.at=function(address){
-    this.address=address
+contract.prototype.at=function(addressKey){
+    addressKey=addressKey||this.addressKey
+    this.address=rpcAddress[addressKey]
 }
 
+contract.address=function(addressKey){
+    return rpcAddress[addressKey]
+}
 contract.prototype.addFunctions=function(){
 
     var self=this
@@ -80,7 +90,7 @@ contract.prototype.addFunctions=function(){
     }
 
     this.abi.forEach(function(fun){
-        if(fun.type!="function"||fun.type!="constructor"){
+        if(fun.type=="function"){
 
             var funInstance=function(args,privateKey,gas){
                 gas=gas||self.callGas
@@ -93,6 +103,30 @@ contract.prototype.addFunctions=function(){
 
                             setTimeout(function () {
                                 var receipt = web3.eth.getTransactionReceipt(hash)
+
+                                var logs = receipt.logs;
+                                var eventsAbl=abls[self.name]
+                                var eventsOut
+                                var label
+                                var  contractKeys=Object.keys(abls)
+                                var r=logs.map(function (log) {
+                                    var logsAbl = eventsAbl[log.topics[0]]
+                                    if (logsAbl == undefined)
+                                        for (var i = 0; i < contractKeys.length; i++) {
+                                            var otherAbl = abls[contractKeys[i]]
+                                            if (otherAbl[log.topics[0]] != undefined) {
+                                                logsAbl = eventsAbl[log.topics[0]]
+                                                break
+                                            }
+                                        }
+                                    label = log["label"]
+                                    if (logsAbl != undefined) {
+                                        var decoder = new SolidityEvent(null, logsAbl, self.props.address);
+                                        eventsOut = JSON.stringify(decoder.decode(log), null, 2);
+                                        console.log("eventsOut", eventsOut)
+
+                                    }
+                                })
                                 accept(receipt)
                             }, self.delay)
                         })
@@ -112,4 +146,109 @@ contract.prototype.addFunctions=function(){
         }
     })
 }
+contract.prototype.save=function(addressKey){
+    var rpcAddress=getRpcStr.get()
+    addressKey=addressKey||this.addressKey
+    rpcAddress[addressKey]='"'+this.address+'"';
+    var self=this
+    getRpcStr.save(rpcAddress,function(err){
+        if (err) throw err;
+        console.log("save %s : %s",addressKey,self.address); //文件被保存
+    })
+
+}
+
+contract.prototype.updateLogic=function(privateKey){
+
+    this.at()
+    var fun=funs[this.name]
+    var addresses=getRpcStr.get()
+    var to=addresses[this.name+"Proxy"]
+    var keys=Object.keys(fun)
+    var logicAddress=this.address
+    var abi=abis["LogicProxy"]
+    var sleep=new Sleep(1)
+    keys.forEach(function(k){
+        var f=fun[k]
+        sleep.go(function(){
+            var res=transaction.call(web3, abi, to, "getWait", [f.sig]);
+            var addressToStr=function(res){
+                var str=res.toString(16)
+                //console.log(res,str)
+                return '0x'+Array(40-str.length).join(0)+str
+            }
+            //console.log(res[0])
+            var currentLogic=addressToStr(res[0])
+            var currentSize=parseInt(res[1].toString(),10)
+            console.log(currentLogic,currentSize,f.sig.toString(16),f.name)
+            if(currentLogic!=logicAddress||currentSize!=f.resSize) {
+                console.log("set :",logicAddress,f.resSize,f.sig.toString(16),f.name)
+                transaction.transaction(web3, abi, to, "setfun", [logicAddress, f.sig, f.resSize], privateKey, 220000, function (err, hash) {
+                    if (err)
+                        console.log(err)
+
+                    setTimeout(function () {
+                        var receipt = web3.eth.getTransactionReceipt(hash)
+                        console.log(receipt)
+
+                    }, 10000)
+                })
+            }
+        },1000)
+
+    })
+    sleep.go(function() {
+        keys.forEach(function (k) {
+            var f = fun[k]
+            var res = transaction.call(web3, abi, to, "getWait", [f.sig])
+            console.log(res[0].toString(16),res[1].toString(),f.sig.toString(16),f.name)
+        })
+    },20000)
+}
+
+contract.prototype.confirmUpdate=function(privateKey){
+    var fun=funs[this.name]
+    var addresses=getRpcStr.get()
+    var to=addresses[this.name+"Proxy"]
+    var keys=Object.keys(fun)
+    var abi=abis["LogicProxy"]
+    var sleep=new Sleep(1)
+    sleep.go(function(){
+        transaction.transaction(web3,abi,to,"requestConfirm",[0],privateKey,300000,function(err,hash){
+            console.log(err)
+            if (!err)
+                console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+
+            setTimeout(function(){
+                var receipt=web3.eth.getTransactionReceipt(hash)
+                console.log(receipt)
+
+            },10000)
+        })
+    },10)
+
+    sleep.go(function(){
+        transaction.transaction(web3,abi,to,"confirm",[0],privateKey,300000,function(err,hash){
+            console.log(err)
+            if (!err)
+                console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+
+            setTimeout(function(){
+                var receipt=web3.eth.getTransactionReceipt(hash)
+                console.log(receipt)
+
+            },10000)
+        })
+    },10000)
+
+
+    sleep.go(function() {
+        keys.forEach(function (k) {
+            var f = fun[k]
+            var res = transaction.call(web3, abi, to, "get", [f.sig])
+            console.log(res[0].toString(16),res[1].toString(),f.sig.toString(16),f.name)
+        })
+    },20000)
+}
+
 module.exports = contract
