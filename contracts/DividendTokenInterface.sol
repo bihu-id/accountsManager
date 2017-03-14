@@ -8,8 +8,7 @@ contract DividendTokenInterface {
 
         uint m_days;
 
-        // eg. 1dou/token/day
-        uint m_dividendRate;
+        uint m_totalAmount;
 
         //DividendStatus ,since solidity consider Enum as uint8,then merge with other variable to store
         //that may cause data error when contract logic update so use uint replace Enum
@@ -42,10 +41,10 @@ contract DividendTokenInterface {
     /// @param _tokenAddress    分红豆资产合约地址
     /// @param _start           分红开始UTC时间戳
     /// @param _days            分红天数
-    /// @param _dividendRate    分红率,格式举例:100豆/凭/天
+    /// @param _totalAmount     总分红量,由于四舍五入的差别,实际分红量会稍微高于或者低于_totalAmount
     /// @param _executor        分红执行者,一般由Andui指定
     /// @return _success true if success else false
-    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _dividendRate,address _executor)returns(bool _success);
+    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor)returns(bool _success);
 
     /// @notice revoke Dividend
     /// @param _no dividend No.
@@ -69,9 +68,9 @@ contract DividendTokenInterface {
     /// @param _tokenAddress    分红豆资产合约地址
     /// @param _start           分红开始UTC时间戳
     /// @param _days            分红天数
-    /// @param _dividendRate    分红率,格式举例:100豆/凭/天
+    /// @param _totalAmount     总分红量,由于四舍五入的差别,实际分红量会稍微高于或者低于_totalAmount
     /// @param _executor        分红执行者,一般由Andui指定
-    event SetDividend(uint _no,address _tokenAddress,uint _start ,uint _days,uint _dividendRate,address _executor);
+    event SetDividend(uint _no,address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor);
 
     event RevokeDividend(uint _no);
 }

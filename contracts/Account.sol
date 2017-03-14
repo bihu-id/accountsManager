@@ -167,20 +167,21 @@ contract Account is BaseLogic , AccountInterface{
 
     }
 
-    function call(address _contractAddress /*uint32 _sig, bytes _data*/){
+    function approvalCall(address _contractAddress /*uint32 _sig, bytes _data*/){
         transactionCheck();
         callRaw(_contractAddress);
     }
 
     function callRaw(address _contractAddress)internal{
 
-            assembly{
+        assembly{
             //store fun sig 4 Bityes to memery 0x6C~0x6F,mem start 0x20 ( can release memery 0x20~0x5F )
             calldatacopy(0x6C,0x24,sub(calldatasize,0x24))
             call(gas,_contractAddress,callvalue,0x6c,sub(calldatasize,0x24), 0x60, 0x20)
             return(0x60, 0x20)
         }
     }
+
     function changeOwner(
         address _contract,
         address _to) returns (bool success){

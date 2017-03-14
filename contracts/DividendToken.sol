@@ -37,9 +37,9 @@ contract DividendToken is Token ,DividendTokenInterface{
             {throwErrEvent(60061001);     }
     }
     // TODO only token issuer/dividendor can dividend
-    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _dividendRate,address _executor)returns(bool _success){
+    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor)returns(bool _success){
         m_dividendAmount++;
-        m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_dividendRate,1,_tokenAddress,_executor);
+        m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_totalAmount,1,_tokenAddress,_executor);
         //m_currentNo=m_dividendAmount;
         return true;
     }
@@ -47,6 +47,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     function revokeDividend(uint _no)returns(bool _success){
         return true;
     }
+
     function startDividend(uint _no){
         onlyExecutor(_no);
         onlyAvailable(_no);
@@ -62,13 +63,14 @@ contract DividendToken is Token ,DividendTokenInterface{
         uint[]  memory  t_amounts=new uint[](t_len);
         uint    t_totalAmounts=0;
         uint    t_AuxTime=m_AuxTime;
+        uint    t_rate=m_dividendHistory[_no].m_totalAmount/(m_dividendHistory[_no].m_days*m_option.m_currentSupply);
         for(uint i=0;i<t_len;i++){
             address t_holder=_holders[i];
             uint t_holderAux=serializeAddressAux(t_holder,uint32(t_AuxTime));
             uint complementAmount=m_balances[t_holder]+m_balancesAux[t_holderAux];
             //never complementAmount>>255<0
             if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
-                t_amounts[i]=complementAmount;
+                t_amounts[i]=complementAmount*t_rate;
                 t_totalAmounts+=complementAmount;
             }else
             {
@@ -76,7 +78,7 @@ contract DividendToken is Token ,DividendTokenInterface{
             }
             // todo when t_amount<0
         }
-        beam.transfers(_holders,t_amounts,t_totalAmounts);
+        beam.dividends(_holders,t_amounts,t_totalAmounts);
     }
 
     function endDividend(uint _no){

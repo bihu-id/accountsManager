@@ -43,6 +43,14 @@ module.exports = {
         this.broadCast(web3,res.serializedTx,callback)
 
     },
+    accountCall:function(web3,abiAccount,abi,to,fun,argsAccount,args,key,gas,callback,value){
+        var dataAccount='0x' + this.dataFromAbis(abiAccount, "approvalCall", argsAccount)
+        var data= dataAccount+this.dataFromAbis(abi, fun, args)
+
+        var res=this.raw(web3, abiAccount, key, fun, args, to, value, gas, null, data)
+        this.broadCast(web3,res.serializedTx,callback)
+
+    },
     createContract:function(web3,code,priKey,gas,callback){
         
         var res=this.raw(web3,null,priKey,null,null,"0x0",0,3000000,null,code)

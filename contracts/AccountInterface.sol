@@ -2,8 +2,9 @@ contract AccountInterface {
 
     //function call other contract                              调用其他合约的函数
 
-    /// @notice call other contract with _data
-    function call(address _contractAddress /*uint32 _sig, bytes _data*/);
+    /// @notice 通过账户调用其他合约执行操作,账户检查owner权限。数据封装格式,  data(call())+data(function)
+    /// @param _contractAddress 合约地址。
+    function approvalCall(address _contractAddress /*uint32 _sig, bytes _data*/);
     //function callOrigin(address _contractAddress,/*uint32 _sig, bytes _data*/);
 
     /// @notice create token ,contract check the account was created by AccountCreator ,but not check the account have access to create token

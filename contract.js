@@ -81,6 +81,31 @@ contract.prototype.setAddress=function(address){
 contract.getAddress=function(addressKey){
     return rpcAddress[addressKey]
 }
+contract.prototype.addAccountCall=function(accountAddress,funName){
+    this.accountAbi=abis["Account"]
+    this.acccountAddress=accountAddress
+    var self=this
+    var funInstance=function(args,privateKey,gas){
+        gas=gas||self.callGas
+
+        return new Promise(function (accept, reject) {
+            console.log("tx to :",self.acccountAddress)
+
+            transaction.accountCall(web3,self.accountAbi,self.abi,self.acccountAddress,funName,[self.address],args,privateKey,gas,function (err, hash) {
+                console.log(err)
+                if (err)
+                    reject(err);
+
+                setTimeout(function () {
+                    var receipt = web3.eth.getTransactionReceipt(hash)
+
+                    accept(receipt)
+                }, self.delay)
+            })
+        })
+    }
+    this.addFunction("call_"+funName,funInstance)
+}
 contract.prototype.addFunctions=function(){
 
     var self=this
@@ -92,7 +117,6 @@ contract.prototype.addFunctions=function(){
             enumerable: true
         });
     }
-
     this.abi.forEach(function(fun){
         if(fun.type=="function"){
 
@@ -105,7 +129,7 @@ contract.prototype.addFunctions=function(){
                             console.log(err)
                             if (err)
                                 reject(err);
-
+                            
                             setTimeout(function () {
                                 var receipt = web3.eth.getTransactionReceipt(hash)
 
@@ -256,16 +280,24 @@ contract.prototype.confirmUpdate=function(privateKey){
     },20000)
 }
 
-contract.prototype.getLogic=function(){
-    var fun=funs[this.name]
-    var addresses=getRpcStr.get()
-    var to=addresses[this.name+"Proxy"]
-    var keys=Object.keys(fun)
-    var abi=abis["LogicProxy"]
+contract.prototype.getLogic=function() {
+    var fun = funs[this.name]
+    var addresses = getRpcStr.get()
+    var to = addresses[this.name + "Proxy"]
+    var keys = Object.keys(fun)
+    var abi = abis["LogicProxy"]
     keys.forEach(function (k) {
         var f = fun[k]
         var res = transaction.call(web3, abi, to, "get", [f.sig])
-        console.log(res[0].toString(16),res[1].toString(),f.sig.toString(16),f.name)
+        console.log(res[0].toString(16), res[1].toString(), f.sig.toString(16), f.name)
     })
+}
+contract.prototype.addFunction=function(funName,fun){
+    Object.defineProperty(this, funName, {
+        value: fun,
+        configurable: false,
+        writable: false,
+        enumerable: true
+    });
 }
 module.exports = contract

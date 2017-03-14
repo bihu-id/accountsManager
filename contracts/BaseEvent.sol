@@ -95,7 +95,7 @@ contract BaseEvent{
 
 
     //广告豆错误 合约编号007
-    //60070001:
+    //60070001:   caller 应该是相关的凭证
     //60071001:   transfers _tos 不等于_amounts
     //60072001:   transfers 总发送余额不正确
 
