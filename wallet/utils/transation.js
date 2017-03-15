@@ -37,8 +37,8 @@ module.exports = {
 
     },
     transaction:function(web3,abi,to,fun,args,key,gas,callback,value,nonce){
-
-        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas,value,nonce)
+        //console.log(value,nonce)
+        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas,nonce,value)
         this.broadCast(web3,res.serializedTx,callback)
 
     },
@@ -86,7 +86,7 @@ module.exports = {
         var gasprice = "0x" + web3.eth.gasPrice.toString(16);
         var gasLimit = "0x" + parseInt(gas, 10).toString(16)
         var _value =new BigNumber(web3.toWei(value, 'ether'));
-
+        //console.log(_value)
         //console.log("start rawTx")
         var rawTx = {
             nonce: _nonce,

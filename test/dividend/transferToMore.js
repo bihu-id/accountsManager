@@ -18,11 +18,13 @@ console.log(nonce )
 var sleep=new Sleep(1)
 var i=0
 
-Sleep.loop(400,function(){
+sleep.loop(400,function(){
     token.call_transfer([keys[i],i+100],privateKey,300000,nonce+i,true).then(function(receipt,err){
 
         console.log(i)
     })
-    i++
+    if(i++>10)
+        sleep.endLoop()
+
 })
 

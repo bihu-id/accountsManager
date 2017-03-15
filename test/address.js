@@ -94,7 +94,8 @@ var Address=
         "DividendTokenLogic": "0x61e9bad8fadaf0e964c124b0d57d4a678eb4c7ab",
         "BeanLogic": "0x0e44dc9583ece24beacf3fc3dcf8037e0dcb6a9f",
         "BeanData": "0x1b222db79b9aea1fd05acc4045b97a3363d5ec2d",
-        "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af"
+        "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af",
+        "DividendTokenData": "0x126e04c3fce0bce1bf69be00b86e9cf4936fffd5"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",

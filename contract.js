@@ -213,10 +213,10 @@ contract.prototype.updateLogic=function(privateKey){
                         console.log(receipt)
 
                     }, 10000)
-                })
+                },0,nonce+i)
                 i++
             }
-        },4000)
+        },100)
 
     })
     sleep.go(function() {

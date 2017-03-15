@@ -307,6 +307,7 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         checKey(m_keys[uint(role.setSubKeyRole)]);
         Token t=Token(_tokenAddress);
         t.changeLogicProxy(uint(_newProxy));
+        ChangeTokenProxy(_tokenAddress,_newProxy);
     }
 
 }

@@ -123,4 +123,5 @@ contract TokenManagerInterface {
     event Unfreeze(address _Token,address _account);
     event ForceTransfer(address _token,address _from,address _to,uint _value);
     event RegisterToken(uint _no,bytes32 _symbol,address _token);
+    event ChangeTokenProxy(address _tokenAddress,address _newProxy);
 }
