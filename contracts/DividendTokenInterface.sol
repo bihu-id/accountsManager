@@ -18,6 +18,16 @@ contract DividendTokenInterface {
 
         address m_executor;
 
+        // implemented dividend amount,
+        uint m_implementedAmount;
+
+        uint m_dayNo;
+        //每天调用开始分红函数之后,会设定能分红豆的上限,
+        uint m_limitedAmount;
+
+        //分红间隔
+        uint m_interval;
+
     }
 
     enum AuxStatus{
@@ -73,4 +83,8 @@ contract DividendTokenInterface {
     event SetDividend(uint _no,address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor);
 
     event RevokeDividend(uint _no);
+
+    event StartDividend(uint _no);
+
+    event EndDividend(uint _no);
 }

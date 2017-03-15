@@ -58,9 +58,9 @@ contract Bean is Token,BeanInterface{
         address _coreContract
         )returns (bool success){}
 
-    event ShowSender(address _address);
+    //event ShowSender(address _address);
     function onlyRelatedToken() internal{
-        if(msg.sender!=m_relatedToken) { ShowSender(msg.sender);throwErrEvent(60070001);}
+        if(msg.sender!=m_relatedToken) { throwErrEvent(60070001);}
     }
     function dividends(address[] _tos, uint256[] _amounts,uint _totalAmount)  returns (bool success) {
 

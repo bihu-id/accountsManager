@@ -244,7 +244,7 @@ fs.readdir("./contracts",function(err,files){
 
     fs.writeFile("/Users/Roy/github/abis/abis.js",str,function (err) {
         if (err) throw err ;
-        console.log("File Saved !"); //文件被保存
+        console.log("update abis !"); //文件被保存
     }) ;
 
     var raw=JSON.stringify(byteCodes,null,4)
