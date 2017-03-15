@@ -20,9 +20,9 @@ contract DividendToken is Token ,DividendTokenInterface{
     mapping(uint=>Dividend)     public m_dividendHistory;
 
     //the current dividend ,store in m_dividendHistory index by No.
-    uint m_currentNo;
+    uint                        m_currentNo;
 
-    uint m_AuxTime;
+    uint                        m_AuxTime;
 
     // current rate ,calcualte while startDividend
     uint public m_rate;
@@ -53,7 +53,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
         onlyIssuer();
         m_dividendAmount++;
-        uint t_interval=3600*24;
+        uint t_interval=60;
         m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_totalAmount,1,_tokenAddress,_executor,0,0,0,t_interval);
         SetDividend(m_dividendAmount,_tokenAddress,_start,_days,_totalAmount,_executor);
         return true;
