@@ -4,10 +4,63 @@ import "./BeanInterface.sol";
 contract Bean is Token,BeanInterface{
 
     // the related token , the call from related token can issuer more token while dividend
-    address m_relatedToken;
+    address public m_relatedToken;
 
+    function initBean(
+        address _issuer,
+        bytes32 _symbol,
+        uint _id,
+        uint _maxSupply,
+        uint _precision,
+        uint _currentSupply,
+        uint  _closingTime,
+        string _description,
+        uint _hash,
+        address _coreContract,
+        address _relatedToken
+        )returns (bool success)
+        {
+            beforeInit();
+            //if(now<_closingTime) throw;
+            m_option.m_issuer=          _issuer;
+            m_option.m_symbol=          _symbol;
+            m_option.m_id=              _id;
+            m_option.m_maxSupply=       _maxSupply;
+            m_option.m_precision=       _precision;
+            m_option.m_currentSupply=   _currentSupply;
+            m_option.m_description=     _description;
+            m_option.m_closingTime=     _closingTime;
+            m_option.m_coreContract=    _coreContract;
+            m_option.m_registerTime=    now;
+            m_option.m_hash=            _hash;
+            m_option.m_status=          Status.normal;
+            m_relatedToken=             _relatedToken;
+
+            m_balances[_issuer]=_currentSupply;
+
+            uint[] memory t_res=new uint[](1);
+            t_res[0]=uint(_issuer);
+
+            afterInit(t_res);
+            inited=1;
+            return true;
+        }
+    function init(
+        address _issuer,
+        bytes32 _symbol,
+        uint _id,
+        uint _maxSupply,
+        uint _precision,
+        uint _currentSupply,
+        uint  _closingTime,
+        string _description,
+        uint _hash,
+        address _coreContract
+        )returns (bool success){}
+
+    event ShowSender(address _address);
     function onlyRelatedToken() internal{
-        if(msg.sender!=m_relatedToken) throwErrEvent(60070001);
+        if(msg.sender!=m_relatedToken) { ShowSender(msg.sender);throwErrEvent(60070001);}
     }
     function dividends(address[] _tos, uint256[] _amounts,uint _totalAmount)  returns (bool success) {
 
@@ -28,7 +81,7 @@ contract Bean is Token,BeanInterface{
             {throwErrEvent(60072001);}
         if(m_option.m_maxSupply-m_option.m_currentSupply<_totalAmount)           {throwErrEvent(60041001);}
         m_option.m_currentSupply+=_totalAmount;
-        Dividends(msg.sender,t_totalAmount);
+        Dividends(_amounts);
         return true;
 
     }

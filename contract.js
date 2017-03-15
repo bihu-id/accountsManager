@@ -4,6 +4,8 @@ var transaction=require("./wallet/utils/transation.js")
 var codes=require("./test/byteCodes.js")
 var Web3=require("./getWeb3Instance.js")
 var coder = require('web3/lib/solidity/coder');
+var ethUtil = require('ethereumjs-util');
+
 var Promise = require('bluebird')
 var Sleep=require("./wallet/utils/sleep.js")
 var rpcAddress=getRpcStr.get()
@@ -79,15 +81,17 @@ contract.prototype.setAddress=function(address){
 }
 
 contract.getAddress=function(addressKey){
+    //console.log(rpcAddress[addressKey])
     return rpcAddress[addressKey]
 }
 contract.prototype.addAccountCall=function(accountAddress,funName){
     this.accountAbi=abis["Account"]
     this.acccountAddress=accountAddress
     var self=this
-    var funInstance=function(args,privateKey,gas){
+    var funInstance=function(args,privateKey,gas,nonce,notWaitReceipt){
         gas=gas||self.callGas
 
+        console.log(notWaitReceipt)
         return new Promise(function (accept, reject) {
             console.log("tx to :",self.acccountAddress)
 
@@ -95,13 +99,18 @@ contract.prototype.addAccountCall=function(accountAddress,funName){
                 console.log(err)
                 if (err)
                     reject(err);
+                if(notWaitReceipt) {
+                    accept(true)
+                }
+                else{
+                    setTimeout(function () {
+                        var receipt = web3.eth.getTransactionReceipt(hash)
 
-                setTimeout(function () {
-                    var receipt = web3.eth.getTransactionReceipt(hash)
+                        accept(receipt)
+                    }, self.delay)
+                }
 
-                    accept(receipt)
-                }, self.delay)
-            })
+            },0,nonce)
         })
     }
     this.addFunction("call_"+funName,funInstance)
@@ -120,7 +129,7 @@ contract.prototype.addFunctions=function(){
     this.abi.forEach(function(fun){
         if(fun.type=="function"){
 
-            var funInstance=function(args,privateKey,gas){
+            var funInstance=function(args,privateKey,gas,nonce,notWaitReceipt){
                 gas=gas||self.callGas
                 if (privateKey!=undefined) {
                     return new Promise(function (accept, reject) {
@@ -129,36 +138,17 @@ contract.prototype.addFunctions=function(){
                             console.log(err)
                             if (err)
                                 reject(err);
-                            
-                            setTimeout(function () {
-                                var receipt = web3.eth.getTransactionReceipt(hash)
-
-                                var logs = receipt.logs;
-                                var eventsAbl=abls[self.name]
-                                var eventsOut
-                                var label
-                                var  contractKeys=Object.keys(abls)
-                                var r=logs.map(function (log) {
-                                    var logsAbl = eventsAbl[log.topics[0]]
-                                    if (logsAbl == undefined)
-                                        for (var i = 0; i < contractKeys.length; i++) {
-                                            var otherAbl = abls[contractKeys[i]]
-                                            if (otherAbl[log.topics[0]] != undefined) {
-                                                logsAbl = eventsAbl[log.topics[0]]
-                                                break
-                                            }
-                                        }
-                                    label = log["label"]
-                                    if (logsAbl != undefined) {
-                                        var decoder = new SolidityEvent(null, logsAbl, self.props.address);
-                                        eventsOut = JSON.stringify(decoder.decode(log), null, 2);
-                                        console.log("eventsOut", eventsOut)
-
-                                    }
-                                })
-                                accept(receipt)
-                            }, self.delay)
-                        })
+                            if(notWaitReceipt) {
+                                accept(true)
+                            }
+                            else{
+                                setTimeout(function () {
+                                    var receipt = web3.eth.getTransactionReceipt(hash)
+                                    console.log(hash)
+                                    accept(receipt)
+                                }, self.delay)
+                            }
+                        },0,nonce)
                     });
                 }
                 else {
@@ -197,6 +187,8 @@ contract.prototype.updateLogic=function(privateKey){
     var logicAddress=this.address
     var abi=abis["LogicProxy"]
     var sleep=new Sleep(1)
+    var nonce=web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
+    var i=0
     keys.forEach(function(k){
         var f=fun[k]
         sleep.go(function(){
@@ -211,7 +203,7 @@ contract.prototype.updateLogic=function(privateKey){
             var currentSize=parseInt(res[1].toString(),10)
             console.log(currentLogic,currentSize,f.sig.toString(16),f.name)
             if(currentLogic!=logicAddress||currentSize!=f.resSize) {
-                console.log("set :",logicAddress,f.resSize,f.sig.toString(16),f.name)
+                console.log("set :",logicAddress,f.resSize,f.sig.toString(16),f.name,"with nonde :",nonce+i)
                 transaction.transaction(web3, abi, to, "setfun", [logicAddress, f.sig, f.resSize], privateKey, 220000, function (err, hash) {
                     if (err)
                         console.log(err)
@@ -222,6 +214,7 @@ contract.prototype.updateLogic=function(privateKey){
 
                     }, 10000)
                 })
+                i++
             }
         },4000)
 

@@ -1,7 +1,7 @@
 var Contract=require("../../contract.js")
 var ethUtil = require('ethereumjs-util');
 var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
-var addresses=require("./addresses.js")
+var addresses=require("./../addresses.js")
 
 var proxyAddress=Contract.getAddress("BeanProxy")
 var Bean=new Contract("Bean","BeanLogic",6000)

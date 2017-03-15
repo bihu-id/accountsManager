@@ -2,7 +2,7 @@ import "BaseSToken.sol";
 
 contract BeanInterface is BaseSToken{
 
-    event Dividends(address _from ,uint _allAmount);
+    event Dividends(uint [] _allAmount);
     /// @notice transfers
     /// @param _tos             接受者地址数组
     /// @param _amounts         发送数量数组(乘精度后)

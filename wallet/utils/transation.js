@@ -23,31 +23,30 @@ var encodeConstructorParams = function (abi, params) {
 
 module.exports = {
 
-    transactionRaw:function(web3,abi,to,fun,args,key,gas,_value){
+    transactionRaw:function(web3,abi,to,fun,args,key,gas,nonce,_value){
 
         var abi=abi
         var value=0;
         if(_value!=undefined)
             value=_value
-        var nonce=0
         var data=null
         var privateKey;
 
         //console.log("sign use private key: %s",privateKey)
-        return this.raw(web3, abi, key, fun, args, to, value, gas, null, data)
+        return this.raw(web3, abi, key, fun, args, to, value, gas, nonce, data)
 
     },
-    transaction:function(web3,abi,to,fun,args,key,gas,callback,value){
+    transaction:function(web3,abi,to,fun,args,key,gas,callback,value,nonce){
 
-        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas,value)
+        var res=this.transactionRaw(web3,abi,to,fun,args,key,gas,value,nonce)
         this.broadCast(web3,res.serializedTx,callback)
 
     },
-    accountCall:function(web3,abiAccount,abi,to,fun,argsAccount,args,key,gas,callback,value){
+    accountCall:function(web3,abiAccount,abi,to,fun,argsAccount,args,key,gas,callback,value,nonce){
         var dataAccount='0x' + this.dataFromAbis(abiAccount, "approvalCall", argsAccount)
         var data= dataAccount+this.dataFromAbis(abi, fun, args)
 
-        var res=this.raw(web3, abiAccount, key, fun, args, to, value, gas, null, data)
+        var res=this.raw(web3, abiAccount, key, fun, args, to, value, gas, nonce, data)
         this.broadCast(web3,res.serializedTx,callback)
 
     },
@@ -63,14 +62,14 @@ module.exports = {
         var data=code+paraData;
         this.createContract(web3,data,priKey,gas,callback);
     },
-    raw :function (web3, abi, privateKey, fun, args, to, value, gas, nonce, data){
+    raw :function (web3, abi, privateKey, fun, args, to, value, gas, int_nonce, data){
 
         var a=ethUtil.privateToAddress(privateKey).toString('hex')
         var balance=parseInt(web3.fromWei(web3.eth.getBalance(a),'ether').toString(),10);
-        console.log(balance )
+        //console.log(balance )
         if(balance<1){
             console.log(a,balance,minBalance)
-            throw("out of balance")
+            throw("balance<1")
         }
 
         var serializedTx;
@@ -80,11 +79,9 @@ module.exports = {
             data = abi ? '0x' + this.dataFromAbis(abi, fun, args) : '0x0'
         //var gas="4000000"
         //console.log(data)
-        var int_nonce
-        if (nonce == null)
-            var int_nonce = web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
-        else
-            int_nonce = nonce;
+
+        int_nonce = int_nonce||web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
+
         var _nonce = "0x" + (int_nonce).toString(16);
         var gasprice = "0x" + web3.eth.gasPrice.toString(16);
         var gasLimit = "0x" + parseInt(gas, 10).toString(16)

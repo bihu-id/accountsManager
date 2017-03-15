@@ -24,14 +24,18 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     uint m_AuxTime;
 
+    // current rate ,calcualte while startDividend
+    uint public m_rate;
+
     function onlyExecutor(uint _no)internal{
         if(msg.sender!=m_dividendHistory[_no].m_executor)  {throwErrEvent(60060001);     }
     }
-
+    event LogNow(uint _now);
     function onlyAvailable(uint _no)internal{
         uint t_start=m_dividendHistory[_no].m_start;
         uint t_end=t_start+m_dividendHistory[_no].m_days*3600*24;
-        if(t_start>now &&t_end<now)
+        LogNow(now);
+        if(t_start<now &&now<t_end)
             m_dividendHistory[_no].m_status=2;
         else
             {throwErrEvent(60061001);     }
@@ -40,7 +44,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     function setDividend(address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor)returns(bool _success){
         m_dividendAmount++;
         m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_totalAmount,1,_tokenAddress,_executor);
-        //m_currentNo=m_dividendAmount;
+        SetDividend(m_dividendAmount,_tokenAddress,_start,_days,_totalAmount,_executor);
         return true;
     }
 
@@ -53,6 +57,7 @@ contract DividendToken is Token ,DividendTokenInterface{
         onlyAvailable(_no);
         m_dividendStatus=2;
         m_AuxTime=now;
+        m_rate=m_dividendHistory[_no].m_totalAmount/(m_dividendHistory[_no].m_days*m_option.m_currentSupply);
     }
 
     function executeDividend(uint _no,address [] _holders){
@@ -63,15 +68,14 @@ contract DividendToken is Token ,DividendTokenInterface{
         uint[]  memory  t_amounts=new uint[](t_len);
         uint    t_totalAmounts=0;
         uint    t_AuxTime=m_AuxTime;
-        uint    t_rate=m_dividendHistory[_no].m_totalAmount/(m_dividendHistory[_no].m_days*m_option.m_currentSupply);
         for(uint i=0;i<t_len;i++){
             address t_holder=_holders[i];
             uint t_holderAux=serializeAddressAux(t_holder,uint32(t_AuxTime));
             uint complementAmount=m_balances[t_holder]+m_balancesAux[t_holderAux];
             //never complementAmount>>255<0
             if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
-                t_amounts[i]=complementAmount*t_rate;
-                t_totalAmounts+=complementAmount;
+                t_amounts[i]=complementAmount*m_rate;
+                t_totalAmounts+=t_amounts[i];
             }else
             {
                 throwErrEvent(60069991);
