@@ -1,3 +1,4 @@
+//分红合约资产最大精度 h128, 前128位纪录辅助状态,后128位纪录余额
 contract DividendTokenInterface {
 
     struct Dividend{
@@ -47,7 +48,7 @@ contract DividendTokenInterface {
         Revoke
 
     }
-    /// @notice set dividend by token creator ,would event Dividend if _success
+    /// @notice set dividend by token creator ,would event Dividend if _success,并且确定分红持有依据
     /// @param _tokenAddress    分红豆资产合约地址
     /// @param _start           分红开始UTC时间戳
     /// @param _days            分红天数

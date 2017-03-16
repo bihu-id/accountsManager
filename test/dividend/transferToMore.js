@@ -4,8 +4,8 @@ var privateKey=new Buffer("1a3e6d52c9362dad35e1ad8890bf3984100e26655b4787d9f0614
 var addresses=require("./../addresses.js")
 var Sleep=require("../../wallet/utils/sleep")
 
-token =new Contract("Token","")
-token.setAddress("0x34da1dbd6df014a367e05d5793c3da578d5ff842")
+token =new Contract("Token","DividendTokenData")
+token.at()
 token.addAccountCall("0x724f255161a5ef4aaf458e37cd1f61fc24b9895a","transfer")
 var tos=[]
 var amounts=[]

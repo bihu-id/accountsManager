@@ -85,17 +85,17 @@ var Address=
         "TokenProxy": "0x3f27673e508125fddd9982aa81aa00cb94111e96",
         "TokenManagerProxy": "0x5a58b8d7be418566794d9d5dbebd6393fd04af3c",
         "TokenManagerData": "0x4dd20d75d57860e31419275c5ebcaf9b911af73b",
-        "TokenManagerLogic": "0x043065bcdafa443ccb5d4c1ac74cde94de278e44",
+        "TokenManagerLogic": "0x8a54a6a679e92b7af20c7258b67ef5cfbe4efa0f",
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
         "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
         "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354",
         "DividendTokenProxy": "0xcb8887c925d8243de066ae226e74dc0426281d83",
-        "DividendTokenLogic": "0x61e9bad8fadaf0e964c124b0d57d4a678eb4c7ab",
+        "DividendTokenLogic": "0x7f788a93d197014933ab93071c4e2c6d1b65c2cb",
         "BeanLogic": "0x0e44dc9583ece24beacf3fc3dcf8037e0dcb6a9f",
-        "BeanData": "0x1b222db79b9aea1fd05acc4045b97a3363d5ec2d",
+        "BeanData": "0x44d19910e8650835478a5457b24f4465a050c4a8",
         "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af",
-        "DividendTokenData": "0x126e04c3fce0bce1bf69be00b86e9cf4936fffd5"
+        "DividendTokenData": "0x8b4715d3562061e5756175c54922a0045091ed26"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",
