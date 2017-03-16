@@ -21,7 +21,7 @@ contract Bean is Token,BeanInterface{
         )returns (bool success)
         {
             beforeInit();
-            //if(now<_closingTime) throw;
+            if(uint(m_relatedToken)!=0) throw;
             m_option.m_issuer=          _issuer;
             m_option.m_symbol=          _symbol;
             m_option.m_id=              _id;
@@ -45,6 +45,15 @@ contract Bean is Token,BeanInterface{
             inited=1;
             return true;
         }
+
+    /*function setRelatedToken(address _relatedToken){
+
+        ifCore();
+        if(uint(m_relatedToken)==0){
+            m_relatedToken=_relatedToken;
+        }
+    }*/
+
     function init(
         address _issuer,
         bytes32 _symbol,
