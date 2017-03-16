@@ -34,7 +34,7 @@ contract TokenManagerInterface {
 
     }
 
-    /// @notice create token ;                                                  创建token
+    /// @notice create token 资产;                                                  创建token 如凭证
     /// @param _symbol symbol of token;                                         token代号,不可重复
     /// @param _maxSupply max supply of token can not been change ;            token的最大供应量,
     /// @param _precision precsion of token ;                                  token的精度,精度*总量<2^64 考虑将来使用64位虚拟机
@@ -54,10 +54,13 @@ contract TokenManagerInterface {
         uint  _hash
         )returns (bool success) ;
 
+    //function setDouRelatedToken(address _dou,address _relatedToken);
+
     /// @notice register a token with existed logic,operation would event token data address
     /// @notice _logicProxyAddress Logic proxy address
     /// @param _symbol symbol of token
     /// @return _success *
+
     function registerToken(bytes32 _symbol,address _token)returns(bool _success);
 /*
     /// @notice 设置可账户可以创建多少个资产 ;
@@ -124,4 +127,5 @@ contract TokenManagerInterface {
     event ForceTransfer(address _token,address _from,address _to,uint _value);
     event RegisterToken(uint _no,bytes32 _symbol,address _token);
     event ChangeTokenProxy(address _tokenAddress,address _newProxy);
+    //event SetDouRelatedToken(address _dou,address _relatedToken);
 }
