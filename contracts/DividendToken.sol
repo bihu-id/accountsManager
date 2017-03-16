@@ -29,7 +29,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     uint public m_rate;
 
     function onlyExecutor(uint _no)internal{
-        if(msg.sender!=m_dividendHistory[_no].m_executor)  {throwErrEvent(60060001);   //60060001:  caller不是 分红执行者  }
+        if(msg.sender!=m_dividendHistory[_no].m_executor)  throwErrEvent(60060001);   //60060001:  caller不是 分红执行者
     }
 
     function checkTime(uint _no)internal{
@@ -38,7 +38,7 @@ contract DividendToken is Token ,DividendTokenInterface{
         if(t_start<now &&now<t_end)
             m_dividendHistory[_no].m_status=uint(DividendStatus.Start);
         else
-            {throwErrEvent(60061001);    //60061001:  执行的分红没有开始或者已经终止 }
+            throwErrEvent(60061001);    //60061001:  执行的分红没有开始或者已经终止
     }
 
     function checkStatus(uint _no)internal{
@@ -86,7 +86,6 @@ contract DividendToken is Token ,DividendTokenInterface{
         onlyExecutor(_no);
         checkTime(_no);
         checkStatus(_no);
-        uint
 
         uint t_start=m_dividendHistory[_no].m_start;
         uint t_dayNo=m_dividendHistory[_no].m_dayNo;
