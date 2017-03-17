@@ -9,5 +9,4 @@ contract BeanInterface is BaseSToken{
     /// @param _totalAmount     总发送数量 _amounts总数
     function dividends(address[] _tos, uint256[] _amounts,uint _totalAmount)  returns (bool success);
 
-    function issueMoreTo(uint _amounts,address _to)returns (bool success);
 }

@@ -26,7 +26,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     uint                        m_AuxTime;
 
     // current rate ,calcualte while startDividend
-    uint public m_rate;
+    uint                        public m_rate;
 
     function onlyExecutor(uint _no)internal{
         if(msg.sender!=m_dividendHistory[_no].m_executor)  throwErrEvent(60060001);   //60060001:  caller不是 分红执行者
