@@ -7,7 +7,7 @@ contract BaseData is BaseEvent{
     // use uint replace address type to make contract more simple
     uint  porxy;        //0x0
     uint  inited;       //0x1
-    uint  m_initor;     //0x2       can init contract
+    uint  m_initor;     //0x2       can init contract ,also as the real core of contract
     uint  m_core;       //0x3       if 1 mean data if 0 mean logic default
 
     function BaseData(uint _porxy){
@@ -19,6 +19,8 @@ contract BaseData is BaseEvent{
     }
 }
 //逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,
+//todo bug logic contract also can store data ,attacker can call logic contract to store many data ,
+//
 contract BaseLogic is BaseData{
 
     event Init(uint[] _res);
