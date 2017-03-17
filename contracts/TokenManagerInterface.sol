@@ -54,7 +54,7 @@ contract TokenManagerInterface {
         uint  _hash
         )returns (bool success) ;
 
-    //function setDouRelatedToken(address _dou,address _relatedToken);
+    function setDouRelatedToken(address _dou,address _relatedToken);
 
     /// @notice register a token with existed logic,operation would event token data address
     /// @notice _logicProxyAddress Logic proxy address
@@ -127,5 +127,5 @@ contract TokenManagerInterface {
     event ForceTransfer(address _token,address _from,address _to,uint _value);
     event RegisterToken(uint _no,bytes32 _symbol,address _token);
     event ChangeTokenProxy(address _tokenAddress,address _newProxy);
-    //event SetDouRelatedToken(address _dou,address _relatedToken);
+    event SetDouRelatedToken(address _dou,address _relatedToken);
 }

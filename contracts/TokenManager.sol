@@ -310,11 +310,11 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         ChangeTokenProxy(_tokenAddress,_newProxy);
     }
 
-    /*function setDouRelatedToken(address _dou,address _relatedToken){
+    function setDouRelatedToken(address _dou,address _relatedToken){
         checKey(m_keys[uint(role.setSubKeyRole)]);
         BaseSToken t=BaseSToken(_dou);
         t.setRelatedToken(_relatedToken);
         SetDouRelatedToken(_dou,_relatedToken);
-    }*/
+    }
 
 }

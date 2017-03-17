@@ -46,13 +46,13 @@ contract Bean is Token,BeanInterface{
             return true;
         }
 
-    /*function setRelatedToken(address _relatedToken){
+    function setRelatedToken(address _relatedToken){
 
         ifCore();
         if(uint(m_relatedToken)==0){
             m_relatedToken=_relatedToken;
         }
-    }*/
+    }
 
     function init(
         address _issuer,
@@ -67,7 +67,6 @@ contract Bean is Token,BeanInterface{
         address _coreContract
         )returns (bool success){}
 
-    //event ShowSender(address _address);
     function onlyRelatedToken() internal{
         if(msg.sender!=m_relatedToken) { throwErrEvent(60070001);}
     }
