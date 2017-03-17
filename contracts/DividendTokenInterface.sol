@@ -65,6 +65,9 @@ contract DividendTokenInterface {
     /// @param _no dividend No.
     function startDividend(uint _no);
 
+    /// @notice 补发最近一次分红,
+    function reissueStartDividend(uint _no,uint _dayNo);
+
     /// @notice execute dividend called by executor,usually executor would call many times per cycle
     /// @param _no dividend No.
     /// @param _holders 资产持有者数组

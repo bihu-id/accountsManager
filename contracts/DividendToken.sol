@@ -81,12 +81,25 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     }
 
-    function startDividendRaw(uint _no,uint _dayNo)internal{
+    function startDividend(uint _no){
+        startDividendRaw(_no,uint32(-1));
+    }
+    function reissueStartDividend(uint _no,uint _dayNo){
+        startDividendRaw(_no,_dayNo);
+    }
+    function startDividendRaw(uint _no,uint _dayNo)internal returns(bool _success){
 
         onlyExecutor(_no);
         checkTime(_no);
         checkStatus(_no);
 
+        if(_dayNo!=uint32(-1)){
+            if(_dayNo!=m_dividendHistory[_no].m_dayNo)
+                //只能补发最近一次分红
+                throwErrEvent(60061008);
+            m_AuxStatus=uint(AuxStatus.Dividend);
+            return true;
+        }
         uint t_start=m_dividendHistory[_no].m_start;
         uint t_dayNo=m_dividendHistory[_no].m_dayNo;
         uint t_interval=m_dividendHistory[_no].m_interval;
@@ -107,7 +120,7 @@ contract DividendToken is Token ,DividendTokenInterface{
             m_AuxTime=now;
         }
         StartDividend(_no);
-
+        return true;
     }
 
     function executeDividend(uint _no,address [] _holders){
