@@ -1,0 +1,3 @@
+[submodule "anduiWallet"]
+	path = anduiWallet
+	url = git@139.196.234.239:anduiWallet.git
