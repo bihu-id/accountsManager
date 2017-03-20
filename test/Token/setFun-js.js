@@ -1,10 +1,10 @@
-var transaction=require("../../wallet/utils/transation.js")
+var transaction=require("../../anduiWallet/utils/transation.js")
 var codes=require("../byteCodes.js")
 var Web3=require("../../getWeb3Instance.js")
 var getRpcStr=require("../../getRpcServe.js")
 var abis=require("../abis.js")
 var Funs=require("../funs.js")
-var Sleep=require("../../wallet/utils/sleep.js")
+var Sleep=require("../../anduiWallet/utils/sleep.js")
 
 var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca551726a4f81c98b",'hex');
 

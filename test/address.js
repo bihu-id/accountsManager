@@ -92,7 +92,7 @@ var Address=
         "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354",
         "DividendTokenProxy": "0xcb8887c925d8243de066ae226e74dc0426281d83",
         "DividendTokenLogic": "0xa66f04e68ee22fe5e17bddd5d8129c97d70fd05e",
-        "BeanLogic": "0x8b41cbc185b36eaa7f113e7f9fdfe03d647c7617",
+        "BeanLogic": "0x4955d0678961675e4fd7dc7050c69ef810c3d8ed",
         "BeanData": "0x44d19910e8650835478a5457b24f4465a050c4a8",
         "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af",
         "DividendTokenData": "0x8b4715d3562061e5756175c54922a0045091ed26"

@@ -2,7 +2,7 @@ var fs=require('fs');
 var path = require('path');
 var solc = require('solc');
 var oldAllFuns=require('./test/funs.js');
-var oldabis1=require('./wallet/config/abls.js');
+var oldabis1=require('./anduiWallet/config/abls.js');
 
 
 var contracts_directory=path.join(process.cwd(),"./contracts");
@@ -228,11 +228,11 @@ fs.readdir("./contracts",function(err,files){
     var str1="var abis1=\n"+raw1+"\nmodule.exports=abis1;";
 
 
-    fs.writeFile("./wallet/config/abls.js",str1,function (err) {
+    fs.writeFile("./anduiWallet/config/abls.js",str1,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;
-    fs.writeFile("./wallet/config/abis.js",str,function (err) {
+    fs.writeFile("./anduiWallet/config/abis.js",str,function (err) {
         if (err) throw err ;
         console.log("File Saved !"); //文件被保存
     }) ;

@@ -2,7 +2,7 @@ var fs=require('fs');
 var path = require('path');
 var solc = require('solc');
 var oldAllFuns=require('./test/funs.js');
-var oldabis1=require('./wallet/config/abls.js');
+var oldabis1=require('./anduiWallet/config/abls.js');
 
 
 var contracts_directory=path.join(process.cwd(),"./contracts");

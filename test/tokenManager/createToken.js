@@ -1,5 +1,5 @@
 var getRpcStr=require("./../../getRpcServe.js")
-var transaction=require("./../../wallet/utils/transation.js")
+var transaction=require("./../../anduiWallet/utils/transation.js")
 var Sleep=require("./../../sleep.js")
 var web3=require("./../../getWeb3Instance.js")
 var abis=require("./../abis.js")

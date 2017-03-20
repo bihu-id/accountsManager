@@ -81,7 +81,7 @@ contract Bean is Token,BeanInterface{
         uint t_totalAmount=0;
         for(uint i=0;i<_tos.length;i++){
              t_totalAmount+=_amounts[i];
-             m_balances[_tos[i]]=_amounts[i];
+             m_balances[_tos[i]]+=_amounts[i];
              //TODO check efficiency
              //Transfers(msg.sender,_tos[i], amounts[i]);
         }

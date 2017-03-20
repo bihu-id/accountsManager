@@ -1,6 +1,6 @@
 var abis=require("./../abis.js")
 var getRpcStr=require("./../../getRpcServe.js")
-var transaction=require("./../../wallet/utils/transation.js")
+var transaction=require("./../../anduiWallet/utils/transation.js")
 
 var web3=require("./../../getWeb3Instance.js")
 var address=getRpcStr.get()

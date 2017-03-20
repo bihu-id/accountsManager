@@ -2,7 +2,7 @@ var Contract=require("../../contract.js")
 var ethUtil = require('ethereumjs-util');
 var privateKey=new Buffer("1a3e6d52c9362dad35e1ad8890bf3984100e26655b4787d9f06143eacc630a09",'hex');
 var addresses=require("./../addresses.js")
-var Sleep=require("../../wallet/utils/sleep")
+var Sleep=require("../../anduiWallet/utils/sleep")
 
 token =new Contract("Token","DividendTokenData")
 token.at()

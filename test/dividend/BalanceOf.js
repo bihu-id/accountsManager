@@ -10,7 +10,7 @@ var amounts=[]
 var totals=0
 var keys=Object.keys(addresses)
 
-for(var i=0;i<200;i++){
+for(var i=0;i<20;i++){
     token.balanceOf([keys[i]]).then(function(res,err){
 
         console.log("balance:",res.toString())

@@ -25,7 +25,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     //分红辅助时间, m_balance[address]=m_AuxTime __ balance
     uint                        m_AuxTime;
 
-    // current rate ,calcualte while startDividend
+    // current rate ,calcualte while startDividend *100000000
     uint                        public m_rate;
 
     function onlyExecutor(uint _no)internal{
@@ -91,6 +91,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
         onlyExecutor(_no);
         checkTime(_no);
+        checkTime(_no);
         checkStatus(_no);
 
         if(_dayNo!=uint32(-1)){
@@ -109,13 +110,14 @@ contract DividendToken is Token ,DividendTokenInterface{
             //不能重复开启分红
             throwErrEvent(60061007);
         uint t_totalAmount=m_dividendHistory[_no].m_totalAmount;
-        m_rate=(t_totalAmount/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
+        m_rate=(t_totalAmount*100000000/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
 
         //set m_limitedAmount perDay
         if(now>haveSetEndTime){
             m_dividendHistory[_no].m_dayNo++;
             //todo 如果遗忘分红,补分红的 的分红率按当时的m_currentSupply 计算,并且持有者以按分红设置点计算
-            m_dividendHistory[_no].m_limitedAmount+=m_rate*m_option.m_currentSupply;
+            uint t_addtionalLimited=m_rate*m_option.m_currentSupply/100000000;
+            m_dividendHistory[_no].m_limitedAmount+=t_addtionalLimited;
             m_AuxStatus=uint(AuxStatus.Dividend);
             m_AuxTime=now;
         }
@@ -151,7 +153,7 @@ contract DividendToken is Token ,DividendTokenInterface{
                 uint complementAmount=t_balance+m_balancesAux[t_holderAux];
                 //never complementAmount>>255<0
                 if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
-                    t_amounts[i]=complementAmount*m_rate;
+                    t_amounts[i]=(complementAmount*m_rate)/100000000;
                     t_totalAmounts+=t_amounts[i];
                     //update t_time_balance
                     m_balances[_holders[i]]=serializeBalance(t_AuxTime,t_balance);

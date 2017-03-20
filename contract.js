@@ -1,16 +1,16 @@
 var abis=require("./test/abis.js")
 var getRpcStr=require("./getRpcServe.js")
-var transaction=require("./wallet/utils/transation.js")
+var transaction=require("./anduiWallet/utils/transation.js")
 var codes=require("./test/byteCodes.js")
 var Web3=require("./getWeb3Instance.js")
 var coder = require('web3/lib/solidity/coder');
 var ethUtil = require('ethereumjs-util');
 
 var Promise = require('bluebird')
-var Sleep=require("./wallet/utils/sleep.js")
+var Sleep=require("./anduiWallet/utils/sleep.js")
 var rpcAddress=getRpcStr.get()
 
-var abls=require("./wallet/config/abls")
+var abls=require("./anduiWallet/config/abls")
 var funs=require("./test/funs.js")
 
 contract=function(name,addressKey,delay,createGas,callGas){

@@ -1,4 +1,4 @@
-var transaction=require("../../wallet/utils/transation.js")
+var transaction=require("../../anduiWallet/utils/transation.js")
 var codes=require("../byteCodes.js")
 var Web3=require("../../getWeb3Instance.js")
 var getRpcStr=require("../../getRpcServe.js")
