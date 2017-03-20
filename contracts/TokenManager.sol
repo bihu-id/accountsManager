@@ -214,6 +214,9 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
     }
 
+    function getTokenId(bytes32 _symbol)constant returns(uint _id){
+        return m_symbols[_symbol];
+    }
     function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress){
 
         return (m_tokenSummarys[_id].m_id,m_tokenSummarys[_id].m_owner,m_tokenSummarys[_id].m_address);

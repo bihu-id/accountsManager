@@ -85,7 +85,7 @@ var Address=
         "TokenProxy": "0x3f27673e508125fddd9982aa81aa00cb94111e96",
         "TokenManagerProxy": "0x5a58b8d7be418566794d9d5dbebd6393fd04af3c",
         "TokenManagerData": "0x4dd20d75d57860e31419275c5ebcaf9b911af73b",
-        "TokenManagerLogic": "0x8a54a6a679e92b7af20c7258b67ef5cfbe4efa0f",
+        "TokenManagerLogic": "0x3603c4faf560bbc996843380ed0c500562ca2ed2",
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
         "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",

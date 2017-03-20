@@ -85,6 +85,18 @@ contract TokenManagerInterface {
      /// @return r_ids          资产的ID
      /// @return _owner         资产的拥有者
      /// @return _tokenAddress  地址的合约地址
+
+     /// @notice 获得TOKEN的Id
+     /// @param _symbol token _symbol
+     /// @return TOKEN的地址
+     function getTokenId(bytes32 _symbol)constant returns(uint _id);
+
+      /// @notice                获得TOKEN的概况
+      /// @param _id             token Id
+      /// @return r_ids          资产的ID
+      /// @return _owner         资产的拥有者
+      /// @return _tokenAddress  地址的合约地址
+
     function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
 
      /// @notice                遍历所有的资产symbol
