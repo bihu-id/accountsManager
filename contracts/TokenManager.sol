@@ -138,7 +138,7 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
         if(_precision>8)                                        {throwErrEvent(60031004);     }
         // consider use 64 b VM for efficiency reason
-        if(_maxSupply*(10**_precision)>=uint64(-1))             {throwErrEvent(60031005);     }
+        if(_maxSupply>=uint64(-1))                              {throwErrEvent(60031005);     }
         if(_currentSupply>_maxSupply)                           {throwErrEvent(60031006);     }
 
         uint t_id=m_amounts+1;

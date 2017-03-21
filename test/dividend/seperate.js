@@ -1,4 +1,4 @@
-//todo cannot use
+////seperate a standard token as a dividend token.
 var Contract=require("../../contract.js")
 var tokenManager=new Contract("TokenManager","TokenManagerData")
 
@@ -6,7 +6,7 @@ var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca5517
 tokenManager.at()
 
 var proxy=Contract.getAddress("DividendTokenProxy")
-var tokenAddress="0x3be17f3896e7bf24f5b28e9c257de45fb4a892cf"
-tokenManager.changeTokenProxy([tokenAddress,proxy],privateKey).then(function(receipt,err){
+var toDividendTokenAddress="0xd4d1ebabaabb5204f48cec72962d8b6a291d01b9"
+tokenManager.changeTokenProxy([toDividendTokenAddress,proxy],privateKey).then(function(receipt,err){
     console.log(receipt)
 })

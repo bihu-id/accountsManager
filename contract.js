@@ -191,7 +191,7 @@ contract.prototype.updateLogic=function(privateKey){
     var i=0
     keys.forEach(function(k){
         var f=fun[k]
-        sleep.go(function(){
+
             var res=transaction.call(web3, abi, to, "getWait", [f.sig]);
             var addressToStr=function(res){
                 var str=res.toString(16)
@@ -216,7 +216,7 @@ contract.prototype.updateLogic=function(privateKey){
                 },0,nonce+i)
                 i++
             }
-        },100)
+        
 
     })
     sleep.go(function() {

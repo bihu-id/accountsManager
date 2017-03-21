@@ -25,7 +25,7 @@ contract DividendToken is Token ,DividendTokenInterface{
     //分红辅助时间, m_balance[address]=m_AuxTime __ balance
     uint                        m_AuxTime;
 
-    // current rate ,calcualte while startDividend *100000000
+    // current rate ,calcualte while startDividend
     uint                        public m_rate;
 
     function onlyExecutor(uint _no)internal{
@@ -34,7 +34,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     function checkTime(uint _no)internal{
         uint t_start=m_dividendHistory[_no].m_start;
-        uint t_end=t_start+m_dividendHistory[_no].m_days*3600*24;
+        uint t_end=t_start+m_dividendHistory[_no].m_days*m_dividendHistory[_no].m_interval;
         if(t_start<now &&now<t_end)
             m_dividendHistory[_no].m_status=uint(DividendStatus.Start);
         else
@@ -57,7 +57,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
         onlyIssuer();
         m_dividendAmount++;
-        uint t_interval=60;
+        uint t_interval=3600*24;
         m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_totalAmount,1,_tokenAddress,_executor,0,0,0,t_interval);
         SetDividend(m_dividendAmount,_tokenAddress,_start,_days,_totalAmount,_executor);
         return true;
@@ -68,7 +68,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
         onlyIssuer();
         uint t_start=m_dividendHistory[_no].m_start;
-        uint t_end=t_start+m_dividendHistory[_no].m_days*3600*24;
+        uint t_end=t_start+m_dividendHistory[_no].m_days*m_dividendHistory[_no].m_interval;
         if(now>=t_end)
             //60061003:  不能撤销一个已经过期的分红
             throwErrEvent(60061003);
@@ -110,13 +110,13 @@ contract DividendToken is Token ,DividendTokenInterface{
             //不能重复开启分红
             throwErrEvent(60061007);
         uint t_totalAmount=m_dividendHistory[_no].m_totalAmount;
-        m_rate=(t_totalAmount*100000000/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
+        m_rate=(t_totalAmount/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
 
         //set m_limitedAmount perDay
         if(now>haveSetEndTime){
             m_dividendHistory[_no].m_dayNo++;
             //todo 如果遗忘分红,补分红的 的分红率按当时的m_currentSupply 计算,并且持有者以按分红设置点计算
-            uint t_addtionalLimited=m_rate*m_option.m_currentSupply/100000000;
+            uint t_addtionalLimited=m_rate*m_option.m_currentSupply;
             m_dividendHistory[_no].m_limitedAmount+=t_addtionalLimited;
             m_AuxStatus=uint(AuxStatus.Dividend);
             m_AuxTime=now;
@@ -153,7 +153,7 @@ contract DividendToken is Token ,DividendTokenInterface{
                 uint complementAmount=t_balance+m_balancesAux[t_holderAux];
                 //never complementAmount>>255<0
                 if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
-                    t_amounts[i]=(complementAmount*m_rate)/100000000;
+                    t_amounts[i]=(complementAmount*m_rate);
                     t_totalAmounts+=t_amounts[i];
                     //update t_time_balance
                     m_balances[_holders[i]]=serializeBalance(t_AuxTime,t_balance);
@@ -176,7 +176,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     function endDividend(uint _no){
 
-        uint t_end=m_dividendHistory[_no].m_start+m_dividendHistory[_no].m_days*3600*24;
+        uint t_end=m_dividendHistory[_no].m_start+m_dividendHistory[_no].m_days*m_dividendHistory[_no].m_interval;
         if(now>=t_end)
             //set end status
             m_dividendHistory[_no].m_status=3;

@@ -1,4 +1,4 @@
-//todo cannot use
+
 var Contract=require("../../contract.js")
 var dividendToken=new Contract("DividendToken","DividendTokenData")
 var tokenissuer="0x724f255161a5ef4aaf458e37cd1f61fc24b9895a"

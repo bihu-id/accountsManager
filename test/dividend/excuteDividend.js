@@ -1,19 +1,28 @@
 var Contract=require("../../contract.js")
+var  SolidityEvent = require("web3/lib/web3/event.js");
+var abls=require("../../anduiwallet/config/abls.js")
 var dividendToken=new Contract("DividendToken","DividendTokenData",6000)
 dividendToken.at()
 var dou=new Contract("Bean","BeanData")
 dou.at()
 var executor=new Buffer("8b4070cb71853a283579b1cee99a54c09d4f29bb1d0659b6d16cd64f356d2d02",'hex')
 
+var issuerPrivateKey=new Buffer("1a3e6d52c9362dad35e1ad8890bf3984100e26655b4787d9f06143eacc630a09",'hex')
+
 var addresses=require("./../addresses.js")
 
 var Sleep= require("../../anduiWallet/utils/sleep.js")
 
 var keys=Object.keys(addresses)
+var issuer="0x724f255161a5ef4aaf458e37cd1f61fc24b9895a"
+
 var holders=[]
 for(var i=0;i<15;i++)
     holders.push(keys[i])
-var no=6
+holders.push(issuer)
+
+console.log(holders)
+var no=20
 var balancesBean={}
 var balancesToken={}
 
@@ -21,11 +30,12 @@ var sleep= new Sleep(1)
 
 sleep.go(function() {
     var j=0
-    for(var i=0;i<10;i++){
-        dou.balanceOf([keys[i]]).then(function(res,err){
+    for(var i=0;i<holders.length;i++){
+        dou.balanceOf([holders[i]]).then(function(res,err){
 
-            balancesBean[keys[j++]]=parseInt(res[0].toString(),10)
-            console.log(keys[j],res[0].toString())
+            balancesBean[holders[j]]=parseInt(res[0].toString(),10)
+            console.log(holders[j],res[0].toString())
+            j++
         })
 
     }
@@ -33,14 +43,15 @@ sleep.go(function() {
 
 sleep.go(function() {
     var j=0
-    for (var i = 0; i < 10; i++) {
-        dividendToken.balanceOf([keys[i]]).then(function (res, err) {
+    for (var i = 0; i < holders.length; i++) {
+        dividendToken.balanceOf([holders[i]]).then(function (res, err) {
 
-            balancesToken[keys[j++]] =parseInt(res[0].toString(),10)
-            console.log(keys[j],res[0].toString())
+            balancesToken[holders[j]] =parseInt(res[0].toString(),10)
+            console.log(holders[j],res[0].toString())
+            j++
         })
     }
-},10000)
+},6000)
 
 
 sleep.go(function() {
@@ -49,28 +60,56 @@ sleep.go(function() {
     var days;
     var amounts;
     dividendToken.m_dividendHistory([no]).then(function(res,err){
-        days=parseInt(res[2].toString(),10)
-        amounts=parseInt(res[3].toString(),10)
-        var shouldDivs={}
-        var keys=Object.keys(balancesToken)
-        for(var i=0;i<keys.length;i++){
-            var address=keys[i]
-            shouldDivs[address]=balancesToken[address]*(amounts/days/10000)+balancesBean[address]
-        }
-        console.log("shouldDivs:\n",shouldDivs)
 
         dividendToken.startDividend([no],executor).then(function(receipt,err){
-            console.log(receipt)
-            dividendToken.executeDividend([no,holders],executor,4800000).then(function(receipt,err){
-                console.log(receipt)
-                keys.forEach(function(address){
-                    dou.balanceOf([address]).then(function(res,err){
+            console.log(receipt.logs[0].data)
 
-                        console.log(address,res.toString())
+            dividendToken.m_rate([]).then(function(res,err){
+                var rate=parseInt(res.toString(),10)
+                console.log(rate)
+                var shouldDivs={}
+                var keys=Object.keys(balancesToken)
+                for(var i=0;i<keys.length;i++){
+                    var address=keys[i]
+                    shouldDivs[address]=balancesToken[address]*rate+balancesBean[address]
+                }
+                dividendToken.addAccountCall("0x724f255161a5ef4aaf458e37cd1f61fc24b9895a","transfer")
+                dividendToken.call_transfer([holders[15],19],issuerPrivateKey).then(function(receipt,err){
+                    dividendToken.executeDividend([no,holders],executor,4800000).then(function(receipt,err){
+                        console.log(receipt)
+                        var data=receipt.logs[0].data.substring(130)
+                        /*var abl=abls["Bean"]["events"][receipt.logs[0].topics]
+                         console.log(abl)
+                         var decoder = new SolidityEvent(null, abl, receipt.logs[0].address);
+                         var eventsOut=JSON.stringify(decoder.decode(receipt.logs),null,2);
+                         console.log(eventsOut.toString())*/
+                        var go=true
+                        var datas=[]
+                        while(go){
+                            datas.push(parseInt(data.substring(0,64),16))
+                            data=data.substring(64)
+                            if(data.length>64)
+                                go=false
+                        }
+
+                        console.log(datas)
+                        var j=0
+                        for(var i=0;i<holders.length;i++) {
+
+                            dou.balanceOf([holders[i]]).then(function(res,err){
+                                var douBalances=parseInt(res.toString(),10)
+                                console.log(holders[j],douBalances)
+                                if(douBalances!=shouldDivs[holders[j++]])
+                                    throw ("dou balance error",holders[j++],douBalances,shouldDivs[holders[j++]])
+                            })
+                        }
                     })
                 })
+
             })
+
+
         })
 
     })
-},10000)
+},6000)
