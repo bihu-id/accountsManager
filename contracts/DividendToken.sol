@@ -12,7 +12,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     //AuxStatus ,since solidity consider Enum as uint8,then merge variable that may cause data error when contract logic update
     //so use uint replace Enum
-    uint                        m_AuxStatus;
+    uint                        public m_AuxStatus;
 
     uint                        public m_dividendAmount;
 
@@ -53,13 +53,18 @@ contract DividendToken is Token ,DividendTokenInterface{
             throwErrEvent(60060002);
     }
 
-    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor)returns(bool _success){
+    function setDividend(address _tokenAddress,uint _start ,uint _interval,uint _times,uint _totalAmount,address _executor)returns(bool _success){
 
         onlyIssuer();
+        uint t_interval=_interval;
+        if(_interval==0)
+            t_interval=3600*24;
+        else
+            if(_interval<5*60)
+                throwErrEvent(60061009);
         m_dividendAmount++;
-        uint t_interval=3600*24;
-        m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_days,_totalAmount,1,_tokenAddress,_executor,0,0,0,t_interval);
-        SetDividend(m_dividendAmount,_tokenAddress,_start,_days,_totalAmount,_executor);
+        m_dividendHistory[m_dividendAmount]=Dividend(m_dividendAmount,_start,_times,_totalAmount,1,_tokenAddress,_executor,0,0,0,t_interval);
+        SetDividend(m_dividendAmount,_tokenAddress,_start,t_interval,_times,_totalAmount,_executor);
         return true;
 
     }
@@ -76,7 +81,7 @@ contract DividendToken is Token ,DividendTokenInterface{
             //60061004:  分红执行阶段不能撤销分红
             throwErrEvent(60061004);
         m_dividendHistory[_no].m_status=uint(DividendStatus.Revoke);
-        RevokeDividend(_no);
+        RevokeDividend(_no,m_dividendHistory[_no].m_implementedAmount);
         return true;
 
     }

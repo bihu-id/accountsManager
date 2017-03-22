@@ -51,11 +51,12 @@ contract DividendTokenInterface {
     /// @notice set dividend by token creator ,would event Dividend if _success,并且确定分红持有依据
     /// @param _tokenAddress    分红豆资产合约地址
     /// @param _start           分红开始UTC时间戳
-    /// @param _days            分红天数
+    /// @param _interval        分红间隔
+    /// @param _times           分红次数
     /// @param _totalAmount     总分红量,由于四舍五入的差别,实际分红量会稍微高于或者低于_totalAmount
     /// @param _executor        分红执行者,一般由Andui指定
     /// @return _success true if success else false
-    function setDividend(address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor)returns(bool _success);
+    function setDividend(address _tokenAddress,uint _start ,uint _interval,uint _times,uint _totalAmount,address _executor)returns(bool _success);
 
     /// @notice revoke Dividend
     /// @param _no dividend No.
@@ -81,12 +82,16 @@ contract DividendTokenInterface {
     /// @param _no              分红编号
     /// @param _tokenAddress    分红豆资产合约地址
     /// @param _start           分红开始UTC时间戳
-    /// @param _days            分红天数
+    /// @param _interval        分红间隔
+    /// @param _times           分红次数
     /// @param _totalAmount     总分红量,由于四舍五入的差别,实际分红量会稍微高于或者低于_totalAmount
     /// @param _executor        分红执行者,一般由Andui指定
-    event SetDividend(uint _no,address _tokenAddress,uint _start ,uint _days,uint _totalAmount,address _executor);
+    event SetDividend(uint _no,address _tokenAddress,uint _start ,uint _interval,uint _times,uint _totalAmount,address _executor);
 
-    event RevokeDividend(uint _no);
+    /// @notice
+    /// @param _no              撤销分红分红编号
+    /// @param _implementedAmount    已经完成分红量
+    event RevokeDividend(uint _no,uint _implementedAmount);
 
     event StartDividend(uint _no);
 

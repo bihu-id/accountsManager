@@ -59,57 +59,51 @@ sleep.go(function() {
     console.log("balancesToken:\n",balancesToken)
     var days;
     var amounts;
-    dividendToken.m_dividendHistory([no]).then(function(res,err){
 
-        dividendToken.startDividend([no],executor).then(function(receipt,err){
-            console.log(receipt.logs[0].data)
 
-            dividendToken.m_rate([]).then(function(res,err){
-                var rate=parseInt(res.toString(),10)
-                console.log(rate)
-                var shouldDivs={}
-                var keys=Object.keys(balancesToken)
-                for(var i=0;i<keys.length;i++){
-                    var address=keys[i]
-                    shouldDivs[address]=balancesToken[address]*rate+balancesBean[address]
+    dividendToken.m_rate([]).then(function(res,err){
+        var rate=parseInt(res.toString(),10)
+        console.log(rate)
+        var shouldDivs={}
+        var keys=Object.keys(balancesToken)
+        for(var i=0;i<keys.length;i++){
+            var address=keys[i]
+            shouldDivs[address]=balancesToken[address]*rate+balancesBean[address]
+        }
+        dividendToken.addAccountCall("0x724f255161a5ef4aaf458e37cd1f61fc24b9895a","transfer")
+        dividendToken.call_transfer([holders[15],19],issuerPrivateKey).then(function(receipt,err){
+            dividendToken.executeDividend([no,holders],executor,4800000).then(function(receipt,err){
+                console.log(receipt)
+                var data=receipt.logs[0].data.substring(130)
+                /*var abl=abls["Bean"]["events"][receipt.logs[0].topics]
+                 console.log(abl)
+                 var decoder = new SolidityEvent(null, abl, receipt.logs[0].address);
+                 var eventsOut=JSON.stringify(decoder.decode(receipt.logs),null,2);
+                 console.log(eventsOut.toString())*/
+                var go=true
+                var datas=[]
+                while(go){
+                    datas.push(parseInt(data.substring(0,64),16))
+                    data=data.substring(64)
+                    if(data.length>64)
+                        go=false
                 }
-                dividendToken.addAccountCall("0x724f255161a5ef4aaf458e37cd1f61fc24b9895a","transfer")
-                dividendToken.call_transfer([holders[15],19],issuerPrivateKey).then(function(receipt,err){
-                    dividendToken.executeDividend([no,holders],executor,4800000).then(function(receipt,err){
-                        console.log(receipt)
-                        var data=receipt.logs[0].data.substring(130)
-                        /*var abl=abls["Bean"]["events"][receipt.logs[0].topics]
-                         console.log(abl)
-                         var decoder = new SolidityEvent(null, abl, receipt.logs[0].address);
-                         var eventsOut=JSON.stringify(decoder.decode(receipt.logs),null,2);
-                         console.log(eventsOut.toString())*/
-                        var go=true
-                        var datas=[]
-                        while(go){
-                            datas.push(parseInt(data.substring(0,64),16))
-                            data=data.substring(64)
-                            if(data.length>64)
-                                go=false
-                        }
 
-                        console.log(datas)
-                        var j=0
-                        for(var i=0;i<holders.length;i++) {
+                console.log(datas)
+                var j=0
+                for(var i=0;i<holders.length;i++) {
 
-                            dou.balanceOf([holders[i]]).then(function(res,err){
-                                var douBalances=parseInt(res.toString(),10)
-                                console.log(holders[j],douBalances)
-                                if(douBalances!=shouldDivs[holders[j++]])
-                                    throw ("dou balance error",holders[j++],douBalances,shouldDivs[holders[j++]])
-                            })
-                        }
+                    dou.balanceOf([holders[i]]).then(function(res,err){
+                        var douBalances=parseInt(res.toString(),10)
+                        console.log(holders[j],douBalances)
+                        if(douBalances!=shouldDivs[holders[j++]])
+                            throw ("dou balance error",holders[j++],douBalances,shouldDivs[holders[j++]])
                     })
-                })
-
+                }
             })
-
-
         })
 
     })
+    
 },6000)
+
