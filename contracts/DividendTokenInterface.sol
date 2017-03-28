@@ -96,4 +96,6 @@ contract DividendTokenInterface {
     event StartDividend(uint _no);
 
     event EndDividend(uint _no);
+
+    event ReissueStartDividend(uint _no,uint _dayNo);
 }

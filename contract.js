@@ -25,10 +25,15 @@ contract=function(name,addressKey,delay,createGas,callGas){
         this.delay=delay
     this.addFunctions()
 }
-contract.prototype.deploy=function(issuer,args,gas){
+contract.prototype.deploy=function(issuer,args,gas,code){
 
     var privateKey=issuer
-    var data="0x"+codes[this.name]
+
+    var data;
+    if(code==undefined)
+        data="0x"+codes[this.name]
+    else
+        data=code
 
     var encodeConstructorParams = function (abi, params) {
         return abi.filter(function (json) {
@@ -42,7 +47,7 @@ contract.prototype.deploy=function(issuer,args,gas){
             })[0] || '';
     };
 
-    if (args!=undefined)
+    if (args!=undefined&&args!=null)
         data+=encodeConstructorParams(this.abi,args)
     var self=this
     gas=gas||self.callGas
@@ -126,44 +131,45 @@ contract.prototype.addFunctions=function(){
             enumerable: true
         });
     }
-    this.abi.forEach(function(fun){
-        if(fun.type=="function"){
+    if(this.abi!=undefined)
+        this.abi.forEach(function(fun){
+            if(fun.type=="function"){
 
-            var funInstance=function(args,privateKey,gas,nonce,notWaitReceipt){
-                gas=gas||self.callGas
-                if (privateKey!=undefined) {
-                    return new Promise(function (accept, reject) {
-                        console.log("tx to :",self.address)
-                        transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas, function (err, hash) {
-                            console.log(err)
-                            if (err)
-                                reject(err);
-                            if(notWaitReceipt) {
-                                accept(true)
-                            }
-                            else{
-                                setTimeout(function () {
-                                    var receipt = web3.eth.getTransactionReceipt(hash)
-                                    console.log(hash)
-                                    accept(receipt)
-                                }, self.delay)
-                            }
-                        },0,nonce)
-                    });
-                }
-                else {
-                    return new Promise(function (accept, reject) {
-                        var res=transaction.call(web3,self.abi, self.address, fun.name, args)
-                        //console.log(res)
-                        accept(res)
+                var funInstance=function(args,privateKey,gas,nonce,notWaitReceipt){
+                    gas=gas||self.callGas
+                    if (privateKey!=undefined) {
+                        return new Promise(function (accept, reject) {
+                            console.log("tx to :",self.address)
+                            transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas, function (err, hash) {
+                                console.log(err)
+                                if (err)
+                                    reject(err);
+                                if(notWaitReceipt) {
+                                    accept(true)
+                                }
+                                else{
+                                    setTimeout(function () {
+                                        var receipt = web3.eth.getTransactionReceipt(hash)
+                                        console.log(hash)
+                                        accept(receipt)
+                                    }, self.delay)
+                                }
+                            },0,nonce)
+                        });
+                    }
+                    else {
+                        return new Promise(function (accept, reject) {
+                            var res=transaction.call(web3,self.abi, self.address, fun.name, args)
+                            //console.log(res)
+                            accept(res)
 
-                    });
-                }
-            };
+                        });
+                    }
+                };
 
-            add(fun.name,funInstance)
-        }
-    })
+                add(fun.name,funInstance)
+            }
+        })
 }
 contract.prototype.save=function(addressKey){
     var rpcAddress=getRpcStr.get()

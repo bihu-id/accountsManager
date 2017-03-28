@@ -54,11 +54,34 @@ function checkErr(receipt,no,str){
         throw("")
     }
 }
+//set dividend use other key rather issuer of account,   , should error 60060002
+sleep.go(function(){
+    var start=Date.parse(new Date())/1000
+    dividendToken.setDividend([douAddress_,start,360,30,200000000,executor_address],executor).then(function(receipt,err){
 
+        checkErr(receipt,60060002,"set dividend access test fail")
+
+    })
+},100)
 
 //set dividend use  issuer of account,   , should event dividend no
-var no=4
+var no
+sleep.go(function(){
+    var tokenissuer="0x724f255161a5ef4aaf458e37cd1f61fc24b9895a"
+    var privateKey_account=new Buffer("1a3e6d52c9362dad35e1ad8890bf3984100e26655b4787d9f06143eacc630a09",'hex');
+    dividendToken.addAccountCall(tokenissuer,"setDividend")
+    dividendToken.at()
+    var start=Date.parse(new Date())/1000
+    dividendToken.call_setDividend([douAddress_,start,300,30,200000000,executor_address],privateKey_account).then(function(receipt,err){
 
+        no=parseInt(receipt.logs[0].data.toString().substring(0,66),16)
+        console.log("no:",no,receipt.logs[0].data.toString().substring(0,66))
+        if(no<0){
+            console.log(receipt)
+            throw("set dividend  test fail")
+        }
+    })
+},5000)
 
 //start dividend use  executor
 sleep.go(function(){
@@ -219,6 +242,7 @@ dividendToken.m_rate([]).then(function(res,err){
     })
 
 })
+
 
 
 

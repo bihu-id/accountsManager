@@ -91,11 +91,12 @@ var Address=
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
         "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354",
         "DividendTokenProxy": "0xcb8887c925d8243de066ae226e74dc0426281d83",
-        "DividendTokenLogic": "0x68b397732d7e81622ccb270ecb1e8e255ffefede",
+        "DividendTokenLogic": "0xe697d7e8f4e5d2ccda94a500af63f66c94101f68",
         "BeanLogic": "0x4955d0678961675e4fd7dc7050c69ef810c3d8ed",
-        "BeanData": "0x44d19910e8650835478a5457b24f4465a050c4a8",
+        "BeanData": "0x329b9e0f5ffbf10989c35cb50db6c33e9cf8c29c",
         "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af",
-        "DividendTokenData": "0x8b4715d3562061e5756175c54922a0045091ed26"
+        "DividendTokenData": "0x87b80a7b0cf1523f33e3c7b08e0bc51ffef0f885",
+        "NullContract": "0x7d3862add87f9cb9f7b599ed7e25ec2b7e76f72b"
     },
     "id315": {
         "XindiLogic": "0x577d8c5dd18b27069cb0e3023ceaf25a0f4e7f8e",

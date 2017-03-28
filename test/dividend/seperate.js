@@ -6,7 +6,7 @@ var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca5517
 tokenManager.at()
 
 var proxy=Contract.getAddress("DividendTokenProxy")
-var toDividendTokenAddress="0x46a201eb6327ab67fc3f63adcac56781fef1b0aa"
+var toDividendTokenAddress="0x87b80a7b0cf1523f33e3c7b08e0bc51ffef0f885"
 tokenManager.changeTokenProxy([toDividendTokenAddress,proxy],privateKey).then(function(receipt,err){
     console.log(receipt)
 })

@@ -91,11 +91,11 @@ contract DividendToken is Token ,DividendTokenInterface{
     }
     function reissueStartDividend(uint _no,uint _dayNo){
         startDividendRaw(_no,_dayNo);
+        ReissueStartDividend(_no,_dayNo);
     }
     function startDividendRaw(uint _no,uint _dayNo)internal returns(bool _success){
 
         onlyExecutor(_no);
-        checkTime(_no);
         checkTime(_no);
         checkStatus(_no);
 
@@ -181,6 +181,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     function endDividend(uint _no){
 
+        onlyExecutor(_no);
         uint t_end=m_dividendHistory[_no].m_start+m_dividendHistory[_no].m_days*m_dividendHistory[_no].m_interval;
         if(now>=t_end)
             //set end status

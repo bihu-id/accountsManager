@@ -8,8 +8,8 @@ var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca5517
 tokenManager.at()
 
 var beanLogicProxy=Contract.getAddress("BeanProxy")
-var toBeanTokenAddress="0x6fc3d9be2c8fa2501194f4ce0a4335712e14c198"
-var relatedToken="0x46a201eb6327ab67fc3f63adcac56781fef1b0aa"
+var toBeanTokenAddress="0x329b9e0f5ffbf10989c35cb50db6c33e9cf8c29c"
+var relatedToken="0x87b80a7b0cf1523f33e3c7b08e0bc51ffef0f885"
 tokenManager.changeTokenProxy([toBeanTokenAddress,beanLogicProxy],privateKey).then(function(receipt,err){
     console.log(receipt)
     //set related token

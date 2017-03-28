@@ -37,7 +37,8 @@ var funContract=
         'ParkingLock',
         'DividendToken',
         'Bean',
-        'Test'
+        'Test',
+        'NullContract'
     ]
 
 fs.readdir("./contracts",function(err,files){
