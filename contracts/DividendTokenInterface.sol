@@ -1,6 +1,18 @@
 //分红合约资产最大精度 h128, 前128位纪录辅助状态,后128位纪录余额
 contract DividendTokenInterface {
 
+    struct ExecuteDetail{
+
+        uint m_rate;
+        // implemented dividend amount,
+        uint m_implementedAmount;
+        uint m_limitedAmount;
+
+        //过期时间戳
+        uint m_timestamp;
+
+    }
+
     struct Dividend{
 
         uint m_no;
@@ -28,6 +40,8 @@ contract DividendTokenInterface {
 
         //分红间隔
         uint m_interval;
+
+        mapping(uint=>ExecuteDetail) m_detailPerInterval;
 
     }
 
@@ -64,10 +78,7 @@ contract DividendTokenInterface {
 
     /// @notice set start dividend each cycle (per day) called by executor;
     /// @param _no dividend No.
-    function startDividend(uint _no);
-
-    /// @notice 补发最近一次分红,
-    function reissueStartDividend(uint _no,uint _dayNo);
+    function startDividend(uint _no)returns(bool _success);
 
     /// @notice execute dividend called by executor,usually executor would call many times per cycle
     /// @param _no dividend No.
@@ -77,6 +88,22 @@ contract DividendTokenInterface {
     /// @notice end dividend called by executor
     /// @param _no dividend No.
     function endDividend(uint _no);
+
+    /// @notice 获得分红详情
+    /// @param _no dividend No.
+    function getDividend(uint _no)constant returns (uint t_no,uint _start,uint _days,uint _totalAmount,uint _status,address _tokenAddress,address _executor,uint _implementedAmount,uint _dayNo,uint _limitedAmount,uint _interval);
+
+    /// @notice 获得分红每个间隔(天)的执行情况
+    /// @param _no dividend No.
+    /// @param _dayNo 次数(天数)
+    function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount);
+
+    /// @notice 补发分红,
+    /// @param _no dividend No.
+    /// @param _dayNo 次数(天数)
+    /// @param _addresses 需要分红的地址
+    /// @param _balances 需要分红的余额
+    function reissueDividend(uint _no,uint _dayNo,address [] _addresses,uint [] _balances);
 
     /// @notice
     /// @param _no              分红编号
