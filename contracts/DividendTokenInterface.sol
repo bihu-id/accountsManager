@@ -98,11 +98,15 @@ contract DividendTokenInterface {
     /// @param _dayNo 次数(天数)
     function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount);
 
+    /// @notice 获得当前分红率
+    function getRate(uint _no)constant returns(uint _rate);
+
     /// @notice 补发分红,
     /// @param _no dividend No.
     /// @param _dayNo 次数(天数)
     /// @param _addresses 需要分红的地址
     /// @param _balances 需要分红的余额
+
     function reissueDividend(uint _no,uint _dayNo,address [] _addresses,uint [] _balances);
 
     /// @notice
@@ -120,7 +124,7 @@ contract DividendTokenInterface {
     /// @param _implementedAmount    已经完成分红量
     event RevokeDividend(uint _no,uint _implementedAmount);
 
-    event StartDividend(uint _no);
+    event StartDividend(uint _no,uint _dayNo);
 
     event EndDividend(uint _no);
 

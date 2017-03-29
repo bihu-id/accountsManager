@@ -132,7 +132,7 @@ sleep.go(function(){
 
 // executeDividend executor
 sleep.go(function(){
-    dividendToken.m_rate([]).then(function(res,err){
+    dividendToken.getRate([no]).then(function(res,err){
         var rate=parseInt(res.toString(),10)
         console.log(rate)
         var shouldDivs={}

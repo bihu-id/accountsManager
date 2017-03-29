@@ -22,10 +22,10 @@ contract DividendToken is Token ,DividendTokenInterface{
     //the current dividend ,store in m_dividendHistory index by No.
     uint                        m_currentNo;
 
-    //分红辅助时间, m_balance[address]=m_AuxTime __ balance
+    //分红辅助时间, m_balance[address]=m_AuxTime __ balance ,1.一个分红辅助时间内一个账户只能被分红一次,2.一个分红辅助时间确定
     uint                        m_AuxTime;
 
-    // current rate ,calcualte while startDividend
+    // current rate ,not use
     uint                        public m_rate;
 
     function onlyExecutor(uint _no)internal{
@@ -106,7 +106,7 @@ contract DividendToken is Token ,DividendTokenInterface{
         if(now>haveSetEndTime){
             uint t_rate=(t_totalAmount/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
             m_dividendHistory[_no].m_dayNo++;
-            uint t_addtionalLimited=m_rate*m_option.m_currentSupply;
+            uint t_addtionalLimited=t_rate*m_option.m_currentSupply;
 
             uint t_timestamp=t_start+t_dayNo*t_interval;
             m_dividendHistory[_no].m_detailPerInterval[m_dividendHistory[_no].m_dayNo]=ExecuteDetail(t_rate,0,t_addtionalLimited,t_timestamp);
@@ -115,7 +115,10 @@ contract DividendToken is Token ,DividendTokenInterface{
             m_AuxStatus=uint(AuxStatus.Dividend);
             m_AuxTime=now;
         }
-        StartDividend(_no);
+        else
+            //不到下一次分红执行周期,不能开启执行
+            throwErrEvent(60061012);
+        StartDividend(_no,m_dividendHistory[_no].m_dayNo);
         return true;
     }
 
@@ -168,14 +171,14 @@ contract DividendToken is Token ,DividendTokenInterface{
     function changeAndCheckLimit(uint _no,uint t_totalAmounts)internal{
 
         uint    t_dayNo=m_dividendHistory[_no].m_dayNo;
-        uint t_implementedAmount=m_dividendHistory[_no].m_implementedAmount;
-        m_dividendHistory[_no].m_implementedAmount=t_implementedAmount+t_totalAmounts;
+        uint t_implementedAmount=m_dividendHistory[_no].m_implementedAmount+t_totalAmounts;
+        m_dividendHistory[_no].m_implementedAmount=t_implementedAmount;
 
-        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount;
-        m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount=t_implementedAmountPerDay+t_totalAmounts;
+        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount+t_totalAmounts;
+        m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount=t_implementedAmountPerDay;
 
         uint limit=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_limitedAmount;
-        if(m_dividendHistory[_no].m_implementedAmount>m_dividendHistory[_no].m_limitedAmount||t_implementedAmountPerDay>limit)
+        if(t_implementedAmount>m_dividendHistory[_no].m_limitedAmount||t_implementedAmountPerDay>limit)
             //分红数超过最大限额。
             throwErrEvent(60061002);
 
@@ -191,8 +194,12 @@ contract DividendToken is Token ,DividendTokenInterface{
             //地址和分红额数组长度补一致
             throwErrEvent(60061011);
 
-        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount;
-        m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount=t_implementedAmountPerDay+t_totalAmounts;
+        uint t_totalAmounts=0;
+        for(uint i=0;i<_balances.length;i++)
+            t_totalAmounts+=_balances[i];
+
+        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount+t_totalAmounts;
+        m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount=t_implementedAmountPerDay;
         uint limit=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_limitedAmount;
 
         if(t_implementedAmountPerDay>limit)
@@ -200,9 +207,6 @@ contract DividendToken is Token ,DividendTokenInterface{
             throwErrEvent(60061002);
 
         BeanInterface beam=BeanInterface(m_dividendHistory[_no].m_tokenAddress);
-        uint t_totalAmounts=0;
-        for(uint i=0;i<_balances.length;i++)
-            t_totalAmounts+=_balances[i];
 
         beam.dividends(_addresses,_balances,t_totalAmounts);
     }
@@ -334,4 +338,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     }
 
+    function getRate(uint _no)constant returns(uint _rate){
+        return m_dividendHistory[_no].m_detailPerInterval[m_dividendHistory[_no].m_dayNo].m_rate;
+    }
 }
