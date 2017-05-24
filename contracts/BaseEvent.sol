@@ -1,10 +1,17 @@
 contract BaseEvent{
 
     event Alert(uint _no);
+    event Alerts(uint _no,uint[] _args);
     function throwErrEvent(uint _no)internal{
 
         Alert(_no);
-        //AnduiChain would keep event when throw ,and also revert state same as ethereum
+        //AnduiChain would keep event/logs when throw (BadJumpDestination in evm ),and also revert state same as ethereum
+        throw;
+    }
+    function throwErrEvents(uint _no,uint[] _args)internal{
+
+        Alerts(_no,_args);
+        //AnduiChain would keep event/logs when throw (BadJumpDestination in evm),and also revert state same as ethereum
         throw;
     }
     //0:权限错误
@@ -36,7 +43,7 @@ contract BaseEvent{
     //Xindi管理合约错误,合约编号:001
     //60011001:  重置账户输入,拥有者数不等于权重数
     //60011002:  设置错误的用户实名等级 _level>=100
-    //60011002:  设置错误的fun编号
+    //60011003:  设置错误的fun编号
 
     //账户逻辑合约错误,合约编号:002
     //60020000:  合约修改权限不足
@@ -103,6 +110,9 @@ contract BaseEvent{
     //60061010:  只能补已经过期的分红
     //60061011:  地址和分红额数组长度补一致
     //60061012:  不到下一次分红执行周期,不能开启执行
+    //60061013:  分红执行期间不能增发凭证
+    //60061014:  分红第几天数错误, 可能原因是 未结束前个分红周期,并且在当前分红周期直接执行
+    //60061015:  数据溢出,分红合约的最大余额未uint128 ,可能原因是补分红是输入负数或者大正数
 
     //60069991:  运算错误
 

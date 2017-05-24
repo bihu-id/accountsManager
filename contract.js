@@ -50,7 +50,7 @@ contract.prototype.deploy=function(issuer,args,gas,code){
     if (args!=undefined&&args!=null)
         data+=encodeConstructorParams(this.abi,args)
     var self=this
-    gas=gas||self.callGas
+    gas=gas||self.createGas
     return new Promise(function(accept, reject) {
         transaction.createContract(web3,data,issuer,gas,function(err,hash){
             console.log(err)
@@ -60,8 +60,14 @@ contract.prototype.deploy=function(issuer,args,gas,code){
             setTimeout(function(){
                 var receipt=web3.eth.getTransactionReceipt(hash)
                 var rpcAddress=getRpcStr.get()
-                var address=receipt.contractAddress
-                rpcAddress[self.addressKey]='"'+address+'"';
+                var address
+                if(receipt){
+                    rpcAddress[self.addressKey]='"'+receipt.contractAddress+'"';
+                    address=receipt.contractAddress
+                }
+                else{
+                    console.log(hash)
+                    throw("cannot get contract address ")}
                 getRpcStr.save(rpcAddress,function(err){
                     if(err)
                         throw err
@@ -135,12 +141,12 @@ contract.prototype.addFunctions=function(){
         this.abi.forEach(function(fun){
             if(fun.type=="function"){
 
-                var funInstance=function(args,privateKey,gas,nonce,notWaitReceipt){
+                var funInstance=function(args,privateKey,gas,gasPrice,nonce,notWaitReceipt){
                     gas=gas||self.callGas
                     if (privateKey!=undefined) {
                         return new Promise(function (accept, reject) {
                             console.log("tx to :",self.address)
-                            transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas, function (err, hash) {
+                            transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas,gasPrice, function (err, hash) {
                                 console.log(err)
                                 if (err)
                                     reject(err);

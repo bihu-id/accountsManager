@@ -12,6 +12,8 @@ var input = {};
 
 var allFuns={};
 
+var allEvents={};
+
 function getSub(obj,keys) {
     var subObj = obj
     for (var i = 0; i < keys.length; i++)
@@ -38,7 +40,8 @@ var funContract=
         'DividendToken',
         'Bean',
         'Test',
-        'NullContract'
+        'NullContract',
+        'Erc20Token'
     ]
 
 fs.readdir("./contracts",function(err,files){
@@ -143,6 +146,7 @@ fs.readdir("./contracts",function(err,files){
                                 sub = [contractKey, "funs", funName, "inputs", paraName, "select"]
                                 if (getSub(oldabis1, sub) != undefined)
                                     funInputs[paraName]["select"] = getSub(oldabis1, sub)
+
                             }
                             abiFun["inputs"] = funInputs
                         }
@@ -165,6 +169,10 @@ fs.readdir("./contracts",function(err,files){
                                 sub = [contractKey, "funs", funName, "outputs", paraName, "select"]
                                 if (getSub(oldabis1, sub) != undefined)
                                     funOutputs[paraName]["select"] = getSub(oldabis1, sub)
+
+                                sub = [contractKey, "funs", funName, "outputs", paraName, "format"]
+                                if (getSub(oldabis1, sub) != undefined)
+                                    funOutputs[paraName]["format"] = getSub(oldabis1, sub)                                
                             }
                             abiFun["outputs"] = funOutputs
                         }
@@ -203,6 +211,7 @@ fs.readdir("./contracts",function(err,files){
                 }
             })
             abisContract["events"]=events
+            allEvents[contractKey]=events
             abisContract["funs"]=abiFuns
             abis[contractKey]=JSON.parse(contracts[contractKey].interface)
             abis1[contractKey]=abisContract
@@ -243,11 +252,18 @@ fs.readdir("./contracts",function(err,files){
         console.log("File Saved !"); //文件被保存
     }) ;
 
+    //store abis to abis repo
     fs.writeFile("/Users/Roy/github/abis/abis.js",str,function (err) {
         if (err) throw err ;
         console.log("update abis !"); //文件被保存
     }) ;
 
+    //store events to abis repo
+    var allEventsStr="var events=\n"+JSON.stringify(allEvents,null,4)+"\nmodule.exports=events;";
+    fs.writeFile("/Users/Roy/github/abis/events.js",allEventsStr,function (err) {
+        if (err) throw err ;
+        console.log("update events to abis !"); //文件被保存
+    }) ;
     var raw=JSON.stringify(byteCodes,null,4)
         //.replace(/\"/g, "")
     var str="var byteCodes=\n"+raw+"\nmodule.exports=byteCodes;";

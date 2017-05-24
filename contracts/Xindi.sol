@@ -275,8 +275,13 @@ contract Xindi is XindiInterface{
 
     function subConfirm(address _destination,uint _type,uint[] _data)internal returns(bool _called,bool _success){
 
+        //notice only resetAccountOwnerType need sub confirm , because new data structure need been made .
         if(_type==uint(OperationType.resetAccountOwnerType))
             return (true,resetAccountOwnerC(_destination,_data));
         return (false true);
+    }
+
+    function version()constant returns(string _versionString){
+        return "Xindi-1.0.1";
     }
 }

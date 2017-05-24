@@ -91,7 +91,7 @@ var Address=
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
         "ParkingLock": "0x436ad51dacf14f64b779161a36e427452654d354",
         "DividendTokenProxy": "0xcb8887c925d8243de066ae226e74dc0426281d83",
-        "DividendTokenLogic": "0x120d1806c762a14470d8e8d8c1d5ef66d97c80ff",
+        "DividendTokenLogic": "0xb5998381a295fc40896f32a863ef72ce1722eb9a",
         "BeanLogic": "0x4955d0678961675e4fd7dc7050c69ef810c3d8ed",
         "BeanData": "0x329b9e0f5ffbf10989c35cb50db6c33e9cf8c29c",
         "BeanProxy": "0x8fe05afb9ab26d72fb30b4c4c407a05d923f03af",
@@ -120,10 +120,10 @@ var Address=
         "AccountCreatorLogic": "0x860bf1b2f7c4f40d55fdd772db515904990421a0",
         "XindiLogic": "0xb97e4b35c559f04f62fbd8f8cdf33a0f49768303",
         "TxManagerLogic": "0x04dad9a353421dacea18b4b563c2f136f545bff4",
-        "TokenManagerLogic": "0xce64a118deeec569a2ed6aa18a7dbf936888eb33",
-        "TokenLogic": "0xb96de85997bb958b004d28594513f9925e1a8947",
+        "TokenManagerLogic": "0x7dcacfa11b2febf8f768651b6785fc814b2ed5dd",
+        "TokenLogic": "0x3ff9e654abf5bb9742ad3a3cb2fb10411aca8cf9",
         "TokenProxy": "0x3f27673e508125fddd9982aa81aa00cb94111e96",
-        "AccountLogic": "0xef9bd9e4704c961175b1db8eda80b45ac5c84cc5",
+        "AccountLogic": "0x0034b1174257efbaf96e6da83e7c903ce3d3d89e",
         "AccountProxy": "0xc92a375b6067c68aec818b58112403aeca888a60",
         "XindiProxy": "0x06ea7d558a08c4c6b9d7cff08185ffdb212d5b4d",
         "XindiData": "0xc7c791ff24f20cc5056824e4fe9bebac5bfc3893",
@@ -132,7 +132,16 @@ var Address=
         "TokenManagerProxy": "0x5a58b8d7be418566794d9d5dbebd6393fd04af3c",
         "TokenManagerData": "0x4dd20d75d57860e31419275c5ebcaf9b911af73b",
         "TxManagerProxy": "0x3f481bdc036c6d8c83408421659bac7642469bbf",
-        "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16"
+        "TxManagerData": "0x0ada435004fbade910c0372278539752102e9c16",
+        "DividendTokenProxy": "0x69fa0c58f7dc5b0271df0004d60a1af66205ad74",
+        "DividendTokenLogic": "0x5098a643c02cd389459e0d02047f409cca87315a",
+        "BeanProxy": "0xb2964dbfdf53359c98bbc7288c0f55f6313384d7",
+        "BeanLogic": "0xcfecfe1a2d97a58983b689d05173913fadda8e9a",
+        "BeanData": "0x67b24e4fd430840ef0bc23bb358eb4be62c65791",
+        "DividendTokenData": "0x4143bb244493cc63d75c3fca82442f3f8954f184"
+    },
+    "id1000": {
+        "Erc20Token": "0xcbff01ff9d4e1c302c5c5a1e9655fb9c61758e66"
     }
 }
 module.exports=Address;

@@ -1,6 +1,7 @@
 import "./BaseEvent.sol";
 
 //数据合约必须继承这个类,不能更改这个类,如果更改会导致合约读取数据错误,
+//data contract must inherit  this base contract, c
 contract BaseData is BaseEvent{
 
     // use type uint256/uint to void compiler merge several variables destroy store structure ,it would make error when contract upgrade with addtional variable
@@ -19,8 +20,11 @@ contract BaseData is BaseEvent{
     }
 }
 //逻辑合约必须继承这个类,不能轻易更改这个类,如果更改会导致合约读取数据错误,
-//todo bug logic contract also can store data ,attacker can call logic contract to store many data ,
-//
+//logic contract must inherit this contract ,do not change this contract .
+//todo  logic contract also can store data ,attacker can call logic contract to store many data ,
+//but it is not a bug problem , though logic contract store mass of data , it does not increase
+//the time cost of read code of contract .
+
 contract BaseLogic is BaseData{
 
     event Init(uint[] _res);
@@ -33,8 +37,8 @@ contract BaseLogic is BaseData{
 
     function beforeInit()internal{
 
-        if(inited==1)                               { throwErrEvent(10000004); }
-        if(uint(msg.sender)!=m_initor)              { throwErrEvent(10000005); }
+        if(inited==1)                                                   { throwErrEvent(10000004); }
+        if(uint(msg.sender)!=m_initor)                                  { throwErrEvent(10000005); }
 
     }
 
@@ -45,4 +49,7 @@ contract BaseLogic is BaseData{
 
     }
 
+    function version()constant returns(string _versionString){
+        return "V000";
+    }
 }

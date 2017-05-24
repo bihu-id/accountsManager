@@ -96,7 +96,7 @@ contract DividendTokenInterface {
     /// @notice 获得分红每个间隔(天)的执行情况
     /// @param _no dividend No.
     /// @param _dayNo 次数(天数)
-    function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount);
+    function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount,uint _expireTimeStamp);
 
     /// @notice 获得当前分红率
     function getRate(uint _no)constant returns(uint _rate);
@@ -104,10 +104,11 @@ contract DividendTokenInterface {
     /// @notice 补发分红,
     /// @param _no dividend No.
     /// @param _dayNo 次数(天数)
+    /// @param _totalSupply _dayNo当天的凭证总供应量,0:表示取当前供应量 ,用以计算分红率
     /// @param _addresses 需要分红的地址
     /// @param _balances 需要分红的余额
 
-    function reissueDividend(uint _no,uint _dayNo,address [] _addresses,uint [] _balances);
+    function reissueDividend(uint _no,uint _dayNo,uint _totalSupply,address [] _addresses,uint [] _balances);
 
     /// @notice
     /// @param _no              分红编号

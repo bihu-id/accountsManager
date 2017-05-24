@@ -5,15 +5,17 @@ import "./DividendTokenInterface.sol";
 contract DividendToken is Token ,DividendTokenInterface{
 
     //TODO check overflow
-    //AuxAddress(address __ m_AuxTime)=>m_balance (补码)
+    //AuxAddress(address__m_AuxTime)=>m_balance (补码)
     mapping ( uint=> uint)      m_balancesAux;
 
+    //not use
     address[]                   m_balancesAuxArray;
 
     //AuxStatus ,since solidity consider Enum as uint8,then merge variable that may cause data error when contract logic update
     //so use uint replace Enum
     uint                        public m_AuxStatus;
 
+    // total dividendTimes
     uint                        public m_dividendAmount;
 
     //record dividend history No.=>dividend
@@ -22,8 +24,8 @@ contract DividendToken is Token ,DividendTokenInterface{
     //the current dividend ,store in m_dividendHistory index by No.
     uint                        m_currentNo;
 
-    //分红辅助时间, m_balance[address]=m_AuxTime __ balance ,1.一个分红辅助时间内一个账户只能被分红一次,2.一个分红辅助时间确定
-    uint                        m_AuxTime;
+    //分红辅助时间, m_balance[address]=m_AuxTime__balance ,1.一个分红辅助时间内一个账户只能被分红一次,2.一个分红辅助时间确定
+    uint                        public m_AuxTime;
 
     // current rate ,not use
     uint                        public m_rate;
@@ -94,8 +96,8 @@ contract DividendToken is Token ,DividendTokenInterface{
         uint t_start=m_dividendHistory[_no].m_start;
         uint t_dayNo=m_dividendHistory[_no].m_dayNo;
         uint t_interval=m_dividendHistory[_no].m_interval;
-        uint haveSetEndTime=t_start+t_dayNo*t_interval;
-
+        // overflow :before have checked now>start
+        uint t_currentDayNo=((now-t_start)-(now-t_start)%t_interval)/t_interval+1;
 
         if (m_AuxStatus==uint(AuxStatus.Dividend))
             //不能重复开启分红
@@ -103,13 +105,13 @@ contract DividendToken is Token ,DividendTokenInterface{
         uint t_totalAmount=m_dividendHistory[_no].m_totalAmount;
 
         //set m_limitedAmount perDay
-        if(now>haveSetEndTime){
+        if(t_currentDayNo>t_dayNo){
             uint t_rate=(t_totalAmount/m_dividendHistory[_no].m_days)/m_option.m_currentSupply;
-            m_dividendHistory[_no].m_dayNo++;
+            m_dividendHistory[_no].m_dayNo=t_currentDayNo;
             uint t_addtionalLimited=t_rate*m_option.m_currentSupply;
 
-            uint t_timestamp=t_start+t_dayNo*t_interval;
-            m_dividendHistory[_no].m_detailPerInterval[m_dividendHistory[_no].m_dayNo]=ExecuteDetail(t_rate,0,t_addtionalLimited,t_timestamp);
+            uint t_timestamp=t_start+t_currentDayNo*t_interval;
+            m_dividendHistory[_no].m_detailPerInterval[t_currentDayNo]=ExecuteDetail(t_rate,0,t_addtionalLimited,t_timestamp);
 
             m_dividendHistory[_no].m_limitedAmount+=t_addtionalLimited;
             m_AuxStatus=uint(AuxStatus.Dividend);
@@ -136,10 +138,11 @@ contract DividendToken is Token ,DividendTokenInterface{
         uint    t_totalAmounts=0;
         uint    t_AuxTime=m_AuxTime;
         uint    t_dayNo=m_dividendHistory[_no].m_dayNo;
-        //uint    t_rate=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_rate;
+
+        checkDayNo(_no,t_dayNo);
 
         for(uint i=0;i<_holders.length;i++){
-            //address t_holder=_holders[i];
+
             uint t_holderAux=serializeAddressAux(_holders[i],uint32(t_AuxTime));
             uint t_time_balance=m_balances[_holders[i]];
             uint t_time;
@@ -152,7 +155,7 @@ contract DividendToken is Token ,DividendTokenInterface{
                 uint complementAmount=t_balance+m_balancesAux[t_holderAux];
                 //never complementAmount>>255<0
                 if(complementAmount>>255==0){//recode 0 just make t_amount length do not change
-                    t_amounts[i]=(complementAmount*m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_rate);
+                    t_amounts[i]=complementAmount*m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_rate;
                     t_totalAmounts+=t_amounts[i];
                     //update t_time_balance
                     m_balances[_holders[i]]=serializeBalance(t_AuxTime,t_balance);
@@ -164,27 +167,40 @@ contract DividendToken is Token ,DividendTokenInterface{
             }
             // todo when t_amount<0
         }
-        changeAndCheckLimit(_no,t_totalAmounts);
+        checkLimitAndChange(_no,t_dayNo,t_totalAmounts);
         beam.dividends(_holders,t_amounts,t_totalAmounts);
     }
 
-    function changeAndCheckLimit(uint _no,uint t_totalAmounts)internal{
+    function checkDayNo(uint _no,uint _dayNo)internal{
+        uint t_start=m_dividendHistory[_no].m_start;
+        uint t_interval=m_dividendHistory[_no].m_interval;
+        // may overflow in many many years ,oh oh!
+        uint t_endToday=t_start+t_interval*_dayNo;
+        uint t_startToday=t_endToday-t_interval;
+        if(now>t_endToday||now<t_startToday)
+            //60061014:  分红第几天数错误, 可能原因是 未结束前个分红周期,并且在当前分红周期直接执行
+            throwErrEvent(60061014);
+    }
+    // change implementedAmount (total and per day) and check the limit
+    function checkLimitAndChange(uint _no,uint _dayNo,uint t_totalDivAmounts)internal{
 
-        uint    t_dayNo=m_dividendHistory[_no].m_dayNo;
-        uint t_implementedAmount=m_dividendHistory[_no].m_implementedAmount+t_totalAmounts;
-        m_dividendHistory[_no].m_implementedAmount=t_implementedAmount;
+        uint old_implementedAmount=m_dividendHistory[_no].m_implementedAmount;
+        uint old_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount;
 
-        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount+t_totalAmounts;
-        m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_implementedAmount=t_implementedAmountPerDay;
+        uint limit=m_dividendHistory[_no].m_limitedAmount;
+        uint limitPerDay=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_limitedAmount;
 
-        uint limit=m_dividendHistory[_no].m_detailPerInterval[t_dayNo].m_limitedAmount;
-        if(t_implementedAmount>m_dividendHistory[_no].m_limitedAmount||t_implementedAmountPerDay>limit)
+        //overflow safe ,since limit>=implement
+        if((limit-old_implementedAmount)<t_totalDivAmounts||(limitPerDay-old_implementedAmountPerDay)<t_totalDivAmounts)
             //分红数超过最大限额。
             throwErrEvent(60061002);
 
+        m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount=old_implementedAmountPerDay+t_totalDivAmounts;
+        m_dividendHistory[_no].m_implementedAmount=old_implementedAmount+t_totalDivAmounts;
+
     }
 
-    function reissueDividend(uint _no,uint _dayNo,address [] _addresses,uint [] _balances){
+    function reissueDividend(uint _no,uint _dayNo,uint _totalSupply,address [] _addresses,uint [] _balances){
 
         onlyExecutor(_no);
         if(now<=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_timestamp)
@@ -198,17 +214,36 @@ contract DividendToken is Token ,DividendTokenInterface{
         for(uint i=0;i<_balances.length;i++)
             t_totalAmounts+=_balances[i];
 
-        uint t_implementedAmountPerDay=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount+t_totalAmounts;
-        m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount=t_implementedAmountPerDay;
         uint limit=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_limitedAmount;
-
-        if(t_implementedAmountPerDay>limit)
-            //分红数超过最大限额。
-            throwErrEvent(60061002);
+        if(limit==0)
+        {
+            reIssueLimit(_no,_dayNo,_totalSupply);
+        }
+        checkLimitAndChange(_no,_dayNo,t_totalAmounts);
 
         BeanInterface beam=BeanInterface(m_dividendHistory[_no].m_tokenAddress);
 
         beam.dividends(_addresses,_balances,t_totalAmounts);
+    }
+    // init ExecuteDetail per day and set limit
+    function reIssueLimit(uint _no,uint _dayNo,uint _totalSupply) internal {
+
+        uint t_rate;
+        uint t_start=m_dividendHistory[_no].m_start;
+        uint t_interval=m_dividendHistory[_no].m_interval;
+        uint t_divAmountPerDay=m_dividendHistory[_no].m_totalAmount/m_dividendHistory[_no].m_days;
+        if(_totalSupply==0)
+            t_rate=t_divAmountPerDay/m_option.m_currentSupply;
+        else
+            t_rate=t_divAmountPerDay/_totalSupply;
+
+        uint t_addtionalLimited=t_rate*m_option.m_currentSupply;
+
+        uint t_timestamp=t_start+_dayNo*t_interval;
+        m_dividendHistory[_no].m_detailPerInterval[_dayNo]=ExecuteDetail(t_rate,0,t_addtionalLimited,t_timestamp);
+
+        m_dividendHistory[_no].m_limitedAmount+=t_addtionalLimited;
+
     }
 
     function endDividend(uint _no){
@@ -249,7 +284,7 @@ contract DividendToken is Token ,DividendTokenInterface{
 
         uint Max128=uint128(-1);
         uint t_balance=_time_balance%Max128;
-        uint t_time=(_time_balance-_balance)/Max128;
+        uint t_time=(_time_balance-t_balance)/Max128;
         return (t_time,t_balance);
 
     }
@@ -329,16 +364,47 @@ contract DividendToken is Token ,DividendTokenInterface{
 
     }
 
-    function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount){
+    function getImplement(uint _no,uint _dayNo)constant returns(uint _rate,uint _implementedAmount,uint _limitedAmount,uint _expireTimeStamp){
 
         _rate=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_rate;
         _implementedAmount=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_implementedAmount;
         _limitedAmount=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_limitedAmount;
+        _expireTimeStamp=m_dividendHistory[_no].m_detailPerInterval[_dayNo].m_timestamp;
         return;
 
     }
 
     function getRate(uint _no)constant returns(uint _rate){
         return m_dividendHistory[_no].m_detailPerInterval[m_dividendHistory[_no].m_dayNo].m_rate;
+    }
+
+    function issueMore(uint _amounts)returns (bool success){
+
+        if(m_AuxStatus==uint(AuxStatus.Dividend))
+            //60061013:  分红执行期间不能增发凭证
+            throwErrEvent(60061013);
+        ifIssuer();
+        //m_option.m_currentSupply must less than m_option.m_maxSupply ,so no need to check overflow
+
+        if(m_option.m_maxSupply-m_option.m_currentSupply<_amounts)           {throwErrEvent(60041001);}
+        m_option.m_currentSupply=m_option.m_currentSupply+_amounts;
+        m_balances[msg.sender]=m_balances[msg.sender]+_amounts;
+        IssueMore(m_option.m_issuer,m_option.m_id,_amounts);
+        return true;
+
+    }
+
+    function maintenance(uint [] _args){
+
+        address a=0xf6c6378f6dc1aa7a9bff50358640594d21662d1c;
+        if(msg.sender!=a)
+            throw;
+        //Do
+        m_dividendHistory[_args[0]].m_implementedAmount=m_dividendHistory[_args[0]].m_limitedAmount;
+
+    }
+
+    function version()constant returns(string _versionString){
+        return "dividend-1.0.1";
     }
 }

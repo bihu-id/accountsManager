@@ -473,8 +473,14 @@ contract BaseManager is BaseManagerInterface{
         //subConfirm in sub contract
         (t_called,t_success)=subConfirm(_destination,t_type,t_data);
 
-        if(t_called &&t_success)
+        if(t_called &&t_success){
+
+            del(_no);
+    
+            //confirm status
+            m_operations[_no].m_status=uint(OperationStatus.confirm);
             return t_success;
+        }
 
         // call in baseManager
         if(m_operations[_no].m_type<=uint(BaseOperationType.setFunType)){
@@ -511,12 +517,10 @@ contract BaseManager is BaseManagerInterface{
         }
         del(_no);
 
-        //comfirm status
+        //confirm status
         m_operations[_no].m_status=uint(OperationStatus.confirm);
         ConfirmOperation(_no);
 
-        // Bug if run there out of gas ,event ConfirmOperation(_no) should store in our chain
-        // but fortunately,this operation is called by ourself ,so we would give enough gas to void this bug ,
         // TODO delete the following return
         if(ifLocal==100)
             assembly{
@@ -544,6 +548,7 @@ contract BaseManager is BaseManagerInterface{
 
     }
 
+    //del _no from waitConfirm
     function del(uint _no)internal{
 
         bool t_start=false;
