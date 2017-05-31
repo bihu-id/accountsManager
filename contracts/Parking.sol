@@ -22,24 +22,28 @@ contract Parking is Token,ParkingInterface{
 
     address m_owner;
 
-    function pay(uint _parkingNo,uint _spaceNo,uint _localNo,uint _onValue,uint _offValue){
+    //function pay(uint _parkingNo,uint _spaceNo,uint _localNo,uint _onValue,uint _offValue){
 
-    }
+    //}
 
     function initParking(
-            address _issuer,
-            bytes32 _symbol,
-            uint _id,
-            uint _maxSupply,
-            uint _precision,
-            uint _currentSupply,
-            uint  _closingTime,
-            string _description,
-            uint _hash,
-            uint _noInSystem,
-            address _system,
-            string _name,
-            uint _spaceAmount){
+        address _issuer,
+        bytes32 _symbol,
+        uint _id,
+        /*
+        uint _maxSupply,
+        uint _precision,
+        uint _currentSupply,
+        */
+        uint  _closingTime,
+        string _description,
+        uint _hash,
+        address _manager,
+        uint _noInSystem,
+        address _system,
+        string _name,
+        uint _spaceAmount)
+        returns(bool _success){
 
         beforeInit();
         m_noInSystem=_noInSystem;
@@ -48,7 +52,8 @@ contract Parking is Token,ParkingInterface{
         m_spaceAmount=_spaceAmount;
         m_owner=_issuer;
 
-        init(_issuer,_symbol,_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash);
+        init(_issuer,_symbol,_id,1,0,1,_closingTime,_description,_hash,_manager);
+        return true;
 
     }
 

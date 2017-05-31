@@ -122,6 +122,8 @@ contract TokenManagerInterface {
     /// @param _value   转移数量,包含精度
     function forceTransfer(address _token,address _from,address _to,uint _value)returns (bool success) ;
 
+    function getTokenAmounts()constant returns(uint _amount);
+
     //event SetTokenAble(address _account,uint _tokenAmounts);
 
     event CreateTokenData(address _token);

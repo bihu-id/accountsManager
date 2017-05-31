@@ -6,6 +6,4 @@ contract ParkingSpace{
     //parent of space ,it mean parking
     address m_parent;
 
-
-
 }
