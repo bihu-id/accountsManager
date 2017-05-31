@@ -7,7 +7,15 @@ import "./Parking.sol";
 
 contract ParkingCreator is BaseLogic,ParkingCreatorInterface{
 
-    uint m_currentNo;
+    uint m_symbolNo;
+    function init(){
+
+        // 0000000000000000 000001
+        uint base=0x30303030303030303030303030303030;
+        uint app=1;
+        uint no=0;
+        m_symbolNo=(base<<6+000000000001)<<10+no;
+    }
 
     function createParking(uint _noInSystem,address _system,string _name,uint _spaceAmount,address _manager ,uint _closingTime,uint _hash,address _logicProxy)returns (bool _success){
         Data d = new Data(uint(_logicProxy));
@@ -16,7 +24,10 @@ contract ParkingCreator is BaseLogic,ParkingCreatorInterface{
         CreateParkingData(d);
 
         Parking p=Parking(d);
-        bytes32 _symbol=0x0000000;//todo
+
+        m_symbolNo++;
+
+        bytes32 _symbol=bytes32(m_symbolNo);
 
         TokenManager tm=TokenManager(_manager);
 
@@ -26,5 +37,7 @@ contract ParkingCreator is BaseLogic,ParkingCreatorInterface{
         tm.registerToken(_symbol,d);
         return true;
     }
+
+
 }
 
