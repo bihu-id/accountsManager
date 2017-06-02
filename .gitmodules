@@ -1,3 +1,9 @@
 [submodule "anduiWallet"]
 	path = anduiWallet
 	url = git@139.196.234.239:anduiWallet.git
+[submodule "contracts/contractInterface"]
+	path = contracts/contractInterface
+	url = git@139.196.234.239:contractInterface.git
+[submodule "contracts/contractBase"]
+	path = contracts/contractBase
+	url = git@139.196.234.239:contractBase.git
