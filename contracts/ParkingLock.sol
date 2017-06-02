@@ -1,7 +1,6 @@
-import "./AccountInterface.sol";
-import "./TokenInterface.sol";
-//import "./Erc20.sol";
-import "./BaseEvent.sol";
+import "./interface/AccountInterface.sol";
+import "./interface/TokenInterface.sol";
+import "./base/BaseEvent.sol";
 
 contract ParkingLock is BaseEvent{
 

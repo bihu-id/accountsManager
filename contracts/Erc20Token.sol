@@ -1,4 +1,4 @@
-import "./Erc20.sol";
+import "./base/Erc20.sol";
 
 contract Erc20Token is Erc20 {
 

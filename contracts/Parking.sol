@@ -1,5 +1,5 @@
-import "./Token.sol";
-import "./ParkingInterface.sol";
+import "./base/Token.sol";
+import "./interface/ParkingInterface.sol";
 
 contract Parking is Token,ParkingInterface{
 

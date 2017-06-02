@@ -1,8 +1,8 @@
 
-import "./AccountInterface.sol";
-import "./BaseAppInterface.sol";
-import "./Token.sol";
-import "./BaseData.sol";
+import "./interface/AccountInterface.sol";
+import "./interface/BaseAppInterface.sol";
+import "./base/Token.sol";
+import "./base/BaseData.sol";
 
 contract Account is BaseLogic , AccountInterface{
 
