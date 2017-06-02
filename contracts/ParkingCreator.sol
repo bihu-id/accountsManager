@@ -1,9 +1,9 @@
-import "./base/BaseData.sol";
-import "./interface/ParkingCreatorInterface.sol";
+import "./contractBase/BaseData.sol";
+import "./contractInterface/ParkingCreatorInterface.sol";
 import "./Parking.sol";
-import "./base/Data.sol";
-import "./interface/TokenManagerInterface.sol";
-import "./base/SubManager.sol";
+import "./contractBase/Data.sol";
+import "./contractInterface/TokenManagerInterface.sol";
+import "./contractBase/SubManager.sol";
 
 contract ParkingCreator is SubManager{
 

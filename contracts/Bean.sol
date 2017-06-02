@@ -1,5 +1,5 @@
-import "./base/Token.sol";
-import "./interface/BeanInterface.sol";
+import "./contractBase/Token.sol";
+import "./contractInterface/BeanInterface.sol";
 
 contract Bean is Token,BeanInterface{
 

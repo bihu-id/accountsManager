@@ -1,8 +1,8 @@
-import "./base/Token.sol";
+import "./contractBase/Token.sol";
 import "./AccountCreator.sol";
-import "./base/BaseManager.sol";
-import "./interface/TokenManagerInterface.sol";
-import "./base/BaseSToken.sol";
+import "./contractBase/BaseManager.sol";
+import "./contractInterface/TokenManagerInterface.sol";
+import "./contractBase/BaseSToken.sol";
 
 contract RoleDefine_Token{
 

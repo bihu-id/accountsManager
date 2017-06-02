@@ -1,6 +1,6 @@
 import "./Erc20.sol";
 import "./BaseData.sol";
-import "../interface/TokenInterface.sol";
+import "../contractInterface/TokenInterface.sol";
 contract Token is BaseLogic,Erc20,TokenInterface {
 
     /*

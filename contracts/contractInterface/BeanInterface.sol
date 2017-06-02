@@ -1,4 +1,4 @@
-import "../base/BaseSToken.sol";
+import "../contractBase/BaseSToken.sol";
 
 contract BeanInterface is BaseSToken{
 

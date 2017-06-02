@@ -1,5 +1,5 @@
 import "./Account.sol";
-import "./base/BaseManager.sol";
+import "./contractBase/BaseManager.sol";
 import "./AccountCreator.sol";
 
 contract RoleDefine_Xindi{
