@@ -41,7 +41,9 @@ var funContract=
         'Bean',
         'Test',
         'NullContract',
-        'Erc20Token'
+        'Erc20Token',
+        'ParkingCreator',
+        'Parking'
     ]
 
 fs.readdir("./contracts",function(err,files){

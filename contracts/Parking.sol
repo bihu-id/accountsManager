@@ -28,17 +28,6 @@ contract Parking is Token,ParkingInterface{
 
     function initParking(
         address _issuer,
-        bytes32 _symbol,
-        uint _id,
-        /*
-        uint _maxSupply,
-        uint _precision,
-        uint _currentSupply,
-        */
-        uint  _closingTime,
-        string _description,
-        uint _hash,
-        address _manager,
         uint _noInSystem,
         address _system,
         string _name,
@@ -51,6 +40,22 @@ contract Parking is Token,ParkingInterface{
         m_name=_name;
         m_spaceAmount=_spaceAmount;
         m_owner=_issuer;
+
+        //init(_issuer,_symbol,_id,1,0,1,_closingTime,_description,_hash,_manager);
+        return true;
+
+    }
+
+    // deal stake too deep
+    function initB(
+        address _issuer,
+        bytes32 _symbol,
+        uint  _id,
+        uint _closingTime,
+        string _description,
+        uint _hash,
+        address _manager)
+        returns(bool _success){
 
         init(_issuer,_symbol,_id,1,0,1,_closingTime,_description,_hash,_manager);
         return true;
