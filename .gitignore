@@ -7,10 +7,14 @@ app
 */node_modules/
 /node_modules/
 *.node-xmlhttprequest*
-copyToInterface.sh
+*.sh
 npm-debug.log
 test/byteCodes.js
 wallet/config/abis.js
 wallet/config/abls.js
 test/funs.js
 test/abis.js
+
+*.sh
+
+copyParking.sh
