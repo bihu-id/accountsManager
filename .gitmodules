@@ -3,7 +3,7 @@
 	url = git@139.196.234.239:anduiWallet.git
 [submodule "contracts/contractInterface"]
 	path = contracts/contractInterface
-	url = git@139.196.234.239:contractInterface.git
+	url = git@106.15.53.193:contractInterface.git
 [submodule "contracts/contractBase"]
 	path = contracts/contractBase
-	url = git@139.196.234.239:contractBase.git
+	url = git@106.15.53.193:contractBase.git

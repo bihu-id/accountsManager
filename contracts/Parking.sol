@@ -34,14 +34,12 @@ contract Parking is Token,ParkingInterface{
         uint _spaceAmount)
         returns(bool _success){
 
-        beforeInit();
         m_noInSystem=_noInSystem;
         m_system=_system;
         m_name=_name;
         m_spaceAmount=_spaceAmount;
         m_owner=_issuer;
 
-        //init(_issuer,_symbol,_id,1,0,1,_closingTime,_description,_hash,_manager);
         return true;
 
     }

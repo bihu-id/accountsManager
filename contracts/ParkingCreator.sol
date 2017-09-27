@@ -12,7 +12,13 @@ contract ParkingCreator is SubManager{
 
     function ParkingCreator()BaseData(uint(msg.sender)){}
 
-
+    /// @notice init this contract ,                                        创建账户使用账户创建Key
+    /// @param _core                                                        账户核心,父级管理者
+    /// @param _resetKey _resetKey
+    /// @param _resetKeyC _resetKeyC
+    /// @param _owner                                                       拥有者
+    /// @param _manager                                                       tokenManager
+    /// @param _logicProxy                                                    parking Logic Proxy
     function init(uint _core,uint _resetKey,uint _resetKeyC, uint _owner,uint _manager,uint _logicProxy){
 
         beforeInit();
@@ -45,6 +51,7 @@ contract ParkingCreator is SubManager{
 
     }
 
+    //event Temp(address _manager);
     function createParking(uint _noInSystem,address _system,string _name,uint _spaceAmount,uint _closingTime,uint _hash){
 
         address _manager=address(getOption(2));
@@ -65,6 +72,7 @@ contract ParkingCreator is SubManager{
         if(!p.initParking(msg.sender,_noInSystem,_system,_name,_spaceAmount))
             throwErrEvent(60032002);
         p.initB(msg.sender,bytes32(m_symbolNo),_id,_closingTime,_name,_hash,_manager);
+        //Temp(_manager);
         tm.registerToken(bytes32(m_symbolNo),d);
 
     }

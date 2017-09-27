@@ -172,7 +172,7 @@ contract.prototype.addFunctions=function(){
                         });
                     }
                 };
-
+                //console.log(fun.name,":",funInstance,"\n")
                 add(fun.name,funInstance)
             }
         })

@@ -278,7 +278,7 @@ contract Xindi is XindiInterface{
         //notice only resetAccountOwnerType need sub confirm , because new data structure need been made .
         if(_type==uint(OperationType.resetAccountOwnerType))
             return (true,resetAccountOwnerC(_destination,_data));
-        return (false true);
+        return (false,true);
     }
 
     function version()constant returns(string _versionString){

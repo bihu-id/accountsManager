@@ -6,7 +6,8 @@ var getRpcStr=require("../../getRpcServe.js")
 var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
 var contract="TokenManager"
 var addresskey=contract+"Logic"
-transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function(err,hash){
+console.log("0x"+codes[contract])
+transaction.createContract(web3,"0x"+codes[contract],privateKey,4000000,function(err,hash){
     console.log(err)
     if (!err)
         console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"

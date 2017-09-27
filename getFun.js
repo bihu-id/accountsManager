@@ -6,6 +6,8 @@ var oldabis1=require('./anduiWallet/config/abls.js');
 
 
 var contracts_directory=path.join(process.cwd(),"./contracts");
+var base_directory=path.join(process.cwd(),"./contracts/contractBase");
+var interface_directory=path.join(process.cwd(),"./contracts/contractInterface");
 
 console.log(contracts_directory);
 var input = {};
@@ -43,14 +45,12 @@ var funContract=
         'NullContract',
         'Erc20Token',
         'ParkingCreator',
-        'Parking'
+        'Parking',
+        'CrawdSale'
     ]
 
-fs.readdir("./contracts",function(err,files){
-    if (err){
-        console.log(err)
-        return ;
-    }
+    var files=fs.readdirSync("./contracts")
+
     //console.log(files)
     var i;
 
@@ -61,7 +61,22 @@ fs.readdir("./contracts",function(err,files){
             input[file] = fs.readFileSync(path.join(contracts_directory ,file), 'utf8');
     }
 
-    var outputs = solc.compile({sources: input}, 1);
+    var filesBase=fs.readdirSync("./contracts/contractBase")
+    for (i in filesBase) {
+        var file = filesBase[i];
+        if(file.indexOf(".sol")>=0)
+            input["contractBase/"+file] = fs.readFileSync(path.join(base_directory ,file), 'utf8');
+    }
+
+    var filesInterface=fs.readdirSync("./contracts/contractInterface")
+    for (i in filesInterface) {
+        var file = filesInterface[i];
+        if(file.indexOf(".sol")>=0)
+            input["contractInterface/"+file] = fs.readFileSync(path.join(interface_directory ,file), 'utf8');
+    }
+
+    console.log(Object.keys(input))
+var outputs = solc.compile({sources: input}, 1);
     
 
     var contracts=outputs.contracts;
@@ -70,7 +85,7 @@ fs.readdir("./contracts",function(err,files){
     var abis={}
     var abis1={}
     var byteCodes={}
-    //console.log(Object.keys(contracts))
+    console.log(outputs)
     Object.keys(contracts).forEach(function(contractKey){
 
         if(funContract.indexOf(contractKey)>=0){
@@ -274,5 +289,5 @@ fs.readdir("./contracts",function(err,files){
         console.log("File Saved !"); //文件被保存
     }) ;
 
-})
+
 
