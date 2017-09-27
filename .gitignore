@@ -3,3 +3,7 @@
 build
 app
 /node_modules/
+
+anduiWallet/
+contracts/contractBase/
+contracts/contractInterface/
