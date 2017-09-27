@@ -1,6 +1,6 @@
-import "./Token.sol";
-import "./BeanInterface.sol";
-import "./DividendTokenInterface.sol";
+import "./contractBase/Token.sol";
+import "./contractInterface/BeanInterface.sol";
+import "./contractInterface/DividendTokenInterface.sol";
 
 contract DividendToken is Token ,DividendTokenInterface{
 

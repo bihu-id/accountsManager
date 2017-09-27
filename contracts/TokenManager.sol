@@ -1,8 +1,8 @@
-import "./Token.sol";
+import "./contractBase/Token.sol";
 import "./AccountCreator.sol";
-import "./BaseManager.sol";
-import "./TokenManagerInterface.sol";
-import "./BaseSToken.sol";
+import "./contractBase/BaseManager.sol";
+import "./contractInterface/TokenManagerInterface.sol";
+import "./contractBase/BaseSToken.sol";
 
 contract RoleDefine_Token{
 
@@ -173,8 +173,6 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
         m_amounts++;
 
-        BaseSToken bst=BaseSToken(_token);
-        bst.setId(m_amounts);
         m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,_token);
 
         m_symbols[_symbol]=m_amounts;
@@ -320,4 +318,9 @@ contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
         SetDouRelatedToken(_dou,_relatedToken);
     }
 
+    event TxVersion(string _versionString);
+    function txVersion()returns(string _versionString){
+        TxVersion("V000");
+        return "V000";
+    }
 }

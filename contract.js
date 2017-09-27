@@ -172,7 +172,7 @@ contract.prototype.addFunctions=function(){
                         });
                     }
                 };
-
+                //console.log(fun.name,":",funInstance,"\n")
                 add(fun.name,funInstance)
             }
         })
@@ -216,7 +216,7 @@ contract.prototype.updateLogic=function(privateKey){
             console.log(currentLogic,currentSize,f.sig.toString(16),f.name)
             if(currentLogic!=logicAddress||currentSize!=f.resSize) {
                 console.log("set :",logicAddress,f.resSize,f.sig.toString(16),f.name,"with nonde :",nonce+i)
-                transaction.transaction(web3, abi, to, "setfun", [logicAddress, f.sig, f.resSize], privateKey, 220000, function (err, hash) {
+                transaction.transaction(web3, abi, to, "setfun", [logicAddress, f.sig, f.resSize], privateKey, 220000,0, function (err, hash) {
                     if (err)
                         console.log(err)
 
@@ -248,7 +248,7 @@ contract.prototype.confirmUpdate=function(privateKey){
     var abi=abis["LogicProxy"]
     var sleep=new Sleep(1)
     sleep.go(function(){
-        transaction.transaction(web3,abi,to,"requestConfirm",[0],privateKey,300000,function(err,hash){
+        transaction.transaction(web3,abi,to,"requestConfirm",[0],privateKey,300000,0,function(err,hash){
             console.log(err)
             if (!err)
                 console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
@@ -262,7 +262,7 @@ contract.prototype.confirmUpdate=function(privateKey){
     },10)
 
     sleep.go(function(){
-        transaction.transaction(web3,abi,to,"confirm",[0],privateKey,300000,function(err,hash){
+        transaction.transaction(web3,abi,to,"confirm",[0],privateKey,300000,0,function(err,hash){
             console.log(err)
             if (!err)
                 console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"

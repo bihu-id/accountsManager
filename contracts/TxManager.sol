@@ -1,5 +1,5 @@
 import "./Account.sol";
-import "./BaseManager.sol";
+import "./contractBase/BaseManager.sol";
 
 contract TxManager is SimpleManager {
 
