@@ -1,6 +1,24 @@
+/wallet/assets/
+assets.zip
 .idea/*
 .idea
 build
 app
+*/node_modules/
 /node_modules/
+<<<<<<< HEAD
 
+=======
+*.node-xmlhttprequest*
+*.sh
+npm-debug.log
+test/byteCodes.js
+wallet/config/abis.js
+wallet/config/abls.js
+test/funs.js
+test/abis.js
+
+*.sh
+
+copyParking.sh
+>>>>>>> andui-develop

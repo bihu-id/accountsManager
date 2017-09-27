@@ -1,6 +1,6 @@
-import "Account.sol";
-import "BaseManager.sol";
-import "AccountManager.sol";
+import "./Account.sol";
+import "./contractBase/BaseManager.sol";
+import "./AccountCreator.sol";
 
 contract RoleDefine_Xindi{
 
@@ -96,29 +96,29 @@ contract XindiInterface is BaseManager ,RoleDefine_Xindi{
     /// @param _owners owners of this account;              新的用户账号拥有者
     /// @param _weight weight per owner;                    新的用户账户拥有的权重,和_owners一一对应
     /// @param _Threshold the tx threshold;                 用户交易生效阀值
-    function resetAccountOwner (address _account,uint _Threshold,address[] _owners,uint[] _weight);
+    function resetAccountOwner (address _account,uint _Threshold,address[] _owners,uint[] _weight)returns (bool success) ;
 
     /// @notice set account real name level;        设置用户实名等级,数值小于100
     /// @param _account account contract address    操作的用户合约账号地址
     /// @param _level real name level               用户实名等级
-    function setIdLevel (address _account,uint _level);
+    function setIdLevel (address _account,uint _level)returns (bool success) ;
 
     /// @notice set account CA address;             设置用户CA
     /// @param _account account contract address;   操作的用户合约账号地址
     /// @param _CA CA address;                      用户CA地址
-    function setCA (address _account,address _CA);
+    function setCA (address _account,address _CA)returns (bool success) ;
 
     /// @notice revoke account CA lable;            撤销用户CA
     /// @param _account account contract address;   操作的用户合约账号地址
-    function revokeCA (address _account);
+    function revokeCA (address _account)returns (bool success) ;
 
     /// @notice freeze account;                     冻结账号
     /// @param _account account contract address;   操作的用户合约账号地址
-    function freeze(address _account);
+    function freeze(address _account)returns (bool success) ;
 
     /// @notice unfreeze account;                   解冻账号
     /// @param _account account contract address;   操作的用户合约账号地址
-    function unfreeze(address _account);
+    function unfreeze(address _account)returns (bool success) ;
 
     event ResetAccountOwner(address _account,uint _Threshold,address[] _owners,uint[] _weight);
     event SetIdLevel (address _account,uint level);
@@ -160,10 +160,10 @@ contract Xindi is XindiInterface{
 
     }
 
-    function resetAccountOwner (address _account,uint _Threshold,address[] _owners,uint[] _weight){
+    function resetAccountOwner (address _account,uint _Threshold,address[] _owners,uint[] _weight)returns (bool success) {
 
         checKey(m_keys[uint(role.resetAccountOwnerRole)]);
-        if (_owners.length!=_weight.length)                                 {Err(60011001);throw; }
+        if (_owners.length!=_weight.length)                                 {throwErrEvent(60011001);}
         // the follow code basely equil using code  btyes m_data=msg.data
             uint[] memory t_data=new uint[](2+2*_owners.length);
             t_data[0]=m_funs[uint(OperationType.resetAccountOwnerType)];
@@ -176,6 +176,7 @@ contract Xindi is XindiInterface{
         addOperation(_account,uint(OperationType.resetAccountOwnerType),uint(role.resetAccountOwnerRoleC),t_data);
 
         ResetAccountOwner(_account,_Threshold,_owners,_weight);
+        return true;
 
     }
 
@@ -194,20 +195,21 @@ contract Xindi is XindiInterface{
 
     }
 
-    function setIdLevel (address _account,uint _level){
+    function setIdLevel (address _account,uint _level)returns (bool success) {
 
         checKey(m_keys[uint(role.realNameRole)]);
-        if (_level>=100)                                                    {Err(60011002);throw; }
+        if (_level>=100)                                                    {throwErrEvent(60011002);}
         uint[] memory t_data=new uint[](2);
         t_data[0]=m_funs[uint(OperationType.setIdLevelType)];
         t_data[1]=_level;
 
         addOperation(_account,uint(OperationType.setIdLevelType),uint(role.realNameRoleC),t_data);
         SetIdLevel(_account,_level);
+        return true;
 
     }
 
-    function setCA (address _account,address _CA){
+    function setCA (address _account,address _CA)returns (bool success) {
 
         checKey(m_keys[uint(role.CARole)]) ;
         uint[] memory t_data=new uint[](2);
@@ -216,38 +218,43 @@ contract Xindi is XindiInterface{
 
         addOperation(_account,uint(OperationType.setCAType),uint(role.CARoleC),t_data);
         SetCA (_account,_CA);
+        return true;
+
     }
 
-    function revokeCA (address _account){
+    function revokeCA (address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.revokeRole)]);
         uint[] memory t_data=new uint[](1);
         t_data[0]=m_funs[uint(OperationType.revokeCAType)];
         addOperation(_account,uint(OperationType.revokeCAType),uint(role.revokeRoleC),t_data);
         RevokeCA(_account);
+        return true;
     }
 
-    function freeze(address _account){
+    function freeze(address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](1);
         t_data[0]=m_funs[uint(OperationType.freezeType)];
         addOperation(_account,uint(OperationType.freezeType),uint(role.freezeRoleC),t_data);
         Freeze(_account);
+        return true;
 
     }
 
-    function unfreeze(address _account){
+    function unfreeze(address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.unfreezeRole)]);
-        uint[] memory t_data=new uint[](0);
+        uint[] memory t_data=new uint[](1);
         t_data[0]=m_funs[uint(OperationType.unfreezeType)];
         addOperation(_account,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_account);
+        return true;
 
     }
 
-    function setSubKey(address _subContract,uint _role,address _key){
+    function setSubKey(address _subContract,uint _role,address _key)returns (bool success) {
 
         checKey(m_keys[uint(BaseRole.setSubKeyRole)]);
         uint[] memory t_data=new uint[](3);
@@ -255,20 +262,26 @@ contract Xindi is XindiInterface{
         t_data[1]=_role;
         t_data[2]=uint(_key);
         addOperation(_subContract,uint(BaseOperationType.setSubKeyType),uint(BaseRole.setSubKeyRoleC),t_data);
+        return true;
 
     }
 
     function setSubKeyC(address _subContract ,uint[] _data)internal{
 
-        AccountManager am=AccountManager(_subContract);
-        am.resetKey.gas(msg.gas)(_data[0],_data[1]);
+        AccountCreator am=AccountCreator(_subContract);
+        am.resetKey.gas(msg.gas)(_data[1],_data[2]);
 
     }
 
     function subConfirm(address _destination,uint _type,uint[] _data)internal returns(bool _called,bool _success){
 
+        //notice only resetAccountOwnerType need sub confirm , because new data structure need been made .
         if(_type==uint(OperationType.resetAccountOwnerType))
             return (true,resetAccountOwnerC(_destination,_data));
-        return (false true);
+        return (false,true);
+    }
+
+    function version()constant returns(string _versionString){
+        return "Xindi-1.0.1";
     }
 }

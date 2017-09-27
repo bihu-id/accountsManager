@@ -4,21 +4,21 @@ contract('reset owner of account', function(accounts) {
     var address=getRpcStr.get()
 
     var xindidata = address.XindiData
-    var accountManager = address.AccountManagerData
+    var accountManager = address.AccountCreatorData
 
 
     it("reset owner of account ", function(){
-        var accountmanager=AccountManager.at(accountManager)
+        var accountmanager=AccountCreator.at(accountManager)
             //console.log("accountManager.accountAmount()",res.toString());
             //console.log("                  account               ","                  core                  ","                 TxCore                      ","status","level","ownerAmount","tx_threshold","                       CA               ","               _owner                   ","weight");
             //0xc06df393ebc0e6c5ba5c4624ecfe242911d7f156 0xc06df393ebc0e6c5ba5c4624ecfe242911d7f156,0x0000000000000000000000000000000000010000,    0      ,0         ,1           ,100      ,0x0000000000000000000000000000000000000000,0xae119076b7273968cc2da5c164a692fa95b98d9c,100 :
-            accountmanager.getAccountAddress(1).then(function (res1) {
+            accountmanager.getAccountAddress(2).then(function (res1) {
                 var account = Account.at(res1);
                 console.log("reset owner of",res1.toString(16))
                 var xindi=Xindi.at(xindidata)
                 return xindi.getKeys().then(function(res){
                     console.log("use reset key:",res[6].toString(16))
-                    return xindi.resetAccountOwner(res1,50,[accounts[20]],[50],{from:res[6]}).then(function(tx){
+                    return xindi.resetAccountOwner(res1,60,["0x009d600a6fc60b6f0fce06b2ed9173f090c89614"],[60],{from:res[6]}).then(function(tx){
                         console.log("reset account "+res1.toString(16),"to :",accounts[6]);
                         console.log(web3.eth.getTransactionReceipt(tx));
                     })

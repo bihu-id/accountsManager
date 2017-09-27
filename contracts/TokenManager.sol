@@ -1,6 +1,8 @@
-import "Token.sol";
-import "AccountManager.sol";
-import "BaseManager.sol";
+import "./contractBase/Token.sol";
+import "./AccountCreator.sol";
+import "./contractBase/BaseManager.sol";
+import "./contractInterface/TokenManagerInterface.sol";
+import "./contractBase/BaseSToken.sol";
 
 contract RoleDefine_Token{
 
@@ -56,130 +58,9 @@ contract RoleDefine_Token{
 
 }
 
-contract TokenManagerInterface is BaseManager,RoleDefine_Token {
+contract TokenManager is BaseManager,RoleDefine_Token,TokenManagerInterface{
 
-    struct TokenSummary{
-
-        // id
-        uint m_id;
-        // owner of token
-        address m_owner;
-        //token contract address
-        address m_address;
-
-    }
-
-    enum Fun{
-
-        freeze,         //0
-
-        unfreeze,       //1
-
-        forceTransfer   //2
-
-    }
-
-    enum Option{
-
-        keysAmount,
-        optionsAmount,
-        funAmount,
-        xindi,
-        accountManager,
-        tokenProxy,
-        MinTerm,
-        limit
-
-    }
-
-    /// @notice create token ;                                                  创建token
-    /// @param _symbol symbol of token;                                         token代号,不可重复
-    /// @param _maxSupply max supply of token can not been change ;            token的最大供应量,
-    /// @param _precision precsion of token ;                                  token的精度,精度*总量<2^64 考虑将来使用64位虚拟机
-    /// @param _currentSupply the init supply when token create, value would change when issue more token by token owner;
-    /// 当前供应量供,直接初始化到创建者账号。
-    /// @param _closingTime token would expire by _closingTime, 0 mean forever token  关闭时间,UTC 时间,以秒计算,0 表示永久资产
-    /// @param _description                                                           资产简单描述
-    /// @param _hash hash of token contract                                           资产合同HASH
-    function createToken(
-        bytes32 _symbol,
-        /*uint _id,*/
-        uint _maxSupply,
-        uint _precision,
-        uint _currentSupply,
-        uint  _closingTime,
-        string _description,
-        uint  _hash)returns(bool);
-/*
-    /// @notice 设置可账户可以创建多少个资产 ;
-    /// @param _account 账户、
-    /// @param _amounts 可以创建资产总个数,
-    //function setTokenAble(address _account,uint _amounts);
-
-    /// @notice 获得账户可以创建多少个资产 ;
-    /// @param _account 账户
-    /// @return t_account 账户
-    /// @return _amounts 可以创建资产总个数,
-    //function getTokenAble(address _account)constant returns(address t_account, uint _amounts);
-*/
-
-    /// @notice 获得TOKEN的地址
-    /// @param _id token Id
-    /// @return TOKEN的地址
-    function getTokenAddress(uint _id)constant returns(address);
-
-     /// @notice                获得TOKEN的概况
-     /// @param _id             token Id
-     /// @return r_ids          资产的ID
-     /// @return _owner         资产的拥有者
-     /// @return _tokenAddress  地址的合约地址
-    function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress);
-
-     /// @notice                遍历所有的资产symbol
-     /// @param _start          开始的资产顺序
-     /// @param _limit          遍历多少个资产
-     /// @return bytes32[]      返回遍历资产的symbol
-    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]);
-
-    /// @notice         冻结某个账户持有的资产
-    /// @param _token   资产合约的地址
-    /// @param _account 哪个账户持有的,如果_account =0x0 :冻结整个资产
-    function freeze(address _token,address _account);
-
-    /// @notice         解冻某个账户持有的资产
-    /// @param _token   资产合约的地址
-    /// @param _account 哪个账户持有的,如果_account =0x0 :解冻整个资产
-    function unfreeze(address _token,address _account);
-
-    /// @notice         强制转移_value从_from持有的_tokenId资产到_to
-    /// @param _token   资产的合约
-    /// @param _from    账户合约地址
-    /// @param _to      账户合约地址
-    /// @param _value   转移数量,包含精度
-    function forceTransfer(address _token,address _from,address _to,uint _value);
-
-    //event SetTokenAble(address _account,uint _tokenAmounts);
-
-    event CreateTokenData(address _token);
-    event CreateToken(address _issuer,
-                    bytes32 _symbol,
-                    uint _id,
-                    uint _maxSupply,
-                    uint _precision,
-                    uint _currentSupply,
-                    uint _closingTime,
-                    string _description,
-                    uint _hash);
-    event Freeze(address _Token,address _account);
-    event Unfreeze(address _Token,address _account);
-    event ForceTransfer(address _token,address _from,address _to,uint _value);
-
-
-}
-
-contract TokenManager is TokenManagerInterface{
-
-    //total amounts of symbols
+    //total amounts of symbols also m_amounts++ as the id of new token
     uint m_amounts=0;
 
     //record the gas need of function call
@@ -199,7 +80,7 @@ contract TokenManager is TokenManagerInterface{
 
     function TokenManager()BaseData(uint(msg.sender)){}
 
-    function init(uint _core,uint _coreC,uint _xindi,uint _accountManager,uint _tokenPorxy){
+    function init(uint _core,uint _coreC,uint _xindi,uint _accountManager,uint _tokenPorxy)returns (bool success){
 
         beforeInit();
 
@@ -210,8 +91,8 @@ contract TokenManager is TokenManagerInterface{
         m_options[uint(Option.optionsAmount)]=8;
         m_options[uint(Option.funAmount)]=3;
 
-        m_options[uint(Option.xindi)]=_accountManager;
-        m_options[uint(Option.accountManager)]=_xindi;
+        m_options[uint(Option.xindi)]=_xindi;
+        m_options[uint(Option.accountManager)]=_accountManager;
         m_options[uint(Option.tokenProxy)]=_tokenPorxy;
         m_options[uint(Option.MinTerm)]=24*3600;
         m_options[uint(Option.limit)]=100;
@@ -222,7 +103,13 @@ contract TokenManager is TokenManagerInterface{
         t_res[2]=uint(_tokenPorxy);
 
         afterInit(t_res);
+        return true;
+    }
 
+    function isXindiManageAccount ()internal{
+        // just check the sender if the account manager by accountManager ,other check is done by server
+        AccountCreator am=AccountCreator(m_options[uint(Option.accountManager)]);
+        if(am.getAccountNo(msg.sender)==0)                      {throwErrEvent(60030001);     }
     }
 
     function createToken(
@@ -233,33 +120,35 @@ contract TokenManager is TokenManagerInterface{
         uint _currentSupply,
         uint  _closingTime,
         string _description,
-        uint  _hash)returns(bool){
+        uint  _hash)returns (bool success) {
 
-        // just check the sender if the account manager by accountManager ,other check is done by server
-        AccountManager am=AccountManager(m_options[uint(Option.accountManager)]);
-        if(am.getAccountNo(msg.sender)==0)                      {Err(60030001);     throw;}
-        //if(tokenAble()==0)                                    {Err(60030001);     throw;}
+        //check token symbol length ,length must >=3
+        if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
+
+        isXindiManageAccount();
+
+        //if(tokenAble()==0)                                    {throwErrEvent(60030001);     }
         // 0: no expired term
         if(_closingTime!=0 && (_closingTime<0||_closingTime<now+m_options[uint(Option.MinTerm)]))
-                                                                {Err(60031001);     throw;}
+                                                                {throwErrEvent(60031001);     }
         // id used
-        //if(m_tokenSummarys[_id].m_id!=0)                      {Err(60031002);     throw;}
+        //if(m_tokenSummarys[_id].m_id!=0)                      {throwErrEvent(60031002);     }
         // symbol is used
-        if( m_symbols[_symbol]>0)                               {Err(60031003);     throw;}
+        if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
 
-        if(_precision>8)                                        {Err(60031004);     throw;}
+        if(_precision>8)                                        {throwErrEvent(60031004);     }
         // consider use 64 b VM for efficiency reason
-        if(_maxSupply*(10**_precision)>=uint64(-1))             {Err(60031005);     throw;}
-        if(_currentSupply>_maxSupply)                           {Err(60031006);     throw;}
+        if(_maxSupply>=uint64(-1))                              {throwErrEvent(60031005);     }
+        if(_currentSupply>_maxSupply)                           {throwErrEvent(60031006);     }
 
         uint t_id=m_amounts+1;
         m_amounts=t_id;
         Data d = new Data(m_options[uint(Option.tokenProxy)]);
-        if(d==address(0x0))                                     {Err(60032001);     throw;}
+        if(d==address(0x0))                                     {throwErrEvent(60032001);     }
         CreateTokenData(d);
         Token t=Token(d);
         if(!t.init(msg.sender,_symbol,t_id,_maxSupply,_precision,_currentSupply,_closingTime,_description,_hash,this))
-                                                                {Err(60032002);     throw;}
+                                                                {throwErrEvent(60032002);     }
         m_tokenSummarys[t_id]=TokenSummary(t_id,msg.sender,d);
 
         m_symbols[_symbol]=t_id;
@@ -274,6 +163,23 @@ contract TokenManager is TokenManagerInterface{
         return true;
     }
 
+    function registerToken(bytes32 _symbol,address _token)returns(bool _success){
+        // todo temp commit
+        //isXindiManageAccount();
+        //check token symbol length ,length must >=3
+        if((uint(_symbol)*0x10000)==0)                          {throwErrEvent(60030010);     }
+        // symbol is used
+        if( m_symbols[_symbol]>0)                               {throwErrEvent(60031003);     }
+
+        m_amounts++;
+
+        m_tokenSummarys[m_amounts]=TokenSummary(m_amounts,msg.sender,_token);
+
+        m_symbols[_symbol]=m_amounts;
+        m_ids[m_amounts]=_symbol;
+        RegisterToken(m_amounts,_symbol,_token);
+        return true;
+    }
     /*
     function tokenAble()internal returns(uint32){
 
@@ -285,7 +191,7 @@ contract TokenManager is TokenManagerInterface{
 
     function setTokenAble(address _account,uint _tokenAmounts){
 
-        if(msg.sender!=m_xindi)                                 {Err(60030002);  throw;}
+        if(msg.sender!=m_xindi)                                 {throwErrEvent(60030002);  }
         // 0~31 : the account have created how many tokens
         //32~63 :how many tokens this account can create
         m_tokenAble[_account]=_tokenAmounts*uint32(-1)+m_tokenAble[_account]%uint32(-1);
@@ -300,19 +206,22 @@ contract TokenManager is TokenManagerInterface{
     }
     */
 
-    function getTokenAddress(uint _id)constant returns(address){
+    function getTokenAddress(uint _id)constant returns(address _tokenAddress){
 
         return m_tokenSummarys[_id].m_address;
 
     }
 
+    function getTokenId(bytes32 _symbol)constant returns(uint _id){
+        return m_symbols[_symbol];
+    }
     function getTokenSummary(uint _id)constant returns(uint r_ids ,address _owner,address _tokenAddress){
 
         return (m_tokenSummarys[_id].m_id,m_tokenSummarys[_id].m_owner,m_tokenSummarys[_id].m_address);
 
     }
 
-    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[]){
+    function getTokensSymbol(uint _start,uint _limit)constant returns(bytes32[] _symbols){
 
         uint t_limit=_limit;
         uint t_end;
@@ -343,46 +252,75 @@ contract TokenManager is TokenManagerInterface{
 
     }
 
-    function getTokenAmounts()constant returns(uint){
+    function getTokenAmounts()constant returns(uint _amount){
 
         return m_amounts;
 
     }
 
-    function freeze(address _token,address _account){
+    function freeze(address _token,address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.freezeRole)]);
         uint[] memory t_data=new uint[](2);
 
-        t_data[0]=m_funs[uint(Fun.freeze)];
+        t_data[0]=0x8d1fdf2f;
+
+        //t_data[0]=m_funs[uint(Fun.freeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.freezeRoleC),t_data);
         Freeze(_token,_account);
+        return true;
 
     }
 
-    function unfreeze(address _token,address _account){
+    function unfreeze(address _token,address _account)returns (bool success) {
 
         checKey(m_keys[uint(role.unfreezeRole)]);
         uint[] memory t_data=new uint[](2);
-        t_data[0]=m_funs[uint(Fun.unfreeze)];
+
+        t_data[0]=0x45c8b1a6;
+        //t_data[0]=m_funs[uint(Fun.unfreeze)];
         t_data[1]=uint(_account);
         addOperation(_token,uint(OperationType.unfreezeType),uint(role.unfreezeRoleC),t_data);
         Unfreeze(_token,_account);
+        return true;
 
     }
 
-    function forceTransfer(address _token,address _from,address _to,uint _value){
+    function forceTransfer(address _token,address _from,address _to,uint _value)returns (bool success) {
 
         checKey(m_keys[uint(role.forceTransferRole)]);
         uint[] memory t_data=new uint[](4);
 
-        t_data[0]=m_funs[uint(Fun.forceTransfer)];
+        t_data[0]=0x33bebb77;
+        //t_data[0]=m_funs[uint(Fun.forceTransfer)];
         t_data[1]=uint(_from);
         t_data[2]=uint(_to);
         t_data[3]=uint(_value);
         addOperation(_token,uint(OperationType.forceTransferType),uint(role.forceTransferRoleC),t_data);
+        forceTransfer(_token,_from,_to,_value);
+        return true;
 
     }
 
+    //seperate logic
+    function changeTokenProxy(address _tokenAddress,address _newProxy){
+        checKey(m_keys[uint(role.setSubKeyRole)]);
+        Token t=Token(_tokenAddress);
+        t.changeLogicProxy(uint(_newProxy));
+        ChangeTokenProxy(_tokenAddress,_newProxy);
+    }
+
+    function setDouRelatedToken(address _dou,address _relatedToken){
+        checKey(m_keys[uint(role.setSubKeyRole)]);
+        BaseSToken t=BaseSToken(_dou);
+        t.setRelatedToken(_relatedToken);
+        SetDouRelatedToken(_dou,_relatedToken);
+    }
+
+    event TxVersion(string _versionString);
+    function txVersion()returns(string _versionString){
+        TxVersion("V000");
+        return "V000";
+    }
 }
