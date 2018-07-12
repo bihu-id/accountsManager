@@ -16,9 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "eth-lightwallet": "^2.5.3",
     "keccakjs": "^0.2.1",
     "solc": "^0.4.7",
-    "web3": "^0.18.2"
+    "web3": "^0.18.4"
   }
 }

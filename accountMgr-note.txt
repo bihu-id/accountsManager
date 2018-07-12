@@ -1,0 +1,49 @@
+data合约都继承自data.sol
+
+所有的合约先创建data，再创建logic
+
+data 0～3
+logic 0～3
+
+accountcreator => account opener
+
+部署可参考test/xindi
+
+accountsManger/deploy.js
+
+1. logicproxy, 地址记下，所有data合约都用这个代理 ，   0x5dc898a916c321cdc1f2020ea86c500c3937975e
+
+xindi/deployData.js
+2. data合约 0xf78740112c2093e6c46dfa6504b601504b930488
+
+2.1 xindi合约
+
+3. accountcreator.  0xe617c751aa5020b3c1468249fe989bc47cf44781
+
+4. register function"
+
+5.xindi(data Address).init()
+
+
+------------------------------
+
+    enum Keys{
+
+        m_A,   //contract update key                0
+        m_AC,  //contract update confirm key        1
+        m_T,   //reset keys key                     2
+        m_TC   //reset keys confirm key             3
+    }. proxy_UA
+
+
+    delegatecall
+
+    logicproxuy.setfun(logicprox contract address, function hash, function return value size byte(32的倍数), )
+
+
+如果返回数组，数组元素
+
+
+deploylogic-js.js
+
+node getFun.js

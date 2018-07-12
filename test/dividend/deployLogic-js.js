@@ -1,6 +1,6 @@
 var Contract=require("../../contract.js")
 
-var privateKey=new Buffer("7326418279111ef3276318ee6dd12cd25a4b343bfab466eacc2def2197e24ade",'hex');
+var privateKey=new Buffer("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",'hex');
 
 var dividendToken=new Contract("DividendToken","DividendTokenLogic")
 dividendToken.deploy(privateKey).then(function(dividendToken,err){

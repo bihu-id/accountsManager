@@ -154,7 +154,7 @@ contract Account is BaseLogic , AccountInterface{
         transactionCheck();
 
         Token t=Token(_tokenContract);
-        t.transfer.gas(msg.gas)(_to,_amount);
+        t.transfer(_to,_amount);
 
     }
 
@@ -165,7 +165,7 @@ contract Account is BaseLogic , AccountInterface{
 
         transactionCheckOrgin();
         Token t=Token(_tokenContract);
-        return t.transfer.gas(msg.gas)(_to,_amount);
+        return t.transfer(_to,_amount);
 
     }
 
