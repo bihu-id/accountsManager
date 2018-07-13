@@ -147,6 +147,13 @@ var Address=
     },
     "id1000": {
         "Erc20Token": "0xcbff01ff9d4e1c302c5c5a1e9655fb9c61758e66"
+    },
+    "id100": {
+        "AccountLogic": "0x0dbf0f9288cb1a22060f17a5b5bdcc260ab7d965",
+        "DividendTokenLogic": "0xcc4d016ab77e28653bdce1098077be5923077980",
+        "XindiData": "0x06ef7018af25ec846ade8f8b5cb591a914a46347",
+        "XindiProxy": "0x97681569c1007380dec7075e5acb6020be36ec83",
+        "XindiLogic": "0x0db24a927ffc3622884b7a3b6f1c694ed8092a01"
     }
 }
 module.exports=Address;

@@ -1,10 +1,7 @@
-var getRpcStr=require("./../../getRpcServe.js")
+var Contract=require("../../contract.js")
 
-contract('xindi summary', function(accounts) {
+var xindi=new Contract ("Xindi","XindiData",10000)// arg0: contract name to get abi and function , arg1: to get contract address
 
-    var address=getRpcStr.get()
-    var xindidata=address.XindiData
-    console.log(address)
 
     var roles={
         core:		    "核心key重置所有keys",
@@ -51,7 +48,7 @@ contract('xindi summary', function(accounts) {
         }
         return str
     }
-
+/*
     it("get resetKey operation ", function(){
         console.log(xindidata)
         var xindi=Xindi.at(xindidata);
@@ -76,12 +73,10 @@ contract('xindi summary', function(accounts) {
                 })
             })
         })
-    })
-    it("xindi summary", function(){
+    })*/
+   // it("xindi summary", function()
 
-        var str;
-        var xindi=Xindi.at(xindidata);
-        xindi.getKeys.call().then(function(res){
+        xindi.getKeys().then(function(res){
             console.log("keys:")
             for(var i=0;i<res.length;i++){
                 str=setw(i.toString(),3)+setw(keys[i],20)+":"+setw(roles[keys[i]],30)+res[i].toString(16)
@@ -92,11 +87,10 @@ contract('xindi summary', function(accounts) {
             }
 
         })
-        xindi.getOptions.call().then(function(res){
+        xindi.getOptions().then(function(res){
             console.log("options:")
 
             console.log("key amounts:%s \n option amounts: %s ",parseInt(res[0],16) ,parseInt(res[1],16))
 
         })
-    });
-});
+

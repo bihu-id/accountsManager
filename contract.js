@@ -199,7 +199,7 @@ contract.prototype.updateLogic=function(privateKey){
     var logicAddress=this.address
     var abi=abis["LogicProxy"]
     var sleep=new Sleep(1)
-    var nonce=web3.eth.getTransactionCount(ethUtil.privateToAddress(privateKey).toString('hex'));
+    var nonce=web3.eth.getTransactionCount('0x' + ethUtil.privateToAddress(privateKey).toString('hex'));
     var i=0
     keys.forEach(function(k){
         var f=fun[k]
@@ -259,7 +259,9 @@ contract.prototype.confirmUpdate=function(privateKey){
 
             },10000)
         })
-    },10)
+    },20000)
+
+
 
     sleep.go(function(){
         transaction.transaction(web3,abi,to,"confirm",[0],privateKey,300000,0,function(err,hash){

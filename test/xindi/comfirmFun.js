@@ -1,9 +1,6 @@
-registar=require("./../../registar")
+var Contract=require("../../contract.js")
 
-contract('Confirm registar fun', function(accounts) {
+var privateKey=new Buffer("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",'hex');
 
-    it("Confirm registar fun ", function () {
-
-        return registar.confirm("Xindi", LogicProxy, accounts[0],accounts[0])
-    })
-})
+var contract=new Contract ("Xindi","XindiLogic",10000)
+contract.confirmUpdate(privateKey)

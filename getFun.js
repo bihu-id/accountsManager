@@ -45,8 +45,8 @@ var funContract=
         'NullContract',
         'Erc20Token',
         'ParkingCreator',
-        'Parking',
-        'CrawdSale'
+        'Parking'
+        // 'CrawdSale'
     ]
 
     var files=fs.readdirSync("./contracts")
@@ -80,7 +80,7 @@ var outputs = solc.compile({sources: input}, 1);
     
 
     var contracts=outputs.contracts;
-    //console.log(outputs)
+    console.log(outputs)
 
     var abis={}
     var abis1={}

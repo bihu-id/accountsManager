@@ -1,14 +1,6 @@
-registar=require("./../../registar")
+var Contract=require("../../contract.js")
 
-contract('registar fun of Xindi', function(accounts) {
+var privateKey=new Buffer("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",'hex');
 
-    it("registar fun of Xindi", function () {
-
-        return registar.register("Xindi", LogicProxy, accounts[0])
-    })
-
-    /*it("Confirm registar fun ", function () {
-
-        return registar.register("Xindi", LogicProxy, accounts[0],accounts[0])
-    })*/
-})
+var contract=new Contract ("Xindi","XindiLogic",10000)
+contract.updateLogic(privateKey)
