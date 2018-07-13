@@ -34,7 +34,10 @@ module.exports ={
         }
         var raw = JSON.stringify(address, null, 4).replace(/\\\"/g, "")
         var str = "var Address=\n" + raw + "\nmodule.exports=Address;";
-        fs.writeFile("/Users/Roy/github/accountsManager/test/address.js", str,callback)
+
+        console.log(process.cwd())
+        fs.writeFile("/Users/huafu/workspace/repo/accountsManager/test/address.js", str,callback)
+
 
     }
 };
