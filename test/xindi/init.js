@@ -1,6 +1,6 @@
 var Contract=require("../../contract.js")
 
-var privateKey=new Buffer("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",'hex');
+var privateKey=new Buffer("f7273ebf3112476ceec2e24b784974348dc487db900d14cd1704c5148d3db104",'hex');
 
 var Xindi=new Contract ("Xindi","XindiData",10000)// arg0: contract name to get abi and function , arg1: to get contract address
 console.log(Xindi.address)

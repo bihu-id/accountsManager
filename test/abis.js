@@ -616,7 +616,20 @@ var abis=
             "name": "getKeys",
             "outputs": [
                 {
-                    "name": "_keys",
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllKeys2",
+            "outputs": [
+                {
+                    "name": "",
                     "type": "address[]"
                 }
             ],
@@ -722,6 +735,37 @@ var abis=
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "name": "i",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getKey",
+            "outputs": [
+                {
+                    "name": "_key",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllKeys",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "getOptions",
             "outputs": [
@@ -772,6 +816,24 @@ var abis=
                 {
                     "name": "success",
                     "type": "bool"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "i",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOptionSize",
+            "outputs": [
+                {
+                    "name": "_key",
+                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -4229,7 +4291,20 @@ var abis=
             "name": "getKeys",
             "outputs": [
                 {
-                    "name": "_keys",
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllKeys2",
+            "outputs": [
+                {
+                    "name": "",
                     "type": "address[]"
                 }
             ],
@@ -4322,6 +4397,37 @@ var abis=
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "name": "i",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getKey",
+            "outputs": [
+                {
+                    "name": "_key",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllKeys",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address[]"
+                }
+            ],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "getOptions",
             "outputs": [
@@ -4363,6 +4469,24 @@ var abis=
             ],
             "name": "createParking",
             "outputs": [],
+            "payable": false,
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "i",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getOptionSize",
+            "outputs": [
+                {
+                    "name": "_key",
+                    "type": "uint256"
+                }
+            ],
             "payable": false,
             "type": "function"
         },

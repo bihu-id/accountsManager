@@ -3,15 +3,20 @@ var codes=require("../byteCodes.js")
 var Web3=require("../../getWeb3Instance.js")
 var getRpcStr=require("../../getRpcServe.js")
 
-var privateKey=new Buffer("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d",'hex');
+
+var privateKey=new Buffer("f7273ebf3112476ceec2e24b784974348dc487db900d14cd1704c5148d3db104",'hex');
+
+
+var Contract=require("../../contract.js")
+
+// var LogicProxy=new Contract("LogicProxy","AccountProxy", 20000)
+// LogicProxy.deploy(privateKey).then(function(LogicProxy,err){
+//     LogicProxy.save()
+// })
+
+
 var contract="Account"
 var addresskey="AccountLogic"
-
-var ethUtil = require('ethereumjs-util');
-
-console.log('0x' + ethUtil.privateToAddress(privateKey).toString('hex'));
-
-console.log(web3.eth.getTransactionCount('0x' + ethUtil.privateToAddress(privateKey).toString('hex')));
 
 transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function(err,hash){
     console.log(err)
@@ -26,6 +31,10 @@ transaction.createContract(web3,"0x"+codes[contract],privateKey,3000000,function
         getRpcStr.save(rpcAddress)
     },5000)
 })
+
+
+
+
 
 
 // transaction.

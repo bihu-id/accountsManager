@@ -80,7 +80,7 @@ var outputs = solc.compile({sources: input}, 1);
     
 
     var contracts=outputs.contracts;
-    console.log(outputs)
+    // console.log(outputs)
 
     var abis={}
     var abis1={}
@@ -269,18 +269,18 @@ var outputs = solc.compile({sources: input}, 1);
         console.log("File Saved !"); //文件被保存
     }) ;
 
-    // //store abis to abis repo
-    // fs.writeFile("/Users/Roy/github/abis/abis.js",str,function (err) {
-    //     if (err) throw err ;
-    //     console.log("update abis !"); //文件被保存
-    // }) ;
+    //store abis to abis repo
+    fs.writeFile("/Users/huafu/workspace/repo/andui-abis/abis.js",str,function (err) {
+        if (err) throw err ;
+        console.log("update abis !"); //文件被保存
+    }) ;
 
-    // //store events to abis repo
-    // var allEventsStr="var events=\n"+JSON.stringify(allEvents,null,4)+"\nmodule.exports=events;";
-    // fs.writeFile("/Users/Roy/github/abis/events.js",allEventsStr,function (err) {
-    //     if (err) throw err ;
-    //     console.log("update events to abis !"); //文件被保存
-    // }) ;
+    //store events to abis repo
+    var allEventsStr="var events=\n"+JSON.stringify(allEvents,null,4)+"\nmodule.exports=events;";
+    fs.writeFile("/Users/huafu/workspace/repo/andui-abis/events.js",allEventsStr,function (err) {
+        if (err) throw err ;
+        console.log("update events to abis !"); //文件被保存
+    }) ;
     var raw=JSON.stringify(byteCodes,null,4)
         //.replace(/\"/g, "")
     var str="var byteCodes=\n"+raw+"\nmodule.exports=byteCodes;";

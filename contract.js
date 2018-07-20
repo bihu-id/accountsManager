@@ -144,6 +144,7 @@ contract.prototype.addFunctions=function(){
                 var funInstance=function(args,privateKey,gas,gasPrice,nonce,notWaitReceipt){
                     gas=gas||self.callGas
                     if (privateKey!=undefined) {
+                        console.log('private key is : ' + privateKey.toString('hex'))
                         return new Promise(function (accept, reject) {
                             console.log("tx to :",self.address)
                             transaction.transaction(web3, self.abi, self.address, fun.name, args, privateKey, gas,gasPrice, function (err, hash) {
@@ -259,7 +260,7 @@ contract.prototype.confirmUpdate=function(privateKey){
 
             },10000)
         })
-    },20000)
+    },10000)
 
 
 

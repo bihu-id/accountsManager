@@ -34,7 +34,7 @@ var funs=
         getOwner: {
             name: 'getOwner(uint256)',
             sig: 0xc41a360a,
-            resSize: 64,
+            resSize: 32,
             register: false
         },
         init: {
@@ -82,7 +82,7 @@ var funs=
         summary: {
             name: 'summary()',
             sig: 0xb16a867c,
-            resSize: 640,
+            resSize: 32,
             register: false
         },
         transferToken: {
@@ -141,40 +141,16 @@ var funs=
             resSize: 32,
             register: false
         },
-        getAllKeys: {
-            name: 'getAllKeys()',
-            sig: 0xbc87eed3,
-            resSize: 192,
-            register: false
-        },
-        getAllKeys2: {
-            name: 'getAllKeys2()',
-            sig: 0x33a534bb,
-            resSize: 192,
-            register: false
-        },
-        getKey: {
-            name: 'getKey(uint256)',
-            sig: 0xbb5b27e1,
-            resSize: 32,
-            register: false
-        },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 192,
-            register: false
-        },
-        getOptionSize: {
-            name: 'getOptionSize(uint256)',
-            sig: 0xf97af5d6,
             resSize: 32,
             register: false
         },
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 160,
+            resSize: 32,
             register: false
         },
         getOptionsWait: {
@@ -842,33 +818,9 @@ var funs=
             resSize: 32,
             register: false
         },
-        getAllKeys: {
-            name: 'getAllKeys()',
-            sig: 0xbc87eed3,
-            resSize: 32,
-            register: false
-        },
-        getAllKeys2: {
-            name: 'getAllKeys2()',
-            sig: 0x33a534bb,
-            resSize: 32,
-            register: false
-        },
-        getKey: {
-            name: 'getKey(uint256)',
-            sig: 0xbb5b27e1,
-            resSize: 32,
-            register: false
-        },
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 32,
-            register: false
-        },
-        getOptionSize: {
-            name: 'getOptionSize(uint256)',
-            sig: 0xf97af5d6,
             resSize: 32,
             register: false
         },
@@ -1347,7 +1299,7 @@ var funs=
         getKeys: {
             name: 'getKeys()',
             sig: 0x2150c518,
-            resSize: 224,
+            resSize: 32,
             register: false
         },
         getOperationAmounts_resetKey: {
@@ -1365,7 +1317,7 @@ var funs=
         getOptions: {
             name: 'getOptions()',
             sig: 0xcc2ee196,
-            resSize: 64,
+            resSize: 32,
             register: false
         },
         getWaitOperationNos: {
@@ -1555,12 +1507,6 @@ var funs=
             sig: 0x45c8b1a6,
             resSize: 32,
             register: true
-        },
-        version: {
-            name: 'version()',
-            sig: 0x54fd4d50,
-            resSize: 32,
-            register: false
         }
     }
 }

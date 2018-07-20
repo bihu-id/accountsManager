@@ -1,6 +1,6 @@
 var Contract=require("../../contract.js")
 
-var privateKey=new Buffer("f6b94a42c26a5cbbb918285612d6678d45120a3e26c8db1ca551726a4f81c98b",'hex');
+var privateKey=new Buffer("f7273ebf3112476ceec2e24b784974348dc487db900d14cd1704c5148d3db104",'hex');
 
 
 var Account=new Contract ("Account","AccountLogic",6000)

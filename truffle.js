@@ -19,11 +19,11 @@ module.exports = {
     //host :"127.0.0.1",
     //host: "47.92.114.62",
     gas:4000000,
-    port: 8545
+    port: 7545
   },
   strict:true,
   //chainId:1000 //test chain active test chain id =200
-  chainId:100 //test chain active test chain id =200
+  chainId:800 //test chain active test chain id =200
   //chainId:318 //test chain active test chain id =200
 
 };

@@ -149,11 +149,31 @@ var Address=
         "Erc20Token": "0xcbff01ff9d4e1c302c5c5a1e9655fb9c61758e66"
     },
     "id100": {
-        "AccountLogic": "0x0dbf0f9288cb1a22060f17a5b5bdcc260ab7d965",
+        "AccountLogic": "0x7db72ab41df7ca1c506d0839cb9b9237ae08093f",
         "DividendTokenLogic": "0xcc4d016ab77e28653bdce1098077be5923077980",
-        "XindiData": "0x06ef7018af25ec846ade8f8b5cb591a914a46347",
-        "XindiProxy": "0x97681569c1007380dec7075e5acb6020be36ec83",
-        "XindiLogic": "0x0db24a927ffc3622884b7a3b6f1c694ed8092a01"
+        "XindiData": "0x59bb7af2077d13bfc73c0012c888c9fd8f668b37",
+        "XindiProxy": "0x53a2d0ea562cf897fe5ee8fdaf52bf242db88f3b",
+        "XindiLogic": "0x8875aa25fe163c00677f7e5ef2bc8b3fd301ff49",
+        "TxManagerProxy": "0x7ee5f3059b8756b9388e6b5dc211a3b9d86c0484",
+        "TxManagerData": "0x862847cdb09c9e4a34529da3a8fe7563a1a3263b",
+        "TxManagerLogic": "0x0ad71a724afb7d4254c346afd3154188459e06ce",
+        "AccountProxy": "0x1481ec6b5747c1f9a08c84fe06ff92bee353523e",
+        "AccountCreatorProxy": "0x565889dc6aed3bd7f57cf82093903438f447eb55",
+        "AccountCreatorData": "0x21247e5d07c582829cb46b52442231050af3331f",
+        "AccountCreatorLogic": "0x685f5dbfae254a7aa0f692e54026d2b2f21ddfa8"
+    },
+    "id800": {
+        "XindiProxy": "0x87b63b574d0c834bdcbe6ff5bd92f81636eb57fa",
+        "XindiData": "0x5fa9ab8331b571b18ac70dc5c2f95a8aab19c2ad",
+        "XindiLogic": "0x9905ce66abc46e602bc43d69cbb99048ff0d439b",
+        "TxManagerProxy": "0x0a5acb8852b3367680fb854541fdbbfb3c7ceecc",
+        "TxManagerData": "0x602795664e093fa1dbb3722872d2f588a2291107",
+        "TxManagerLogic": "0x8a9baf99766b57556806a9536992a1baf676ab1b",
+        "AccountProxy": "0xf487716e97942deaabf5562bf34b6b50b7c8e14a",
+        "AccountLogic": "0x59f9b3b080ac3f2e1280e8e5637efa6ea2b739c3",
+        "AccountCreatorProxy": "0xa113c04e962eacc20167d66d52ac43d902bce62a",
+        "AccountCreatorData": "0x2d753883c06fab4f0e4dc075c1b12982355a5c92",
+        "AccountCreatorLogic": "0xd70f613feea8d3acebeebb7fd0c6ed627fec91e9"
     }
 }
 module.exports=Address;
